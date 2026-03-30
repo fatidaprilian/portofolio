@@ -1,0 +1,32 @@
+name: release-gate
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  release-gate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Run release gate
+        run: node ./scripts/release-gate.mjs > release-gate-report.json
+
+      - name: Upload release gate report artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-gate-report
+          path: release-gate-report.json

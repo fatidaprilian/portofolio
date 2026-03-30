@@ -1,0 +1,29 @@
+{
+  "$schema": "https://modelcontextprotocol.io/schemas/mcp.json",
+  "version": "1.0",
+  "name": "agentic-senior-core",
+  "description": "MCP configuration for governance-aware diagnostics and self-healing workflows.",
+  "servers": {
+    "lint": {
+      "command": "node",
+      "args": ["./scripts/validate.mjs"],
+      "transport": "stdio"
+    },
+    "test": {
+      "command": "node",
+      "args": ["--test", "./tests/cli-smoke.test.mjs", "./tests/llm-judge.test.mjs"],
+      "transport": "stdio"
+    }
+  },
+  "workflows": {
+    "self-heal-on-failure": {
+      "trigger": ["ci.failure", "lint.failure"],
+      "steps": [
+        "collect_logs",
+        "map_violation_to_rule",
+        "propose_patch",
+        "run_checklist_review"
+      ]
+    }
+  }
+}

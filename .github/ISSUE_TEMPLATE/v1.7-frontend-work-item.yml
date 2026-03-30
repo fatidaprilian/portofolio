@@ -1,0 +1,54 @@
+name: V1.7 Frontend Work Item
+description: Track a V1.7 frontend task with quality-gate ready acceptance criteria.
+title: "[V1.7][QX] "
+labels:
+  - v1.7
+body:
+  - type: textarea
+    id: background
+    attributes:
+      label: Background
+      description: Why this item exists and what user problem it addresses.
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: Scope
+      description: What is included in this issue.
+    validations:
+      required: true
+  - type: textarea
+    id: out_of_scope
+    attributes:
+      label: Out of Scope
+      description: What is intentionally excluded.
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance_criteria
+    attributes:
+      label: Acceptance Criteria
+      description: Use measurable and testable criteria.
+      placeholder: |
+        - [ ] ...
+        - [ ] ...
+    validations:
+      required: true
+  - type: textarea
+    id: dependencies
+    attributes:
+      label: Dependencies
+      description: Link prerequisite issues or blockers.
+  - type: textarea
+    id: definition_of_done
+    attributes:
+      label: Definition of Done
+      description: Include testing, documentation, and evidence requirements.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence
+      description: Screenshots, benchmark output, links to reports.

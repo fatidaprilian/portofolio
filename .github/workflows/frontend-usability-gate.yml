@@ -1,0 +1,36 @@
+name: Frontend Usability Gate
+
+on:
+  push:
+    branches:
+      - '**'
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  frontend-usability-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Run frontend usability audit
+        run: node ./scripts/frontend-usability-audit.mjs > frontend-usability-audit-report.json
+
+      - name: Upload frontend audit artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend-usability-audit-report
+          path: frontend-usability-audit-report.json
