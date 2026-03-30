@@ -67,11 +67,8 @@ onUnmounted(() => {
     <!-- Vertical divider line (desktop) -->
     <div class="hidden lg:block pointer-events-none absolute z-0 top-0 bottom-0" style="right: 38%; width: 1px; background: linear-gradient(to bottom, transparent 0%, rgba(255,255,255,0.06) 30%, rgba(255,255,255,0.06) 70%, transparent 100%);"></div>
 
-    <!-- Top bar: just label pill, no duplicate location -->
-    <div class="relative z-10 px-5 md:px-8 lg:px-10 pt-8 md:pt-10 flex items-center" data-reveal-fade>
-      <span class="hero-label-pill">
-        {{ getActiveCopy().labelPill }}
-      </span>
+    <!-- Top bar removed as per user preference -->
+    <div class="relative z-10 px-5 md:px-8 lg:px-10 pt-8 md:pt-10 flex items-center h-12">
     </div>
 
     <!-- Main content: name (left) + avatar (right, vertically CENTERED) -->
@@ -104,8 +101,8 @@ onUnmounted(() => {
         <div class="flex flex-wrap gap-x-8 gap-y-5 items-end justify-between">
 
           <!-- Left: summary + CTAs -->
-          <div class="space-y-4 max-w-sm">
-            <p class="text-[0.85rem] leading-relaxed text-white/60">
+          <div class="space-y-4 max-w-lg">
+            <p class="text-[0.85rem] leading-relaxed text-white/60 w-[95%] md:w-full">
               {{ getActiveCopy().summary }}
             </p>
             <div class="flex gap-3 flex-wrap">
