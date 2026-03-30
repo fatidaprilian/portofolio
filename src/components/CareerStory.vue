@@ -96,7 +96,7 @@ const getProfile = () => getCareerProfileByLanguage(props.language)
                 :class="i === getProfile().timelineItems.length - 1 ? 'border-b border-[#c9b297]/50' : ''"
               >
                 <!-- Giant year watermark — bottom-right, purely decorative -->
-                <div class="absolute right-2 bottom-1 font-display text-[2.2rem] md:text-[3rem] leading-none text-[#c9b297]/18 select-none pointer-events-none group-hover:text-[#c9b297]/30 transition-colors duration-500">
+                <div class="absolute right-2 bottom-1 font-display text-4xl md:text-[3rem] leading-none text-[#c9b297]/10 md:text-[#c9b297]/18 select-none pointer-events-none group-hover:text-[#c9b297]/30 transition-colors duration-500">
                   {{ timelineItem.period.split('–')[0].trim().split('—')[0].trim() }}
                 </div>
 
@@ -106,8 +106,8 @@ const getProfile = () => getCareerProfileByLanguage(props.language)
                     <p class="mt-1.5 text-sm text-[#6d4f3f]">{{ timelineItem.role }}</p>
                   </div>
                   <div class="md:col-span-9">
-                    <h3 class="font-display text-3xl md:text-4xl text-text tracking-wide leading-none">{{ timelineItem.title }}</h3>
-                    <p class="mt-3 text-sm md:text-base text-[#5b4639] leading-relaxed">{{ timelineItem.description }}</p>
+                    <h3 class="font-display text-2xl md:text-4xl text-text tracking-wide leading-none">{{ timelineItem.title }}</h3>
+                    <p class="mt-2 md:mt-3 text-sm md:text-base text-[#5b4639] leading-relaxed">{{ timelineItem.description }}</p>
                   </div>
                 </div>
               </div>

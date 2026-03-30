@@ -40,8 +40,8 @@ const getStandardProjects = () => getAllProjects().filter((p) => p.type !== 'fea
     <div class="section-shell pt-20 md:pt-28 pb-10 md:pb-12" data-reveal>
       <div class="flex items-end justify-between gap-6 border-b border-[#d7c2a8]/60 pb-6">
         <div>
-          <p class="text-xs uppercase tracking-[0.26em] text-muted mb-3">{{ getActiveCopy().sectionLabel }}</p>
-          <h2 class="font-display text-6xl md:text-8xl lg:text-[9rem] text-text leading-none tracking-wide">
+          <p class="text-[0.6rem] md:text-xs uppercase tracking-[0.26em] text-muted mb-2 md:mb-3">{{ getActiveCopy().sectionLabel }}</p>
+          <h2 class="font-display text-5xl md:text-8xl lg:text-[9rem] text-text leading-none tracking-wide">
             {{ getActiveCopy().sectionTitle }}
           </h2>
         </div>
@@ -72,14 +72,14 @@ const getStandardProjects = () => getAllProjects().filter((p) => p.type !== 'fea
 
           <!-- Title block -->
           <div class="lg:col-span-6 lg:pr-10">
-            <div class="flex items-start gap-4 mb-4">
-              <span class="inline-block text-[0.6rem] tracking-[0.2em] uppercase border border-[#b98a69] bg-[#f5e4d1] text-[#6f4933] rounded-full px-3 py-1 mt-1">{{ getActiveCopy().featuredLabel }}</span>
-              <span class="text-xs text-muted mt-1.5">{{ getFeaturedProject().year }}</span>
+            <div class="flex items-start gap-3 md:gap-4 mb-3 md:mb-4">
+              <span class="inline-block text-[0.55rem] md:text-[0.6rem] tracking-[0.2em] uppercase border border-[#b98a69] bg-[#f5e4d1] text-[#6f4933] rounded-full px-2.5 py-1 mt-1">{{ getActiveCopy().featuredLabel }}</span>
+              <span class="text-[0.65rem] md:text-xs text-muted mt-1.5">{{ getFeaturedProject().year }}</span>
             </div>
-            <h3 class="font-display text-5xl md:text-6xl lg:text-7xl text-text tracking-wide leading-none break-all group-hover:text-[#5a3e2f] transition-colors duration-500">
+            <h3 class="font-display text-4xl md:text-6xl lg:text-7xl text-text tracking-wide leading-[0.9] break-words group-hover:text-[#5a3e2f] transition-colors duration-500">
               {{ getFeaturedProject().title }}
             </h3>
-            <p class="mt-5 text-[#5f4a3d] text-base leading-relaxed max-w-xl">{{ getFeaturedProject().summary }}</p>
+            <p class="mt-4 md:mt-5 text-[#5f4a3d] text-sm md:text-base leading-relaxed max-w-xl">{{ getFeaturedProject().summary }}</p>
           </div>
 
           <!-- Right: details + CTA -->
@@ -139,11 +139,11 @@ const getStandardProjects = () => getAllProjects().filter((p) => p.type !== 'fea
           </span>
 
           <!-- Title — most prominent -->
-          <div class="flex-1 min-w-0">
-            <h3 class="font-display text-2xl md:text-3xl lg:text-4xl text-text tracking-wide leading-tight group-hover:text-[#5a3e2f] transition-colors duration-500 break-all">
+          <div class="flex-1 min-w-0 pb-1">
+            <h3 class="font-display text-xl md:text-3xl lg:text-4xl text-text tracking-wide leading-tight group-hover:text-[#5a3e2f] transition-colors duration-500 break-words">
               {{ project.title }}
             </h3>
-            <p class="text-sm text-muted mt-1 truncate">{{ project.summary }}</p>
+            <p class="text-xs md:text-sm text-muted mt-0.5 md:mt-1 truncate">{{ project.summary }}</p>
           </div>
 
           <!-- Tags — hidden on small, shown on md -->

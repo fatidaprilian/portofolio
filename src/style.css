@@ -578,7 +578,8 @@
 ═══════════════════════════════════════ */
 @media (max-width: 768px) {
   .hero-display-name {
-    font-size: clamp(4rem, 22vw, 7rem);
+    font-size: clamp(3rem, 18vw, 6rem);
+    word-break: break-word; /* Ensure no horizontal overflow */
   }
 
   .closing-marquee-item {
