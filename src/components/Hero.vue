@@ -1,6 +1,7 @@
 <script setup>
 import { onMounted, onUnmounted, ref, computed } from 'vue'
 import { ArrowRight, Download } from 'lucide-vue-next'
+import MagneticHover from './MagneticHover.vue'
 
 const props = defineProps({
   language: {
@@ -13,9 +14,9 @@ const copyByLanguage = {
   id: {
     labelPill: 'Full-stack Engineer & Product Builder',
     location: 'Indonesia · GMT+7',
-    availableFor: 'Open to opportunities',
-    summary: 'Membangun digital products yang robust di struktur, user-focused, dan siap scale dengan iterasi bisnis yang sustainable.',
-    viewProjects: 'Lihat Projects',
+    availableFor: 'Terbuka untuk kolaborasi',
+    summary: 'Membangun produk digital dengan struktur kokoh, berbasis pengguna, dan siap diskalakan untuk iterasi bisnis yang berkelanjutan.',
+    viewProjects: 'Lihat Proyek',
     contact: 'Diskusi',
     downloadCv: 'Unduh CV',
     stats: [
@@ -107,29 +108,35 @@ onUnmounted(() => {
             <p class="text-[0.85rem] leading-relaxed text-white/60 w-[95%] md:w-full">
               {{ getActiveCopy().summary }}
             </p>
-            <div class="flex gap-3 flex-wrap">
-              <a
-                href="#work"
-                class="inline-flex items-center gap-2 rounded-lg bg-[#a56a43] hover:bg-[#8c5938] text-[#f8f1e5] font-semibold text-sm px-5 py-2.5 transition duration-300"
-              >
-                {{ getActiveCopy().viewProjects }}
-                <ArrowRight class="w-3.5 h-3.5" />
-              </a>
-              <a
-                href="#contact"
-                class="inline-flex items-center gap-2 rounded-lg border border-white/[0.14] hover:border-white/[0.28] hover:bg-white/[0.05] text-white/60 hover:text-white/85 font-semibold text-sm px-5 py-2.5 transition duration-300"
-              >
-                {{ getActiveCopy().contact }}
-              </a>
-              <a
-                href="/cv.pdf"
-                target="_blank"
-                rel="noreferrer"
-                class="inline-flex items-center gap-2 rounded-lg border border-[#a56a43]/40 hover:border-[#a56a43]/80 hover:bg-[#a56a43]/10 text-white/80 hover:text-white font-semibold text-sm px-5 py-2.5 transition duration-300"
-              >
-                <Download class="w-3.5 h-3.5" />
-                {{ getActiveCopy().downloadCv }}
-              </a>
+            <div class="flex gap-3 flex-wrap items-start">
+              <MagneticHover>
+                <a
+                  href="#work"
+                  class="inline-flex items-center gap-2 rounded-lg bg-[#a56a43] hover:bg-[#8c5938] text-[#f8f1e5] font-semibold text-sm px-5 py-2.5 transition duration-300"
+                >
+                  {{ getActiveCopy().viewProjects }}
+                  <ArrowRight class="w-3.5 h-3.5" />
+                </a>
+              </MagneticHover>
+              <MagneticHover>
+                <a
+                  href="#contact"
+                  class="inline-flex items-center gap-2 rounded-lg border border-white/[0.14] hover:border-white/[0.28] hover:bg-white/[0.05] text-white/60 hover:text-white/85 font-semibold text-sm px-5 py-2.5 transition duration-300"
+                >
+                  {{ getActiveCopy().contact }}
+                </a>
+              </MagneticHover>
+              <MagneticHover>
+                <a
+                  href="/cv.pdf"
+                  target="_blank"
+                  rel="noreferrer"
+                  class="inline-flex items-center gap-2 rounded-lg border border-[#a56a43]/40 hover:border-[#a56a43]/80 hover:bg-[#a56a43]/10 text-white/80 hover:text-white font-semibold text-sm px-5 py-2.5 transition duration-300"
+                >
+                  <Download class="w-3.5 h-3.5" />
+                  {{ getActiveCopy().downloadCv }}
+                </a>
+              </MagneticHover>
             </div>
           </div>
 

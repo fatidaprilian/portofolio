@@ -1,6 +1,7 @@
 <script setup>
 import { getProjectsByLanguage } from '../data/projects'
 import { ArrowUpRight } from 'lucide-vue-next'
+import TiltCard from './TiltCard.vue'
 
 const props = defineProps({
   language: {
@@ -64,7 +65,8 @@ const getStandardProjects = () => getAllProjects().filter((p) => p.type !== 'fea
       data-reveal
     >
       <div class="section-shell">
-        <div class="grid lg:grid-cols-12 gap-0 py-10 md:py-14">
+        <TiltCard>
+          <div class="grid lg:grid-cols-12 gap-0 py-10 md:py-14">
           <!-- Number + meta left side -->
           <div class="lg:col-span-1 mb-4 lg:mb-0">
             <span class="font-display text-5xl text-[#c0a08a]">01</span>
@@ -117,22 +119,26 @@ const getStandardProjects = () => getAllProjects().filter((p) => p.type !== 'fea
             </a>
           </div>
         </div>
+        </TiltCard>
       </div>
     </div>
 
     <!-- Standard projects — horizontal strips -->
     <div class="border-b border-[#d7c2a8]/60">
       <div class="section-shell">
-        <a
+        <div
           v-for="(project, index) in getStandardProjects()"
           :key="project.title"
-          :href="project.link"
-          target="_blank"
-          rel="noreferrer"
-          class="group flex items-start lg:items-center gap-4 lg:gap-6 py-7 md:py-8 border-b border-[#d7c2a8]/50 last:border-b-0 transition-all duration-500 hover:bg-[#f5e5d2]/50 -mx-5 md:-mx-8 lg:-mx-10 px-5 md:px-8 lg:px-10"
           data-reveal
           :style="{ '--reveal-delay': `${index * 60}ms` }"
         >
+          <TiltCard>
+            <a
+              :href="project.link"
+              target="_blank"
+              rel="noreferrer"
+              class="group flex items-start lg:items-center gap-4 lg:gap-6 py-7 md:py-8 border-b border-[#d7c2a8]/50 last:border-b-0 transition-all duration-500 hover:bg-[#f5e5d2]/50 -mx-5 md:-mx-8 lg:-mx-10 px-5 md:px-8 lg:px-10"
+            >
           <!-- Index number -->
           <span class="font-display text-3xl md:text-4xl text-[#c0a08a] w-12 flex-shrink-0 leading-none">
             {{ String(index + 2).padStart(2, '0') }}
@@ -162,7 +168,9 @@ const getStandardProjects = () => getAllProjects().filter((p) => p.type !== 'fea
             <span class="hidden lg:block">{{ project.year }}</span>
             <ArrowUpRight class="w-5 h-5 opacity-0 group-hover:opacity-100 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-500" />
           </div>
-        </a>
+            </a>
+          </TiltCard>
+        </div>
       </div>
     </div>
   </section>

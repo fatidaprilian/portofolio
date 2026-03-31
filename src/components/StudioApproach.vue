@@ -31,21 +31,21 @@ const copyByLanguage = {
     disciplineItems: [
       {
         number: '01',
-        title: 'Frontend Engineering',
-        description: 'Antarmuka yang tidak hanya menarik secara visual, tapi juga konsisten, responsif, dan siap scale secara produk.',
-        bulletPoints: ['UI system terstruktur', 'Interaksi halus dan jelas', 'Performant di mobile']
+        title: 'Rekayasa Frontend',
+        description: 'Antarmuka yang tidak hanya menarik secara visual, tapi juga konsisten, responsif, dan siap diskalakan seiring produk berkembang.',
+        bulletPoints: ['Sistem UI terstruktur', 'Interaksi halus dan jelas', 'Performa andal di mobile']
       },
       {
         number: '02',
-        title: 'Backend Architecture',
-        description: 'Arsitektur backend disusun untuk maintainability jangka panjang: boundary jelas, validasi rapi, dan alur data yang bisa diandalkan.',
-        bulletPoints: ['Service boundary jelas', 'Data flow terukur', 'Maintainability jangka panjang']
+        title: 'Arsitektur Backend',
+        description: 'Arsitektur backend disusun untuk pemeliharaan jangka panjang: batasan layanan yang jelas, validasi solid, dan alur data yang bisa diandalkan.',
+        bulletPoints: ['Batasan servis yang jelas', 'Alur data terukur', 'Keterpeliharaan jangka panjang']
       },
       {
         number: '03',
-        title: 'Full Product Delivery',
-        description: 'Dari discovery sampai release, fokus saya adalah memastikan produk punya nilai nyata dan tetap efisien dikembangkan setelah launch.',
-        bulletPoints: ['Scope realistis', 'Eksekusi terarah', 'Outcome terukur']
+        title: 'Siklus Pengiriman Utuh',
+        description: 'Dari riset hingga rilis, berfokus memastikan produk punya nilai nyata dan implementasinya tetap efisien setelah peluncuran.',
+        bulletPoints: ['Cakupan realistis', 'Eksekusi terarah', 'Hasil yang terukur']
       }
     ]
   },

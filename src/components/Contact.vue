@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from 'vue'
 import { Send, Mail, MapPin, ArrowUpRight } from 'lucide-vue-next'
+import MagneticHover from './MagneticHover.vue'
 
 const props = defineProps({
   language: {
@@ -13,18 +14,19 @@ const form = ref({ name: '', email: '', message: '' })
 const errors = ref({})
 const isSubmitting = ref(false)
 const isSuccess = ref(false)
+const serverError = ref('')
 
 const copyByLanguage = {
   id: {
-    bigLine1: "LET'S",
-    bigLine2: 'TALK',
+    bigLine1: 'MARI',
+    bigLine2: 'DISKUSI',
     tagline: 'Terbuka untuk freelance & kolaborasi strategis.',
     sectionLabel: 'Kontak',
-    sectionDescription: 'Share konteks bisnis, target, dan timeline supaya diskusinya fokus.',
-    responseTime: 'Typical response: 24–48 hours',
-    nameLabel: 'Name', emailLabel: 'Email', briefLabel: 'Project brief',
-    namePlaceholder: 'Your name', emailPlaceholder: 'your@email.com', briefPlaceholder: 'Scope, timeline, goals',
-    sending: 'Sending...', sendMessage: 'Send message →',
+    sectionDescription: 'Ceritakan konteks bisnis, target, dan timeline agar diskusi lebih fokus.',
+    responseTime: 'Waktu respons: 24–48 jam',
+    nameLabel: 'Nama', emailLabel: 'Email', briefLabel: 'Konteks Proyek',
+    namePlaceholder: 'Nama Anda', emailPlaceholder: 'anda@email.com', briefPlaceholder: 'Scope, timeline, goals',
+    sending: 'Mengirim...', sendMessage: 'Kirim pesan →',
     successMessage: 'Terima kasih! Saya balas secepatnya.',
     nameRequired: 'Isi nama kamu dulu ya.',
     emailRequired: 'Email belum diisi.',
@@ -67,11 +69,46 @@ const validate = () => {
 const submitForm = async () => {
   if (!validate()) return
   isSubmitting.value = true
-  await new Promise(resolve => setTimeout(resolve, 1500))
-  isSubmitting.value = false
-  isSuccess.value = true
-  form.value = { name: '', email: '', message: '' }
-  setTimeout(() => { isSuccess.value = false }, 5000)
+  serverError.value = ''
+  
+  const accessKey = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY
+  
+  if (!accessKey) {
+    // Fallback bypass mode for development if key isn't set
+    await new Promise(resolve => setTimeout(resolve, 1500))
+    isSubmitting.value = false
+    isSuccess.value = true
+    form.value = { name: '', email: '', message: '' }
+    setTimeout(() => { isSuccess.value = false }, 5000)
+    return
+  }
+
+  try {
+    const response = await fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify({
+        access_key: accessKey,
+        ...form.value
+      })
+    })
+    
+    const json = await response.json()
+    if (response.status === 200) {
+      isSuccess.value = true
+      form.value = { name: '', email: '', message: '' }
+      setTimeout(() => { isSuccess.value = false }, 5000)
+    } else {
+      serverError.value = json.message || 'Error occurred while sending.'
+    }
+  } catch (error) {
+    serverError.value = 'Network error. Please try again.'
+  } finally {
+    isSubmitting.value = false
+  }
 }
 </script>
 
@@ -157,17 +194,22 @@ const submitForm = async () => {
           </div>
 
           <!-- Submit -->
-          <button
-            type="submit"
-            class="w-full border border-[#a56a43] text-[#a56a43] hover:bg-[#a56a43] hover:text-[#f8f1e5] font-semibold text-sm px-6 py-4 rounded-lg transition duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-            :disabled="isSubmitting"
-          >
-            <Send class="w-4 h-4" />
-            {{ isSubmitting ? getActiveCopy().sending : getActiveCopy().sendMessage }}
-          </button>
+          <MagneticHover wrapperClass="block w-full">
+            <button
+              type="submit"
+              class="w-full border border-[#a56a43] text-[#a56a43] hover:bg-[#a56a43] hover:text-[#f8f1e5] font-semibold text-sm px-6 py-4 rounded-lg transition duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+              :disabled="isSubmitting"
+            >
+              <Send class="w-4 h-4" />
+              {{ isSubmitting ? getActiveCopy().sending : getActiveCopy().sendMessage }}
+            </button>
+          </MagneticHover>
 
           <div v-if="isSuccess" class="rounded-lg border border-[#a56a43]/30 bg-[#a56a43]/10 text-[#5a3a28] text-sm px-4 py-3">
             {{ getActiveCopy().successMessage }}
+          </div>
+          <div v-if="serverError" class="rounded-lg border border-red-500/30 bg-red-500/10 text-red-700 text-sm px-4 py-3">
+            {{ serverError }}
           </div>
         </form>
       </div>

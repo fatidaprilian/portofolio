@@ -95,10 +95,7 @@ const getProfile = () => getCareerProfileByLanguage(props.language)
                 class="relative border-t border-[#c9b297]/50 py-8 overflow-hidden group"
                 :class="i === getProfile().timelineItems.length - 1 ? 'border-b border-[#c9b297]/50' : ''"
               >
-                <!-- Giant year watermark — bottom-right, purely decorative -->
-                <div class="absolute right-2 bottom-1 font-display text-4xl md:text-[3rem] leading-none text-[#c9b297]/10 md:text-[#c9b297]/18 select-none pointer-events-none group-hover:text-[#c9b297]/30 transition-colors duration-500">
-                  {{ timelineItem.period.split('–')[0].trim().split('—')[0].trim() }}
-                </div>
+
 
                 <div class="relative z-10 grid md:grid-cols-12 gap-4">
                   <div class="md:col-span-3">
