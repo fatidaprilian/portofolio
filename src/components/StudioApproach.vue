@@ -12,19 +12,19 @@ const props = defineProps({
 
 const copyByLanguage = {
   id: {
-    sectionLabel: 'Core Disciplines',
+    sectionLabel: 'Disiplin Utama',
     sectionTitle: 'Struktur sebagai fondasi,\nrasa sebagai pembeda.',
     philosophyItems: [
       {
-        step: 'Observe',
+        step: 'Amati',
         description: 'Saya mulai dengan memahami produk, konteks, dan bagaimana sesuatu sebenarnya bekerja. Keputusan teknis datang setelah pemahaman terbentuk.'
       },
       {
-        step: 'Distil',
+        step: 'Saring',
         description: 'Saya membuang noise, mengurangi kompleksitas, dan menyisakan hanya yang benar-benar penting untuk produk berjalan.'
       },
       {
-        step: 'Build',
+        step: 'Bangun',
         description: 'Bentuk muncul dari kejelasan — struktur, komponen, dan keputusan teknis yang tepat menghasilkan produk yang bisa di-maintain jangka panjang.'
       }
     ],

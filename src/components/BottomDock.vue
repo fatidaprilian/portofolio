@@ -10,11 +10,11 @@ const props = defineProps({
 
 const copyByLanguage = {
   id: {
-    skills: 'Skills',
+    skills: 'Keahlian',
     about: 'Tentang',
-    portfolio: 'Portfolio',
+    portfolio: 'Portofolio',
     contact: 'Kontak',
-    home: 'Home'
+    home: 'Beranda'
   },
   en: {
     skills: 'Skills',
@@ -66,7 +66,7 @@ const observeSections = () => {
         }
       })
     },
-    { threshold: 0.2, rootMargin: '-30% 0px -55% 0px' }
+    { threshold: 0, rootMargin: '-40% 0px -40% 0px' }
   )
 
   targetSections.forEach((sectionElement) => sectionObserver.observe(sectionElement))

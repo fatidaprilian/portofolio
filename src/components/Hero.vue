@@ -1,6 +1,6 @@
 <script setup>
 import { onMounted, onUnmounted, ref, computed } from 'vue'
-import { ArrowRight } from 'lucide-vue-next'
+import { ArrowRight, Download } from 'lucide-vue-next'
 
 const props = defineProps({
   language: {
@@ -17,6 +17,7 @@ const copyByLanguage = {
     summary: 'Membangun digital products yang robust di struktur, user-focused, dan siap scale dengan iterasi bisnis yang sustainable.',
     viewProjects: 'Lihat Projects',
     contact: 'Diskusi',
+    downloadCv: 'Unduh CV',
     stats: [
       { value: '35+', label: 'Repositori' },
       { value: '3+', label: 'Rilis Produk' },
@@ -30,6 +31,7 @@ const copyByLanguage = {
     summary: 'Building digital products with strong architecture, user focus, and sustainable business iteration.',
     viewProjects: 'View Projects',
     contact: 'Discuss',
+    downloadCv: 'Download CV',
     stats: [
       { value: '35+', label: 'Repositories' },
       { value: '3+', label: 'Deliveries' },
@@ -118,6 +120,15 @@ onUnmounted(() => {
                 class="inline-flex items-center gap-2 rounded-lg border border-white/[0.14] hover:border-white/[0.28] hover:bg-white/[0.05] text-white/60 hover:text-white/85 font-semibold text-sm px-5 py-2.5 transition duration-300"
               >
                 {{ getActiveCopy().contact }}
+              </a>
+              <a
+                href="/cv.pdf"
+                target="_blank"
+                rel="noreferrer"
+                class="inline-flex items-center gap-2 rounded-lg border border-[#a56a43]/40 hover:border-[#a56a43]/80 hover:bg-[#a56a43]/10 text-white/80 hover:text-white font-semibold text-sm px-5 py-2.5 transition duration-300"
+              >
+                <Download class="w-3.5 h-3.5" />
+                {{ getActiveCopy().downloadCv }}
               </a>
             </div>
           </div>

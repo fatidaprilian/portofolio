@@ -331,7 +331,10 @@
     font-family: 'Bebas Neue', sans-serif;
     font-size: clamp(2.8rem, 10vw, 6rem);
     line-height: 0.9;
-    color: #f0ebe4;
+    background: linear-gradient(135deg, #f0ebe4 0%, #d4bcab 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
     letter-spacing: 0.02em;
   }
 

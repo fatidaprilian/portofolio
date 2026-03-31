@@ -1,6 +1,6 @@
 const careerProfileSource = {
   id: {
-    heroLabel: 'Career Story',
+    heroLabel: 'Perjalanan Karir',
     heroTitle: 'Perjalanan profesional yang dibangun lewat produk nyata.',
     heroSummary:
       'Mahasiswa Teknologi Informasi sekaligus Full-stack Web Developer dengan fokus pada web engineering, AI architecture, dan kualitas delivery. Nyaman bekerja dengan instruksi teknis berbahasa Inggris serta kolaborasi lintas tim.',
@@ -17,7 +17,7 @@ const careerProfileSource = {
       linkedinLabel: 'LinkedIn',
       linkedinValue: 'linkedin.com/in/farid-aprilian'
     },
-    timelineLabel: 'Experience Timeline',
+    timelineLabel: 'Linimasa Pengalaman',
     timelineItems: [
       {
         period: 'Jan. 2026 - Present',
@@ -41,7 +41,7 @@ const careerProfileSource = {
           'Mendesain homepage katalog produk, membuat konten multimedia promosi, serta mengelola pencatatan data stok untuk kebutuhan operasional.'
       }
     ],
-    faqLabel: 'Personal FAQ',
+    faqLabel: 'FAQ Personal',
     faqItems: [
       {
         question: 'Bagaimana cara kamu memastikan kualitas kerja?',
@@ -59,7 +59,7 @@ const careerProfileSource = {
           'Project web product yang butuh fondasi rapi, iterasi cepat, dan maintainability jangka panjang akan jadi area kontribusi terbaik saya.'
       }
     ],
-    educationLabel: 'Education',
+    educationLabel: 'Pendidikan',
     educationItems: [
       {
         period: 'Sept. 2023 - Present',
@@ -72,7 +72,7 @@ const careerProfileSource = {
         degree: 'High School Diploma'
       }
     ],
-    skillsLabel: 'Technical Stack',
+    skillsLabel: 'Stack Teknis',
     skillGroups: [
       {
         category: 'Core Competencies',

@@ -11,12 +11,12 @@ const props = defineProps({
 
 const copyByLanguage = {
   id: {
-    sectionLabel: '/ Selected Work',
+    sectionLabel: '/ Proyek Pilihan',
     sectionTitle: 'Proyek',
-    openRepository: 'Explore',
+    openRepository: 'Eksplor',
     browseAll: 'Semua di GitHub',
-    tagsLabel: 'Stack',
-    featuredLabel: 'Featured'
+    tagsLabel: 'Teknologi',
+    featuredLabel: 'Unggulan'
   },
   en: {
     sectionLabel: '/ Selected Work',

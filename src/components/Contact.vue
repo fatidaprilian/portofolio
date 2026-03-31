@@ -19,7 +19,7 @@ const copyByLanguage = {
     bigLine1: "LET'S",
     bigLine2: 'TALK',
     tagline: 'Terbuka untuk freelance & kolaborasi strategis.',
-    sectionLabel: 'Contact',
+    sectionLabel: 'Kontak',
     sectionDescription: 'Share konteks bisnis, target, dan timeline supaya diskusinya fokus.',
     responseTime: 'Typical response: 24–48 hours',
     nameLabel: 'Name', emailLabel: 'Email', briefLabel: 'Project brief',

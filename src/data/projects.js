@@ -79,26 +79,7 @@ const projectSource = [
     },
     tags: ['TypeScript', 'Backend', 'Platform']
   },
-  {
-    title: 'EcommerceSparepartVespa',
-    year: '2025',
-    type: 'standard',
-    accent: 'copper',
-    link: 'https://github.com/fatidaprilian/EcommerceSparepartVespa',
-    role: {
-      id: 'Commerce Backend',
-      en: 'Commerce Backend'
-    },
-    summary: {
-      id: 'Platform spare part berbasis Laravel dengan alur transaksi dan katalog produk yang terstruktur.',
-      en: 'A Laravel-based spare part platform with structured transaction flow and product catalog management.'
-    },
-    keyPoints: {
-      id: ['Laravel architecture', 'Catalog structure', 'Commerce operations'],
-      en: ['Laravel architecture', 'Catalog structure', 'Commerce operations']
-    },
-    tags: ['PHP', 'Laravel', 'Commerce']
-  },
+
   {
     title: 'war-tiket-bot',
     year: '2026',

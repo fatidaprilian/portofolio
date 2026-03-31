@@ -23,10 +23,12 @@ const currentLanguage = ref('id')
 const isScrollTopVisible = ref(false)
 const activeGreetingIndex = ref(0)
 const shuffledGreetings = ref([])
+const isFontLoaded = ref(false)
 
 const greetings = [
   'Hello',
   'Halo',
+  'Nǐ hǎo',
   'Bonjour',
   'Hola',
   'Ciao',
@@ -34,30 +36,35 @@ const greetings = [
   'Namaste',
   'Konnichiwa',
   'Annyeong',
-  'Salam'
+  'Salam',
+  'Sawasdee',
+  'Merhaba',
+  'Shalom',
+  'Aloha'
 ]
 
 const shuffleGreetingOrder = (greetingItems) => {
-  const shuffledGreetingItems = [...greetingItems]
-  for (let currentIndex = shuffledGreetingItems.length - 1; currentIndex > 0; currentIndex -= 1) {
+  const firstItem = greetingItems[0]
+  const restItems = [...greetingItems.slice(1)]
+  for (let currentIndex = restItems.length - 1; currentIndex > 0; currentIndex -= 1) {
     const randomIndex = Math.floor(Math.random() * (currentIndex + 1))
-    const currentItem = shuffledGreetingItems[currentIndex]
-    shuffledGreetingItems[currentIndex] = shuffledGreetingItems[randomIndex]
-    shuffledGreetingItems[randomIndex] = currentItem
+    const currentItem = restItems[currentIndex]
+    restItems[currentIndex] = restItems[randomIndex]
+    restItems[randomIndex] = currentItem
   }
-  return shuffledGreetingItems
+  return [firstItem, ...restItems]
 }
 
 const copyByLanguage = {
   id: {
-    preparingPortfolio: 'Menyiapkan portfolio',
-    footerTagline: 'Built with Vue, crafted with product mindset.',
+    preparingPortfolio: 'Menyiapkan portofolio',
+    footerTagline: 'Dibuat dengan Vue, dirancang dengan mindset produk.',
     quickLinks: 'Navigasi',
-    connect: 'Connect',
-    home: 'Home',
-    work: 'Project',
+    connect: 'Hubungi',
+    home: 'Beranda',
+    work: 'Proyek',
     contact: 'Kontak',
-    repositories: 'Repositories'
+    repositories: 'Repositori'
   },
   en: {
     preparingPortfolio: 'Preparing portfolio',
@@ -76,6 +83,7 @@ let sectionScrollObserver
 let loadingProgressInterval
 let loadingDoneTimeout
 let loadingGreetingInterval
+let loadingGreetingTimeout
 
 const updateScrollUiState = () => {
   isScrollTopVisible.value = window.scrollY > 340
@@ -89,6 +97,7 @@ const clearLoadingTimers = () => {
   if (loadingProgressInterval) { clearInterval(loadingProgressInterval); loadingProgressInterval = null }
   if (loadingDoneTimeout) { clearTimeout(loadingDoneTimeout); loadingDoneTimeout = null }
   if (loadingGreetingInterval) { clearInterval(loadingGreetingInterval); loadingGreetingInterval = null }
+  if (loadingGreetingTimeout) { clearTimeout(loadingGreetingTimeout); loadingGreetingTimeout = null }
 }
 
 const runPageLoader = () => {
@@ -99,12 +108,19 @@ const runPageLoader = () => {
     return
   }
 
-  shuffledGreetings.value = shuffleGreetingOrder(greetings)
+  shuffledGreetings.value = greetings
   activeGreetingIndex.value = 0
 
-  loadingGreetingInterval = setInterval(() => {
-    activeGreetingIndex.value = (activeGreetingIndex.value + 1) % shuffledGreetings.value.length
-  }, 140)
+  loadingGreetingTimeout = setTimeout(() => {
+    // Array guarantees 'Hello' is at index 0
+    shuffledGreetings.value = shuffleGreetingOrder(greetings)
+    // Instantly move to index 1 so we don't hold 'Hello' for +140ms extra
+    activeGreetingIndex.value = 1
+    
+    loadingGreetingInterval = setInterval(() => {
+      activeGreetingIndex.value = (activeGreetingIndex.value + 1) % shuffledGreetings.value.length
+    }, 140)
+  }, 500)
 
   loadingProgressInterval = setInterval(() => {
     if (loadingProgressPercentage.value >= 92) return
@@ -132,6 +148,16 @@ const toggleLanguage = () => {
 }
 
 onMounted(() => {
+  if (typeof document !== 'undefined' && document.fonts) {
+    document.fonts.ready.then(() => {
+      isFontLoaded.value = true
+    })
+    // Safe fallback in case fonts API acts up
+    setTimeout(() => { isFontLoaded.value = true }, 800)
+  } else {
+    isFontLoaded.value = true
+  }
+
   // Initialize Lenis for smooth premium scroll
   const lenis = new Lenis({
     duration: 1.2,
@@ -210,9 +236,9 @@ onUnmounted(() => {
       <div v-if="isPageLoading" class="preloader fixed inset-0 z-[100] flex items-center justify-center">
         <div class="w-[min(440px,84vw)]">
           <p class="text-[0.65rem] tracking-[0.26em] uppercase text-white/35">Farid Eka Aprilian</p>
-          <div class="mt-4 h-[72px] md:h-[88px] flex items-center relative overflow-hidden">
+          <div class="mt-4 h-[72px] md:h-[88px] flex items-center relative overflow-hidden transition-opacity duration-300" :style="{ opacity: isFontLoaded ? 1 : 0 }">
             <transition name="hello-crossfade">
-              <p :key="`hello-${activeGreetingIndex}`" class="hello-loading-word absolute inset-y-0 flex items-center">{{ getActiveGreeting() }}</p>
+              <p :key="`hello-${activeGreetingIndex}`" class="hello-loading-word absolute inset-y-0 flex items-center whitespace-nowrap">{{ getActiveGreeting() }}</p>
             </transition>
           </div>
           <div class="mt-4 preloader-bar">
