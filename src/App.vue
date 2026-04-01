@@ -153,8 +153,15 @@ const runPageLoader = () => {
   if (hasSeenLoader) {
     isPageLoading.value = false
     loadingProgressPercentage.value = 100
-    // Observers run immediately since no preloader blocking
-    initializeRevealObservers()
+    // On refresh/return visit: force everything visible immediately.
+    // Browser scroll restoration races with IntersectionObserver, so
+    // relying on observers here causes invisible sections mid-page.
+    document.querySelectorAll('[data-scroll-section]').forEach((sectionElement) => {
+      sectionElement.classList.add('is-inview')
+    })
+    document.querySelectorAll('[data-reveal]').forEach((revealElement) => {
+      revealElement.classList.add('is-visible')
+    })
     return
   }
 
