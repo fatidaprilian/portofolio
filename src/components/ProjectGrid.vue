@@ -116,10 +116,10 @@ const getPreviewTheme = (accentLabel) => previewThemeByAccent[accentLabel] ?? pr
 
           <div class="lg:col-span-7 xl:col-span-8 space-y-7">
             <div>
-              <div class="flex items-start gap-3 md:gap-4 mb-3 md:mb-4">
-                <span class="font-display text-5xl text-[#c0a08a] leading-none">01</span>
-                <span class="inline-block text-[0.55rem] md:text-[0.6rem] tracking-[0.2em] uppercase border border-[#b98a69] bg-[#f5e4d1] text-[#6f4933] rounded-full px-2.5 py-1 mt-1">{{ getActiveCopy().featuredLabel }}</span>
-                <span class="text-[0.65rem] md:text-xs text-muted mt-1.5">{{ getFeaturedProject().year }}</span>
+              <div class="flex flex-wrap items-center gap-x-3 gap-y-1 md:gap-4 mb-3 md:mb-4">
+                <span class="font-display text-4xl sm:text-5xl text-[#c0a08a] leading-none">01</span>
+                <span class="inline-block text-[0.52rem] sm:text-[0.55rem] md:text-[0.6rem] tracking-[0.2em] uppercase border border-[#b98a69] bg-[#f5e4d1] text-[#6f4933] rounded-full px-2.5 py-1">{{ getActiveCopy().featuredLabel }}</span>
+                <span class="text-[0.62rem] sm:text-[0.65rem] md:text-xs text-muted">{{ getFeaturedProject().year }}</span>
               </div>
               <h3 class="font-display text-3xl sm:text-4xl md:text-6xl lg:text-7xl text-text tracking-wide leading-[0.9] break-words group-hover:text-[#5a3e2f] transition-colors duration-500">
                 {{ getFeaturedProject().title }}

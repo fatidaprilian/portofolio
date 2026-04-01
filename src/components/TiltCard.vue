@@ -1,11 +1,44 @@
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useMouseInElement } from '@vueuse/core'
 
 const target = ref(null)
 const { elementX, elementY, isOutside, elementHeight, elementWidth } = useMouseInElement(target)
+const isTiltEnabled = ref(true)
+
+let pointerMediaQuery
+let viewportMediaQuery
+
+const updateTiltAvailability = () => {
+  const hasCoarsePointer = pointerMediaQuery ? pointerMediaQuery.matches : false
+  const isSmallViewport = viewportMediaQuery ? viewportMediaQuery.matches : false
+  isTiltEnabled.value = !hasCoarsePointer && !isSmallViewport
+}
+
+onMounted(() => {
+  if (typeof window === 'undefined') return
+
+  pointerMediaQuery = window.matchMedia('(pointer: coarse)')
+  viewportMediaQuery = window.matchMedia('(max-width: 1023px)')
+  updateTiltAvailability()
+
+  pointerMediaQuery.addEventListener('change', updateTiltAvailability)
+  viewportMediaQuery.addEventListener('change', updateTiltAvailability)
+})
+
+onUnmounted(() => {
+  pointerMediaQuery?.removeEventListener('change', updateTiltAvailability)
+  viewportMediaQuery?.removeEventListener('change', updateTiltAvailability)
+})
 
 const cardStyle = computed(() => {
+  if (!isTiltEnabled.value) {
+    return {
+      transform: 'none',
+      transition: 'none'
+    }
+  }
+
   // Graceful degradation when dimensions are 0 (e.g., initial render)
   if (isOutside.value || elementHeight.value === 0 || elementWidth.value === 0) {
     return {
