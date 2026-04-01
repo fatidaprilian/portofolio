@@ -29,7 +29,7 @@ export default {
         }
       },
       fontFamily: {
-        sans: ['Inter', 'sans-serif'],
+        sans: ['Manrope', 'sans-serif'],
         display: ['Bebas Neue', 'sans-serif'],
         editorial: ['Fraunces', 'serif'],
       },

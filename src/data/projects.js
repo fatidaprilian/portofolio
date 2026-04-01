@@ -6,18 +6,36 @@ const projectSource = [
     accent: 'copper',
     link: 'https://github.com/fatidaprilian/bumbuserbaguna',
     role: {
-      id: 'Frontend Product',
-      en: 'Frontend Product'
+      id: 'Platform Product Engineering',
+      en: 'Platform Product Engineering'
     },
     summary: {
-      id: 'Produk web dengan pendekatan frontend modern untuk pengalaman user yang jelas, cepat, dan maintainable.',
-      en: 'A web product built with a modern frontend approach for clarity, speed, and long-term maintainability.'
+      id: 'Platform produktivitas akademik end-to-end untuk drafting, validasi struktur, sitasi, presentasi, dan cek orisinalitas dalam satu alur.',
+      en: 'An end-to-end academic productivity platform covering drafting, structure validation, citations, presentation generation, and originality checks in one flow.'
     },
     keyPoints: {
-      id: ['UI modular', 'Alur user terukur', 'Struktur komponen rapi'],
-      en: ['Modular UI', 'Measurable user flow', 'Clean component structure']
+      id: ['Tool suite bertingkat untuk SMP sampai kampus', 'Deteksi exact, near-duplicate, dan paraphrase similarity', 'Reliability dengan graceful degradation saat AI provider bermasalah'],
+      en: ['Tiered tool suite from middle school to campus', 'Exact, near-duplicate, and paraphrase similarity detection', 'Reliability with graceful degradation during AI provider issues']
     },
-    tags: ['TypeScript', 'Frontend', 'Product']
+    productContext: {
+      id: 'Bumbuserbaguna dirancang sebagai modular monolith dengan batas modul jelas untuk menjaga kecepatan iterasi, akurasi analisis, dan privasi dokumen siswa.',
+      en: 'Bumbuserbaguna is designed as a modular monolith with clear module boundaries to preserve delivery speed, analysis accuracy, and student document privacy.'
+    },
+    impactMetrics: {
+      id: ['Report 10 halaman < 2 menit', 'Draft presentasi < 3 menit', 'Target false-positive dispute < 5%'],
+      en: ['10-page report in < 2 minutes', 'Presentation draft in < 3 minutes', 'False-positive dispute target < 5%']
+    },
+    preview: {
+      id: {
+        eyebrow: 'Academic Platform Snapshot',
+        headline: 'One-stop academic assistant dari drafting sampai originality audit.'
+      },
+      en: {
+        eyebrow: 'Academic Platform Snapshot',
+        headline: 'A one-stop academic assistant from drafting to originality audits.'
+      }
+    },
+    tags: ['TypeScript', 'Modular Monolith', 'AI Gateway', 'Education']
   },
   {
     title: 'Agentic-Senior-Core',
@@ -36,6 +54,16 @@ const projectSource = [
     keyPoints: {
       id: ['Agent workflow', 'Engineering guardrails', 'Reusable setup'],
       en: ['Agent workflow', 'Engineering guardrails', 'Reusable setup']
+    },
+    preview: {
+      id: {
+        eyebrow: 'Workflow Snapshot',
+        headline: 'Toolkit agentic untuk engineering flow yang konsisten.'
+      },
+      en: {
+        eyebrow: 'Workflow Snapshot',
+        headline: 'An agentic toolkit for consistent engineering workflows.'
+      }
     },
     tags: ['JavaScript', 'Automation', 'Developer Tools']
   },
@@ -57,6 +85,16 @@ const projectSource = [
       id: ['Catalog UX', 'Checkout flow', 'Component architecture'],
       en: ['Catalog UX', 'Checkout flow', 'Component architecture']
     },
+    preview: {
+      id: {
+        eyebrow: 'Storefront Snapshot',
+        headline: 'Flow katalog ke checkout dengan ritme interaksi yang rapi.'
+      },
+      en: {
+        eyebrow: 'Storefront Snapshot',
+        headline: 'Catalog-to-checkout flow with a cleaner interaction rhythm.'
+      }
+    },
     tags: ['TypeScript', 'Vue', 'E-commerce']
   },
   {
@@ -76,6 +114,16 @@ const projectSource = [
     keyPoints: {
       id: ['Domain modeling', 'Service layer', 'Data reliability'],
       en: ['Domain modeling', 'Service layer', 'Data reliability']
+    },
+    preview: {
+      id: {
+        eyebrow: 'Platform Snapshot',
+        headline: 'Boundary service yang rapi untuk lifecycle kredensial digital.'
+      },
+      en: {
+        eyebrow: 'Platform Snapshot',
+        headline: 'Clear service boundaries for digital credential lifecycle.'
+      }
     },
     tags: ['TypeScript', 'Backend', 'Platform']
   },
@@ -98,6 +146,16 @@ const projectSource = [
       id: ['Automation flow', 'Fast iteration', 'Script reliability'],
       en: ['Automation flow', 'Fast iteration', 'Script reliability']
     },
+    preview: {
+      id: {
+        eyebrow: 'Experiment Snapshot',
+        headline: 'Eksperimen automasi yang cepat tapi tetap terukur.'
+      },
+      en: {
+        eyebrow: 'Experiment Snapshot',
+        headline: 'Fast automation experiments with measurable execution.'
+      }
+    },
     tags: ['TypeScript', 'Automation', 'Experiment']
   }
 ]
@@ -114,6 +172,9 @@ export const getProjectsByLanguage = (language = 'id') => {
     tags: projectItem.tags,
     role: projectItem.role[supportedLanguage],
     summary: projectItem.summary[supportedLanguage],
-    keyPoints: projectItem.keyPoints[supportedLanguage]
+    keyPoints: projectItem.keyPoints[supportedLanguage],
+    preview: projectItem.preview[supportedLanguage],
+    productContext: projectItem.productContext?.[supportedLanguage] ?? null,
+    impactMetrics: projectItem.impactMetrics?.[supportedLanguage] ?? []
   }))
 }

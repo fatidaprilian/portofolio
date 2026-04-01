@@ -100,7 +100,7 @@ const getActiveCopy = () => copyByLanguage[props.language] ?? copyByLanguage.id
     <div class="section-shell">
 
       <!-- Header -->
-      <div class="mb-14 md:mb-16" data-reveal>
+      <div class="mb-14 md:mb-16" data-reveal-fade>
         <p
           class="text-[0.6rem] md:text-xs uppercase tracking-[0.26em] mb-2 md:mb-3"
           :class="dark ? 'text-[rgba(240,235,228,0.42)]' : 'text-muted'"
@@ -125,7 +125,7 @@ const getActiveCopy = () => copyByLanguage[props.language] ?? copyByLanguage.id
           :key="item.step"
           class="p-6 md:p-8"
           :class="dark ? 'bg-[#0f0d0b]' : 'bg-background/90'"
-          data-reveal
+          data-reveal-fade
           :style="{ '--reveal-delay': `${index * 80}ms` }"
         >
           <p
@@ -148,7 +148,7 @@ const getActiveCopy = () => copyByLanguage[props.language] ?? copyByLanguage.id
           :class="dark
             ? 'bg-white/[0.04] border-white/[0.07]'
             : 'panel'"
-          data-reveal
+          data-reveal-fade
           :style="{ '--reveal-delay': `${index * 80}ms` }"
         >
           <p

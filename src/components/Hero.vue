@@ -41,6 +41,19 @@ const copyByLanguage = {
   }
 }
 
+const heroNameLines = [
+  {
+    text: 'FARID EKA',
+    toneClassName: 'hero-name-line-primary',
+    delayBaseMs: 40
+  },
+  {
+    text: 'APRILIAN',
+    toneClassName: 'hero-name-line-muted',
+    delayBaseMs: 220
+  }
+]
+
 const getActiveCopy = () => copyByLanguage[props.language] ?? copyByLanguage.id
 
 const scrollY = ref(0)
@@ -89,9 +102,20 @@ onUnmounted(() => {
 
       <!-- Left: name pushed to bottom -->
       <div class="flex-1 flex flex-col justify-end pb-2 lg:pb-6" :style="nameParallaxStyle" data-reveal-fade>
-        <h1 class="leading-none">
-          <span class="hero-display-name block">FARID EKA</span>
-          <span class="hero-display-name block" style="color: rgba(240,235,228,0.58);">APRILIAN</span>
+        <h1 class="leading-none" aria-label="Farid Eka Aprilian">
+          <span
+            v-for="nameLine in heroNameLines"
+            :key="nameLine.text"
+            class="hero-display-name block"
+            :class="nameLine.toneClassName"
+          >
+            <span
+              v-for="(characterLabel, characterIndex) in nameLine.text.split('')"
+              :key="`${nameLine.text}-${characterIndex}`"
+              class="hero-letter-reveal"
+              :style="{ '--hero-letter-delay': `${nameLine.delayBaseMs + characterIndex * 32}ms` }"
+            >{{ characterLabel === ' ' ? '\u00A0' : characterLabel }}</span>
+          </span>
         </h1>
       </div>
 

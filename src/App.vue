@@ -312,7 +312,7 @@ onUnmounted(() => {
       <button
         type="button"
         @click="toggleLanguage"
-        class="text-[0.62rem] tracking-[0.18em] uppercase font-semibold px-3 py-1.5 rounded-lg border border-white/[0.14] bg-black/55 text-white/55 hover:text-white/85 hover:border-white/[0.25] transition backdrop-blur-sm"
+        class="text-[0.62rem] tracking-[0.18em] uppercase font-semibold min-h-[44px] px-3.5 py-2 rounded-lg border border-white/[0.14] bg-black/55 text-white/55 hover:text-white/85 hover:border-white/[0.25] transition backdrop-blur-sm"
         :aria-label="`Switch to ${currentLanguage === 'id' ? 'English' : 'Bahasa Indonesia'}`"
       >
         {{ currentLanguage === 'id' ? 'EN' : 'ID' }}
