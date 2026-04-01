@@ -102,11 +102,11 @@ const getActiveCopy = () => copyByLanguage[props.language] ?? copyByLanguage.id
       <!-- Header -->
       <div class="mb-14 md:mb-16" data-reveal>
         <p
-          class="text-xs uppercase tracking-[0.24em]"
+          class="text-[0.6rem] md:text-xs uppercase tracking-[0.26em] mb-2 md:mb-3"
           :class="dark ? 'text-[rgba(240,235,228,0.42)]' : 'text-muted'"
         >{{ getActiveCopy().sectionLabel }}</p>
         <h2
-          class="mt-4 font-display text-5xl md:text-6xl lg:text-7xl leading-none tracking-wide whitespace-pre-line"
+          class="font-display text-5xl md:text-6xl lg:text-7xl leading-none tracking-wide whitespace-pre-line"
           :class="dark ? 'text-[#f0ebe4]' : 'text-text'"
         >
           {{ getActiveCopy().sectionTitle }}
@@ -119,13 +119,14 @@ const getActiveCopy = () => copyByLanguage[props.language] ?? copyByLanguage.id
         :class="dark
           ? 'bg-white/[0.06] border border-white/[0.07]'
           : 'bg-[#d7c2a8]/40 border border-[#d7c2a8]/40'"
-        data-reveal
       >
         <div
           v-for="(item, index) in getActiveCopy().philosophyItems"
           :key="item.step"
           class="p-6 md:p-8"
           :class="dark ? 'bg-[#0f0d0b]' : 'bg-background/90'"
+          data-reveal
+          :style="{ '--reveal-delay': `${index * 80}ms` }"
         >
           <p
             class="font-display text-4xl md:text-5xl tracking-wide mb-4"

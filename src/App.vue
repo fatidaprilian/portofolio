@@ -191,7 +191,7 @@ onMounted(() => {
         }
       })
     },
-    { threshold: 0.06, rootMargin: '0px 0px -4% 0px' }
+    { threshold: 0.01, rootMargin: '50px 0px 10% 0px' }
   )
   revealElements.forEach((elementItem) => revealObserver.observe(elementItem))
 
@@ -205,7 +205,7 @@ onMounted(() => {
         }
       })
     },
-    { threshold: 0.05, rootMargin: '-2% 0px -4% 0px' }
+    { threshold: 0.01, rootMargin: '50px 0px 15% 0px' }
   )
   sectionElements.forEach((sectionElement) => sectionScrollObserver.observe(sectionElement))
 })
