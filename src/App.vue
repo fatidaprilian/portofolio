@@ -84,9 +84,17 @@ let loadingProgressInterval
 let loadingDoneTimeout
 let loadingGreetingInterval
 let loadingGreetingTimeout
+let revealSafetyTimeout
+
+let isAppScrollScheduled = false
 
 const updateScrollUiState = () => {
-  isScrollTopVisible.value = window.scrollY > 340
+  if (isAppScrollScheduled) return
+  isAppScrollScheduled = true
+  requestAnimationFrame(() => {
+    isScrollTopVisible.value = window.scrollY > 340
+    isAppScrollScheduled = false
+  })
 }
 
 const scrollToTop = () => {
@@ -100,11 +108,53 @@ const clearLoadingTimers = () => {
   if (loadingGreetingTimeout) { clearTimeout(loadingGreetingTimeout); loadingGreetingTimeout = null }
 }
 
+const initializeRevealObservers = () => {
+  const revealElements = document.querySelectorAll('[data-reveal]')
+  revealObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible')
+          revealObserver.unobserve(entry.target)
+        }
+      })
+    },
+    { threshold: 0.01, rootMargin: '80px 0px 12% 0px' }
+  )
+  revealElements.forEach((elementItem) => revealObserver.observe(elementItem))
+
+  const sectionElements = document.querySelectorAll('[data-scroll-section]')
+  sectionScrollObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-inview')
+          sectionScrollObserver.unobserve(entry.target)
+        }
+      })
+    },
+    { threshold: 0.01, rootMargin: '80px 0px 20% 0px' }
+  )
+  sectionElements.forEach((sectionElement) => sectionScrollObserver.observe(sectionElement))
+
+  // Safety net: force all sections visible after 4s to prevent invisible content
+  revealSafetyTimeout = setTimeout(() => {
+    document.querySelectorAll('[data-scroll-section]:not(.is-inview)').forEach((sectionElement) => {
+      sectionElement.classList.add('is-inview')
+    })
+    document.querySelectorAll('[data-reveal]:not(.is-visible)').forEach((revealElement) => {
+      revealElement.classList.add('is-visible')
+    })
+  }, 4000)
+}
+
 const runPageLoader = () => {
   const hasSeenLoader = sessionStorage.getItem('portfolio-loader-seen')
   if (hasSeenLoader) {
     isPageLoading.value = false
     loadingProgressPercentage.value = 100
+    // Observers run immediately since no preloader blocking
+    initializeRevealObservers()
     return
   }
 
@@ -134,6 +184,8 @@ const runPageLoader = () => {
     setTimeout(() => {
       isPageLoading.value = false
       clearLoadingTimers()
+      // Initialize observers after preloader fully dismissed
+      initializeRevealObservers()
     }, 200)
   }, 1500)
 }
@@ -180,34 +232,6 @@ onMounted(() => {
   updateScrollUiState()
   window.addEventListener('scroll', updateScrollUiState)
   window.addEventListener('resize', updateScrollUiState)
-
-  const revealElements = document.querySelectorAll('[data-reveal]')
-  revealObserver = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('is-visible')
-          revealObserver.unobserve(entry.target)
-        }
-      })
-    },
-    { threshold: 0.01, rootMargin: '50px 0px 10% 0px' }
-  )
-  revealElements.forEach((elementItem) => revealObserver.observe(elementItem))
-
-  const sectionElements = document.querySelectorAll('[data-scroll-section]')
-  sectionScrollObserver = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('is-inview')
-          sectionScrollObserver.unobserve(entry.target)
-        }
-      })
-    },
-    { threshold: 0.01, rootMargin: '50px 0px 15% 0px' }
-  )
-  sectionElements.forEach((sectionElement) => sectionScrollObserver.observe(sectionElement))
 })
 
 onUnmounted(() => {
@@ -216,6 +240,7 @@ onUnmounted(() => {
   window.removeEventListener('resize', updateScrollUiState)
   if (revealObserver) revealObserver.disconnect()
   if (sectionScrollObserver) sectionScrollObserver.disconnect()
+  if (revealSafetyTimeout) clearTimeout(revealSafetyTimeout)
 })
 </script>
 

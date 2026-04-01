@@ -85,8 +85,15 @@ const syncActivePillPosition = () => {
   }
 }
 
+let isDockScrollScheduled = false
+
 const updateDockFocusState = () => {
-  isDockFocused.value = window.scrollY > 24
+  if (isDockScrollScheduled) return
+  isDockScrollScheduled = true
+  requestAnimationFrame(() => {
+    isDockFocused.value = window.scrollY > 24
+    isDockScrollScheduled = false
+  })
 }
 
 const scrollToSection = (sectionId) => {

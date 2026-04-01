@@ -4,6 +4,7 @@ const careerProfileSource = {
     heroTitle: 'Perjalanan profesional yang dibangun lewat produk nyata.',
     heroSummary:
       'Mahasiswa Teknologi Informasi sekaligus Full-stack Web Developer dengan fokus pada web engineering, AI architecture, dan kualitas delivery. Nyaman bekerja dengan instruksi teknis berbahasa Inggris serta kolaborasi lintas tim.',
+    quickFactsLabel: 'Fakta Singkat',
     quickFacts: [
       'S1 Teknologi Informasi, BSI (Semester 6)',
       'Freelance Web Developer (2025)',
@@ -93,6 +94,7 @@ const careerProfileSource = {
     heroTitle: 'A professional journey built through real product delivery.',
     heroSummary:
       'Information Technology undergraduate and Full-stack Web Developer focused on web engineering, AI architecture, and quality delivery. Comfortable with technical English instructions and cross-team collaboration.',
+    quickFactsLabel: 'Quick Facts',
     quickFacts: [
       'Information Technology Undergraduate, BSI (6th Semester)',
       'Freelance Web Developer (2025)',

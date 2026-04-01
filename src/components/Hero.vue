@@ -44,10 +44,20 @@ const copyByLanguage = {
 const getActiveCopy = () => copyByLanguage[props.language] ?? copyByLanguage.id
 
 const scrollY = ref(0)
-const updateScrollY = () => { scrollY.value = window.scrollY }
+let isScrollScheduled = false
+
+const updateScrollY = () => {
+  if (isScrollScheduled) return
+  isScrollScheduled = true
+  requestAnimationFrame(() => {
+    scrollY.value = window.scrollY
+    isScrollScheduled = false
+  })
+}
 
 const nameParallaxStyle = computed(() => ({
-  transform: `translateY(${scrollY.value * 0.06}px)`
+  transform: `translateY(${scrollY.value * 0.06}px)`,
+  willChange: 'transform'
 }))
 
 onMounted(() => {

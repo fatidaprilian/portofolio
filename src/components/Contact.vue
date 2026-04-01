@@ -54,16 +54,25 @@ const copyByLanguage = {
 const getActiveCopy = () => copyByLanguage[props.language] ?? copyByLanguage.id
 
 const validate = () => {
-  errors.value = {}
-  const c = getActiveCopy()
-  if (!form.value.name) errors.value.name = c.nameRequired
+  const activeCopy = getActiveCopy()
+  const validationErrors = {}
+
+  if (!form.value.name) validationErrors.name = activeCopy.nameRequired
   if (!form.value.email) {
-    errors.value.email = c.emailRequired
+    validationErrors.email = activeCopy.emailRequired
   } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.value.email)) {
-    errors.value.email = c.emailInvalid
+    validationErrors.email = activeCopy.emailInvalid
   }
-  if (!form.value.message) errors.value.message = c.messageRequired
-  return Object.keys(errors.value).length === 0
+  if (!form.value.message) validationErrors.message = activeCopy.messageRequired
+
+  errors.value = validationErrors
+  return Object.keys(validationErrors).length === 0
+}
+
+const resetFormState = () => {
+  form.value = { name: '', email: '', message: '' }
+  isSuccess.value = true
+  setTimeout(() => { isSuccess.value = false }, 5000)
 }
 
 const submitForm = async () => {
@@ -73,13 +82,11 @@ const submitForm = async () => {
   
   const accessKey = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY
   
-  if (!accessKey) {
-    // Fallback bypass mode for development if key isn't set
+  if (!accessKey && import.meta.env.DEV) {
+    // Development-only bypass when access key is not configured
     await new Promise(resolve => setTimeout(resolve, 1500))
     isSubmitting.value = false
-    isSuccess.value = true
-    form.value = { name: '', email: '', message: '' }
-    setTimeout(() => { isSuccess.value = false }, 5000)
+    resetFormState()
     return
   }
 
@@ -96,15 +103,13 @@ const submitForm = async () => {
       })
     })
     
-    const json = await response.json()
+    const responseBody = await response.json()
     if (response.status === 200) {
-      isSuccess.value = true
-      form.value = { name: '', email: '', message: '' }
-      setTimeout(() => { isSuccess.value = false }, 5000)
+      resetFormState()
     } else {
-      serverError.value = json.message || 'Error occurred while sending.'
+      serverError.value = responseBody.message || 'Error occurred while sending.'
     }
-  } catch (error) {
+  } catch (networkError) {
     serverError.value = 'Network error. Please try again.'
   } finally {
     isSubmitting.value = false
@@ -122,7 +127,7 @@ const submitForm = async () => {
         <div class="absolute -bottom-8 -left-4 font-display text-[22rem] leading-none text-[#d7beaa]/25 select-none pointer-events-none">01</div>
 
         <div class="relative z-10">
-          <p class="text-xs uppercase tracking-[0.26em] text-muted mb-8">{{ getActiveCopy().sectionLabel }}</p>
+          <p class="text-[0.6rem] md:text-xs uppercase tracking-[0.26em] text-muted mb-5">{{ getActiveCopy().sectionLabel }}</p>
           <!-- Giant display text -->
           <div class="mb-0">
             <p class="font-display text-[clamp(4.5rem,12vw,9rem)] text-text leading-[0.88] tracking-wide">{{ getActiveCopy().bigLine1 }}</p>

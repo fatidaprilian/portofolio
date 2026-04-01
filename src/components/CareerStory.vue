@@ -17,8 +17,8 @@ const getProfile = () => getCareerProfileByLanguage(props.language)
 
       <!-- Section header -->
       <div class="mb-12 md:mb-16" data-reveal>
-        <p class="text-xs uppercase tracking-[0.24em] text-muted">{{ getProfile().heroLabel }}</p>
-        <h2 class="mt-3 font-display text-5xl md:text-6xl lg:text-7xl text-text leading-none tracking-wide">
+        <p class="text-[0.6rem] md:text-xs uppercase tracking-[0.26em] text-muted mb-2 md:mb-3">{{ getProfile().heroLabel }}</p>
+        <h2 class="font-display text-5xl md:text-6xl lg:text-7xl text-text leading-none tracking-wide">
           {{ getProfile().heroTitle }}
         </h2>
         <p class="mt-5 text-[#5b4639] leading-relaxed max-w-2xl">
@@ -33,7 +33,7 @@ const getProfile = () => getCareerProfileByLanguage(props.language)
         <aside class="lg:col-span-4 space-y-5 lg:sticky lg:top-24" data-reveal>
           <!-- Quick facts -->
           <div class="panel rounded-2xl p-5 md:p-6 space-y-3">
-            <p class="text-xs uppercase tracking-[0.2em] text-muted">Quick Facts</p>
+            <p class="text-xs uppercase tracking-[0.2em] text-muted">{{ getProfile().quickFactsLabel }}</p>
             <ul class="space-y-2 mt-3">
               <li
                 v-for="factItem in getProfile().quickFacts"

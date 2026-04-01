@@ -10,12 +10,14 @@ const renderedCursor = {
   y: { previous: 0, current: 0, amt: 0.15 }
 }
 
-let requestRef = null
+let animationFrameId = null
 const isHovering = ref(false)
 
-const onMouseMove = (ev) => {
-  mouse.x = ev.clientX
-  mouse.y = ev.clientY
+const HOVER_SELECTORS = 'a, button, input, textarea, [data-cursor="hover"]'
+
+const onMouseMove = (event) => {
+  mouse.x = event.clientX
+  mouse.y = event.clientY
 }
 
 const render = () => {
@@ -33,58 +35,42 @@ const render = () => {
     cursorInnerRef.value.style.transform = `translate3d(${mouse.x}px, ${mouse.y}px, 0)`
   }
 
-  requestRef = requestAnimationFrame(render)
+  animationFrameId = requestAnimationFrame(render)
 }
 
-const addHoverEvents = () => {
-  const hoverElements = document.querySelectorAll('a, button, input, textarea, [data-cursor="hover"]')
-  hoverElements.forEach((el) => {
-    el.addEventListener('mouseenter', () => { isHovering.value = true })
-    el.addEventListener('mouseleave', () => { isHovering.value = false })
-  })
+// Event delegation: single listener on body instead of MutationObserver + querySelectorAll
+const onPointerOver = (event) => {
+  if (event.target.closest(HOVER_SELECTORS)) {
+    isHovering.value = true
+  }
 }
 
-let mutationObserver = null
+const onPointerOut = (event) => {
+  if (event.target.closest(HOVER_SELECTORS)) {
+    isHovering.value = false
+  }
+}
 
 onMounted(() => {
   if (typeof window === 'undefined') return
 
-  // Initialize mouse position to center
   mouse.x = window.innerWidth / 2
   mouse.y = window.innerHeight / 2
   renderedCursor.x.previous = mouse.x
   renderedCursor.y.previous = mouse.y
 
-  window.addEventListener('mousemove', onMouseMove)
-  requestRef = requestAnimationFrame(render)
-
-  // Wait a bit to let DOM render completely
-  setTimeout(() => {
-    addHoverEvents()
-  }, 1000)
-
-  // Watch for DOM changes to re-bind hover events (e.g. navigation)
-  mutationObserver = new MutationObserver((mutations) => {
-    let shouldUpdate = false
-    for (const m of mutations) {
-      if (m.addedNodes.length > 0) {
-        shouldUpdate = true
-        break
-      }
-    }
-    if (shouldUpdate) {
-      addHoverEvents()
-    }
-  })
-  
-  mutationObserver.observe(document.body, { childList: true, subtree: true })
+  window.addEventListener('mousemove', onMouseMove, { passive: true })
+  document.body.addEventListener('pointerover', onPointerOver, { passive: true })
+  document.body.addEventListener('pointerout', onPointerOut, { passive: true })
+  animationFrameId = requestAnimationFrame(render)
 })
 
 onUnmounted(() => {
   if (typeof window === 'undefined') return
   window.removeEventListener('mousemove', onMouseMove)
-  cancelAnimationFrame(requestRef)
-  if (mutationObserver) mutationObserver.disconnect()
+  document.body.removeEventListener('pointerover', onPointerOver)
+  document.body.removeEventListener('pointerout', onPointerOut)
+  cancelAnimationFrame(animationFrameId)
 })
 </script>
 
