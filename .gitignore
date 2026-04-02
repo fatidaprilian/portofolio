@@ -35,6 +35,9 @@ AGENTS.md
 .aider*
 .agent-override.md
 
+# Audit & utility scripts (not deployed)
+analyze-performance.js
+keyboard-audit-plan.js
 
 # Environment files
 .env
