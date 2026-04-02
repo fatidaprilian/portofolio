@@ -17,6 +17,18 @@ const projectSource = [
       id: ['Tool suite bertingkat untuk SMP sampai kampus', 'Deteksi exact, near-duplicate, dan paraphrase similarity', 'Reliability dengan graceful degradation saat AI provider bermasalah'],
       en: ['Tiered tool suite from middle school to campus', 'Exact, near-duplicate, and paraphrase similarity detection', 'Reliability with graceful degradation during AI provider issues']
     },
+    caseStudy: {
+      id: {
+        constraint: 'Akurasi analisis harus tinggi, tetapi biaya model tetap harus terkontrol saat trafik naik.',
+        decision: 'Membangun AI gateway berlapis dengan fallback provider dan aturan confidence per tipe tugas.',
+        outcome: 'Alur tetap stabil saat provider error dan proses dokumen panjang tetap responsif untuk pengguna.'
+      },
+      en: {
+        constraint: 'Analysis accuracy had to remain high while model cost stayed controlled during traffic spikes.',
+        decision: 'Implemented a layered AI gateway with provider fallback and confidence rules per task type.',
+        outcome: 'Flows stayed stable during provider outages and long-document tasks remained responsive.'
+      }
+    },
     productContext: {
       id: 'Bumbuserbaguna dirancang sebagai modular monolith dengan batas modul jelas untuk menjaga kecepatan iterasi, akurasi analisis, dan privasi dokumen siswa.',
       en: 'Bumbuserbaguna is designed as a modular monolith with clear module boundaries to preserve delivery speed, analysis accuracy, and student document privacy.'
@@ -55,6 +67,18 @@ const projectSource = [
       id: ['Agent workflow', 'Engineering guardrails', 'Reusable setup'],
       en: ['Agent workflow', 'Engineering guardrails', 'Reusable setup']
     },
+    caseStudy: {
+      id: {
+        constraint: 'Tim butuh output konsisten lintas sesi tanpa kualitas engineering yang berubah-ubah.',
+        decision: 'Menyusun rulebook terstruktur, profile stack, dan checklist review berbasis evidence.',
+        outcome: 'Alur kerja agent menjadi repeatable dan review lebih cepat karena standar sudah eksplisit.'
+      },
+      en: {
+        constraint: 'The team needed consistent outputs across sessions without drifting engineering quality.',
+        decision: 'Built a structured rulebook, stack profiles, and evidence-based review checklists.',
+        outcome: 'Agent workflows became repeatable and review cycles sped up with explicit standards.'
+      }
+    },
     preview: {
       id: {
         eyebrow: 'Workflow Snapshot',
@@ -85,6 +109,18 @@ const projectSource = [
       id: ['Catalog UX', 'Checkout flow', 'Component architecture'],
       en: ['Catalog UX', 'Checkout flow', 'Component architecture']
     },
+    caseStudy: {
+      id: {
+        constraint: 'Flow katalog dan checkout harus cepat meski komponen UI berkembang cepat.',
+        decision: 'Pisahkan smart-presentational layer dan susun komponen reusable berbasis state boundaries.',
+        outcome: 'Perubahan fitur baru lebih aman tanpa merusak ritme interaksi pengguna utama.'
+      },
+      en: {
+        constraint: 'Catalog and checkout flows had to stay fast while UI components evolved quickly.',
+        decision: 'Separated smart and presentational layers with reusable components across state boundaries.',
+        outcome: 'New feature changes became safer without breaking key interaction rhythm.'
+      }
+    },
     preview: {
       id: {
         eyebrow: 'Storefront Snapshot',
@@ -114,6 +150,18 @@ const projectSource = [
     keyPoints: {
       id: ['Domain modeling', 'Service layer', 'Data reliability'],
       en: ['Domain modeling', 'Service layer', 'Data reliability']
+    },
+    caseStudy: {
+      id: {
+        constraint: 'Lifecycle credential butuh integritas data tinggi dengan modul yang mudah di-maintain.',
+        decision: 'Menetapkan service boundary per domain dan validasi ketat di setiap input boundary.',
+        outcome: 'Perubahan domain lebih terisolasi dan stabilitas data lintas modul meningkat.'
+      },
+      en: {
+        constraint: 'Credential lifecycle required high data integrity with maintainable module boundaries.',
+        decision: 'Defined service boundaries per domain and applied strict validation at input boundaries.',
+        outcome: 'Domain changes became more isolated and cross-module data stability improved.'
+      }
     },
     preview: {
       id: {
@@ -146,6 +194,18 @@ const projectSource = [
       id: ['Automation flow', 'Fast iteration', 'Script reliability'],
       en: ['Automation flow', 'Fast iteration', 'Script reliability']
     },
+    caseStudy: {
+      id: {
+        constraint: 'Eksperimen harus cepat, tapi hasil tetap dapat diulang saat kondisi berubah.',
+        decision: 'Menyusun script dengan guard input dan langkah retry terukur untuk titik rawan gagal.',
+        outcome: 'Eksperimen lebih aman dipakai ulang pada skenario mirip tanpa setup ulang panjang.'
+      },
+      en: {
+        constraint: 'Experiments had to move fast while staying repeatable under changing conditions.',
+        decision: 'Added input guards and measured retry steps for failure-prone execution points.',
+        outcome: 'Experiments became safer to reuse in similar scenarios without lengthy setup.'
+      }
+    },
     preview: {
       id: {
         eyebrow: 'Experiment Snapshot',
@@ -175,6 +235,7 @@ export const getProjectsByLanguage = (language = 'id') => {
     keyPoints: projectItem.keyPoints[supportedLanguage],
     preview: projectItem.preview[supportedLanguage],
     productContext: projectItem.productContext?.[supportedLanguage] ?? null,
-    impactMetrics: projectItem.impactMetrics?.[supportedLanguage] ?? []
+    impactMetrics: projectItem.impactMetrics?.[supportedLanguage] ?? [],
+    caseStudy: projectItem.caseStudy?.[supportedLanguage] ?? null
   }))
 }

@@ -6,6 +6,7 @@ import MarqueeStats from './components/MarqueeStats.vue'
 import CapabilityMatrix from './components/CapabilityMatrix.vue'
 import CareerStory from './components/CareerStory.vue'
 import StudioApproach from './components/StudioApproach.vue'
+import ArchitectureSnapshot from './components/ArchitectureSnapshot.vue'
 import ProjectGrid from './components/ProjectGrid.vue'
 import Contact from './components/Contact.vue'
 import ClosingCtaStrip from './components/ClosingCtaStrip.vue'
@@ -85,6 +86,8 @@ let loadingDoneTimeout
 let loadingGreetingInterval
 let loadingGreetingTimeout
 let revealSafetyTimeout
+let lenisInstance = null
+let lenisAnimationFrameId = null
 
 let isAppScrollScheduled = false
 
@@ -217,18 +220,22 @@ onMounted(() => {
     isFontLoaded.value = true
   }
 
-  // Initialize Lenis for smooth premium scroll
-  const lenis = new Lenis({
-    duration: 1.2,
-    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-    smooth: true,
-  })
+  const shouldReduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  if (!shouldReduceMotion) {
+    // Initialize Lenis for smooth premium scroll
+    lenisInstance = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smooth: true,
+    })
 
-  function raf(time) {
-    lenis.raf(time)
-    requestAnimationFrame(raf)
+    const runLenisFrame = (time) => {
+      if (!lenisInstance) return
+      lenisInstance.raf(time)
+      lenisAnimationFrameId = requestAnimationFrame(runLenisFrame)
+    }
+    lenisAnimationFrameId = requestAnimationFrame(runLenisFrame)
   }
-  requestAnimationFrame(raf)
 
   const storedLanguage = localStorage.getItem('portfolio-language')
   if (storedLanguage === 'id' || storedLanguage === 'en') {
@@ -248,6 +255,11 @@ onUnmounted(() => {
   if (revealObserver) revealObserver.disconnect()
   if (sectionScrollObserver) sectionScrollObserver.disconnect()
   if (revealSafetyTimeout) clearTimeout(revealSafetyTimeout)
+  if (lenisAnimationFrameId) cancelAnimationFrame(lenisAnimationFrameId)
+  if (lenisInstance) {
+    lenisInstance.destroy()
+    lenisInstance = null
+  }
 })
 </script>
 
@@ -347,6 +359,9 @@ onUnmounted(() => {
       </div>
       <div data-scroll-section class="scroll-section section-dark">
         <StudioApproach :language="currentLanguage" :dark="true" />
+      </div>
+      <div data-scroll-section class="scroll-section">
+        <ArchitectureSnapshot :language="currentLanguage" />
       </div>
       <div data-scroll-section class="scroll-section">
         <ProjectGrid :language="currentLanguage" />

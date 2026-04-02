@@ -102,7 +102,8 @@ const scrollToSection = (sectionId) => {
     return
   }
 
-  sectionElement.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  const shouldReduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  sectionElement.scrollIntoView({ behavior: shouldReduceMotion ? 'auto' : 'smooth', block: 'start' })
   activeSectionId.value = sectionId
   const nextActiveIndex = navItems.value.findIndex((item) => item.id === sectionId)
   if (nextActiveIndex >= 0) {
@@ -161,6 +162,8 @@ watch(
           item.isPrimary ? 'bottom-dock-item-primary' : 'bottom-dock-item-neutral',
           activeSectionId === item.id ? 'bottom-dock-item-active' : ''
         ]"
+        :aria-label="`Go to ${item.label}`"
+        :aria-current="activeSectionId === item.id ? 'page' : undefined"
       >
         {{ item.label }}
       </button>

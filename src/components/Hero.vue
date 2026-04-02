@@ -16,6 +16,13 @@ const copyByLanguage = {
     location: 'Indonesia · GMT+7',
     availableFor: 'Terbuka untuk kolaborasi',
     summary: 'Membangun produk digital dengan struktur kokoh, berbasis pengguna, dan siap diskalakan untuk iterasi bisnis yang berkelanjutan.',
+    signatureStatement: 'Saya merancang produk agar tetap cepat dikembangkan saat kompleksitas bisnis naik.',
+    proofTitle: 'Bukti Engineering',
+    proofItems: [
+      'Arsitektur modular untuk iterasi aman',
+      'Validasi batas untuk menjaga kualitas input',
+      'Delivery fokus hasil, bukan sekadar output'
+    ],
     viewProjects: 'Lihat Proyek',
     contact: 'Diskusi',
     downloadCv: 'Unduh CV',
@@ -30,6 +37,13 @@ const copyByLanguage = {
     location: 'Indonesia · GMT+7',
     availableFor: 'Open to opportunities',
     summary: 'Building digital products with strong architecture, user focus, and sustainable business iteration.',
+    signatureStatement: 'I design products to stay fast to evolve even as business complexity increases.',
+    proofTitle: 'Engineering Proof',
+    proofItems: [
+      'Modular architecture for safer iteration',
+      'Boundary validation to protect input quality',
+      'Delivery focused on outcomes, not only output'
+    ],
     viewProjects: 'View Projects',
     contact: 'Discuss',
     downloadCv: 'Download CV',
@@ -139,6 +153,9 @@ onUnmounted(() => {
 
           <!-- Left: summary + CTAs -->
           <div class="space-y-4 max-w-lg">
+            <p class="hero-signature-line">
+              {{ getActiveCopy().signatureStatement }}
+            </p>
             <p class="text-[0.85rem] leading-relaxed text-white/60 w-[95%] md:w-full">
               {{ getActiveCopy().summary }}
             </p>
@@ -175,7 +192,20 @@ onUnmounted(() => {
           </div>
 
           <!-- Right: stats only, clear contrast -->
-          <div class="flex flex-wrap items-end gap-3">
+          <div class="flex flex-col items-start lg:items-end gap-3">
+            <div class="hero-proof-strip w-full lg:w-auto">
+              <p class="hero-proof-title">{{ getActiveCopy().proofTitle }}</p>
+              <div class="space-y-1.5">
+                <p
+                  v-for="proofItem in getActiveCopy().proofItems"
+                  :key="proofItem"
+                  class="hero-proof-item"
+                >
+                  {{ proofItem }}
+                </p>
+              </div>
+            </div>
+            <div class="flex flex-wrap items-end gap-3">
             <div
               v-for="stat in getActiveCopy().stats"
               :key="stat.label"
@@ -184,6 +214,7 @@ onUnmounted(() => {
               <p class="font-display text-2xl text-white tracking-wide leading-none">{{ stat.value }}</p>
               <p class="text-[0.6rem] tracking-[0.14em] uppercase text-white/60 mt-1">{{ stat.label }}</p>
             </div>
+          </div>
           </div>
         </div>
       </div>

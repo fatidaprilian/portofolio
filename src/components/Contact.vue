@@ -22,7 +22,7 @@ const copyByLanguage = {
     bigLine2: 'DISKUSI',
     tagline: 'Terbuka untuk freelance & kolaborasi strategis.',
     sectionLabel: 'Kontak',
-    sectionDescription: 'Ceritakan konteks bisnis, target, dan timeline agar diskusi lebih fokus.',
+    sectionDescription: 'Kirim konteks bisnis, target dampak, dan timeline agar saya bisa usulkan scope eksekusi yang realistis.',
     responseTime: 'Waktu respons: 24–48 jam',
     nameLabel: 'Nama', emailLabel: 'Email', briefLabel: 'Konteks Proyek',
     namePlaceholder: 'Nama Anda', emailPlaceholder: 'anda@email.com', briefPlaceholder: 'Scope, timeline, goals',
@@ -38,7 +38,7 @@ const copyByLanguage = {
     bigLine2: 'TALK',
     tagline: 'Open to freelance & strategic collaboration.',
     sectionLabel: 'Contact',
-    sectionDescription: 'Share your business context, goals, and timeline to keep the discussion focused.',
+    sectionDescription: 'Share your business context, impact targets, and timeline so I can propose a realistic execution scope.',
     responseTime: 'Typical response: 24–48 hours',
     nameLabel: 'Name', emailLabel: 'Email', briefLabel: 'Project brief',
     namePlaceholder: 'Your name', emailPlaceholder: 'your@email.com', briefPlaceholder: 'Scope, timeline, goals',
@@ -128,6 +128,7 @@ const submitForm = async () => {
 
         <div class="relative z-10">
           <p class="text-[0.6rem] md:text-xs uppercase tracking-[0.26em] text-muted mb-5">{{ getActiveCopy().sectionLabel }}</p>
+          <p class="max-w-sm text-sm text-[#6a5143] leading-relaxed mb-6">{{ getActiveCopy().sectionDescription }}</p>
           <!-- Giant display text -->
           <div class="mb-0">
             <p class="font-display text-[clamp(4.5rem,12vw,9rem)] text-text leading-[0.88] tracking-wide">{{ getActiveCopy().bigLine1 }}</p>

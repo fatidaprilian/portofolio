@@ -1,4 +1,5 @@
 <script setup>
+import { computed } from 'vue'
 import { getProjectsByLanguage } from '../data/projects'
 import { ArrowUpRight } from 'lucide-vue-next'
 import TiltCard from './TiltCard.vue'
@@ -19,7 +20,11 @@ const copyByLanguage = {
     tagsLabel: 'Teknologi',
     featuredLabel: 'Unggulan',
     contextLabel: 'Konteks Produk',
-    impactLabel: 'Target Dampak'
+    impactLabel: 'Target Dampak',
+    caseStudyLabel: 'Studi Kasus',
+    constraintLabel: 'Kendala',
+    decisionLabel: 'Keputusan',
+    outcomeLabel: 'Hasil'
   },
   en: {
     sectionLabel: '/ Selected Work',
@@ -29,7 +34,11 @@ const copyByLanguage = {
     tagsLabel: 'Stack',
     featuredLabel: 'Featured',
     contextLabel: 'Product Context',
-    impactLabel: 'Impact Targets'
+    impactLabel: 'Impact Targets',
+    caseStudyLabel: 'Case Study',
+    constraintLabel: 'Constraint',
+    decisionLabel: 'Decision',
+    outcomeLabel: 'Outcome'
   }
 }
 
@@ -37,6 +46,9 @@ const getActiveCopy = () => copyByLanguage[props.language] ?? copyByLanguage.id
 const getAllProjects = () => getProjectsByLanguage(props.language)
 const getFeaturedProject = () => getAllProjects().find((p) => p.type === 'featured')
 const getStandardProjects = () => getAllProjects().filter((p) => p.type !== 'featured')
+const activeCopy = computed(() => getActiveCopy())
+const featuredProject = computed(() => getFeaturedProject())
+const standardProjects = computed(() => getStandardProjects())
 
 const previewThemeByAccent = {
   copper: {
@@ -65,9 +77,9 @@ const getPreviewTheme = (accentLabel) => previewThemeByAccent[accentLabel] ?? pr
     <div class="section-shell pt-20 md:pt-28 pb-10 md:pb-12" data-reveal>
       <div class="flex items-end justify-between gap-4 md:gap-6 border-b border-[#d7c2a8]/60 pb-6">
         <div>
-          <p class="text-[0.6rem] md:text-xs uppercase tracking-[0.26em] text-muted mb-2 md:mb-3">{{ getActiveCopy().sectionLabel }}</p>
+          <p class="text-[0.6rem] md:text-xs uppercase tracking-[0.26em] text-muted mb-2 md:mb-3">{{ activeCopy.sectionLabel }}</p>
           <h2 class="font-display text-4xl sm:text-5xl md:text-8xl lg:text-[9rem] text-text leading-none tracking-wide">
-            {{ getActiveCopy().sectionTitle }}
+            {{ activeCopy.sectionTitle }}
           </h2>
         </div>
         <a
@@ -76,7 +88,7 @@ const getPreviewTheme = (accentLabel) => previewThemeByAccent[accentLabel] ?? pr
           rel="noreferrer"
           class="flex-shrink-0 inline-flex items-center gap-2 text-xs sm:text-sm font-medium text-muted hover:text-text transition underline-link pb-2"
         >
-          {{ getActiveCopy().browseAll }}
+          {{ activeCopy.browseAll }}
           <ArrowUpRight class="w-3.5 h-3.5" />
         </a>
       </div>
@@ -84,7 +96,7 @@ const getPreviewTheme = (accentLabel) => previewThemeByAccent[accentLabel] ?? pr
 
     <!-- Featured project — visual-first full-width card -->
     <div
-      v-if="getFeaturedProject()"
+      v-if="featuredProject"
       class="border-b border-[#d7c2a8]/60 group"
       data-reveal
     >
@@ -94,21 +106,21 @@ const getPreviewTheme = (accentLabel) => previewThemeByAccent[accentLabel] ?? pr
           <div class="lg:col-span-5 xl:col-span-4">
             <div
               class="relative overflow-hidden rounded-2xl border border-white/10 min-h-[220px] sm:min-h-[280px] md:min-h-[320px] p-4 sm:p-5 md:p-6 bg-gradient-to-br shadow-[0_24px_44px_-30px_rgba(40,22,12,0.85)]"
-              :class="getPreviewTheme(getFeaturedProject().accent).shellClassName"
+              :class="getPreviewTheme(featuredProject.accent).shellClassName"
             >
               <div class="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_24%_18%,rgba(255,255,255,0.42),transparent_38%),radial-gradient(circle_at_80%_78%,rgba(255,255,255,0.22),transparent_45%)]"></div>
               <div class="relative z-10 h-full flex flex-col justify-between">
-                <p class="text-[0.62rem] uppercase tracking-[0.18em] text-white/75">{{ getFeaturedProject().preview.eyebrow }}</p>
+                <p class="text-[0.62rem] uppercase tracking-[0.18em] text-white/75">{{ featuredProject.preview.eyebrow }}</p>
                 <div class="space-y-3">
-                  <p class="text-[#faeee4] font-semibold leading-relaxed text-xs sm:text-sm md:text-base max-w-[26ch]">{{ getFeaturedProject().preview.headline }}</p>
+                  <p class="text-[#faeee4] font-semibold leading-relaxed text-xs sm:text-sm md:text-base max-w-[26ch]">{{ featuredProject.preview.headline }}</p>
                   <div class="space-y-2.5">
-                    <span class="block h-1.5 rounded-full" :class="getPreviewTheme(getFeaturedProject().accent).lineClassName"></span>
-                    <span class="block h-1.5 rounded-full w-[78%]" :class="getPreviewTheme(getFeaturedProject().accent).lineClassName"></span>
-                    <span class="block h-1.5 rounded-full w-[52%]" :class="getPreviewTheme(getFeaturedProject().accent).lineClassName"></span>
+                    <span class="block h-1.5 rounded-full" :class="getPreviewTheme(featuredProject.accent).lineClassName"></span>
+                    <span class="block h-1.5 rounded-full w-[78%]" :class="getPreviewTheme(featuredProject.accent).lineClassName"></span>
+                    <span class="block h-1.5 rounded-full w-[52%]" :class="getPreviewTheme(featuredProject.accent).lineClassName"></span>
                   </div>
                 </div>
-                <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-[0.62rem] uppercase tracking-[0.14em] w-fit" :class="getPreviewTheme(getFeaturedProject().accent).chipClassName">
-                  {{ getFeaturedProject().role }}
+                <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-[0.62rem] uppercase tracking-[0.14em] w-fit" :class="getPreviewTheme(featuredProject.accent).chipClassName">
+                  {{ featuredProject.role }}
                 </div>
               </div>
             </div>
@@ -118,24 +130,41 @@ const getPreviewTheme = (accentLabel) => previewThemeByAccent[accentLabel] ?? pr
             <div>
               <div class="flex flex-wrap items-center gap-x-3 gap-y-1 md:gap-4 mb-3 md:mb-4">
                 <span class="font-display text-4xl sm:text-5xl text-[#c0a08a] leading-none">01</span>
-                <span class="inline-block text-[0.52rem] sm:text-[0.55rem] md:text-[0.6rem] tracking-[0.2em] uppercase border border-[#b98a69] bg-[#f5e4d1] text-[#6f4933] rounded-full px-2.5 py-1">{{ getActiveCopy().featuredLabel }}</span>
-                <span class="text-[0.62rem] sm:text-[0.65rem] md:text-xs text-muted">{{ getFeaturedProject().year }}</span>
+                <span class="inline-block text-[0.52rem] sm:text-[0.55rem] md:text-[0.6rem] tracking-[0.2em] uppercase border border-[#b98a69] bg-[#f5e4d1] text-[#6f4933] rounded-full px-2.5 py-1">{{ activeCopy.featuredLabel }}</span>
+                <span class="text-[0.62rem] sm:text-[0.65rem] md:text-xs text-muted">{{ featuredProject.year }}</span>
               </div>
               <h3 class="font-display text-3xl sm:text-4xl md:text-6xl lg:text-7xl text-text tracking-wide leading-[0.9] break-words group-hover:text-[#5a3e2f] transition-colors duration-500">
-                {{ getFeaturedProject().title }}
+                {{ featuredProject.title }}
               </h3>
-              <p class="mt-4 md:mt-5 text-[#5f4a3d] text-sm md:text-base leading-relaxed max-w-2xl">{{ getFeaturedProject().summary }}</p>
-              <div v-if="getFeaturedProject().productContext" class="mt-5 rounded-xl border border-[#d7c2a8]/70 bg-[#f8eddf]/72 p-4 md:p-5">
-                <p class="text-[0.62rem] uppercase tracking-[0.2em] text-muted mb-2">{{ getActiveCopy().contextLabel }}</p>
-                <p class="text-sm md:text-[0.95rem] text-[#553f32] leading-relaxed">{{ getFeaturedProject().productContext }}</p>
+              <p class="mt-4 md:mt-5 text-[#5f4a3d] text-sm md:text-base leading-relaxed max-w-2xl">{{ featuredProject.summary }}</p>
+              <div v-if="featuredProject.productContext" class="mt-5 rounded-xl border border-[#d7c2a8]/70 bg-[#f8eddf]/72 p-4 md:p-5">
+                <p class="text-[0.62rem] uppercase tracking-[0.2em] text-muted mb-2">{{ activeCopy.contextLabel }}</p>
+                <p class="text-sm md:text-[0.95rem] text-[#553f32] leading-relaxed">{{ featuredProject.productContext }}</p>
+              </div>
+              <div v-if="featuredProject.caseStudy" class="mt-5 rounded-xl border border-[#ceb094]/65 bg-[#faeee2]/85 p-4 md:p-5 space-y-3.5">
+                <p class="text-[0.62rem] uppercase tracking-[0.2em] text-muted">{{ activeCopy.caseStudyLabel }}</p>
+                <div class="space-y-2.5">
+                  <p class="text-sm md:text-[0.95rem] text-[#513b2f] leading-relaxed">
+                    <span class="font-semibold text-[#3f2d23]">{{ activeCopy.constraintLabel }}:</span>
+                    {{ featuredProject.caseStudy.constraint }}
+                  </p>
+                  <p class="text-sm md:text-[0.95rem] text-[#513b2f] leading-relaxed">
+                    <span class="font-semibold text-[#3f2d23]">{{ activeCopy.decisionLabel }}:</span>
+                    {{ featuredProject.caseStudy.decision }}
+                  </p>
+                  <p class="text-sm md:text-[0.95rem] text-[#513b2f] leading-relaxed">
+                    <span class="font-semibold text-[#3f2d23]">{{ activeCopy.outcomeLabel }}:</span>
+                    {{ featuredProject.caseStudy.outcome }}
+                  </p>
+                </div>
               </div>
             </div>
 
             <div class="rounded-2xl border border-[#d7c2a8]/65 bg-[#f4e4d2]/40 p-5 md:p-6">
-              <p class="text-xs uppercase tracking-[0.18em] text-muted mb-3">{{ getActiveCopy().tagsLabel }}</p>
+              <p class="text-xs uppercase tracking-[0.18em] text-muted mb-3">{{ activeCopy.tagsLabel }}</p>
               <div class="flex flex-wrap gap-2">
                 <span
-                  v-for="tag in getFeaturedProject().tags"
+                  v-for="tag in featuredProject.tags"
                   :key="tag"
                   class="rounded-lg border border-[#be9f84] px-3 py-1.5 text-xs font-medium text-[#553b2e] bg-[#f0ddc8]/70"
                 >
@@ -144,7 +173,7 @@ const getPreviewTheme = (accentLabel) => previewThemeByAccent[accentLabel] ?? pr
               </div>
               <div class="mt-6 space-y-2">
                 <div
-                  v-for="keyPoint in getFeaturedProject().keyPoints"
+                  v-for="keyPoint in featuredProject.keyPoints"
                   :key="keyPoint"
                   class="text-sm text-[#4e372c] flex items-start gap-2"
                 >
@@ -152,11 +181,11 @@ const getPreviewTheme = (accentLabel) => previewThemeByAccent[accentLabel] ?? pr
                   <span>{{ keyPoint }}</span>
                 </div>
               </div>
-              <div v-if="getFeaturedProject().impactMetrics.length" class="mt-6">
-                <p class="text-[0.62rem] uppercase tracking-[0.2em] text-muted mb-2.5">{{ getActiveCopy().impactLabel }}</p>
+              <div v-if="featuredProject.impactMetrics.length" class="mt-6">
+                <p class="text-[0.62rem] uppercase tracking-[0.2em] text-muted mb-2.5">{{ activeCopy.impactLabel }}</p>
                 <div class="flex flex-wrap gap-2">
                   <span
-                    v-for="metricItem in getFeaturedProject().impactMetrics"
+                    v-for="metricItem in featuredProject.impactMetrics"
                     :key="metricItem"
                     class="rounded-full border border-[#b99375]/65 bg-[#f7eadb] px-3 py-1.5 text-[0.68rem] font-semibold tracking-[0.02em] text-[#644537]"
                   >
@@ -165,12 +194,12 @@ const getPreviewTheme = (accentLabel) => previewThemeByAccent[accentLabel] ?? pr
                 </div>
               </div>
               <a
-                :href="getFeaturedProject().link"
+                :href="featuredProject.link"
                 target="_blank"
                 rel="noreferrer"
                 class="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-[#6f4930] hover:text-[#3f2310] transition border-b border-[#a56a43]/50 pb-0.5 hover:border-[#3f2310] underline-link"
               >
-                {{ getActiveCopy().openRepository }}
+                {{ activeCopy.openRepository }}
                 <ArrowUpRight class="w-4 h-4" />
               </a>
             </div>
@@ -184,7 +213,7 @@ const getPreviewTheme = (accentLabel) => previewThemeByAccent[accentLabel] ?? pr
     <div class="border-b border-[#d7c2a8]/60">
       <div class="section-shell">
         <div
-          v-for="(project, index) in getStandardProjects()"
+          v-for="(project, index) in standardProjects"
           :key="project.title"
           data-reveal
           :style="{ '--reveal-delay': `${index * 60}ms` }"
@@ -194,7 +223,7 @@ const getPreviewTheme = (accentLabel) => previewThemeByAccent[accentLabel] ?? pr
               :href="project.link"
               target="_blank"
               rel="noreferrer"
-              class="group flex items-start lg:items-center gap-4 lg:gap-6 py-7 md:py-8 border-b border-[#d7c2a8]/50 last:border-b-0 transition-all duration-500 hover:bg-[#f5e5d2]/50 -mx-5 md:-mx-8 lg:-mx-10 px-5 md:px-8 lg:px-10"
+              class="group flex items-start lg:items-center gap-4 lg:gap-6 py-7 md:py-8 border-b border-[#d7c2a8]/50 last:border-b-0 transition-colors duration-300 hover:bg-[#f5e5d2]/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#8f5d3f]/60 focus-visible:ring-offset-2 focus-visible:ring-offset-[#f5e9d8] -mx-5 md:-mx-8 lg:-mx-10 px-5 md:px-8 lg:px-10"
             >
           <div
             class="hidden sm:flex w-24 md:w-28 lg:w-32 min-h-16 md:min-h-20 rounded-xl border border-white/10 bg-gradient-to-br p-3 flex-col justify-between shadow-[0_16px_30px_-20px_rgba(30,17,12,0.8)]"
@@ -215,6 +244,10 @@ const getPreviewTheme = (accentLabel) => previewThemeByAccent[accentLabel] ?? pr
               {{ project.title }}
             </h3>
             <p class="text-xs md:text-sm text-muted mt-0.5 md:mt-1 truncate">{{ project.summary }}</p>
+            <p v-if="project.caseStudy" class="mt-2 text-[0.7rem] md:text-xs leading-relaxed text-[#624a3d] max-w-[42ch]">
+              <span class="font-semibold text-[#4f3629]">{{ activeCopy.decisionLabel }}:</span>
+              {{ project.caseStudy.decision }}
+            </p>
           </div>
 
           <!-- Tags — hidden on small, shown on md -->

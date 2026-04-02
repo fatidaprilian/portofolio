@@ -110,7 +110,7 @@ onUnmounted(() => {
   height: 30px;
   border: 1px solid rgba(206, 178, 150, 0.4);
   border-radius: 50%;
-  transition: width 0.3s ease-out, height 0.3s ease-out, top 0.3s ease-out, left 0.3s ease-out, background-color 0.3s ease-out, border-color 0.3s ease-out;
+  transition: width 0.22s ease-out, height 0.22s ease-out, top 0.22s ease-out, left 0.22s ease-out, background-color 0.22s ease-out, border-color 0.22s ease-out;
   will-change: transform;
 }
 
@@ -122,16 +122,16 @@ onUnmounted(() => {
   height: 6px;
   background-color: rgba(206, 178, 150, 0.9);
   border-radius: 50%;
-  transition: opacity 0.3s ease-out;
+  transition: opacity 0.22s ease-out;
   will-change: transform;
 }
 
 /* Hover States */
 .cursor-outer.is-hover {
-  width: 50px;
-  height: 50px;
-  top: -25px;
-  left: -25px;
+  width: 42px;
+  height: 42px;
+  top: -21px;
+  left: -21px;
   background-color: rgba(206, 178, 150, 0.1);
   border-color: rgba(206, 178, 150, 0.6);
   backdrop-filter: blur(1px);

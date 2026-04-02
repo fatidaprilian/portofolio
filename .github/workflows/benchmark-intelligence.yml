@@ -1,0 +1,50 @@
+name: Benchmark Intelligence
+
+on:
+  schedule:
+    - cron: '0 2 * * 1'
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  benchmark-intelligence:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Run benchmark detection report
+        run: |
+          node ./scripts/detection-benchmark.mjs > detection-benchmark-report.json
+          test -s detection-benchmark-report.json
+
+      - name: Run benchmark anti-regression gate
+        run: |
+          node ./scripts/benchmark-gate.mjs > benchmark-gate-report.json
+          test -s benchmark-gate-report.json
+
+      - name: Run benchmark intelligence report
+        run: |
+          node ./scripts/benchmark-intelligence.mjs > benchmark-intelligence-report.json
+          test -s benchmark-intelligence-report.json
+
+      - name: Upload benchmark artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: benchmark-intelligence-report
+          path: |
+            detection-benchmark-report.json
+            benchmark-gate-report.json
+            benchmark-intelligence-report.json

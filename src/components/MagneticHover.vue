@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useMouseInElement } from '@vueuse/core'
 
 const props = defineProps({
@@ -15,8 +15,41 @@ const props = defineProps({
 
 const target = ref(null)
 const { elementX, elementY, isOutside, elementHeight, elementWidth } = useMouseInElement(target)
+const isMagneticEnabled = ref(true)
+
+let coarsePointerMediaQuery
+let reducedMotionMediaQuery
+
+const updateMagneticAvailability = () => {
+  const hasCoarsePointer = coarsePointerMediaQuery ? coarsePointerMediaQuery.matches : false
+  const prefersReducedMotion = reducedMotionMediaQuery ? reducedMotionMediaQuery.matches : false
+  isMagneticEnabled.value = !hasCoarsePointer && !prefersReducedMotion
+}
+
+onMounted(() => {
+  if (typeof window === 'undefined') return
+
+  coarsePointerMediaQuery = window.matchMedia('(pointer: coarse)')
+  reducedMotionMediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
+  updateMagneticAvailability()
+
+  coarsePointerMediaQuery.addEventListener('change', updateMagneticAvailability)
+  reducedMotionMediaQuery.addEventListener('change', updateMagneticAvailability)
+})
+
+onUnmounted(() => {
+  coarsePointerMediaQuery?.removeEventListener('change', updateMagneticAvailability)
+  reducedMotionMediaQuery?.removeEventListener('change', updateMagneticAvailability)
+})
 
 const targetStyle = computed(() => {
+  if (!isMagneticEnabled.value) {
+    return {
+      transform: 'translate(0px, 0px)',
+      transition: 'none'
+    }
+  }
+
   if (isOutside.value || elementHeight.value === 0 || elementWidth.value === 0) {
     return {
       transform: 'translate(0px, 0px)',

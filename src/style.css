@@ -131,8 +131,8 @@
   /* ─── Reveal animations ─── */
   [data-reveal] {
     opacity: 0;
-    transform: translateY(22px);
-    transition: opacity 0.58s cubic-bezier(0.16, 1, 0.3, 1), transform 0.58s cubic-bezier(0.16, 1, 0.3, 1);
+    transform: translateY(16px);
+    transition: opacity 0.42s cubic-bezier(0.16, 1, 0.3, 1), transform 0.42s cubic-bezier(0.16, 1, 0.3, 1);
     transition-delay: var(--reveal-delay, 0ms);
   }
 
@@ -170,10 +170,10 @@
   /* ═════ Scroll sections ─ smooth GPU reveal ═════ */
   .scroll-section {
     opacity: 0;
-    transform: translateY(48px);
+    transform: translateY(28px);
     transition:
-      opacity 640ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
-      transform 640ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      opacity 480ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
+      transform 480ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
     will-change: transform, opacity;
   }
 
@@ -209,7 +209,7 @@
     background: rgba(246, 232, 215, 0.92);
     color: #543a2d;
     box-shadow: 0 14px 28px -20px rgba(48, 31, 22, 0.7);
-    transition: all 220ms ease;
+    transition: transform 220ms ease, background-color 220ms ease, border-color 220ms ease, color 220ms ease;
   }
 
   .scroll-top-button:hover {
@@ -338,6 +338,49 @@
     border-radius: 12px;
     background: rgba(255, 255, 255, 0.04);
     border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .hero-signature-line {
+    font-family: 'Fraunces', serif;
+    font-size: 1rem;
+    line-height: 1.4;
+    color: rgba(240, 235, 228, 0.94);
+    max-width: 38ch;
+  }
+
+  .hero-proof-strip {
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.04);
+    border-radius: 14px;
+    padding: 12px 14px;
+    min-width: min(100%, 300px);
+  }
+
+  .hero-proof-title {
+    font-size: 0.62rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(240, 235, 228, 0.56);
+    margin-bottom: 7px;
+  }
+
+  .hero-proof-item {
+    font-size: 0.75rem;
+    line-height: 1.45;
+    color: rgba(240, 235, 228, 0.78);
+    position: relative;
+    padding-left: 12px;
+  }
+
+  .hero-proof-item::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.55em;
+    width: 5px;
+    height: 5px;
+    border-radius: 999px;
+    background: rgba(200, 142, 102, 0.8);
   }
 
   /* ═══════════════════════════════════════
@@ -557,7 +600,7 @@
   }
 
   .bottom-dock-focused {
-    transform: translateY(-3px);
+    transform: translateY(-2px);
     box-shadow: 0 22px 42px -22px rgba(0, 0, 0, 0.95), 0 0 0 1px rgba(255,255,255,0.06);
     border-color: rgba(200, 142, 102, 0.28);
   }
@@ -581,10 +624,15 @@
     font-size: 0.72rem;
     font-weight: 600;
     letter-spacing: 0.05em;
-    transition: all 220ms ease;
+    transition: background-color 220ms ease, color 220ms ease, box-shadow 220ms ease;
     white-space: nowrap;
     text-transform: uppercase;
     min-height: 44px;
+  }
+
+  .bottom-dock-item:focus-visible {
+    outline: 2px solid rgba(240, 235, 228, 0.9);
+    outline-offset: 2px;
   }
 
   .bottom-dock-item-neutral {
@@ -631,6 +679,14 @@
     transform: translateY(8px) scale(0.99);
   }
 
+  .hero-signature-line {
+    font-size: 0.92rem;
+  }
+
+  .hero-proof-strip {
+    padding: 10px 12px;
+  }
+
   .closing-marquee-item {
     font-size: 0.72rem;
     letter-spacing: 0.08em;
@@ -647,12 +703,15 @@
     justify-content: space-between;
     border-radius: 14px;
     padding: 4px;
+    backdrop-filter: none;
+    background: rgba(18, 13, 11, 0.96);
   }
 
   .bottom-dock-item {
     padding: 10px 9px;
     font-size: 0.62rem;
     letter-spacing: 0.03em;
+    color: rgba(240, 235, 228, 0.78);
   }
 
   .scroll-top-button {
@@ -665,25 +724,6 @@
   .bottom-dock-active-pill {
     top: 4px;
     height: calc(100% - 8px);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .hero-letter-reveal {
-    opacity: 1;
-    transform: none;
-    animation: none;
-  }
-
-  [data-reveal],
-  [data-reveal-fade],
-  .scroll-section,
-  .marquee-track,
-  .closing-marquee-track {
-    animation: none !important;
-    transition: none !important;
-    transform: none !important;
-    opacity: 1 !important;
   }
 }
 
@@ -719,5 +759,10 @@
   .scroll-section {
     opacity: 1;
     transform: none;
+  }
+
+  .marquee-track,
+  .closing-marquee-track {
+    transform: none !important;
   }
 }
