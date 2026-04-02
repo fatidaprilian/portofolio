@@ -10,11 +10,11 @@ import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-console.log('\n📊 PERFORMANCE AUDIT — Fallback Metrics (No Chrome Required)\n');
+console.log('\nPERFORMANCE AUDIT — Fallback Metrics (No Chrome Required)\n');
 console.log('=' .repeat(70));
 
 // 1. Bundle Size Analysis
-console.log('\n1️⃣  Bundle Size & Network Impact (Mobile 4G Throttle Simulation)\n');
+console.log('\n1. Bundle Size & Network Impact (Mobile 4G Throttle Simulation)\n');
 
 const distPath = path.join(__dirname, 'dist/assets');
 const files = {
@@ -60,7 +60,7 @@ console.log(`    • Download time: ${(downloadTime).toFixed(0)}ms`);
 console.log(`    • Est. DCL (DOM Content Loaded): ${(estimatedDCL).toFixed(0)}ms`);
 
 // 2. Animation Performance Analysis
-console.log('\n\n2️⃣  Motion Hierarchy & GPU Optimization\n');
+console.log('\n2. Motion Hierarchy & GPU Optimization\n');
 
 const styleFile = path.join(__dirname, 'src/style.css');
 const styleContent = fs.readFileSync(styleFile, 'utf-8');
@@ -77,11 +77,7 @@ console.log(`  GPU-Accelerated Properties:`);
 console.log(`    • Transform usage: ${animations['transform-based']} occurrences`);
 console.log(`    • Opacity transitions: ${animations['opacity-transitions']} rules`);
 console.log(`    • Will-change hints: ${animations['will-change-hints']} hints`);
-console.log(`    • Reduced-motion guards: ${animations['reduce-motion-guards']} media queries ✓`);
-
-// Analyze timing values
-const timings = styleContent.match(/(\d+)ms/g) || [];
-const ms600plus = timings.filter(t => parseInt(t) >= 600).length;
+console.log(`    • Reduced-motion guards: ${animations['reduce-motion-guards']} media queries [OK]`);
 const ms300to600 = timings.filter(t => {
   const val = parseInt(t);
   return val >= 300 && val < 600;
@@ -89,12 +85,12 @@ const ms300to600 = timings.filter(t => {
 const msUnder300 = timings.filter(t => parseInt(t) < 300).length;
 
 console.log(`\n  Animation Timing Distribution:`);
-console.log(`    • < 300ms (responsive): ${msUnder300} animations ✓`);
+console.log(`    • < 300ms (responsive): ${msUnder300} animations [OK]`);
 console.log(`    • 300-600ms (standard): ${ms300to600} animations`);
-console.log(`    • ≥ 600ms (potentially slow): ${ms600plus} animations`);
+console.log(`    • >= 600ms (potentially slow): ${ms600plus} animations`);
 
 // 3. Render Path Efficiency
-console.log('\n\n3️⃣  Render Path & Component Optimization\n');
+console.log('\n3. Render Path & Component Optimization\n');
 
 const appVue = fs.readFileSync(path.join(__dirname, 'src/App.vue'), 'utf-8');
 const projectGridVue = fs.readFileSync(path.join(__dirname, 'src/components/ProjectGrid.vue'), 'utf-8');
@@ -104,12 +100,12 @@ const hasWatchOptim = projectGridVue.includes('watchEffect') || projectGridVue.i
 const hasLedisGuard = appVue.includes('prefers-reduced-motion') && appVue.includes('lenis');
 
 console.log(`  Render Efficiency Patterns:`);
-console.log(`    • Computed properties (prevent re-render): ${hasComputedOptim ? '✓' : '✗'}`);
-console.log(`    • Lenis lifecycle guard (memory safe): ${hasLedisGuard ? '✓' : '✗'}`);
-console.log(`    • Transition property targeting (not all): ${styleContent.includes('transition-colors') ? '✓' : '✗'}`);
+console.log(`    • Computed properties (prevent re-render): ${hasComputedOptim ? '[OK]' : '[FAIL]'}`);
+console.log(`    • Lenis lifecycle guard (memory safe): ${hasLedisGuard ? '[OK]' : '[FAIL]'}`);
+console.log(`    • Transition property targeting (not all): ${styleContent.includes('transition-colors') ? '[OK]' : '[FAIL]'}`);
 
 // 4. Core Web Vitals Baseline Estimation
-console.log('\n\n4️⃣  Core Web Vitals Baseline (Estimated from Code Quality)\n');
+console.log('\n4. Core Web Vitals Baseline (Estimated from Code Quality)\n');
 
 // LCP estimation based on hero image + first content paint
 const estimatedLCP = 2100; // ms - rendered as fast as DCL + hero paint
@@ -127,21 +123,21 @@ const clsPasses = estimatedCLS < 0.1;
 
 console.log(`  LCP (Largest Contentful Paint):`);
 console.log(`    • Estimated: ${estimatedLCP}ms`);
-console.log(`    • Target: < 2500ms ✓`);
-console.log(`    • Status: ${lcpPasses ? '✅ PASS' : '❌ FAIL'}`);
+console.log(`    • Target: < 2500ms [OK]`);
+console.log(`    • Status: ${lcpPasses ? '[PASS]' : '[FAIL]'}`);
 
 console.log(`\n  INP (Interaction to Next Paint):`);
 console.log(`    • Estimated: ${estimatedINP}ms (${eventHandlers} handlers detected)`);
 console.log(`    • Target: < 200ms`);
-console.log(`    • Status: ${inpPasses ? '✅ PASS' : '⚠️ CAUTION'}`);
+console.log(`    • Status: ${inpPasses ? '[PASS]' : '[CAUTION]'}`);
 
 console.log(`\n  CLS (Cumulative Layout Shift):`);
 console.log(`    • Estimated: ${estimatedCLS.toFixed(3)}`);
-console.log(`    • Target: < 0.1 ✓`);
-console.log(`    • Status: ${clsPasses ? '✅ PASS' : '⚠️ INVESTIGATE'}`);
+console.log(`    • Target: < 0.1 [OK]`);
+console.log(`    • Status: ${clsPasses ? '[PASS]' : '[INVESTIGATE]'}`);
 
 // 5. Accessibility Readiness
-console.log('\n\n5️⃣  Accessibility Baseline (Production Ready Markers)\n');
+console.log('\n5. Accessibility Baseline (Production Ready Markers)\n');
 
 const bottomDockVue = fs.readFileSync(path.join(__dirname, 'src/components/BottomDock.vue'), 'utf-8');
 const hasAriaLabel = bottomDockVue.includes('aria-label') || bottomDockVue.includes('aria-current');
@@ -149,10 +145,10 @@ const hasFocusVisible = styleContent.includes('focus-visible') || styleContent.i
 const hasReducedMotion = appVue.includes('prefers-reduced-motion');
 
 console.log(`  WCAG 2.1 Compliance Markers:`);
-console.log(`    • ARIA labels present: ${hasAriaLabel ? '✓' : '✗'}`);
-console.log(`    • Focus-visible styling: ${hasFocusVisible ? '✓' : '✗'}`);
-console.log(`    • Reduced-motion support: ${hasReducedMotion ? '✓' : '✗'}`);
+console.log(`    • ARIA labels present: ${hasAriaLabel ? '[OK]' : '[FAIL]'}`);
+console.log(`    • Focus-visible styling: ${hasFocusVisible ? '[OK]' : '[FAIL]'}`);
+console.log(`    • Reduced-motion support: ${hasReduceMotion ? '[OK]' : '[FAIL]'}`);
 
 console.log('\n' + '='.repeat(70));
-console.log('\n✅ RECOMMENDATION: Proceed to keyboard traversal & skip-link implementation');
+console.log('\n✓ RECOMMENDATION: Proceed to keyboard traversal & skip-link implementation');
 console.log('   All Core Web Vitals indicators green. Production audit passed.\n');

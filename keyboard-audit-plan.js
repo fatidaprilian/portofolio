@@ -90,12 +90,12 @@ export const keyboardAuditPlan = {
     bottom_dock_items: {
       selector: 'BottomDock button',
       currentCss: 'focus-visible:ring-2 focus-visible:ring-[#8f5d3f]/60 (from commit)',
-      status: '✓ Already implemented'
+      status: '[IMPLEMENTED]'
     },
     project_links: {
       selector: 'ProjectGrid a',
       currentCss: 'focus-visible:ring-2 focus-visible:ring-[#8f5d3f]/60 (from commit)',
-      status: '✓ Already implemented'
+      status: '[IMPLEMENTED]'
     },
     footer_links: {
       selector: 'footer a',
@@ -112,14 +112,14 @@ export const keyboardAuditPlan = {
 
   accessibilityMarkers: {
     ariaLabels: [
-      'Language toggle: aria-label="Switch to English/Bahasa Indonesia" ✓',
-      'Scroll to top: aria-label="Scroll to top" ✓',
-      'BottomDock items: aria-label per nav item ✓',
+      'Language toggle: aria-label="Switch to English/Bahasa Indonesia" [OK]',
+      'Scroll to top: aria-label="Scroll to top" [OK]',
+      'BottomDock items: aria-label per nav item [OK]',
       'Footer links: Some use href anchors (#home, #work, #contact)'
     ],
     
     skipLink: {
-      status: '⚠️ NOT IMPLEMENTED',
+      status: '[NOT IMPLEMENTED]',
       purpose: 'Allow keyboard users to bypass fixed navigation + skip to main content',
       priority: 'HIGH for WCAG 2.1 Level AA',
       implementation: 'Add hidden-until-focused link in App.vue template'
@@ -139,11 +139,11 @@ export const keyboardAuditPlan = {
   5. Check for color contrast: Are focus rings visible against current background?
   
   EXPECTED PASS CRITERIA:
-  ✓ All interactive elements are focusable
-  ✓ Tab order matches visual/logical reading order
-  ✓ No focus traps (unless intended modal behavior)
-  ✓ Focus ring is visible (WCAG AA requires 3:1 contrast minimum)
-  ✓ Mobile: Bottom dock buttons accessible via keyboard
+  [OK] All interactive elements are focusable
+  [OK] Tab order matches visual/logical reading order
+  [OK] No focus traps (unless intended modal behavior)
+  [OK] Focus ring is visible (WCAG AA requires 3:1 contrast minimum)
+  [OK] Mobile: Bottom dock buttons accessible via keyboard
   `,
 
   nextSteps: [

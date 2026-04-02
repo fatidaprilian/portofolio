@@ -34,3 +34,9 @@ AGENTS.md
 .windsurf
 .aider*
 .agent-override.md
+
+
+# Environment files
+.env
+.env.local
+.env.*.local
