@@ -266,6 +266,11 @@ onUnmounted(() => {
 <template>
   <div class="font-sans antialiased text-text relative min-h-screen">
     
+    <!-- ─── Skip-link for keyboard navigation ─── -->
+    <a href="#main-content" class="skip-link">
+      {{ currentLanguage === 'id' ? 'Lewati ke konten utama' : 'Skip to main content' }}
+    </a>
+
     <CustomCursor />
 
     <!-- ─── Preloader (dark) ─── -->
@@ -335,7 +340,7 @@ onUnmounted(() => {
     <BottomDock :language="currentLanguage" />
 
     <!-- ─── Main content ─── -->
-    <main>
+    <main id="main-content">
       <!-- Hero: dark section, no scroll-section wrapper -->
       <div data-scroll-section class="scroll-section is-inview">
         <Hero :language="currentLanguage" />

@@ -27,6 +27,27 @@
     overflow-x: clip;
   }
 
+  /* ─── Skip-link: hidden by default, visible on focus ─── */
+  .skip-link {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    z-index: 99;
+    padding: 8px 16px;
+    background-color: #543a2d;
+    color: #f6ead9;
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 600;
+    border-bottom: 2px solid #a56a43;
+    transition: top 220ms ease;
+  }
+
+  .skip-link:focus {
+    top: 0;
+    outline: none;
+  }
+
   a:focus-visible,
   button:focus-visible,
   input:focus-visible,
