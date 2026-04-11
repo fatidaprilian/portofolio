@@ -2,7 +2,56 @@
   "$schema": "https://modelcontextprotocol.io/schemas/mcp.json",
   "version": "1.0",
   "name": "agentic-senior-core",
-  "description": "MCP configuration for governance-aware diagnostics and self-healing workflows.",
+  "description": "MCP configuration for governance-aware diagnostics and self-healing workflows with full knowledge injection.",
+  "knowledgeLayers": {
+    "enabled": true,
+    "description": "8-layer unified knowledge injection for AI agents",
+    "layers": {
+      "rules": {
+        "path": ".agent-context/rules",
+        "count": 14,
+        "autoLoad": true
+      },
+      "stacks": {
+        "path": ".agent-context/stacks",
+        "count": 10,
+        "autoLoad": true
+      },
+      "blueprints": {
+        "path": ".agent-context/blueprints",
+        "count": 14,
+        "autoLoad": true
+      },
+      "skills": {
+        "path": ".agent-context/skills",
+        "count": 6,
+        "autoLoad": true,
+        "packs": ["backend", "frontend", "cli", "distribution", "fullstack", "review-quality"]
+      },
+      "prompts": {
+        "path": ".agent-context/prompts",
+        "count": 3,
+        "autoLoad": true,
+        "templates": ["init-project", "refactor", "review-code"]
+      },
+      "profiles": {
+        "path": ".agent-context/profiles",
+        "count": 3,
+        "autoLoad": true,
+        "governance": ["platform", "regulated", "startup"]
+      },
+      "state": {
+        "path": ".agent-context/state",
+        "count": 6,
+        "autoLoad": true
+      },
+      "policies": {
+        "path": ".agent-context/policies",
+        "count": 1,
+        "autoLoad": true
+      }
+    }
+  },
   "servers": {
     "lint": {
       "command": "node",
@@ -23,6 +72,20 @@
         "map_violation_to_rule",
         "propose_patch",
         "run_checklist_review"
+      ]
+    },
+    "full-knowledge-injection": {
+      "trigger": ["workspace.initialize", "agent.start"],
+      "steps": [
+        "load_all_knowledge_layers",
+        "inject_rules",
+        "inject_stacks",
+        "inject_blueprints",
+        "inject_skills",
+        "inject_prompts",
+        "inject_profiles",
+        "inject_state",
+        "inject_policies"
       ]
     }
   }

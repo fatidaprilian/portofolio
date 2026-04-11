@@ -10,6 +10,10 @@ const props = defineProps({
   }
 })
 
+const heroAvatarUrl = '/avatar-github.jpg'
+const heroAvatarLoadState = ref('loading')
+let avatarFallbackTimeout
+
 const copyByLanguage = {
   id: {
     labelPill: 'Full-stack Engineer & Product Builder',
@@ -88,12 +92,29 @@ const nameParallaxStyle = computed(() => ({
 }))
 
 onMounted(() => {
+  avatarFallbackTimeout = setTimeout(() => {
+    if (heroAvatarLoadState.value === 'loading') {
+      heroAvatarLoadState.value = 'fallback'
+    }
+  }, 2600)
+
   window.addEventListener('scroll', updateScrollY, { passive: true })
 })
 
 onUnmounted(() => {
+  if (avatarFallbackTimeout) clearTimeout(avatarFallbackTimeout)
   window.removeEventListener('scroll', updateScrollY)
 })
+
+const handleAvatarLoad = () => {
+  if (avatarFallbackTimeout) clearTimeout(avatarFallbackTimeout)
+  heroAvatarLoadState.value = 'loaded'
+}
+
+const handleAvatarError = () => {
+  if (avatarFallbackTimeout) clearTimeout(avatarFallbackTimeout)
+  heroAvatarLoadState.value = 'fallback'
+}
 </script>
 
 <template>
@@ -136,12 +157,27 @@ onUnmounted(() => {
       <!-- Right: avatar VERTICALLY CENTERED in its column -->
       <div class="flex-shrink-0 flex lg:flex-col items-end lg:items-center justify-end lg:justify-center py-6 lg:py-8" data-reveal-fade style="--reveal-delay: 140ms">
         <div class="hero-avatar-contained">
+          <div
+            v-if="heroAvatarLoadState === 'loading'"
+            class="hero-avatar-skeleton"
+            aria-hidden="true"
+          ></div>
           <img
-            src="https://avatars.githubusercontent.com/u/64300224?v=4"
+            v-if="heroAvatarLoadState !== 'fallback'"
+            :src="heroAvatarUrl"
             alt="Farid Eka Aprilian"
-            class="w-full h-full object-cover object-center"
+            class="w-full h-full object-cover object-center transition-opacity duration-300"
+            :class="heroAvatarLoadState === 'loaded' ? 'opacity-100' : 'opacity-0'"
             loading="eager"
+            decoding="async"
+            fetchpriority="high"
+            @load="handleAvatarLoad"
+            @error="handleAvatarError"
           />
+          <div v-else class="hero-avatar-fallback" role="img" aria-label="Farid Eka Aprilian avatar fallback">
+            <span class="hero-avatar-fallback-initial">FA</span>
+            <span class="hero-avatar-fallback-status">Slow network mode</span>
+          </div>
         </div>
       </div>
     </div>

@@ -77,6 +77,29 @@
     pointer-events: none;
   }
 
+  html.runtime-reduced-motion {
+    scroll-behavior: auto !important;
+  }
+
+  html.runtime-reduced-motion .scroll-section {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  html.runtime-reduced-motion [data-reveal-fade],
+  html.runtime-reduced-motion .hero-letter-reveal,
+  html.runtime-reduced-motion .hero-avatar-contained {
+    animation: none !important;
+    transition: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  html.runtime-reduced-motion .hero-avatar-skeleton {
+    animation-duration: 2.4s;
+  }
+
   /* Hide default cursor on desktop */
   @media (min-width: 768px) {
     body, a, button, input, textarea, select {
@@ -338,6 +361,7 @@
   .hero-avatar-contained {
     width: clamp(180px, 26vw, 300px);
     aspect-ratio: 1 / 1;
+    position: relative;
     border-radius: 20px;
     overflow: hidden;
     border: 1px solid rgba(255, 255, 255, 0.08);
@@ -348,9 +372,57 @@
     animation-delay: 220ms;
   }
 
+  .hero-avatar-skeleton {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at 18% 16%, rgba(255, 255, 255, 0.08), transparent 42%),
+      linear-gradient(105deg, #1f1816 0%, #2e2320 44%, #1f1816 84%);
+    background-size: 100% 100%, 220% 100%;
+    animation: heroAvatarShimmer 1.4s linear infinite;
+  }
+
+  .hero-avatar-fallback {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background:
+      radial-gradient(circle at 22% 18%, rgba(200, 142, 102, 0.32), transparent 48%),
+      radial-gradient(circle at 80% 84%, rgba(110, 72, 49, 0.36), transparent 58%),
+      linear-gradient(140deg, #191211 0%, #241816 54%, #1a1211 100%);
+    color: rgba(240, 235, 228, 0.9);
+  }
+
+  .hero-avatar-fallback-initial {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3rem, 8vw, 5rem);
+    line-height: 0.9;
+    letter-spacing: 0.06em;
+  }
+
+  .hero-avatar-fallback-status {
+    font-size: 0.64rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(240, 235, 228, 0.62);
+  }
+
   @keyframes heroAvatarIn {
     0% { opacity: 0; transform: translateY(28px) scale(0.92); }
     100% { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  @keyframes heroAvatarShimmer {
+    0% {
+      background-position: center, 120% 0;
+    }
+    100% {
+      background-position: center, -120% 0;
+    }
   }
 
   /* Dark section stat badge */

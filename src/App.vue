@@ -25,6 +25,13 @@ const isScrollTopVisible = ref(false)
 const activeGreetingIndex = ref(0)
 const shuffledGreetings = ref([])
 const isFontLoaded = ref(false)
+const isUltraSlowNetwork = ref(false)
+
+const heroAvatarUrl = '/avatar-github.jpg'
+const LOADER_MIN_MS = 900
+const LOADER_MAX_MS = 3200
+const LOADER_ASSET_TIMEOUT_MS = 2200
+const ULTRA_SLOW_EFFECTIVE_TYPES = ['slow-2g', '2g']
 
 const greetings = [
   'Hello',
@@ -85,9 +92,17 @@ let loadingProgressInterval
 let loadingDoneTimeout
 let loadingGreetingInterval
 let loadingGreetingTimeout
+let loadingMinTimeout
+let loadingMaxTimeout
 let revealSafetyTimeout
 let lenisInstance = null
 let lenisAnimationFrameId = null
+let networkConnection = null
+let handleNetworkConnectionChange = null
+
+let isLoaderMinElapsed = false
+let isLoaderAssetsReady = false
+let isLoaderFinalized = false
 
 let isAppScrollScheduled = false
 
@@ -109,7 +124,73 @@ const clearLoadingTimers = () => {
   if (loadingDoneTimeout) { clearTimeout(loadingDoneTimeout); loadingDoneTimeout = null }
   if (loadingGreetingInterval) { clearInterval(loadingGreetingInterval); loadingGreetingInterval = null }
   if (loadingGreetingTimeout) { clearTimeout(loadingGreetingTimeout); loadingGreetingTimeout = null }
+  if (loadingMinTimeout) { clearTimeout(loadingMinTimeout); loadingMinTimeout = null }
+  if (loadingMaxTimeout) { clearTimeout(loadingMaxTimeout); loadingMaxTimeout = null }
 }
+
+const applyRuntimeMotionMode = () => {
+  document.documentElement.classList.toggle('runtime-reduced-motion', isUltraSlowNetwork.value)
+}
+
+const detectUltraSlowNetwork = () => {
+  if (typeof navigator === 'undefined') {
+    isUltraSlowNetwork.value = false
+    return
+  }
+
+  const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection
+  networkConnection = connection ?? null
+
+  if (!connection) {
+    isUltraSlowNetwork.value = false
+    return
+  }
+
+  const effectiveType = (connection.effectiveType || '').toLowerCase()
+  isUltraSlowNetwork.value = Boolean(connection.saveData) || ULTRA_SLOW_EFFECTIVE_TYPES.includes(effectiveType)
+}
+
+const withTimeout = (promise, timeoutMs, fallbackValue) => new Promise((resolve) => {
+  let isResolved = false
+
+  const finish = (value) => {
+    if (isResolved) return
+    isResolved = true
+    clearTimeout(timeoutHandle)
+    resolve(value)
+  }
+
+  const timeoutHandle = setTimeout(() => {
+    finish(fallbackValue)
+  }, timeoutMs)
+
+  promise
+    .then((value) => finish(value))
+    .catch(() => finish(fallbackValue))
+})
+
+const preloadImageWithTimeout = (imageUrl, timeoutMs) => new Promise((resolve) => {
+  const image = new Image()
+  let isResolved = false
+
+  const finish = (didLoad) => {
+    if (isResolved) return
+    isResolved = true
+    image.onload = null
+    image.onerror = null
+    clearTimeout(timeoutHandle)
+    resolve(didLoad)
+  }
+
+  const timeoutHandle = setTimeout(() => {
+    finish(false)
+  }, timeoutMs)
+
+  image.onload = () => finish(true)
+  image.onerror = () => finish(false)
+  image.decoding = 'async'
+  image.src = imageUrl
+})
 
 const initializeRevealObservers = () => {
   const revealElements = document.querySelectorAll('[data-reveal]')
@@ -170,34 +251,82 @@ const runPageLoader = () => {
 
   shuffledGreetings.value = greetings
   activeGreetingIndex.value = 0
+  isLoaderMinElapsed = false
+  isLoaderAssetsReady = false
+  isLoaderFinalized = false
 
-  loadingGreetingTimeout = setTimeout(() => {
-    // Array guarantees 'Hello' is at index 0
-    shuffledGreetings.value = shuffleGreetingOrder(greetings)
-    // Instantly move to index 1 so we don't hold 'Hello' for +140ms extra
-    activeGreetingIndex.value = 1
-    
-    loadingGreetingInterval = setInterval(() => {
-      activeGreetingIndex.value = (activeGreetingIndex.value + 1) % shuffledGreetings.value.length
-    }, 140)
-  }, 500)
+  const loaderMinMs = isUltraSlowNetwork.value ? 420 : LOADER_MIN_MS
+  const loaderMaxMs = isUltraSlowNetwork.value ? 1800 : LOADER_MAX_MS
+  const loaderAssetTimeoutMs = isUltraSlowNetwork.value ? 950 : LOADER_ASSET_TIMEOUT_MS
 
-  loadingProgressInterval = setInterval(() => {
-    if (loadingProgressPercentage.value >= 92) return
-    const nextProgressValue = loadingProgressPercentage.value + 4
-    loadingProgressPercentage.value = Math.min(nextProgressValue, 92)
-  }, 70)
+  const finalizeLoader = () => {
+    if (isLoaderFinalized) return
+    isLoaderFinalized = true
 
-  loadingDoneTimeout = setTimeout(() => {
     loadingProgressPercentage.value = 100
     sessionStorage.setItem('portfolio-loader-seen', 'true')
-    setTimeout(() => {
+
+    loadingDoneTimeout = setTimeout(() => {
       isPageLoading.value = false
       clearLoadingTimers()
-      // Initialize observers after preloader fully dismissed
       initializeRevealObservers()
-    }, 200)
-  }, 1500)
+    }, 220)
+  }
+
+  const tryFinalizeLoader = () => {
+    if (isLoaderMinElapsed && isLoaderAssetsReady) {
+      finalizeLoader()
+    }
+  }
+
+  if (!isUltraSlowNetwork.value) {
+    loadingGreetingTimeout = setTimeout(() => {
+      // Array guarantees 'Hello' is at index 0
+      shuffledGreetings.value = shuffleGreetingOrder(greetings)
+      // Instantly move to index 1 so we don't hold 'Hello' for +140ms extra
+      activeGreetingIndex.value = 1
+
+      loadingGreetingInterval = setInterval(() => {
+        activeGreetingIndex.value = (activeGreetingIndex.value + 1) % shuffledGreetings.value.length
+      }, 140)
+    }, 500)
+  }
+
+  loadingProgressInterval = setInterval(() => {
+    const progressCap = isLoaderAssetsReady ? 98 : 92
+    if (loadingProgressPercentage.value >= progressCap) return
+    const nextProgressValue = loadingProgressPercentage.value + (isLoaderAssetsReady ? 3 : 2)
+    loadingProgressPercentage.value = Math.min(nextProgressValue, progressCap)
+  }, isUltraSlowNetwork.value ? 56 : 80)
+
+  loadingMinTimeout = setTimeout(() => {
+    isLoaderMinElapsed = true
+    if (loadingProgressPercentage.value < 58) {
+      loadingProgressPercentage.value = 58
+    }
+    tryFinalizeLoader()
+  }, loaderMinMs)
+
+  loadingMaxTimeout = setTimeout(() => {
+    isLoaderAssetsReady = true
+    isLoaderMinElapsed = true
+    finalizeLoader()
+  }, loaderMaxMs)
+
+  const fontReadinessPromise = typeof document !== 'undefined' && document.fonts
+    ? withTimeout(document.fonts.ready.then(() => true), loaderAssetTimeoutMs, false)
+    : Promise.resolve(true)
+
+  const imageReadinessPromise = preloadImageWithTimeout(heroAvatarUrl, loaderAssetTimeoutMs)
+
+  Promise.allSettled([fontReadinessPromise, imageReadinessPromise]).then((results) => {
+    const isFontReady = results[0].status === 'fulfilled' ? Boolean(results[0].value) : false
+    if (isFontReady) {
+      isFontLoaded.value = true
+    }
+    isLoaderAssetsReady = true
+    tryFinalizeLoader()
+  })
 }
 
 const getActiveCopy = () => copyByLanguage[currentLanguage.value]
@@ -210,6 +339,17 @@ const toggleLanguage = () => {
 }
 
 onMounted(() => {
+  detectUltraSlowNetwork()
+  applyRuntimeMotionMode()
+
+  if (networkConnection && typeof networkConnection.addEventListener === 'function') {
+    handleNetworkConnectionChange = () => {
+      detectUltraSlowNetwork()
+      applyRuntimeMotionMode()
+    }
+    networkConnection.addEventListener('change', handleNetworkConnectionChange)
+  }
+
   if (typeof document !== 'undefined' && document.fonts) {
     document.fonts.ready.then(() => {
       isFontLoaded.value = true
@@ -221,7 +361,7 @@ onMounted(() => {
   }
 
   const shouldReduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-  if (!shouldReduceMotion) {
+  if (!shouldReduceMotion && !isUltraSlowNetwork.value) {
     // Initialize Lenis for smooth premium scroll
     lenisInstance = new Lenis({
       duration: 1.2,
@@ -250,6 +390,14 @@ onMounted(() => {
 
 onUnmounted(() => {
   clearLoadingTimers()
+  document.documentElement.classList.remove('runtime-reduced-motion')
+  if (
+    networkConnection
+    && handleNetworkConnectionChange
+    && typeof networkConnection.removeEventListener === 'function'
+  ) {
+    networkConnection.removeEventListener('change', handleNetworkConnectionChange)
+  }
   window.removeEventListener('scroll', updateScrollUiState)
   window.removeEventListener('resize', updateScrollUiState)
   if (revealObserver) revealObserver.disconnect()

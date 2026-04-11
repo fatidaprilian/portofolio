@@ -1,0 +1,43 @@
+name: Governance Weekly Report
+
+on:
+  schedule:
+    - cron: '0 3 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  governance-weekly-report:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Run quality trend report
+        run: |
+          node ./scripts/quality-trend-report.mjs > quality-trend-report.json
+          test -s quality-trend-report.json
+
+      - name: Run weekly governance report
+        run: |
+          node ./scripts/governance-weekly-report.mjs > weekly-governance-report.json
+          test -s weekly-governance-report.json
+
+      - name: Upload governance artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: governance-weekly-report
+          path: |
+            quality-trend-report.json
+            weekly-governance-report.json
