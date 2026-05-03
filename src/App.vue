@@ -15,6 +15,7 @@ import {
 } from 'lucide-vue-next'
 import { getCareerProfileByLanguage } from './data/careerProfile'
 import { getProjectsByLanguage } from './data/projects'
+import Hero from './components/Hero.vue'
 
 // ─── State ───────────────────────────────────────────
 const currentYear = new Date().getFullYear()
@@ -22,7 +23,7 @@ const lang = ref('id')
 const activeChapter = ref('home')
 const scrollProgress = ref(0)
 const isScrolled = ref(false)
-const trackRef = ref(null)
+const scrollWrapper = ref(null)
 const trackIndex = ref(0)
 const isDragging = ref(false)
 
@@ -155,7 +156,15 @@ const updateScroll = () => {
 // ─── Navigation ───────────────────────────────────────
 const scrollTo = (id) => {
   const el = document.getElementById(id)
-  if (el) el.scrollIntoView({ behavior: isReducedMotion() ? 'auto' : 'smooth', block: 'start' })
+  if (!el) return
+  
+  if (isReducedMotion()) {
+    el.scrollIntoView({ behavior: 'auto', block: 'start' })
+    return
+  }
+
+  const offsetLeft = el.offsetLeft
+  window.scrollTo({ top: offsetLeft, behavior: 'smooth' })
 }
 
 const toggleLang = () => {
@@ -163,32 +172,7 @@ const toggleLang = () => {
   localStorage.setItem('portfolio-lang', lang.value)
 }
 
-// ─── Project track drag ───────────────────────────────
-let dragStartX = 0
-let dragScrollLeft = 0
-
-const onTrackMouseDown = (e) => {
-  isDragging.value = true
-  dragStartX = e.pageX - trackRef.value.offsetLeft
-  dragScrollLeft = trackRef.value.scrollLeft
-}
-
-const onTrackMouseMove = (e) => {
-  if (!isDragging.value) return
-  e.preventDefault()
-  const x = e.pageX - trackRef.value.offsetLeft
-  trackRef.value.scrollLeft = dragScrollLeft - (x - dragStartX)
-}
-
-const stopDrag = () => { isDragging.value = false }
-
-const scrollTrack = (dir) => {
-  if (!trackRef.value) return
-  const card = trackRef.value.querySelector('.project-card')
-  const cardW = card ? card.offsetWidth + 24 : 400
-  trackRef.value.scrollBy({ left: dir * cardW, behavior: 'smooth' })
-  trackIndex.value = Math.max(0, Math.min(trackTotal.value - 1, trackIndex.value + dir))
-}
+// Track navigation removed in favor of horizontal scroll
 
 // ─── Custom cursor ────────────────────────────────────
 let cursorEl = null
@@ -294,6 +278,23 @@ onMounted(() => {
   // GSAP
   if (!isReducedMotion()) {
     gsap.registerPlugin(ScrollTrigger)
+    
+    setTimeout(() => {
+      const wrapper = scrollWrapper.value
+      if (wrapper) {
+        gsap.to(wrapper, {
+          x: () => -(wrapper.scrollWidth - window.innerWidth),
+          ease: "none",
+          scrollTrigger: {
+            trigger: ".horizontal-scroll-container",
+            pin: true,
+            scrub: 1,
+            end: () => "+=" + (wrapper.scrollWidth - window.innerWidth),
+            invalidateOnRefresh: true
+          }
+        })
+      }
+    }, 100)
   }
 
   initObservers()
@@ -377,64 +378,13 @@ onUnmounted(() => {
       </button>
     </nav>
 
-    <main id="main-content">
+    <main id="main-content" class="horizontal-scroll-container">
+      <div ref="scrollWrapper" class="horizontal-scroll-wrapper">
       <!-- ──────── HERO ──────── -->
-      <section id="home" class="hero-section" data-scene>
-        <!-- Ghost chapter number bg -->
-        <div class="hero-bg-number" aria-hidden="true">01</div>
-
-        <div class="hero-content">
-          <!-- Eyebrow with animated line -->
-          <div class="hero-eyebrow">
-            <span class="eyebrow-line" aria-hidden="true"></span>
-            <span class="eyebrow-text">{{ c.eyebrow }}</span>
-          </div>
-
-          <!-- Role tag -->
-          <div class="hero-role-tag">{{ c.role }}</div>
-
-          <!-- Big title — word stagger -->
-          <h1 class="hero-title">
-            <span
-              v-for="(w, i) in splitIntoWords(c.heroLine1)"
-              :key="`l1-${i}`"
-              class="word-reveal"
-            ><span class="word-reveal-inner">{{ w.word }}</span></span>
-            <em><span
-              v-for="(w, i) in splitIntoWords(c.heroLine2)"
-              :key="`l2-${i}`"
-              class="word-reveal"
-            ><span class="word-reveal-inner">{{ w.word }}</span></span></em>
-            <br />
-            <span
-              v-for="(w, i) in splitIntoWords(c.heroLine3)"
-              :key="`l3-${i}`"
-              class="word-reveal"
-            ><span class="word-reveal-inner">{{ w.word }}</span></span>
-          </h1>
-
-          <p class="hero-body" data-reveal>{{ c.heroBody }}</p>
-
-          <div class="hero-actions" data-reveal>
-            <button type="button" class="btn-primary" @click="scrollTo('projects')">
-              <ArrowRight class="btn-icon" aria-hidden="true" />
-              {{ c.ctaView }}
-            </button>
-            <a
-              href="https://github.com/fatidaprilian"
-              target="_blank"
-              rel="noreferrer"
-              class="btn-secondary"
-            >
-              <Github class="btn-icon" aria-hidden="true" />
-              {{ c.ctaGithub }}
-            </a>
-          </div>
-        </div>
-      </section>
+      <Hero :c="c" @scroll-to="scrollTo" class="horizontal-section" />
 
       <!-- ──────── PROCESS ──────── -->
-      <section id="process" class="page-section" data-scene>
+      <section id="process" class="horizontal-section page-section" data-scene>
         <div class="section-inner">
           <div class="section-label" data-reveal>
             <span class="section-num">{{ c.processNum }}</span>
@@ -459,83 +409,56 @@ onUnmounted(() => {
       </section>
 
       <!-- ──────── PROJECTS ──────── -->
-      <section id="projects" class="page-section" data-scene>
-        <div class="section-inner">
-          <div class="section-label" data-reveal>
-            <span class="section-num">{{ c.projectsNum }}</span>
-            <span class="section-rule" aria-hidden="true"></span>
-          </div>
-          <h2 class="section-title" data-reveal>
-            {{ c.projectsTitle }} <em>{{ c.projectsTitleEm }}</em>
-          </h2>
-
-          <!-- Horizontal track -->
-          <div class="projects-track-wrapper">
-            <div
-              ref="trackRef"
-              class="projects-track"
-              :class="{ 'is-dragging': isDragging }"
-              @mousedown="onTrackMouseDown"
-              @mousemove="onTrackMouseMove"
-              @mouseleave="stopDrag"
-              @mouseup="stopDrag"
-            >
-              <article
-                v-for="(project, idx) in projects"
-                :key="project.title"
-                class="project-card"
-              >
-                <span class="card-number">{{ String(idx + 1).padStart(2, '0') }}</span>
-                <span class="card-role">{{ project.role }} · {{ project.year }}</span>
-                <h3 class="card-title">{{ project.title }}</h3>
-                <p class="card-summary">{{ project.summary }}</p>
-
-                <div v-if="project.caseStudy" class="card-breakdown">
-                  <div class="breakdown-item">
-                    <span>{{ c.constraint }}</span>
-                    <p>{{ project.caseStudy.constraint }}</p>
-                  </div>
-                  <div class="breakdown-item">
-                    <span>{{ c.decision }}</span>
-                    <p>{{ project.caseStudy.decision }}</p>
-                  </div>
-                  <div class="breakdown-item">
-                    <span>{{ c.outcome }}</span>
-                    <p>{{ project.caseStudy.outcome }}</p>
-                  </div>
-                </div>
-
-                <div class="card-tags">
-                  <span v-for="tag in project.tags" :key="tag">{{ tag }}</span>
-                </div>
-
-                <a :href="project.link" target="_blank" rel="noreferrer" class="card-link">
-                  {{ c.source }}
-                  <ArrowUpRight />
-                </a>
-              </article>
-            </div>
-          </div>
-
-          <!-- Track navigation -->
-          <div class="track-nav" data-reveal>
-            <span class="track-progress">
-              {{ String(trackIndex + 1).padStart(2, '0') }} / {{ String(trackTotal).padStart(2, '0') }}
-            </span>
-            <div class="track-arrows">
-              <button type="button" class="track-arrow" :aria-label="'Previous'" @click="scrollTrack(-1)">
-                <ChevronLeft />
-              </button>
-              <button type="button" class="track-arrow" :aria-label="'Next'" @click="scrollTrack(1)">
-                <ChevronRight />
-              </button>
-            </div>
-          </div>
+      <section 
+        v-for="(project, idx) in projects" 
+        :key="'proj-'+idx" 
+        :id="idx === 0 ? 'projects' : ''" 
+        class="horizontal-section page-section flex items-center justify-center" 
+        data-scene
+      >
+        <div class="section-inner w-full">
+           <div class="flex flex-col lg:flex-row gap-12 w-full">
+              <!-- Left: Opening Credits -->
+              <div class="flex-1 flex flex-col justify-center">
+                 <span class="card-number mb-6 block text-8xl font-display text-paper-warm border-b border-rule pb-4">{{ String(idx + 1).padStart(2, '0') }}</span>
+                 <span class="card-role text-accent-blue font-bold uppercase tracking-widest text-sm mb-4 block">{{ project.role }} · {{ project.year }}</span>
+                 <h2 class="card-title text-5xl lg:text-7xl font-editorial font-semibold leading-tight text-ink mb-6">{{ project.title }}</h2>
+                 <p class="card-summary text-lg text-ink-muted leading-relaxed max-w-xl">{{ project.summary }}</p>
+                 <div class="mt-10">
+                   <a :href="project.link" target="_blank" class="btn-primary inline-flex items-center gap-2">
+                     {{ c.source }} <ArrowUpRight class="w-5 h-5" />
+                   </a>
+                 </div>
+              </div>
+              
+              <!-- Right: Technical Breakdown -->
+              <div class="flex-1 bg-paper-warm p-10 lg:p-14 border border-rule flex flex-col justify-center">
+                 <h3 class="font-display text-3xl text-ink mb-8 border-b border-rule pb-6">{{ c.technicalBreakdown || 'Technical Breakdown' }}</h3>
+                 <div v-if="project.caseStudy" class="space-y-8">
+                    <div>
+                      <span class="text-accent-red font-bold uppercase text-xs tracking-wider block mb-2">{{ c.constraint }}</span>
+                      <p class="text-ink-muted leading-relaxed text-base">{{ project.caseStudy.constraint }}</p>
+                    </div>
+                    <div>
+                      <span class="text-accent-red font-bold uppercase text-xs tracking-wider block mb-2">{{ c.decision }}</span>
+                      <p class="text-ink-muted leading-relaxed text-base">{{ project.caseStudy.decision }}</p>
+                    </div>
+                    <div>
+                      <span class="text-accent-red font-bold uppercase text-xs tracking-wider block mb-2">{{ c.outcome }}</span>
+                      <p class="text-ink-muted leading-relaxed text-base">{{ project.caseStudy.outcome }}</p>
+                    </div>
+                 </div>
+                 
+                 <div class="card-tags flex flex-wrap gap-2 mt-10">
+                   <span v-for="tag in project.tags" :key="tag" class="px-3 py-1 bg-ink/5 border border-ink/10 text-accent-blue text-xs font-bold uppercase tracking-wider rounded">{{ tag }}</span>
+                 </div>
+              </div>
+           </div>
         </div>
       </section>
 
       <!-- ──────── CAREER ──────── -->
-      <section id="career" class="page-section" data-scene>
+      <section id="career" class="horizontal-section page-section" data-scene>
         <div class="section-inner">
           <div class="section-label" data-reveal>
             <span class="section-num">{{ c.careerNum }}</span>
@@ -577,7 +500,7 @@ onUnmounted(() => {
       </section>
 
       <!-- ──────── CONTACT ──────── -->
-      <section id="contact" class="page-section" data-scene>
+      <section id="contact" class="horizontal-section page-section" data-scene>
         <div class="section-inner">
           <div class="section-label" data-reveal>
             <span class="section-num">{{ c.contactNum }}</span>
@@ -617,6 +540,7 @@ onUnmounted(() => {
           </div>
         </div>
       </section>
+      </div> <!-- end horizontal-scroll-wrapper -->
     </main>
 
     <footer class="site-footer">

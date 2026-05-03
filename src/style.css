@@ -8,9 +8,9 @@
     --paper-warm: #F0EDE3;
     --ink: #1A1A16;
     --ink-muted: #6B6B60;
-    --accent-red: #E84A2F;
-    --accent-blue: #0057FF;
-    --accent-yellow: #F5C842;
+    --accent-red: #A56A43;
+    --accent-blue: #2A3B4C;
+    --accent-yellow: #E3D8B0;
     --rule: #D4D0C4;
     --scroll-progress: 0%;
   }
@@ -25,7 +25,7 @@
     overflow-x: hidden;
     background: var(--paper);
     color: var(--ink);
-    font-family: 'Manrope', sans-serif;
+    font-family: 'Inter', sans-serif;
   }
 
   #app { min-height: 100vh; }
@@ -119,7 +119,7 @@
   .site-nav > * { pointer-events: auto; }
 
   .brand-mark {
-    font-family: 'Fraunces', serif;
+    font-family: 'Playfair Display', serif;
     font-size: 1.1rem;
     font-weight: 600;
     color: var(--ink);
@@ -171,7 +171,7 @@
     border-radius: 2px;
     background: transparent;
     color: var(--ink-muted);
-    font-family: 'Bebas Neue', sans-serif;
+    font-family: 'Playfair Display', serif;
     font-size: 1.1rem;
     letter-spacing: 1px;
     cursor: pointer;
@@ -231,13 +231,36 @@
   }
 
   /* ── Sections ── */
+  .horizontal-scroll-container {
+    overflow: hidden;
+  }
+  
+  .horizontal-scroll-wrapper {
+    display: flex;
+    flex-wrap: nowrap;
+    width: max-content;
+    height: 100vh;
+  }
+  
+  .horizontal-section {
+    width: 100vw;
+    height: 100vh;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    overflow-y: auto;
+    scrollbar-width: none;
+  }
+  .horizontal-section::-webkit-scrollbar { display: none; }
+
   .page-section {
-    padding: clamp(80px, 12vw, 160px) clamp(24px, 6vw, 80px);
+    padding: clamp(40px, 6vw, 80px) clamp(24px, 6vw, 80px); /* Reduced vertical padding for 100vh fit */
     position: relative;
   }
 
   .section-inner {
     max-width: 1320px;
+    width: 100%;
     margin: 0 auto;
   }
 
@@ -256,7 +279,7 @@
     position: absolute;
     right: -0.05em;
     bottom: -0.1em;
-    font-family: 'Bebas Neue', sans-serif;
+    font-family: 'Playfair Display', serif;
     font-size: clamp(18vw, 22vw, 28vw);
     line-height: 1;
     color: transparent;
@@ -319,7 +342,7 @@
   }
 
   .hero-title {
-    font-family: 'Fraunces', serif;
+    font-family: 'Playfair Display', serif;
     font-size: clamp(3.5rem, 6vw, 7rem);
     line-height: 1.05;
     font-weight: 600;
@@ -373,7 +396,7 @@
     color: var(--paper);
     border: 2px solid var(--ink);
     border-radius: 2px;
-    font-family: 'Manrope', sans-serif;
+    font-family: 'Inter', sans-serif;
     font-size: 0.9rem;
     font-weight: 800;
     text-transform: uppercase;
@@ -399,7 +422,7 @@
     color: var(--ink);
     border: 2px solid var(--rule);
     border-radius: 2px;
-    font-family: 'Manrope', sans-serif;
+    font-family: 'Inter', sans-serif;
     font-size: 0.9rem;
     font-weight: 800;
     text-transform: uppercase;
@@ -424,7 +447,7 @@
   }
 
   .section-num {
-    font-family: 'Bebas Neue', sans-serif;
+    font-family: 'Playfair Display', serif;
     font-size: 1.4rem;
     color: var(--accent-red);
     letter-spacing: 2px;
@@ -442,7 +465,7 @@
   .is-scene-visible .section-rule { transform: scaleX(1); }
 
   .section-title {
-    font-family: 'Fraunces', serif;
+    font-family: 'Playfair Display', serif;
     font-size: clamp(2.4rem, 4.5vw, 5rem);
     font-weight: 600;
     line-height: 1.1;
@@ -494,7 +517,7 @@
   .beat-cell:hover { background: var(--paper-warm); }
 
   .beat-num {
-    font-family: 'Bebas Neue', sans-serif;
+    font-family: 'Playfair Display', serif;
     font-size: 5rem;
     line-height: 1;
     color: var(--accent-yellow);
@@ -503,7 +526,7 @@
   }
 
   .beat-title {
-    font-family: 'Fraunces', serif;
+    font-family: 'Playfair Display', serif;
     font-size: 1.8rem;
     font-weight: 600;
     color: var(--ink);
@@ -561,7 +584,7 @@
   .project-card:hover::after { width: 100%; }
 
   .card-number {
-    font-family: 'Bebas Neue', sans-serif;
+    font-family: 'Playfair Display', serif;
     font-size: 5rem;
     line-height: 1;
     color: var(--paper-warm);
@@ -582,7 +605,7 @@
   }
 
   .card-title {
-    font-family: 'Fraunces', serif;
+    font-family: 'Playfair Display', serif;
     font-size: clamp(1.8rem, 2.5vw, 2.4rem);
     font-weight: 600;
     color: var(--ink);
@@ -667,7 +690,7 @@
   }
 
   .track-progress {
-    font-family: 'Bebas Neue', sans-serif;
+    font-family: 'Playfair Display', serif;
     font-size: 1.1rem;
     letter-spacing: 2px;
     color: var(--ink-muted);
@@ -746,7 +769,7 @@
   }
 
   .timeline-title {
-    font-family: 'Fraunces', serif;
+    font-family: 'Playfair Display', serif;
     font-size: 1.6rem;
     font-weight: 600;
     color: var(--ink);
@@ -806,7 +829,7 @@
     white-space: pre;
     position: absolute;
     right: -0.05em; bottom: -0.1em;
-    font-family: 'Bebas Neue', sans-serif;
+    font-family: 'Playfair Display', serif;
     font-size: clamp(10vw, 14vw, 18vw);
     line-height: 0.85;
     color: transparent;
@@ -816,7 +839,7 @@
   }
 
   .contact-title {
-    font-family: 'Fraunces', serif;
+    font-family: 'Playfair Display', serif;
     font-size: clamp(3rem, 6vw, 6rem);
     font-weight: 600;
     line-height: 1.05;
