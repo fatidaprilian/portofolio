@@ -158,8 +158,8 @@ const scrollTo = (id) => {
   const el = document.getElementById(id)
   if (!el) return
   
-  if (isReducedMotion()) {
-    el.scrollIntoView({ behavior: 'auto', block: 'start' })
+  if (isReducedMotion() || window.innerWidth < 1024) {
+    el.scrollIntoView({ behavior: 'smooth', block: 'start' })
     return
   }
 
@@ -282,17 +282,21 @@ onMounted(() => {
     setTimeout(() => {
       const wrapper = scrollWrapper.value
       if (wrapper) {
-        gsap.to(wrapper, {
-          x: () => -(wrapper.scrollWidth - window.innerWidth),
-          ease: "none",
-          scrollTrigger: {
-            trigger: ".horizontal-scroll-container",
-            pin: true,
-            scrub: 1,
-            end: () => "+=" + (wrapper.scrollWidth - window.innerWidth),
-            invalidateOnRefresh: true
-          }
-        })
+        let mm = gsap.matchMedia();
+        
+        mm.add("(min-width: 1024px)", () => {
+          gsap.to(wrapper, {
+            x: () => -(wrapper.scrollWidth - window.innerWidth),
+            ease: "none",
+            scrollTrigger: {
+              trigger: ".horizontal-scroll-container",
+              pin: true,
+              scrub: 1,
+              end: () => "+=" + (wrapper.scrollWidth - window.innerWidth),
+              invalidateOnRefresh: true
+            }
+          })
+        });
       }
     }, 100)
   }

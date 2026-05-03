@@ -253,6 +253,25 @@
   }
   .horizontal-section::-webkit-scrollbar { display: none; }
 
+  @media (max-width: 1023px) {
+    .horizontal-scroll-container {
+      overflow: visible;
+    }
+    .horizontal-scroll-wrapper {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+    .horizontal-section {
+      width: 100%;
+      height: auto;
+      min-height: 100vh;
+      overflow-y: visible;
+      padding-top: 60px;
+      padding-bottom: 60px;
+    }
+  }
+
   .page-section {
     padding: clamp(40px, 6vw, 80px) clamp(24px, 6vw, 80px); /* Reduced vertical padding for 100vh fit */
     position: relative;
