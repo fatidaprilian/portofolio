@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "agentic-senior-core": {
+      "command": "node",
+      "args": [
+        "./scripts/mcp-server.mjs"
+      ],
+      "cwd": "${workspaceFolder}"
+    }
+  }
+}

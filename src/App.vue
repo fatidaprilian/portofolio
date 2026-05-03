@@ -1,559 +1,627 @@
 <script setup>
-import { onMounted, onUnmounted, ref } from 'vue'
-import { ChevronUp } from 'lucide-vue-next'
-import Hero from './components/Hero.vue'
-import MarqueeStats from './components/MarqueeStats.vue'
-import CapabilityMatrix from './components/CapabilityMatrix.vue'
-import CareerStory from './components/CareerStory.vue'
-import StudioApproach from './components/StudioApproach.vue'
-import ArchitectureSnapshot from './components/ArchitectureSnapshot.vue'
-import ProjectGrid from './components/ProjectGrid.vue'
-import Contact from './components/Contact.vue'
-import ClosingCtaStrip from './components/ClosingCtaStrip.vue'
-import BottomDock from './components/BottomDock.vue'
-import CustomCursor from './components/CustomCursor.vue'
+import { computed, onMounted, onUnmounted, ref } from 'vue'
 import Lenis from '@studio-freight/lenis'
+import gsap from 'gsap'
+import ScrollTrigger from 'gsap/ScrollTrigger'
+import {
+  ArrowRight,
+  ArrowUpRight,
+  ChevronLeft,
+  ChevronRight,
+  Github,
+  Linkedin,
+  Mail,
+  Phone,
+} from 'lucide-vue-next'
+import { getCareerProfileByLanguage } from './data/careerProfile'
+import { getProjectsByLanguage } from './data/projects'
 
+// ─── State ───────────────────────────────────────────
 const currentYear = new Date().getFullYear()
-// Initialize from sessionStorage immediately to avoid single-frame flash
-const isPageLoading = ref(
-  typeof window !== 'undefined' ? !sessionStorage.getItem('portfolio-loader-seen') : true
-)
-const loadingProgressPercentage = ref(0)
-const currentLanguage = ref('id')
-const isScrollTopVisible = ref(false)
-const activeGreetingIndex = ref(0)
-const shuffledGreetings = ref([])
-const isFontLoaded = ref(false)
-const isUltraSlowNetwork = ref(false)
+const lang = ref('id')
+const activeChapter = ref('home')
+const scrollProgress = ref(0)
+const isScrolled = ref(false)
+const trackRef = ref(null)
+const trackIndex = ref(0)
+const isDragging = ref(false)
 
-const heroAvatarUrl = '/avatar-github.jpg'
-const LOADER_MIN_MS = 900
-const LOADER_MAX_MS = 3200
-const LOADER_ASSET_TIMEOUT_MS = 2200
-const ULTRA_SLOW_EFFECTIVE_TYPES = ['slow-2g', '2g']
+const chapterIds = ['home', 'process', 'projects', 'career', 'contact']
 
-const greetings = [
-  'Hello',
-  'Halo',
-  'Nǐ hǎo',
-  'Bonjour',
-  'Hola',
-  'Ciao',
-  'Guten Tag',
-  'Namaste',
-  'Konnichiwa',
-  'Annyeong',
-  'Salam',
-  'Sawasdee',
-  'Merhaba',
-  'Shalom',
-  'Aloha'
-]
-
-const shuffleGreetingOrder = (greetingItems) => {
-  const firstItem = greetingItems[0]
-  const restItems = [...greetingItems.slice(1)]
-  for (let currentIndex = restItems.length - 1; currentIndex > 0; currentIndex -= 1) {
-    const randomIndex = Math.floor(Math.random() * (currentIndex + 1))
-    const currentItem = restItems[currentIndex]
-    restItems[currentIndex] = restItems[randomIndex]
-    restItems[randomIndex] = currentItem
-  }
-  return [firstItem, ...restItems]
-}
-
-const copyByLanguage = {
+// ─── Copy ─────────────────────────────────────────────
+const copy = {
   id: {
-    preparingPortfolio: 'Menyiapkan portofolio',
-    footerTagline: 'Dibuat dengan Vue, dirancang dengan mindset produk.',
-    quickLinks: 'Navigasi',
-    connect: 'Hubungi',
-    home: 'Beranda',
-    work: 'Proyek',
-    contact: 'Kontak',
-    repositories: 'Repositori'
+    skip: 'Lewati ke konten utama',
+    eyebrow: 'Creative Developer Portfolio',
+    role: 'Designer-minded developer',
+    heroLine1: 'Produk yang',
+    heroLine2: 'bercerita',
+    heroLine3: 'sendiri.',
+    heroBody: 'Saya membangun web product dengan rasa desain, struktur teknis, dan proof-of-work yang bisa diperiksa.',
+    ctaView: 'Lihat Proyek',
+    ctaGithub: 'GitHub',
+    processNum: '02',
+    processLabel: 'Process',
+    processTitle: 'Dari brief ke sistem yang bisa dipakai.',
+    processBody: 'Setiap chapter kerja dibaca sebagai adegan: konteks, constraint, keputusan, dan hasil.',
+    projectsNum: '03',
+    projectsLabel: 'Projects',
+    projectsTitle: 'Proyek sebagai chapter,',
+    projectsTitleEm: 'bukan kartu katalog.',
+    openingCredits: 'Opening Credits',
+    technicalBreakdown: 'Technical Breakdown',
+    constraint: 'Constraint',
+    decision: 'Decision',
+    outcome: 'Outcome',
+    source: 'Lihat Source',
+    careerNum: '04',
+    careerLabel: 'Career',
+    careerTitle: 'Timeline',
+    careerTitleEm: 'produksi.',
+    careerBody: 'Perjalanan, riset, dan stack sebagai continuity notes.',
+    contactNum: '05',
+    contactLabel: 'Contact',
+    contactTitle: 'Mari mulai',
+    contactTitleEm: 'kolaborasi.',
+    contactBody: 'Kalau butuh developer yang bisa ikut mikir produk, motion, dan struktur engineering.',
+    sendEmail: 'Kirim Email',
+    phone: 'Telepon',
+    linkedin: 'LinkedIn',
+    github: 'GitHub',
+    footerText: 'Dibangun dengan Vue — disusun sebagai editorial.',
+    rail: { home: 'Opening', process: 'Process', projects: 'Projects', career: 'Career', contact: 'Contact' },
+    beats: [
+      { num: '01', title: 'Intent', body: 'Membaca tujuan produk dan batasan sebelum memilih bentuk visual atau teknis.' },
+      { num: '02', title: 'System', body: 'Membentuk alur, state, dan struktur supaya UI tidak hanya terlihat bagus.' },
+      { num: '03', title: 'Motion', body: 'Gerak dipakai untuk continuity, feedback, dan hierarchy — bukan dekorasi.' },
+      { num: '04', title: 'Proof', body: 'Hasil akhir tetap bisa dilacak lewat repository, constraint, keputusan, dan outcome.' },
+    ],
   },
   en: {
-    preparingPortfolio: 'Preparing portfolio',
-    footerTagline: 'Built with Vue, crafted with product mindset.',
-    quickLinks: 'Quick Links',
-    connect: 'Connect',
-    home: 'Home',
-    work: 'Work',
-    contact: 'Contact',
-    repositories: 'Repositories'
-  }
+    skip: 'Skip to main content',
+    eyebrow: 'Creative Developer Portfolio',
+    role: 'Designer-minded developer',
+    heroLine1: 'Products that',
+    heroLine2: 'tell their own',
+    heroLine3: 'story.',
+    heroBody: 'I build web products with design taste, technical structure, and inspectable proof-of-work.',
+    ctaView: 'View Projects',
+    ctaGithub: 'GitHub',
+    processNum: '02',
+    processLabel: 'Process',
+    processTitle: 'From brief to usable system.',
+    processBody: 'Every work chapter is read as a scene: context, constraint, decision, and outcome.',
+    projectsNum: '03',
+    projectsLabel: 'Projects',
+    projectsTitle: 'Projects as chapters,',
+    projectsTitleEm: 'not catalogue cards.',
+    openingCredits: 'Opening Credits',
+    technicalBreakdown: 'Technical Breakdown',
+    constraint: 'Constraint',
+    decision: 'Decision',
+    outcome: 'Outcome',
+    source: 'View Source',
+    careerNum: '04',
+    careerLabel: 'Career',
+    careerTitle: 'Production',
+    careerTitleEm: 'timeline.',
+    careerBody: 'Experience, research, and stack as continuity notes.',
+    contactNum: '05',
+    contactLabel: 'Contact',
+    contactTitle: 'Let\'s start',
+    contactTitleEm: 'collaborating.',
+    contactBody: 'If you need a developer who thinks through product, motion, and engineering structure.',
+    sendEmail: 'Send Email',
+    phone: 'Phone',
+    linkedin: 'LinkedIn',
+    github: 'GitHub',
+    footerText: 'Built with Vue — staged as editorial.',
+    rail: { home: 'Opening', process: 'Process', projects: 'Projects', career: 'Career', contact: 'Contact' },
+    beats: [
+      { num: '01', title: 'Intent', body: 'Read product goals and constraints before choosing visual or technical form.' },
+      { num: '02', title: 'System', body: 'Shape flow, state, and structure so the UI is not only good looking.' },
+      { num: '03', title: 'Motion', body: 'Motion for continuity, feedback, and hierarchy — not empty decoration.' },
+      { num: '04', title: 'Proof', body: 'Final result stays traceable through repository, constraint, decision, and outcome.' },
+    ],
+  },
 }
 
-let revealObserver
-let sectionScrollObserver
-let loadingProgressInterval
-let loadingDoneTimeout
-let loadingGreetingInterval
-let loadingGreetingTimeout
-let loadingMinTimeout
-let loadingMaxTimeout
-let revealSafetyTimeout
-let lenisInstance = null
-let lenisAnimationFrameId = null
-let networkConnection = null
-let handleNetworkConnectionChange = null
+const c = computed(() => copy[lang.value])
+const projects = computed(() => getProjectsByLanguage(lang.value))
+const profile = computed(() => getCareerProfileByLanguage(lang.value))
+const railChapters = computed(() =>
+  chapterIds.map((id, i) => ({ id, label: c.value.rail[id], num: String(i + 1).padStart(2, '0') }))
+)
+const trackTotal = computed(() => projects.value.length)
 
-let isLoaderMinElapsed = false
-let isLoaderAssetsReady = false
-let isLoaderFinalized = false
+// ─── Helpers ──────────────────────────────────────────
+const isReducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
-let isAppScrollScheduled = false
+const splitIntoWords = (text) =>
+  text.split(' ').map((w) => ({ word: w + '\u00A0' }))
 
-const updateScrollUiState = () => {
-  if (isAppScrollScheduled) return
-  isAppScrollScheduled = true
-  requestAnimationFrame(() => {
-    isScrollTopVisible.value = window.scrollY > 340
-    isAppScrollScheduled = false
+// ─── Scroll state ─────────────────────────────────────
+let scrollRafId = null
+const updateScroll = () => {
+  if (scrollRafId) return
+  scrollRafId = requestAnimationFrame(() => {
+    const max = document.documentElement.scrollHeight - window.innerHeight
+    scrollProgress.value = max > 0 ? Math.min(100, (window.scrollY / max) * 100) : 0
+    isScrolled.value = window.scrollY > 40
+    scrollRafId = null
   })
 }
 
-const scrollToTop = () => {
-  window.scrollTo({ top: 0, behavior: 'smooth' })
+// ─── Navigation ───────────────────────────────────────
+const scrollTo = (id) => {
+  const el = document.getElementById(id)
+  if (el) el.scrollIntoView({ behavior: isReducedMotion() ? 'auto' : 'smooth', block: 'start' })
 }
 
-const clearLoadingTimers = () => {
-  if (loadingProgressInterval) { clearInterval(loadingProgressInterval); loadingProgressInterval = null }
-  if (loadingDoneTimeout) { clearTimeout(loadingDoneTimeout); loadingDoneTimeout = null }
-  if (loadingGreetingInterval) { clearInterval(loadingGreetingInterval); loadingGreetingInterval = null }
-  if (loadingGreetingTimeout) { clearTimeout(loadingGreetingTimeout); loadingGreetingTimeout = null }
-  if (loadingMinTimeout) { clearTimeout(loadingMinTimeout); loadingMinTimeout = null }
-  if (loadingMaxTimeout) { clearTimeout(loadingMaxTimeout); loadingMaxTimeout = null }
+const toggleLang = () => {
+  lang.value = lang.value === 'id' ? 'en' : 'id'
+  localStorage.setItem('portfolio-lang', lang.value)
 }
 
-const applyRuntimeMotionMode = () => {
-  document.documentElement.classList.toggle('runtime-reduced-motion', isUltraSlowNetwork.value)
+// ─── Project track drag ───────────────────────────────
+let dragStartX = 0
+let dragScrollLeft = 0
+
+const onTrackMouseDown = (e) => {
+  isDragging.value = true
+  dragStartX = e.pageX - trackRef.value.offsetLeft
+  dragScrollLeft = trackRef.value.scrollLeft
 }
 
-const detectUltraSlowNetwork = () => {
-  if (typeof navigator === 'undefined') {
-    isUltraSlowNetwork.value = false
-    return
-  }
-
-  const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection
-  networkConnection = connection ?? null
-
-  if (!connection) {
-    isUltraSlowNetwork.value = false
-    return
-  }
-
-  const effectiveType = (connection.effectiveType || '').toLowerCase()
-  isUltraSlowNetwork.value = Boolean(connection.saveData) || ULTRA_SLOW_EFFECTIVE_TYPES.includes(effectiveType)
+const onTrackMouseMove = (e) => {
+  if (!isDragging.value) return
+  e.preventDefault()
+  const x = e.pageX - trackRef.value.offsetLeft
+  trackRef.value.scrollLeft = dragScrollLeft - (x - dragStartX)
 }
 
-const withTimeout = (promise, timeoutMs, fallbackValue) => new Promise((resolve) => {
-  let isResolved = false
+const stopDrag = () => { isDragging.value = false }
 
-  const finish = (value) => {
-    if (isResolved) return
-    isResolved = true
-    clearTimeout(timeoutHandle)
-    resolve(value)
-  }
+const scrollTrack = (dir) => {
+  if (!trackRef.value) return
+  const card = trackRef.value.querySelector('.project-card')
+  const cardW = card ? card.offsetWidth + 24 : 400
+  trackRef.value.scrollBy({ left: dir * cardW, behavior: 'smooth' })
+  trackIndex.value = Math.max(0, Math.min(trackTotal.value - 1, trackIndex.value + dir))
+}
 
-  const timeoutHandle = setTimeout(() => {
-    finish(fallbackValue)
-  }, timeoutMs)
+// ─── Custom cursor ────────────────────────────────────
+let cursorEl = null
+let cursorRafId = null
+let mouseX = -100, mouseY = -100
+let curX = -100, curY = -100
 
-  promise
-    .then((value) => finish(value))
-    .catch(() => finish(fallbackValue))
-})
+const animateCursor = () => {
+  curX += (mouseX - curX) * 0.15
+  curY += (mouseY - curY) * 0.15
+  if (cursorEl) cursorEl.style.transform = `translate(calc(${curX}px - 50%), calc(${curY}px - 50%))`
+  cursorRafId = requestAnimationFrame(animateCursor)
+}
 
-const preloadImageWithTimeout = (imageUrl, timeoutMs) => new Promise((resolve) => {
-  const image = new Image()
-  let isResolved = false
+const onMouseMove = (e) => {
+  mouseX = e.clientX
+  mouseY = e.clientY
+}
 
-  const finish = (didLoad) => {
-    if (isResolved) return
-    isResolved = true
-    image.onload = null
-    image.onerror = null
-    clearTimeout(timeoutHandle)
-    resolve(didLoad)
-  }
+const setCursorHover = (v) => {
+  if (cursorEl) cursorEl.classList.toggle('is-hovering', v)
+}
 
-  const timeoutHandle = setTimeout(() => {
-    finish(false)
-  }, timeoutMs)
+// ─── Observers ────────────────────────────────────────
+let sceneObs = null
+let revealObs = null
 
-  image.onload = () => finish(true)
-  image.onerror = () => finish(false)
-  image.decoding = 'async'
-  image.src = imageUrl
-})
-
-const initializeRevealObservers = () => {
-  const revealElements = document.querySelectorAll('[data-reveal]')
-  revealObserver = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('is-visible')
-          revealObserver.unobserve(entry.target)
-        }
-      })
-    },
-    { threshold: 0.01, rootMargin: '80px 0px 12% 0px' }
+const initObservers = () => {
+  sceneObs = new IntersectionObserver(
+    (entries) => entries.forEach((e) => {
+      const id = e.target.id
+      if (e.isIntersecting) {
+        if (id && chapterIds.includes(id)) activeChapter.value = id
+        e.target.classList.add('is-scene-visible')
+      }
+    }),
+    { threshold: 0.2, rootMargin: '-10% 0px -40% 0px' }
   )
-  revealElements.forEach((elementItem) => revealObserver.observe(elementItem))
+  document.querySelectorAll('[data-scene]').forEach((el) => sceneObs.observe(el))
 
-  const sectionElements = document.querySelectorAll('[data-scroll-section]')
-  sectionScrollObserver = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('is-inview')
-          sectionScrollObserver.unobserve(entry.target)
-        }
-      })
-    },
-    { threshold: 0.01, rootMargin: '80px 0px 20% 0px' }
+  revealObs = new IntersectionObserver(
+    (entries) => entries.forEach((e) => {
+      if (e.isIntersecting) {
+        e.target.classList.add('is-visible')
+        revealObs.unobserve(e.target)
+      }
+    }),
+    { threshold: 0.06 }
   )
-  sectionElements.forEach((sectionElement) => sectionScrollObserver.observe(sectionElement))
+  document.querySelectorAll('[data-reveal]').forEach((el) => revealObs.observe(el))
 
-  // Safety net: force all sections visible after 4s to prevent invisible content
-  revealSafetyTimeout = setTimeout(() => {
-    document.querySelectorAll('[data-scroll-section]:not(.is-inview)').forEach((sectionElement) => {
-      sectionElement.classList.add('is-inview')
-    })
-    document.querySelectorAll('[data-reveal]:not(.is-visible)').forEach((revealElement) => {
-      revealElement.classList.add('is-visible')
-    })
-  }, 4000)
+  // Fallback reveal
+  setTimeout(() => {
+    document.querySelectorAll('[data-reveal]:not(.is-visible)').forEach((el) =>
+      el.classList.add('is-visible')
+    )
+  }, 2600)
 }
 
-const runPageLoader = () => {
-  const hasSeenLoader = sessionStorage.getItem('portfolio-loader-seen')
-  if (hasSeenLoader) {
-    isPageLoading.value = false
-    loadingProgressPercentage.value = 100
-    // On refresh/return visit: force everything visible immediately.
-    // Browser scroll restoration races with IntersectionObserver, so
-    // relying on observers here causes invisible sections mid-page.
-    document.querySelectorAll('[data-scroll-section]').forEach((sectionElement) => {
-      sectionElement.classList.add('is-inview')
-    })
-    document.querySelectorAll('[data-reveal]').forEach((revealElement) => {
-      revealElement.classList.add('is-visible')
-    })
+// ─── Word stagger (hero) ──────────────────────────────
+const triggerHeroWords = () => {
+  if (isReducedMotion()) {
+    document.querySelectorAll('.word-reveal-inner').forEach((el) => el.classList.add('is-visible'))
+    document.querySelectorAll('.eyebrow-line').forEach((el) => el.classList.add('is-drawn'))
     return
   }
-
-  shuffledGreetings.value = greetings
-  activeGreetingIndex.value = 0
-  isLoaderMinElapsed = false
-  isLoaderAssetsReady = false
-  isLoaderFinalized = false
-
-  const loaderMinMs = isUltraSlowNetwork.value ? 420 : LOADER_MIN_MS
-  const loaderMaxMs = isUltraSlowNetwork.value ? 1800 : LOADER_MAX_MS
-  const loaderAssetTimeoutMs = isUltraSlowNetwork.value ? 950 : LOADER_ASSET_TIMEOUT_MS
-
-  const finalizeLoader = () => {
-    if (isLoaderFinalized) return
-    isLoaderFinalized = true
-
-    loadingProgressPercentage.value = 100
-    sessionStorage.setItem('portfolio-loader-seen', 'true')
-
-    loadingDoneTimeout = setTimeout(() => {
-      isPageLoading.value = false
-      clearLoadingTimers()
-      initializeRevealObservers()
-    }, 220)
-  }
-
-  const tryFinalizeLoader = () => {
-    if (isLoaderMinElapsed && isLoaderAssetsReady) {
-      finalizeLoader()
-    }
-  }
-
-  if (!isUltraSlowNetwork.value) {
-    loadingGreetingTimeout = setTimeout(() => {
-      // Array guarantees 'Hello' is at index 0
-      shuffledGreetings.value = shuffleGreetingOrder(greetings)
-      // Instantly move to index 1 so we don't hold 'Hello' for +140ms extra
-      activeGreetingIndex.value = 1
-
-      loadingGreetingInterval = setInterval(() => {
-        activeGreetingIndex.value = (activeGreetingIndex.value + 1) % shuffledGreetings.value.length
-      }, 140)
-    }, 500)
-  }
-
-  loadingProgressInterval = setInterval(() => {
-    const progressCap = isLoaderAssetsReady ? 98 : 92
-    if (loadingProgressPercentage.value >= progressCap) return
-    const nextProgressValue = loadingProgressPercentage.value + (isLoaderAssetsReady ? 3 : 2)
-    loadingProgressPercentage.value = Math.min(nextProgressValue, progressCap)
-  }, isUltraSlowNetwork.value ? 56 : 80)
-
-  loadingMinTimeout = setTimeout(() => {
-    isLoaderMinElapsed = true
-    if (loadingProgressPercentage.value < 58) {
-      loadingProgressPercentage.value = 58
-    }
-    tryFinalizeLoader()
-  }, loaderMinMs)
-
-  loadingMaxTimeout = setTimeout(() => {
-    isLoaderAssetsReady = true
-    isLoaderMinElapsed = true
-    finalizeLoader()
-  }, loaderMaxMs)
-
-  const fontReadinessPromise = typeof document !== 'undefined' && document.fonts
-    ? withTimeout(document.fonts.ready.then(() => true), loaderAssetTimeoutMs, false)
-    : Promise.resolve(true)
-
-  const imageReadinessPromise = preloadImageWithTimeout(heroAvatarUrl, loaderAssetTimeoutMs)
-
-  Promise.allSettled([fontReadinessPromise, imageReadinessPromise]).then((results) => {
-    const isFontReady = results[0].status === 'fulfilled' ? Boolean(results[0].value) : false
-    if (isFontReady) {
-      isFontLoaded.value = true
-    }
-    isLoaderAssetsReady = true
-    tryFinalizeLoader()
+  setTimeout(() => {
+    document.querySelectorAll('.eyebrow-line').forEach((el) => el.classList.add('is-drawn'))
+  }, 200)
+  document.querySelectorAll('.word-reveal-inner').forEach((el, i) => {
+    setTimeout(() => el.classList.add('is-visible'), 300 + i * 60)
   })
 }
 
-const getActiveCopy = () => copyByLanguage[currentLanguage.value]
-const getActiveGreeting = () => shuffledGreetings.value[activeGreetingIndex.value] ?? 'Hello'
+// ─── Lenis & GSAP ─────────────────────────────────────
+let lenis = null
+let lenisRaf = null
 
-const toggleLanguage = () => {
-  const nextLanguage = currentLanguage.value === 'id' ? 'en' : 'id'
-  currentLanguage.value = nextLanguage
-  localStorage.setItem('portfolio-language', nextLanguage)
-}
-
+// ─── Lifecycle ────────────────────────────────────────
 onMounted(() => {
-  detectUltraSlowNetwork()
-  applyRuntimeMotionMode()
+  const saved = localStorage.getItem('portfolio-lang')
+  if (saved === 'id' || saved === 'en') lang.value = saved
 
-  if (networkConnection && typeof networkConnection.addEventListener === 'function') {
-    handleNetworkConnectionChange = () => {
-      detectUltraSlowNetwork()
-      applyRuntimeMotionMode()
-    }
-    networkConnection.addEventListener('change', handleNetworkConnectionChange)
-  }
+  // Custom cursor
+  cursorEl = document.getElementById('cursor')
+  if (cursorEl && window.matchMedia('(pointer: fine)').matches) {
+    window.addEventListener('mousemove', onMouseMove)
+    animateCursor()
 
-  if (typeof document !== 'undefined' && document.fonts) {
-    document.fonts.ready.then(() => {
-      isFontLoaded.value = true
+    document.querySelectorAll('a, button, .project-card, .track-arrow, .nav-icon-btn').forEach((el) => {
+      el.addEventListener('mouseenter', () => setCursorHover(true))
+      el.addEventListener('mouseleave', () => setCursorHover(false))
     })
-    // Safe fallback in case fonts API acts up
-    setTimeout(() => { isFontLoaded.value = true }, 800)
-  } else {
-    isFontLoaded.value = true
   }
 
-  const shouldReduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-  if (!shouldReduceMotion && !isUltraSlowNetwork.value) {
-    // Initialize Lenis for smooth premium scroll
-    lenisInstance = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      smooth: true,
-    })
-
-    const runLenisFrame = (time) => {
-      if (!lenisInstance) return
-      lenisInstance.raf(time)
-      lenisAnimationFrameId = requestAnimationFrame(runLenisFrame)
-    }
-    lenisAnimationFrameId = requestAnimationFrame(runLenisFrame)
+  // Lenis smooth scroll
+  if (!isReducedMotion()) {
+    lenis = new Lenis({ duration: 1.1, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) })
+    const raf = (time) => { if (!lenis) return; lenis.raf(time); lenisRaf = requestAnimationFrame(raf) }
+    lenisRaf = requestAnimationFrame(raf)
   }
 
-  const storedLanguage = localStorage.getItem('portfolio-language')
-  if (storedLanguage === 'id' || storedLanguage === 'en') {
-    currentLanguage.value = storedLanguage
+  // GSAP
+  if (!isReducedMotion()) {
+    gsap.registerPlugin(ScrollTrigger)
   }
 
-  runPageLoader()
-  updateScrollUiState()
-  window.addEventListener('scroll', updateScrollUiState)
-  window.addEventListener('resize', updateScrollUiState)
+  initObservers()
+  triggerHeroWords()
+  updateScroll()
+  window.addEventListener('scroll', updateScroll, { passive: true })
+  window.addEventListener('resize', updateScroll)
+
+  // Drag events
+  window.addEventListener('mouseup', stopDrag)
+  window.addEventListener('mouseleave', stopDrag)
 })
 
 onUnmounted(() => {
-  clearLoadingTimers()
-  document.documentElement.classList.remove('runtime-reduced-motion')
-  if (
-    networkConnection
-    && handleNetworkConnectionChange
-    && typeof networkConnection.removeEventListener === 'function'
-  ) {
-    networkConnection.removeEventListener('change', handleNetworkConnectionChange)
-  }
-  window.removeEventListener('scroll', updateScrollUiState)
-  window.removeEventListener('resize', updateScrollUiState)
-  if (revealObserver) revealObserver.disconnect()
-  if (sectionScrollObserver) sectionScrollObserver.disconnect()
-  if (revealSafetyTimeout) clearTimeout(revealSafetyTimeout)
-  if (lenisAnimationFrameId) cancelAnimationFrame(lenisAnimationFrameId)
-  if (lenisInstance) {
-    lenisInstance.destroy()
-    lenisInstance = null
-  }
+  window.removeEventListener('scroll', updateScroll)
+  window.removeEventListener('resize', updateScroll)
+  window.removeEventListener('mousemove', onMouseMove)
+  window.removeEventListener('mouseup', stopDrag)
+  window.removeEventListener('mouseleave', stopDrag)
+  if (scrollRafId) cancelAnimationFrame(scrollRafId)
+  if (cursorRafId) cancelAnimationFrame(cursorRafId)
+  if (lenisRaf) cancelAnimationFrame(lenisRaf)
+  if (lenis) { lenis.destroy(); lenis = null }
+  if (sceneObs) sceneObs.disconnect()
+  if (revealObs) revealObs.disconnect()
 })
 </script>
 
 <template>
-  <div class="font-sans antialiased text-text relative min-h-screen">
-    
-    <!-- ─── Skip-link for keyboard navigation ─── -->
-    <a href="#main-content" class="skip-link">
-      {{ currentLanguage === 'id' ? 'Lewati ke konten utama' : 'Skip to main content' }}
-    </a>
+  <!-- Custom cursor -->
+  <div id="cursor" aria-hidden="true"></div>
 
-    <CustomCursor />
+  <div class="editorial-app" :style="{ '--scroll-progress': `${scrollProgress}%` }">
+    <a href="#main-content" class="skip-link">{{ c.skip }}</a>
 
-    <!-- ─── Preloader (dark) ─── -->
-    <transition
-      enter-active-class="transition duration-300 ease-out"
-      enter-from-class="opacity-0"
-      enter-to-class="opacity-100"
-      leave-active-class="transition duration-500 ease-in"
-      leave-from-class="opacity-100"
-      leave-to-class="opacity-0"
-    >
-      <div v-if="isPageLoading" class="preloader fixed inset-0 z-[100] flex items-center justify-center">
-        <div class="w-[min(440px,84vw)]">
-          <p class="text-[0.65rem] tracking-[0.26em] uppercase text-white/35">Farid Eka Aprilian</p>
-          <div class="mt-4 h-[72px] md:h-[88px] flex items-center relative overflow-hidden transition-opacity duration-300" :style="{ opacity: isFontLoaded ? 1 : 0 }">
-            <transition name="hello-crossfade">
-              <p :key="`hello-${activeGreetingIndex}`" class="hello-loading-word absolute inset-y-0 flex items-center whitespace-nowrap">{{ getActiveGreeting() }}</p>
-            </transition>
+    <!-- Progress bar (top) -->
+    <div class="progress-bar" aria-hidden="true"></div>
+
+    <!-- Nav -->
+    <header class="site-nav" :class="{ 'is-scrolled': isScrolled }">
+      <a href="#home" class="brand-mark" @click.prevent="scrollTo('home')">
+        <span class="brand-dot"></span>
+        Farid Eka Aprilian
+      </a>
+      <div class="nav-actions">
+        <a
+          href="https://github.com/fatidaprilian"
+          target="_blank"
+          rel="noreferrer"
+          class="nav-icon-btn"
+          :aria-label="c.github"
+        >
+          <Github />
+        </a>
+        <a
+          href="https://linkedin.com/in/farid-aprilian"
+          target="_blank"
+          rel="noreferrer"
+          class="nav-icon-btn"
+          :aria-label="c.linkedin"
+        >
+          <Linkedin />
+        </a>
+        <button type="button" class="lang-btn" @click="toggleLang">
+          {{ lang === 'id' ? 'EN' : 'ID' }}
+        </button>
+      </div>
+    </header>
+
+    <!-- Chapter rail (right side, desktop) -->
+    <nav class="chapter-rail" aria-label="Portfolio chapters">
+      <button
+        v-for="ch in railChapters"
+        :key="ch.id"
+        type="button"
+        class="rail-item"
+        :class="{ 'is-active': activeChapter === ch.id }"
+        @click="scrollTo(ch.id)"
+      >
+        {{ ch.label }}
+      </button>
+    </nav>
+
+    <main id="main-content">
+      <!-- ──────── HERO ──────── -->
+      <section id="home" class="hero-section" data-scene>
+        <!-- Ghost chapter number bg -->
+        <div class="hero-bg-number" aria-hidden="true">01</div>
+
+        <div class="hero-content">
+          <!-- Eyebrow with animated line -->
+          <div class="hero-eyebrow">
+            <span class="eyebrow-line" aria-hidden="true"></span>
+            <span class="eyebrow-text">{{ c.eyebrow }}</span>
           </div>
-          <div class="mt-4 preloader-bar">
-            <span class="preloader-bar-progress" :style="{ width: `${loadingProgressPercentage}%` }"></span>
-          </div>
-          <div class="mt-2.5 flex items-center justify-between text-xs text-white/30">
-            <span>{{ getActiveCopy().preparingPortfolio }}</span>
-            <span>{{ loadingProgressPercentage }}%</span>
-          </div>
-          <div class="mt-3 h-2 flex items-center">
-            <span :key="`haptic-${activeGreetingIndex}`" class="hello-haptic-cue" aria-hidden="true"></span>
+
+          <!-- Role tag -->
+          <div class="hero-role-tag">{{ c.role }}</div>
+
+          <!-- Big title — word stagger -->
+          <h1 class="hero-title">
+            <span
+              v-for="(w, i) in splitIntoWords(c.heroLine1)"
+              :key="`l1-${i}`"
+              class="word-reveal"
+            ><span class="word-reveal-inner">{{ w.word }}</span></span>
+            <em><span
+              v-for="(w, i) in splitIntoWords(c.heroLine2)"
+              :key="`l2-${i}`"
+              class="word-reveal"
+            ><span class="word-reveal-inner">{{ w.word }}</span></span></em>
+            <br />
+            <span
+              v-for="(w, i) in splitIntoWords(c.heroLine3)"
+              :key="`l3-${i}`"
+              class="word-reveal"
+            ><span class="word-reveal-inner">{{ w.word }}</span></span>
+          </h1>
+
+          <p class="hero-body" data-reveal>{{ c.heroBody }}</p>
+
+          <div class="hero-actions" data-reveal>
+            <button type="button" class="btn-primary" @click="scrollTo('projects')">
+              <ArrowRight class="btn-icon" aria-hidden="true" />
+              {{ c.ctaView }}
+            </button>
+            <a
+              href="https://github.com/fatidaprilian"
+              target="_blank"
+              rel="noreferrer"
+              class="btn-secondary"
+            >
+              <Github class="btn-icon" aria-hidden="true" />
+              {{ c.ctaGithub }}
+            </a>
           </div>
         </div>
-      </div>
-    </transition>
+      </section>
 
-    <!-- ─── Scroll to top ─── -->
-    <transition
-      enter-active-class="transition duration-300 ease-out"
-      enter-from-class="opacity-0 translate-y-2"
-      enter-to-class="opacity-100 translate-y-0"
-      leave-active-class="transition duration-200 ease-in"
-      leave-from-class="opacity-100 translate-y-0"
-      leave-to-class="opacity-0 translate-y-2"
-    >
-      <button
-        v-if="isScrollTopVisible"
-        type="button"
-        @click="scrollToTop"
-        class="scroll-top-button"
-        aria-label="Scroll to top"
-      >
-        <ChevronUp class="h-4 w-4" />
-      </button>
-    </transition>
+      <!-- ──────── PROCESS ──────── -->
+      <section id="process" class="page-section" data-scene>
+        <div class="section-inner">
+          <div class="section-label" data-reveal>
+            <span class="section-num">{{ c.processNum }}</span>
+            <span class="section-rule" aria-hidden="true"></span>
+          </div>
+          <h2 class="section-title" data-reveal>{{ c.processTitle }}</h2>
+          <p class="section-body" data-reveal>{{ c.processBody }}</p>
 
-    <!-- ─── Language toggle ─ aligned top-right at same level as hero label ─── -->
-    <div class="fixed top-[30px] right-5 md:right-8 lg:right-10 z-50">
-      <button
-        type="button"
-        @click="toggleLanguage"
-        class="text-[0.62rem] tracking-[0.18em] uppercase font-semibold min-h-[44px] px-3.5 py-2 rounded-lg border border-white/[0.14] bg-black/55 text-white/55 hover:text-white/85 hover:border-white/[0.25] transition backdrop-blur-sm"
-        :aria-label="`Switch to ${currentLanguage === 'id' ? 'English' : 'Bahasa Indonesia'}`"
-      >
-        {{ currentLanguage === 'id' ? 'EN' : 'ID' }}
-      </button>
-    </div>
+          <div class="beats-grid">
+            <div
+              v-for="beat in c.beats"
+              :key="beat.num"
+              class="beat-cell"
+              data-reveal
+            >
+              <span class="beat-num">{{ beat.num }}</span>
+              <h3 class="beat-title">{{ beat.title }}</h3>
+              <p class="beat-body">{{ beat.body }}</p>
+            </div>
+          </div>
+        </div>
+      </section>
 
-    <!-- ─── Bottom dock nav ─── -->
-    <BottomDock :language="currentLanguage" />
+      <!-- ──────── PROJECTS ──────── -->
+      <section id="projects" class="page-section" data-scene>
+        <div class="section-inner">
+          <div class="section-label" data-reveal>
+            <span class="section-num">{{ c.projectsNum }}</span>
+            <span class="section-rule" aria-hidden="true"></span>
+          </div>
+          <h2 class="section-title" data-reveal>
+            {{ c.projectsTitle }} <em>{{ c.projectsTitleEm }}</em>
+          </h2>
 
-    <!-- ─── Main content ─── -->
-    <main id="main-content">
-      <!-- Hero: dark section, no scroll-section wrapper -->
-      <div data-scroll-section class="scroll-section is-inview">
-        <Hero :language="currentLanguage" />
-      </div>
+          <!-- Horizontal track -->
+          <div class="projects-track-wrapper">
+            <div
+              ref="trackRef"
+              class="projects-track"
+              :class="{ 'is-dragging': isDragging }"
+              @mousedown="onTrackMouseDown"
+              @mousemove="onTrackMouseMove"
+              @mouseleave="stopDrag"
+              @mouseup="stopDrag"
+            >
+              <article
+                v-for="(project, idx) in projects"
+                :key="project.title"
+                class="project-card"
+              >
+                <span class="card-number">{{ String(idx + 1).padStart(2, '0') }}</span>
+                <span class="card-role">{{ project.role }} · {{ project.year }}</span>
+                <h3 class="card-title">{{ project.title }}</h3>
+                <p class="card-summary">{{ project.summary }}</p>
 
-      <!-- Marquee stats: dark strip, lives in hero zone -->
-      <div style="background-color: #0d0b0a;">
-        <MarqueeStats :language="currentLanguage" />
-      </div>
+                <div v-if="project.caseStudy" class="card-breakdown">
+                  <div class="breakdown-item">
+                    <span>{{ c.constraint }}</span>
+                    <p>{{ project.caseStudy.constraint }}</p>
+                  </div>
+                  <div class="breakdown-item">
+                    <span>{{ c.decision }}</span>
+                    <p>{{ project.caseStudy.decision }}</p>
+                  </div>
+                  <div class="breakdown-item">
+                    <span>{{ c.outcome }}</span>
+                    <p>{{ project.caseStudy.outcome }}</p>
+                  </div>
+                </div>
 
-      <!-- Color bridge: dark → warm cream -->
-      <div class="color-bridge"></div>
+                <div class="card-tags">
+                  <span v-for="tag in project.tags" :key="tag">{{ tag }}</span>
+                </div>
 
-      <!-- Visual rhythm:
-           Light warm → Light warm → DARK editorial → Light warm → Light warm -->
-      <div data-scroll-section class="scroll-section">
-        <CapabilityMatrix :language="currentLanguage" />
-      </div>
-      <div data-scroll-section class="scroll-section section-warm-alt">
-        <CareerStory :language="currentLanguage" />
-      </div>
-      <div data-scroll-section class="scroll-section section-dark">
-        <StudioApproach :language="currentLanguage" :dark="true" />
-      </div>
-      <div data-scroll-section class="scroll-section">
-        <ArchitectureSnapshot :language="currentLanguage" />
-      </div>
-      <div data-scroll-section class="scroll-section">
-        <ProjectGrid :language="currentLanguage" />
-      </div>
-      <div data-scroll-section class="scroll-section">
-        <Contact :language="currentLanguage" />
-      </div>
+                <a :href="project.link" target="_blank" rel="noreferrer" class="card-link">
+                  {{ c.source }}
+                  <ArrowUpRight />
+                </a>
+              </article>
+            </div>
+          </div>
+
+          <!-- Track navigation -->
+          <div class="track-nav" data-reveal>
+            <span class="track-progress">
+              {{ String(trackIndex + 1).padStart(2, '0') }} / {{ String(trackTotal).padStart(2, '0') }}
+            </span>
+            <div class="track-arrows">
+              <button type="button" class="track-arrow" :aria-label="'Previous'" @click="scrollTrack(-1)">
+                <ChevronLeft />
+              </button>
+              <button type="button" class="track-arrow" :aria-label="'Next'" @click="scrollTrack(1)">
+                <ChevronRight />
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ──────── CAREER ──────── -->
+      <section id="career" class="page-section" data-scene>
+        <div class="section-inner">
+          <div class="section-label" data-reveal>
+            <span class="section-num">{{ c.careerNum }}</span>
+            <span class="section-rule" aria-hidden="true"></span>
+          </div>
+          <h2 class="section-title" data-reveal>
+            {{ c.careerTitle }} <em>{{ c.careerTitleEm }}</em>
+          </h2>
+          <p class="section-body" data-reveal>{{ c.careerBody }}</p>
+
+          <div class="career-grid">
+            <!-- Timeline -->
+            <div class="timeline" data-reveal>
+              <div
+                v-for="item in profile.timelineItems"
+                :key="`${item.period}-${item.title}`"
+                class="timeline-item"
+              >
+                <span class="timeline-period">{{ item.period }}</span>
+                <h3 class="timeline-title">{{ item.title }}</h3>
+                <span class="timeline-role">{{ item.role }}</span>
+                <p class="timeline-desc">{{ item.description }}</p>
+              </div>
+            </div>
+
+            <!-- Skills -->
+            <div class="skills-list" data-reveal>
+              <div
+                v-for="group in profile.skillGroups"
+                :key="group.category"
+                class="skill-group"
+              >
+                <span class="skill-group-label">{{ group.category }}</span>
+                <p class="skill-group-items">{{ group.items.join(' · ') }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ──────── CONTACT ──────── -->
+      <section id="contact" class="page-section" data-scene>
+        <div class="section-inner">
+          <div class="section-label" data-reveal>
+            <span class="section-num">{{ c.contactNum }}</span>
+            <span class="section-rule" aria-hidden="true"></span>
+          </div>
+
+          <div class="contact-inner" data-reveal>
+            <h2 class="contact-title">
+              {{ c.contactTitle }} <em>{{ c.contactTitleEm }}</em>
+            </h2>
+            <p class="contact-body">{{ c.contactBody }}</p>
+            <div class="contact-actions">
+              <a
+                :href="`mailto:${profile.contactActions.emailValue}`"
+                class="btn-primary"
+              >
+                <Mail class="btn-icon" aria-hidden="true" />
+                {{ c.sendEmail }}
+              </a>
+              <a
+                href="https://linkedin.com/in/farid-aprilian"
+                target="_blank"
+                rel="noreferrer"
+                class="btn-secondary"
+              >
+                <Linkedin class="btn-icon" aria-hidden="true" />
+                {{ c.linkedin }}
+              </a>
+              <a
+                :href="`tel:${profile.contactActions.callValue}`"
+                class="btn-secondary"
+              >
+                <Phone class="btn-icon" aria-hidden="true" />
+                {{ c.phone }}
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
     </main>
 
-    <!-- ─── Closing CTA ─── -->
-    <div data-scroll-section class="scroll-section">
-      <ClosingCtaStrip :language="currentLanguage" />
-    </div>
-
-    <!-- ─── Footer ─── -->
-    <footer class="pb-28">
-      <div class="section-shell">
-        <div class="border-t border-[#c9b297] pt-8 grid md:grid-cols-3 gap-6">
-          <div>
-            <p class="font-display text-xl text-[#3e2c23] tracking-wide">Farid Eka Aprilian</p>
-            <p class="text-xs text-muted mt-1">{{ getActiveCopy().footerTagline }}</p>
-            <p class="text-xs text-muted mt-1">&copy; {{ currentYear }}</p>
-          </div>
-
-          <div class="text-sm text-[#4a352a] space-y-2">
-            <p class="text-xs uppercase tracking-[0.16em] text-muted">{{ getActiveCopy().quickLinks }}</p>
-            <a href="#home" class="block underline-link hover:text-[#2f211a] transition">{{ getActiveCopy().home }}</a>
-            <a href="#work" class="block underline-link hover:text-[#2f211a] transition">{{ getActiveCopy().work }}</a>
-            <a href="#contact" class="block underline-link hover:text-[#2f211a] transition">{{ getActiveCopy().contact }}</a>
-          </div>
-
-          <div class="text-sm text-[#4a352a] space-y-2">
-            <p class="text-xs uppercase tracking-[0.16em] text-muted">{{ getActiveCopy().connect }}</p>
-            <a href="https://github.com/fatidaprilian" target="_blank" rel="noreferrer" class="block underline-link hover:text-[#2f211a] transition">GitHub</a>
-            <a href="mailto:faridaprilian214@gmail.com" class="block underline-link hover:text-[#2f211a] transition">Email</a>
-            <a href="https://linkedin.com/in/farid-aprilian" target="_blank" rel="noreferrer" class="block underline-link hover:text-[#2f211a] transition">LinkedIn</a>
-          </div>
-        </div>
-      </div>
+    <footer class="site-footer">
+      <span>{{ c.footerText }}</span>
+      <span>{{ currentYear }}</span>
     </footer>
   </div>
 </template>

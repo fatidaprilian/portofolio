@@ -1,0 +1,11 @@
+{
+  "context_servers": {
+    "agentic-senior-core": {
+      "command": "node",
+      "env": {},
+      "args": [
+        "./scripts/mcp-server.mjs"
+      ]
+    }
+  }
+}

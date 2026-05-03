@@ -1,0 +1,310 @@
+{
+  "mode": "project-specific",
+  "status": "refined-for-ui-implementation",
+  "updatedAt": "2026-05-03",
+  "project": {
+    "name": "portofolio",
+    "domain": "Personal portfolio for a designer-minded creative developer",
+    "runtimeConstraint": "Existing Vue 3 and Vite application with Tailwind CSS 3, Lenis, lucide-vue-next, and local fontsource packages.",
+    "architectureConstraint": "Single-page portfolio experience using existing repo data as content evidence, with no backend or new runtime dependency required for this pass."
+  },
+  "confirmedAssumptions": [
+    "The user selected the Rank 1 Gemini research direction: The Narrative Thread, described as a cinematic narrative concept.",
+    "The current visual direction should be reset from the existing warm editorial portfolio while retaining useful content evidence.",
+    "Repository evidence may inform project chapters, but the design must feel authored as a designer portfolio rather than a GitHub index."
+  ],
+  "researchIntake": {
+    "userSuppliedResearch": "Riset Konsep Visual Portfolio Developer Kreatif.md",
+    "usedSignals": [
+      "chaptered storytelling",
+      "cinematic pacing",
+      "fluid project transitions",
+      "high-end typography",
+      "continuous thread as navigation and progress"
+    ],
+    "fitFiltering": [
+      "Horizontal scroll is translated into vertical chapter progression for accessibility and mobile control.",
+      "WebGL and Three.js claims remain research inspiration only; this pass uses native CSS and existing dependencies.",
+      "Awwwards examples are treated as pattern evidence and not as surfaces to copy."
+    ]
+  },
+  "visualDirection": {
+    "name": "The Narrative Thread",
+    "summary": "A portfolio staged as a cinematic storyboard where one luminous thread connects identity, craft, projects, and contact.",
+    "firstViewportBet": "A diagonal film-thread crossing a black frame, with oversized cinematic type and a director-monitor project preview.",
+    "distinctiveMoves": [
+      "Diagonal light thread that behaves as visual continuity instead of wallpaper.",
+      "Projects framed as chapters with opening credits, constraint, decision, and outcome beats.",
+      "Metadata uses film-production language while the copy remains grounded in real technical work."
+    ]
+  },
+  "motionPaletteDecision": {
+    "productCategorySignal": "creative-developer-portfolio",
+    "decision": "Use high-motion cinematic chapter transitions and a mixed film palette: black reel, ivory subtitle, signal red, oxidized teal, and silver metadata.",
+    "densityDecisionSource": "The user explicitly wants the impressive designer direction first; reduced-motion and slow-network fallbacks keep the experience responsible.",
+    "spatialDecision": "No new 3D or WebGL dependency in this pass. Spatial depth is created with layered film frames, thread transforms, scroll progress, and parallax-like CSS transforms."
+  },
+  "conceptualAnchor": {
+    "name": "Cinematic storyboard thread",
+    "anchorReference": "35mm film strip, director storyboard wall, and projector light path",
+    "agentResearchMode": "user-supplied-research-plus-current-repo-evidence",
+    "sourceDomain": "cinematic-spatial-interface",
+    "specificReferencePoint": "A physical storyboard wall where frames are connected by a marked continuity thread from opening shot to final contact.",
+    "rationale": "The anchor gives structure to storytelling, motion, typography, and project evidence without copying any single portfolio reference.",
+    "signatureMotion": "Scenes enter as if a frame is pulled through a projector gate: slight vertical lift, mask reveal, and thread glow shift over 560ms with reduced-motion fallback.",
+    "typographicDecision": "Fraunces carries cinematic scene titles, Bebas Neue carries poster-scale opening credits, and Manrope carries readable body and technical metadata.",
+    "visualRiskBudget": "High distinctiveness with strict contrast, keyboard, and reduced-motion safeguards.",
+    "motionRiskBudget": "Motion is allowed for hierarchy and continuity; it must not hide content or become required to understand navigation.",
+    "cohesionChecks": [
+      "No dashboard mental model",
+      "Thread motion derives from the film-strip anchor",
+      "Project metadata remains readable without animation"
+    ]
+  },
+  "derivedTokenLogic": {
+    "anchorReference": "35mm film strip, director storyboard wall, and projector light path",
+    "colorDerivationSource": "Black reel for stage, ivory for subtitle legibility, signal red for scene markers, oxidized teal for technical evidence, and silver for metadata.",
+    "spacingDerivationSource": "Large poster openings, narrow subtitle measures, and strong frame gutters follow cinema poster and storyboard wall rhythm.",
+    "typographyDerivationSource": "Display type behaves like opening credits, serif titles behave like chapter cards, body type behaves like production notes, and metadata behaves like slate markings.",
+    "motionDerivationSource": "Projector-gate reveal, chapter advance, and thread glow create continuity; reduced motion exposes all frames immediately.",
+    "validationRule": "Every visible motif must serve identity, project sequencing, navigation, or technical evidence. Decorative lines or glows without story function fail review."
+  },
+  "aiSafeUiAudit": {
+    "status": "completed",
+    "failureDefinition": "A generic portfolio would use a centered hero, equal cards, dark slate gradients, and decorative glow. This direction rejects those.",
+    "interchangeabilityTest": "Renaming the page to a SaaS, agency, or dashboard would break the film thread, chapter credits, and storyboard evidence structure.",
+    "requiredProductSpecificSignals": [
+      "Projects are written as scene chapters with constraint, decision, and outcome.",
+      "The light thread is both progress marker and content connector.",
+      "Technical stack appears as production metadata, not generic badges."
+    ],
+    "paletteExplorationRule": "Use a non-SaaS cinematic palette with strong contrast and a color role for each chapter state.",
+    "backgroundPatternRule": "Lines are allowed only as thread, frame, progress, or storyboard alignment marks."
+  },
+  "colorTruth": {
+    "format": "hex-derived-from-anchor",
+    "paletteRoles": [
+      {
+        "role": "stage",
+        "value": "#070707",
+        "purpose": "cinematic black frame"
+      },
+      {
+        "role": "subtitle",
+        "value": "#f6efe4",
+        "purpose": "primary readable text"
+      },
+      {
+        "role": "signal",
+        "value": "#f24b36",
+        "purpose": "scene marker and call-to-action emphasis"
+      },
+      {
+        "role": "technicalEvidence",
+        "value": "#2fd3c6",
+        "purpose": "stack, proof, and technical metadata"
+      },
+      {
+        "role": "silver",
+        "value": "#b9b3a8",
+        "purpose": "secondary metadata"
+      }
+    ],
+    "productSpecificBehavior": "The thread changes from signal red to oxidized teal when the user moves from story to technical evidence."
+  },
+  "tokenSystem": {
+    "sourceOfTruth": "docs/design-intent.json",
+    "taxonomyOrder": [
+      "primitive",
+      "semantic",
+      "component"
+    ],
+    "requireSemanticAliases": true,
+    "componentTokensConsumeSemantic": true,
+    "forbidDirectComponentPrimitiveBypass": false,
+    "implementationNote": "This repository currently uses Tailwind plus CSS utility classes; this pass defines root CSS variables to reduce future hardcoded color drift."
+  },
+  "crossViewportAdaptation": {
+    "adaptByRecomposition": true,
+    "touchTargetMinPx": 44,
+    "mutationRules": {
+      "mobile": "The diagonal thread becomes a vertical progress spine. Chapters stack with the primary project action near the top and side navigation hidden.",
+      "tablet": "The storyboard rail sits above chapter content while project evidence uses two-column regrouping.",
+      "desktop": "The chapter rail becomes sticky and the hero uses split composition with a director-monitor preview."
+    }
+  },
+  "motionSystem": {
+    "allowMeaningfulMotion": true,
+    "signature": "Projector-gate scene reveal with thread glow shift.",
+    "duration": "220ms for controls, 560ms for chapter reveals, 900ms for opening hero choreography.",
+    "easing": "cubic-bezier(0.16, 1, 0.3, 1)",
+    "reducedMotion": "Disable transforms, marquee drift, and reveal masks; preserve chapter order and all content."
+  },
+  "componentMorphology": {
+    "primarySurfaces": [
+      "cinematic-hero",
+      "chapter-rail",
+      "story-beats",
+      "project-scenes",
+      "career-roll",
+      "contact-frame"
+    ],
+    "stateKeys": [
+      "default",
+      "hover",
+      "focus-visible",
+      "active",
+      "disabled",
+      "loading",
+      "empty",
+      "error",
+      "success",
+      "transition"
+    ],
+    "rules": [
+      "Repeated project chapters may share the film-frame grammar but must vary by chapter metadata and evidence layout.",
+      "Interactive controls use visible focus and minimum 44px target size.",
+      "Cards use tight film-frame radii and never become rounded SaaS panels."
+    ]
+  },
+  "accessibilityPolicy": {
+    "hardComplianceFloor": "WCAG-2.2-AA",
+    "textContrastMinimum": true,
+    "nonTextContrast": true,
+    "useOfColorOnlyProhibited": true,
+    "focusVisible": true,
+    "targetSizeMinimum": true,
+    "keyboardAccess": true,
+    "reflowRequired": true,
+    "statusMessagesAndDynamicStateAccess": true
+  },
+  "designExecutionPolicy": {
+    "representationStrategy": "single-page-cinematic-storyboard",
+    "requireSurfacePlan": true,
+    "requireViewportMutationPlan": true,
+    "requireInteractionStateMatrix": true,
+    "requireSignatureMoveRationale": true,
+    "requireRepoEvidenceAlignment": true,
+    "forbidGenericLayoutFallbackWithoutReason": true
+  },
+  "designExecutionHandoff": {
+    "version": "ui-handoff-v1",
+    "primaryExperienceGoal": "Convince the visitor within the first viewport that the owner is a designer-minded developer with motion taste and grounded engineering proof.",
+    "surfacePlan": [
+      {
+        "surfaceId": "hero",
+        "role": "opening shot",
+        "goal": "Establish cinematic identity and immediately expose project proof."
+      },
+      {
+        "surfaceId": "projects",
+        "role": "chapter sequence",
+        "goal": "Turn repository-backed work into narrative scenes with constraint, decision, and outcome."
+      },
+      {
+        "surfaceId": "contact",
+        "role": "final frame",
+        "goal": "Make the collaboration path obvious without losing the cinematic voice."
+      }
+    ],
+    "contentPriorityMap": {
+      "primary": [
+        "designer-minded developer identity",
+        "featured project proof",
+        "project chapter sequence",
+        "contact action"
+      ],
+      "secondary": [
+        "career story",
+        "skills",
+        "process"
+      ],
+      "deferred": [
+        "long-form personal FAQ",
+        "legacy visual details"
+      ]
+    },
+    "viewportMutationPlan": {
+      "mobile": {
+        "primaryOperation": "vertical story spine",
+        "forbiddenPatterns": [
+          "horizontal-only navigation",
+          "scale-only desktop shrink"
+        ]
+      },
+      "tablet": {
+        "primaryOperation": "top storyboard rail and grouped chapters",
+        "forbiddenPatterns": [
+          "uniform equal cards"
+        ]
+      },
+      "desktop": {
+        "primaryOperation": "sticky chapter rail with split hero and large film frames",
+        "forbiddenPatterns": [
+          "dashboard chrome",
+          "generic landing hero"
+        ]
+      }
+    }
+  },
+  "libraryResearchStatus": "not-needed",
+  "libraryDecisions": [
+    {
+      "library": "@studio-freight/lenis",
+      "purpose": "Existing smooth scrolling dependency already present in package.json.",
+      "verifiedAt": null,
+      "sourceUrl": null,
+      "stableVersion": "existing ^1.0.42",
+      "fallbackIfUnavailable": "Native browser scroll with CSS scroll-behavior disabled for reduced motion."
+    },
+    {
+      "library": "lucide-vue-next",
+      "purpose": "Existing icon dependency for link and action affordances.",
+      "verifiedAt": null,
+      "sourceUrl": null,
+      "stableVersion": "existing ^0.331.0",
+      "fallbackIfUnavailable": "Text links with accessible labels."
+    }
+  ],
+  "reviewRubric": {
+    "version": "ui-rubric-v1",
+    "genericityAutoFail": true,
+    "genericitySignals": [
+      "centered hero with generic value proposition",
+      "equal portfolio card grid",
+      "decorative glow without thread or frame function",
+      "dark SaaS slate palette",
+      "project copy without constraint or outcome"
+    ],
+    "validBoldSignals": [
+      "cinematic first viewport",
+      "thread-derived navigation and progress",
+      "project chapters with technical breakdown",
+      "responsive recomposition from diagonal thread to vertical spine",
+      "reduced-motion safe motion system"
+    ]
+  },
+  "contextHygiene": {
+    "allowedSources": [
+      "current-user-brief",
+      "Gemini research markdown supplied by user",
+      "current repository files",
+      "public GitHub repository listing supplied by user"
+    ],
+    "taintedSources": [
+      "old UI palette as final direction",
+      "Awwwards surfaces copied one-to-one",
+      "prior unrelated project styles"
+    ],
+    "approvedExternalConstraintUsage": "Extract concepts, not assets or unique visual signatures."
+  },
+  "forbiddenPatterns": [
+    "portfolio card grid as the main experience",
+    "dashboard shell",
+    "SaaS landing page hero",
+    "purple-blue gradient default",
+    "cyber terminal cliche",
+    "decorative background lines without navigation or story function",
+    "motion that hides content from keyboard users"
+  ]
+}
