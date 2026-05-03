@@ -1,13 +1,11 @@
 <script setup>
-import { computed, onMounted, onUnmounted, ref } from 'vue'
+import { computed, nextTick, onMounted, onUnmounted, ref } from 'vue'
 import Lenis from '@studio-freight/lenis'
 import gsap from 'gsap'
 import ScrollTrigger from 'gsap/ScrollTrigger'
 import {
-  ArrowRight,
+  ArrowDown,
   ArrowUpRight,
-  ChevronLeft,
-  ChevronRight,
   Github,
   Linkedin,
   Mail,
@@ -15,114 +13,137 @@ import {
 } from 'lucide-vue-next'
 import { getCareerProfileByLanguage } from './data/careerProfile'
 import { getProjectsByLanguage } from './data/projects'
-import Hero from './components/Hero.vue'
 
-// ─── State ───────────────────────────────────────────
 const currentYear = new Date().getFullYear()
 const lang = ref('id')
-const activeChapter = ref('home')
+const activeSection = ref('home')
 const scrollProgress = ref(0)
 const isScrolled = ref(false)
-const scrollWrapper = ref(null)
-const trackIndex = ref(0)
-const isDragging = ref(false)
+const isLoading = ref(true)
+const isContentReady = ref(false)
+const loaderProgress = ref(9)
+const loaderStage = ref('Checking paper stock')
 
-const chapterIds = ['home', 'process', 'projects', 'career', 'contact']
+const sectionIds = ['home', 'intent', 'process', 'projects', 'career', 'contact']
+const loaderStages = [
+  'Checking paper stock',
+  'Drawing registration marks',
+  'Composing type columns',
+  'Binding project spreads',
+  'Opening Issue 01',
+]
 
-// ─── Copy ─────────────────────────────────────────────
 const copy = {
   id: {
     skip: 'Lewati ke konten utama',
+    issue: 'Issue 01',
+    prepress: 'Pre-Press Check',
+    ready: 'Issue ready',
+    folio: 'Portofolio Farid Eka Aprilian',
     eyebrow: 'Creative Developer Portfolio',
     role: 'Designer-minded developer',
     heroLine1: 'Produk yang',
-    heroLine2: 'bercerita',
-    heroLine3: 'sendiri.',
-    heroBody: 'Saya membangun web product dengan rasa desain, struktur teknis, dan proof-of-work yang bisa diperiksa.',
-    ctaView: 'Lihat Proyek',
+    heroLine2: 'berpikir seperti',
+    heroLine3: 'editorial.',
+    heroBody:
+      'Saya membangun web product dengan rasa desain, struktur teknis, dan proof-of-work yang bisa diperiksa.',
+    ctaView: 'Buka proyek',
     ctaGithub: 'GitHub',
-    processNum: '02',
-    processLabel: 'Process',
-    processTitle: 'Dari brief ke sistem yang bisa dipakai.',
-    processBody: 'Setiap chapter kerja dibaca sebagai adegan: konteks, constraint, keputusan, dan hasil.',
-    projectsNum: '03',
-    projectsLabel: 'Projects',
-    projectsTitle: 'Proyek sebagai chapter,',
-    projectsTitleEm: 'bukan kartu katalog.',
+    intentLabel: 'Editor Note',
+    intentTitle: 'Bukan sekadar portfolio. Ini argumen visual.',
+    intentQuote:
+      'Kalau kode punya arsitektur, interface juga harus punya sikap.',
+    intentBody:
+      'Setiap bagian dibuat seperti halaman majalah: ada hirarki, ritme, aksen, dan bukti kerja. Tujuannya bukan ramai, tapi punya keputusan.',
+    processLabel: 'Typesetting Grid',
+    processTitle: 'Cara kerja dibentuk sebagai sistem editorial.',
+    projectsLabel: 'Feature Spreads',
+    projectsTitle: 'Project sebagai artikel utama, bukan kartu katalog.',
     openingCredits: 'Opening Credits',
-    technicalBreakdown: 'Technical Breakdown',
     constraint: 'Constraint',
     decision: 'Decision',
     outcome: 'Outcome',
     source: 'Lihat Source',
-    careerNum: '04',
-    careerLabel: 'Career',
-    careerTitle: 'Timeline',
-    careerTitleEm: 'produksi.',
-    careerBody: 'Perjalanan, riset, dan stack sebagai continuity notes.',
-    contactNum: '05',
-    contactLabel: 'Contact',
-    contactTitle: 'Mari mulai',
-    contactTitleEm: 'kolaborasi.',
-    contactBody: 'Kalau butuh developer yang bisa ikut mikir produk, motion, dan struktur engineering.',
+    careerLabel: 'Issue Index',
+    careerTitle: 'Timeline produksi dan stack.',
+    contactLabel: 'Back Cover',
+    contactTitle: 'Frame berikutnya bisa kita mulai.',
+    contactBody:
+      'Kalau butuh developer yang bisa ikut mikir produk, motion, dan struktur engineering, saya terbuka untuk ngobrol.',
     sendEmail: 'Kirim Email',
     phone: 'Telepon',
     linkedin: 'LinkedIn',
     github: 'GitHub',
-    footerText: 'Dibangun dengan Vue — disusun sebagai editorial.',
-    rail: { home: 'Opening', process: 'Process', projects: 'Projects', career: 'Career', contact: 'Contact' },
+    footerText: 'Dibangun dengan Vue, disusun sebagai editorial issue.',
+    rail: {
+      home: 'Cover',
+      intent: 'Note',
+      process: 'Process',
+      projects: 'Work',
+      career: 'Index',
+      contact: 'Back',
+    },
     beats: [
       { num: '01', title: 'Intent', body: 'Membaca tujuan produk dan batasan sebelum memilih bentuk visual atau teknis.' },
       { num: '02', title: 'System', body: 'Membentuk alur, state, dan struktur supaya UI tidak hanya terlihat bagus.' },
-      { num: '03', title: 'Motion', body: 'Gerak dipakai untuk continuity, feedback, dan hierarchy — bukan dekorasi.' },
+      { num: '03', title: 'Motion', body: 'Gerak dipakai untuk continuity, feedback, dan hierarchy, bukan dekorasi.' },
       { num: '04', title: 'Proof', body: 'Hasil akhir tetap bisa dilacak lewat repository, constraint, keputusan, dan outcome.' },
     ],
   },
   en: {
     skip: 'Skip to main content',
+    issue: 'Issue 01',
+    prepress: 'Pre-Press Check',
+    ready: 'Issue ready',
+    folio: 'Farid Eka Aprilian Portfolio',
     eyebrow: 'Creative Developer Portfolio',
     role: 'Designer-minded developer',
     heroLine1: 'Products that',
-    heroLine2: 'tell their own',
-    heroLine3: 'story.',
-    heroBody: 'I build web products with design taste, technical structure, and inspectable proof-of-work.',
-    ctaView: 'View Projects',
+    heroLine2: 'think like',
+    heroLine3: 'editorial.',
+    heroBody:
+      'I build web products with design taste, technical structure, and inspectable proof-of-work.',
+    ctaView: 'Open projects',
     ctaGithub: 'GitHub',
-    processNum: '02',
-    processLabel: 'Process',
-    processTitle: 'From brief to usable system.',
-    processBody: 'Every work chapter is read as a scene: context, constraint, decision, and outcome.',
-    projectsNum: '03',
-    projectsLabel: 'Projects',
-    projectsTitle: 'Projects as chapters,',
-    projectsTitleEm: 'not catalogue cards.',
+    intentLabel: 'Editor Note',
+    intentTitle: 'Not just a portfolio. A visual argument.',
+    intentQuote:
+      'If code has architecture, an interface should have a point of view.',
+    intentBody:
+      'Every section behaves like a magazine page: hierarchy, rhythm, accent, and evidence. The goal is not noise, but decisions.',
+    processLabel: 'Typesetting Grid',
+    processTitle: 'The working method becomes an editorial system.',
+    projectsLabel: 'Feature Spreads',
+    projectsTitle: 'Projects as feature articles, not catalogue cards.',
     openingCredits: 'Opening Credits',
-    technicalBreakdown: 'Technical Breakdown',
     constraint: 'Constraint',
     decision: 'Decision',
     outcome: 'Outcome',
     source: 'View Source',
-    careerNum: '04',
-    careerLabel: 'Career',
-    careerTitle: 'Production',
-    careerTitleEm: 'timeline.',
-    careerBody: 'Experience, research, and stack as continuity notes.',
-    contactNum: '05',
-    contactLabel: 'Contact',
-    contactTitle: 'Let\'s start',
-    contactTitleEm: 'collaborating.',
-    contactBody: 'If you need a developer who thinks through product, motion, and engineering structure.',
+    careerLabel: 'Issue Index',
+    careerTitle: 'Production timeline and stack.',
+    contactLabel: 'Back Cover',
+    contactTitle: 'The next frame can start here.',
+    contactBody:
+      'If you need a developer who can think through product, motion, and engineering structure, I am open to talk.',
     sendEmail: 'Send Email',
     phone: 'Phone',
     linkedin: 'LinkedIn',
     github: 'GitHub',
-    footerText: 'Built with Vue — staged as editorial.',
-    rail: { home: 'Opening', process: 'Process', projects: 'Projects', career: 'Career', contact: 'Contact' },
+    footerText: 'Built with Vue, composed as an editorial issue.',
+    rail: {
+      home: 'Cover',
+      intent: 'Note',
+      process: 'Process',
+      projects: 'Work',
+      career: 'Index',
+      contact: 'Back',
+    },
     beats: [
       { num: '01', title: 'Intent', body: 'Read product goals and constraints before choosing visual or technical form.' },
       { num: '02', title: 'System', body: 'Shape flow, state, and structure so the UI is not only good looking.' },
-      { num: '03', title: 'Motion', body: 'Motion for continuity, feedback, and hierarchy — not empty decoration.' },
-      { num: '04', title: 'Proof', body: 'Final result stays traceable through repository, constraint, decision, and outcome.' },
+      { num: '03', title: 'Motion', body: 'Motion is for continuity, feedback, and hierarchy, not decoration.' },
+      { num: '04', title: 'Proof', body: 'Final output stays traceable through repository, constraint, decision, and outcome.' },
     ],
   },
 }
@@ -130,41 +151,98 @@ const copy = {
 const c = computed(() => copy[lang.value])
 const projects = computed(() => getProjectsByLanguage(lang.value))
 const profile = computed(() => getCareerProfileByLanguage(lang.value))
-const railChapters = computed(() =>
-  chapterIds.map((id, i) => ({ id, label: c.value.rail[id], num: String(i + 1).padStart(2, '0') }))
+
+const railSections = computed(() =>
+  sectionIds.map((id, index) => ({
+    id,
+    label: c.value.rail[id],
+    num: String(index + 1).padStart(2, '0'),
+  }))
 )
-const trackTotal = computed(() => projects.value.length)
 
-// ─── Helpers ──────────────────────────────────────────
-const isReducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches
+const heroWords = computed(() => {
+  const lines = [c.value.heroLine1, c.value.heroLine2, c.value.heroLine3]
 
-const splitIntoWords = (text) =>
-  text.split(' ').map((w) => ({ word: w + '\u00A0' }))
+  return lines.flatMap((line, lineIndex) => {
+    const words = line.split(' ')
 
-// ─── Scroll state ─────────────────────────────────────
+    return words.map((word, wordIndex) => ({
+      text: `${word}${wordIndex === words.length - 1 ? '' : '\u00A0'}`,
+      key: `${lineIndex}-${wordIndex}-${word}`,
+      accent: lineIndex === 1,
+      lineBreak: wordIndex === words.length - 1,
+    }))
+  })
+})
+
+let lenis = null
+let lenisRaf = null
 let scrollRafId = null
+let sceneObserver = null
+let cursorEl = null
+let cursorRafId = null
+let mouseX = -100
+let mouseY = -100
+let currentX = -100
+let currentY = -100
+let gsapContext = null
+let matchMediaContext = null
+
+const isReducedMotion = () =>
+  typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+const wait = (ms) => new Promise((resolve) => {
+  window.setTimeout(resolve, ms)
+})
+
+const waitForFrame = () => new Promise((resolve) => {
+  requestAnimationFrame(() => requestAnimationFrame(resolve))
+})
+
+const withTimeout = (promise, timeoutMs) => Promise.race([
+  promise,
+  wait(timeoutMs),
+])
+
+const preloadImage = (src, timeoutMs = 1400) => new Promise((resolve) => {
+  const image = new Image()
+  let done = false
+
+  const finish = () => {
+    if (done) return
+    done = true
+    image.onload = null
+    image.onerror = null
+    resolve()
+  }
+
+  window.setTimeout(finish, timeoutMs)
+  image.onload = finish
+  image.onerror = finish
+  image.decoding = 'async'
+  image.src = src
+})
+
+const setLoaderStep = (index, progress) => {
+  loaderStage.value = loaderStages[index] ?? loaderStages[loaderStages.length - 1]
+  loaderProgress.value = progress
+}
+
 const updateScroll = () => {
   if (scrollRafId) return
+
   scrollRafId = requestAnimationFrame(() => {
     const max = document.documentElement.scrollHeight - window.innerHeight
     scrollProgress.value = max > 0 ? Math.min(100, (window.scrollY / max) * 100) : 0
-    isScrolled.value = window.scrollY > 40
+    isScrolled.value = window.scrollY > 36
     scrollRafId = null
   })
 }
 
-// ─── Navigation ───────────────────────────────────────
-const scrollTo = (id) => {
-  const el = document.getElementById(id)
-  if (!el) return
-  
-  if (isReducedMotion() || window.innerWidth < 1024) {
-    el.scrollIntoView({ behavior: 'smooth', block: 'start' })
-    return
-  }
-
-  const offsetLeft = el.offsetLeft
-  window.scrollTo({ top: offsetLeft, behavior: 'smooth' })
+const scrollToSection = (id) => {
+  const element = document.getElementById(id)
+  if (!element) return
+  element.scrollIntoView({ behavior: isReducedMotion() ? 'auto' : 'smooth', block: 'start' })
 }
 
 const toggleLang = () => {
@@ -172,379 +250,557 @@ const toggleLang = () => {
   localStorage.setItem('portfolio-lang', lang.value)
 }
 
-// Track navigation removed in favor of horizontal scroll
-
-// ─── Custom cursor ────────────────────────────────────
-let cursorEl = null
-let cursorRafId = null
-let mouseX = -100, mouseY = -100
-let curX = -100, curY = -100
-
 const animateCursor = () => {
-  curX += (mouseX - curX) * 0.15
-  curY += (mouseY - curY) * 0.15
-  if (cursorEl) cursorEl.style.transform = `translate(calc(${curX}px - 50%), calc(${curY}px - 50%))`
+  currentX += (mouseX - currentX) * 0.18
+  currentY += (mouseY - currentY) * 0.18
+
+  if (cursorEl) {
+    cursorEl.style.transform = `translate3d(calc(${currentX}px - 50%), calc(${currentY}px - 50%), 0)`
+  }
+
   cursorRafId = requestAnimationFrame(animateCursor)
 }
 
-const onMouseMove = (e) => {
-  mouseX = e.clientX
-  mouseY = e.clientY
+const onMouseMove = (event) => {
+  mouseX = event.clientX
+  mouseY = event.clientY
 }
 
-const setCursorHover = (v) => {
-  if (cursorEl) cursorEl.classList.toggle('is-hovering', v)
+const setCursorHover = (value) => {
+  if (cursorEl) cursorEl.classList.toggle('is-hovering', value)
 }
 
-// ─── Observers ────────────────────────────────────────
-let sceneObs = null
-let revealObs = null
+const initCursor = () => {
+  cursorEl = document.getElementById('cursor')
+  if (!cursorEl || !window.matchMedia('(pointer: fine)').matches) return
 
-const initObservers = () => {
-  sceneObs = new IntersectionObserver(
-    (entries) => entries.forEach((e) => {
-      const id = e.target.id
-      if (e.isIntersecting) {
-        if (id && chapterIds.includes(id)) activeChapter.value = id
-        e.target.classList.add('is-scene-visible')
-      }
-    }),
-    { threshold: 0.2, rootMargin: '-10% 0px -40% 0px' }
-  )
-  document.querySelectorAll('[data-scene]').forEach((el) => sceneObs.observe(el))
+  window.addEventListener('mousemove', onMouseMove)
+  animateCursor()
 
-  revealObs = new IntersectionObserver(
-    (entries) => entries.forEach((e) => {
-      if (e.isIntersecting) {
-        e.target.classList.add('is-visible')
-        revealObs.unobserve(e.target)
-      }
-    }),
-    { threshold: 0.06 }
-  )
-  document.querySelectorAll('[data-reveal]').forEach((el) => revealObs.observe(el))
-
-  // Fallback reveal
-  setTimeout(() => {
-    document.querySelectorAll('[data-reveal]:not(.is-visible)').forEach((el) =>
-      el.classList.add('is-visible')
-    )
-  }, 2600)
-}
-
-// ─── Word stagger (hero) ──────────────────────────────
-const triggerHeroWords = () => {
-  if (isReducedMotion()) {
-    document.querySelectorAll('.word-reveal-inner').forEach((el) => el.classList.add('is-visible'))
-    document.querySelectorAll('.eyebrow-line').forEach((el) => el.classList.add('is-drawn'))
-    return
-  }
-  setTimeout(() => {
-    document.querySelectorAll('.eyebrow-line').forEach((el) => el.classList.add('is-drawn'))
-  }, 200)
-  document.querySelectorAll('.word-reveal-inner').forEach((el, i) => {
-    setTimeout(() => el.classList.add('is-visible'), 300 + i * 60)
+  document.querySelectorAll('a, button, .feature-spread').forEach((element) => {
+    element.addEventListener('mouseenter', () => setCursorHover(true))
+    element.addEventListener('mouseleave', () => setCursorHover(false))
   })
 }
 
-// ─── Lenis & GSAP ─────────────────────────────────────
-let lenis = null
-let lenisRaf = null
+const initSectionObserver = () => {
+  sceneObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return
+        const id = entry.target.getAttribute('id')
+        if (id && sectionIds.includes(id)) {
+          activeSection.value = id
+        }
+        entry.target.classList.add('is-scene-visible')
+      })
+    },
+    { threshold: 0.28, rootMargin: '-8% 0px -42% 0px' }
+  )
 
-// ─── Lifecycle ────────────────────────────────────────
+  document.querySelectorAll('[data-scene]').forEach((element) => sceneObserver.observe(element))
+}
+
+const showAllMotionTargets = () => {
+  document.querySelectorAll('[data-reveal], .cover-word, .issue-section').forEach((element) => {
+    element.classList.add('is-visible')
+  })
+}
+
+const initAnimations = () => {
+  showAllMotionTargets()
+
+  if (isReducedMotion()) {
+    return
+  }
+
+  gsap.registerPlugin(ScrollTrigger)
+  gsapContext = gsap.context(() => {
+    gsap.fromTo('.cover-strike', { scaleX: 0 }, { scaleX: 1, duration: 0.75, ease: 'power3.out' })
+    gsap.fromTo(
+      '.cover-word',
+      { yPercent: 110, opacity: 0 },
+      { yPercent: 0, opacity: 1, duration: 0.78, stagger: 0.055, ease: 'power4.out', delay: 0.08 }
+    )
+    gsap.fromTo(
+      '.cover-meta, .cover-actions, .cover-proof',
+      { y: 26, opacity: 0 },
+      { y: 0, opacity: 1, duration: 0.7, stagger: 0.08, ease: 'power3.out', delay: 0.45 }
+    )
+
+    gsap.utils.toArray('[data-motion="column-reflow"]').forEach((section) => {
+      gsap.timeline({
+        scrollTrigger: { trigger: section, start: 'top 72%', once: true },
+      })
+        .from(section.querySelector('.section-strike'), { scaleX: 0, duration: 0.65, ease: 'power3.out' })
+        .from(section.querySelectorAll('.editor-column'), {
+          y: 46,
+          opacity: 0,
+          duration: 0.72,
+          stagger: 0.12,
+          ease: 'power3.out',
+        }, '-=0.22')
+        .from(section.querySelector('.pull-quote'), {
+          clipPath: 'inset(0 100% 0 0)',
+          duration: 0.78,
+          ease: 'power4.inOut',
+        }, '-=0.35')
+    })
+
+    gsap.utils.toArray('[data-motion="rule-grid"]').forEach((section) => {
+      gsap.timeline({
+        scrollTrigger: { trigger: section, start: 'top 70%', once: true },
+      })
+        .from(section.querySelector('.section-strike'), { scaleX: 0, duration: 0.65, ease: 'power3.out' })
+        .from(section.querySelectorAll('.beat-cell'), {
+          y: 34,
+          opacity: 0,
+          duration: 0.58,
+          stagger: { amount: 0.42, from: 'start' },
+          ease: 'power3.out',
+        }, '-=0.12')
+    })
+
+    gsap.utils.toArray('.feature-spread').forEach((spread, index) => {
+      const direction = index % 2 === 0 ? -1 : 1
+      gsap.timeline({
+        scrollTrigger: { trigger: spread, start: 'top 74%', once: true },
+      })
+        .from(spread.querySelector('.spread-number'), {
+          xPercent: 18 * direction,
+          opacity: 0,
+          duration: 0.7,
+          ease: 'power3.out',
+        })
+        .from(spread.querySelector('.spread-text'), {
+          y: 48,
+          opacity: 0,
+          duration: 0.72,
+          ease: 'power3.out',
+        }, '-=0.36')
+        .from(spread.querySelector('.spread-breakdown'), {
+          x: 54 * direction,
+          rotate: 1.2 * direction,
+          opacity: 0,
+          duration: 0.78,
+          ease: 'power3.out',
+        }, '-=0.48')
+        .from(spread.querySelectorAll('.tag-chip'), {
+          y: 18,
+          opacity: 0,
+          duration: 0.42,
+          stagger: 0.045,
+          ease: 'power2.out',
+        }, '-=0.22')
+    })
+
+    gsap.utils.toArray('[data-motion="index"]').forEach((section) => {
+      gsap.timeline({
+        scrollTrigger: { trigger: section, start: 'top 70%', once: true },
+      })
+        .from(section.querySelector('.section-strike'), { scaleX: 0, duration: 0.65, ease: 'power3.out' })
+        .from(section.querySelectorAll('.index-row'), {
+          x: -42,
+          opacity: 0,
+          duration: 0.56,
+          stagger: 0.09,
+          ease: 'power3.out',
+        }, '-=0.18')
+        .from(section.querySelectorAll('.skill-ticket'), {
+          y: 24,
+          opacity: 0,
+          duration: 0.48,
+          stagger: 0.06,
+          ease: 'power3.out',
+        }, '-=0.24')
+    })
+
+    gsap.utils.toArray('[data-motion="back-cover"]').forEach((section) => {
+      gsap.timeline({
+        scrollTrigger: { trigger: section, start: 'top 74%', once: true },
+      })
+        .from(section.querySelector('.back-cover-card'), {
+          y: 54,
+          opacity: 0,
+          duration: 0.76,
+          ease: 'power3.out',
+        })
+        .from(section.querySelector('.contact-sticker'), {
+          scale: 0.7,
+          rotate: -8,
+          opacity: 0,
+          duration: 0.62,
+          ease: 'back.out(1.6)',
+        }, '-=0.36')
+    })
+  })
+
+  matchMediaContext = gsap.matchMedia()
+  matchMediaContext.add('(min-width: 900px)', () => {
+    gsap.utils.toArray('.issue-section').forEach((section, index) => {
+      gsap.to(section.querySelector('.chapter-ghost'), {
+        yPercent: index % 2 === 0 ? -8 : 8,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: section,
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: 0.7,
+        },
+      })
+    })
+  })
+
+  ScrollTrigger.refresh()
+}
+
+const initLenis = () => {
+  if (isReducedMotion()) return
+
+  lenis = new Lenis({
+    duration: 1.08,
+    easing: (time) => Math.min(1, 1.001 - Math.pow(2, -10 * time)),
+  })
+
+  lenis.on('scroll', ScrollTrigger.update)
+
+  const run = (time) => {
+    if (!lenis) return
+    lenis.raf(time)
+    lenisRaf = requestAnimationFrame(run)
+  }
+
+  lenisRaf = requestAnimationFrame(run)
+}
+
+const prepareEntry = async () => {
+  document.documentElement.classList.add('is-preloading')
+  setLoaderStep(0, 9)
+
+  const minimumDuration = wait(isReducedMotion() ? 450 : 1750)
+
+  try {
+    setLoaderStep(1, 28)
+    await nextTick()
+    await waitForFrame()
+
+    setLoaderStep(2, 52)
+    if (document.fonts?.ready) {
+      await withTimeout(document.fonts.ready, 1700)
+    }
+
+    setLoaderStep(3, 78)
+    await preloadImage('/avatar-github.jpg')
+    await waitForFrame()
+
+    setLoaderStep(4, 92)
+    await minimumDuration
+  } finally {
+    isContentReady.value = true
+    loaderProgress.value = 100
+    loaderStage.value = c.value.ready
+    await wait(isReducedMotion() ? 80 : 520)
+    isLoading.value = false
+    document.documentElement.classList.remove('is-preloading')
+    await waitForFrame()
+    initAnimations()
+    updateScroll()
+  }
+}
+
 onMounted(() => {
   const saved = localStorage.getItem('portfolio-lang')
   if (saved === 'id' || saved === 'en') lang.value = saved
 
-  // Custom cursor
-  cursorEl = document.getElementById('cursor')
-  if (cursorEl && window.matchMedia('(pointer: fine)').matches) {
-    window.addEventListener('mousemove', onMouseMove)
-    animateCursor()
-
-    document.querySelectorAll('a, button, .project-card, .track-arrow, .nav-icon-btn').forEach((el) => {
-      el.addEventListener('mouseenter', () => setCursorHover(true))
-      el.addEventListener('mouseleave', () => setCursorHover(false))
-    })
-  }
-
-  // Lenis smooth scroll
-  if (!isReducedMotion()) {
-    lenis = new Lenis({ duration: 1.1, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) })
-    const raf = (time) => { if (!lenis) return; lenis.raf(time); lenisRaf = requestAnimationFrame(raf) }
-    lenisRaf = requestAnimationFrame(raf)
-  }
-
-  // GSAP
-  if (!isReducedMotion()) {
-    gsap.registerPlugin(ScrollTrigger)
-    
-    setTimeout(() => {
-      const wrapper = scrollWrapper.value
-      if (wrapper) {
-        let mm = gsap.matchMedia();
-        
-        mm.add("(min-width: 1024px)", () => {
-          gsap.to(wrapper, {
-            x: () => -(wrapper.scrollWidth - window.innerWidth),
-            ease: "none",
-            scrollTrigger: {
-              trigger: ".horizontal-scroll-container",
-              pin: true,
-              scrub: 1,
-              end: () => "+=" + (wrapper.scrollWidth - window.innerWidth),
-              invalidateOnRefresh: true
-            }
-          })
-        });
-      }
-    }, 100)
-  }
-
-  initObservers()
-  triggerHeroWords()
-  updateScroll()
+  initLenis()
+  initCursor()
+  initSectionObserver()
   window.addEventListener('scroll', updateScroll, { passive: true })
   window.addEventListener('resize', updateScroll)
-
-  // Drag events
-  window.addEventListener('mouseup', stopDrag)
-  window.addEventListener('mouseleave', stopDrag)
+  prepareEntry()
 })
 
 onUnmounted(() => {
+  document.documentElement.classList.remove('is-preloading')
   window.removeEventListener('scroll', updateScroll)
   window.removeEventListener('resize', updateScroll)
   window.removeEventListener('mousemove', onMouseMove)
-  window.removeEventListener('mouseup', stopDrag)
-  window.removeEventListener('mouseleave', stopDrag)
   if (scrollRafId) cancelAnimationFrame(scrollRafId)
   if (cursorRafId) cancelAnimationFrame(cursorRafId)
   if (lenisRaf) cancelAnimationFrame(lenisRaf)
-  if (lenis) { lenis.destroy(); lenis = null }
-  if (sceneObs) sceneObs.disconnect()
-  if (revealObs) revealObs.disconnect()
+  if (lenis) {
+    lenis.destroy()
+    lenis = null
+  }
+  if (sceneObserver) sceneObserver.disconnect()
+  if (matchMediaContext) matchMediaContext.revert()
+  if (gsapContext) gsapContext.revert()
+  ScrollTrigger.getAll().forEach((trigger) => trigger.kill())
 })
 </script>
 
 <template>
-  <!-- Custom cursor -->
   <div id="cursor" aria-hidden="true"></div>
 
-  <div class="editorial-app" :style="{ '--scroll-progress': `${scrollProgress}%` }">
+  <div
+    class="editorial-app"
+    :class="{ 'is-loading': isLoading, 'is-ready': !isLoading }"
+    :style="{ '--scroll-progress': `${scrollProgress}%` }"
+    :aria-busy="isLoading ? 'true' : 'false'"
+  >
+    <Transition name="loader-fade">
+      <section v-if="isLoading" class="prepress-loader" aria-live="polite" aria-label="Loading portfolio">
+        <div class="loader-marks" aria-hidden="true">
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+
+        <div class="loader-sheet">
+          <p class="loader-kicker">{{ c.prepress }}</p>
+          <h1>{{ c.issue }}</h1>
+          <div class="loader-strike" aria-hidden="true">
+            <span :style="{ width: `${loaderProgress}%` }"></span>
+          </div>
+          <div class="loader-meta">
+            <span>{{ loaderStage }}</span>
+            <strong>{{ loaderProgress }}%</strong>
+          </div>
+          <p class="loader-folio">{{ c.folio }}</p>
+        </div>
+      </section>
+    </Transition>
+
     <a href="#main-content" class="skip-link">{{ c.skip }}</a>
 
-    <!-- Progress bar (top) -->
     <div class="progress-bar" aria-hidden="true"></div>
 
-    <!-- Nav -->
-    <header class="site-nav" :class="{ 'is-scrolled': isScrolled }">
-      <a href="#home" class="brand-mark" @click.prevent="scrollTo('home')">
-        <span class="brand-dot"></span>
-        Farid Eka Aprilian
-      </a>
+    <nav class="site-nav" :class="{ 'is-scrolled': isScrolled }" aria-label="Primary navigation">
+      <button type="button" class="brand-mark" @click="scrollToSection('home')" aria-label="Go to cover">
+        <span>FA</span>
+        <small>{{ c.issue }}</small>
+      </button>
+
       <div class="nav-actions">
-        <a
-          href="https://github.com/fatidaprilian"
-          target="_blank"
-          rel="noreferrer"
-          class="nav-icon-btn"
-          :aria-label="c.github"
-        >
-          <Github />
+        <a href="https://github.com/fatidaprilian" target="_blank" rel="noreferrer" class="nav-icon-btn" :aria-label="c.github">
+          <Github aria-hidden="true" />
         </a>
-        <a
-          href="https://linkedin.com/in/farid-aprilian"
-          target="_blank"
-          rel="noreferrer"
-          class="nav-icon-btn"
-          :aria-label="c.linkedin"
-        >
-          <Linkedin />
-        </a>
-        <button type="button" class="lang-btn" @click="toggleLang">
+        <button type="button" class="lang-btn" @click="toggleLang" aria-label="Switch language">
           {{ lang === 'id' ? 'EN' : 'ID' }}
         </button>
       </div>
-    </header>
-
-    <!-- Chapter rail (right side, desktop) -->
-    <nav class="chapter-rail" aria-label="Portfolio chapters">
-      <button
-        v-for="ch in railChapters"
-        :key="ch.id"
-        type="button"
-        class="rail-item"
-        :class="{ 'is-active': activeChapter === ch.id }"
-        @click="scrollTo(ch.id)"
-      >
-        {{ ch.label }}
-      </button>
     </nav>
 
-    <main id="main-content" class="horizontal-scroll-container">
-      <div ref="scrollWrapper" class="horizontal-scroll-wrapper">
-      <!-- ──────── HERO ──────── -->
-      <Hero :c="c" @scroll-to="scrollTo" class="horizontal-section" />
+    <aside class="issue-rail" aria-label="Issue sections">
+      <button
+        v-for="section in railSections"
+        :key="section.id"
+        type="button"
+        class="rail-item"
+        :class="{ 'is-active': activeSection === section.id }"
+        @click="scrollToSection(section.id)"
+      >
+        <span>{{ section.num }}</span>
+        <strong>{{ section.label }}</strong>
+      </button>
+    </aside>
 
-      <!-- ──────── PROCESS ──────── -->
-      <section id="process" class="horizontal-section page-section" data-scene>
-        <div class="section-inner">
-          <div class="section-label" data-reveal>
-            <span class="section-num">{{ c.processNum }}</span>
-            <span class="section-rule" aria-hidden="true"></span>
+    <main
+      id="main-content"
+      class="issue-main"
+      :inert="isLoading"
+      :aria-hidden="isLoading ? 'true' : 'false'"
+    >
+      <section id="home" class="cover-section issue-section" data-scene>
+        <span class="chapter-ghost" aria-hidden="true">01</span>
+        <div class="cover-grid">
+          <div class="cover-meta">
+            <span class="cover-strike"></span>
+            <p>{{ c.eyebrow }}</p>
           </div>
-          <h2 class="section-title" data-reveal>{{ c.processTitle }}</h2>
-          <p class="section-body" data-reveal>{{ c.processBody }}</p>
+
+          <div class="cover-copy">
+            <p class="role-tag">{{ c.role }}</p>
+            <h1 class="cover-title">
+              <span
+                v-for="word in heroWords"
+                :key="word.key"
+                class="word-wrap"
+                :class="{ 'is-accent': word.accent, 'is-break': word.lineBreak }"
+              >
+                <span class="cover-word">{{ word.text }}</span>
+              </span>
+            </h1>
+            <p class="cover-body">{{ c.heroBody }}</p>
+
+            <div class="cover-actions">
+              <button type="button" class="btn-primary" @click="scrollToSection('projects')">
+                <ArrowDown class="btn-icon" aria-hidden="true" />
+                {{ c.ctaView }}
+              </button>
+              <a href="https://github.com/fatidaprilian" target="_blank" rel="noreferrer" class="btn-secondary">
+                <Github class="btn-icon" aria-hidden="true" />
+                {{ c.ctaGithub }}
+              </a>
+            </div>
+          </div>
+
+          <div class="cover-proof">
+            <figure class="cover-proof-figure">
+              <img
+                src="/avatar-github.jpg"
+                alt="Farid Eka Aprilian GitHub profile portrait"
+                decoding="async"
+                fetchpriority="high"
+              />
+            </figure>
+            <div class="cover-proof-meta">
+              <span>{{ c.issue }}</span>
+              <strong>{{ projects.length }}</strong>
+              <p>repository-backed feature spreads</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="intent" class="issue-section editor-note-section" data-scene data-motion="column-reflow">
+        <span class="chapter-ghost" aria-hidden="true">02</span>
+        <div class="section-shell editor-note-grid">
+          <div class="section-header">
+            <p class="section-label">{{ c.intentLabel }}</p>
+            <span class="section-strike" aria-hidden="true"></span>
+            <h2>{{ c.intentTitle }}</h2>
+          </div>
+
+          <blockquote class="pull-quote editor-column">{{ c.intentQuote }}</blockquote>
+          <p class="editor-column note-body">{{ c.intentBody }}</p>
+          <div class="editor-column note-stamp" aria-hidden="true">
+            <span>Opinionated</span>
+            <strong>Layout / Motion / Code</strong>
+          </div>
+        </div>
+      </section>
+
+      <section id="process" class="issue-section process-section" data-scene data-motion="rule-grid">
+        <span class="chapter-ghost" aria-hidden="true">03</span>
+        <div class="section-shell">
+          <div class="section-header section-header-wide">
+            <p class="section-label">{{ c.processLabel }}</p>
+            <span class="section-strike" aria-hidden="true"></span>
+            <h2>{{ c.processTitle }}</h2>
+          </div>
 
           <div class="beats-grid">
-            <div
-              v-for="beat in c.beats"
-              :key="beat.num"
-              class="beat-cell"
-              data-reveal
-            >
-              <span class="beat-num">{{ beat.num }}</span>
-              <h3 class="beat-title">{{ beat.title }}</h3>
-              <p class="beat-body">{{ beat.body }}</p>
-            </div>
+            <article v-for="beat in c.beats" :key="beat.num" class="beat-cell">
+              <span>{{ beat.num }}</span>
+              <h3>{{ beat.title }}</h3>
+              <p>{{ beat.body }}</p>
+            </article>
           </div>
         </div>
       </section>
 
-      <!-- ──────── PROJECTS ──────── -->
-      <section 
-        v-for="(project, idx) in projects" 
-        :key="'proj-'+idx" 
-        :id="idx === 0 ? 'projects' : ''" 
-        class="horizontal-section page-section flex items-center justify-center" 
-        data-scene
+      <section id="projects" class="issue-section projects-intro" data-scene>
+        <span class="chapter-ghost" aria-hidden="true">04</span>
+        <div class="section-shell project-intro-grid">
+          <p class="section-label">{{ c.projectsLabel }}</p>
+          <h2>{{ c.projectsTitle }}</h2>
+          <p>{{ c.projectsLabel }} / {{ projects.length }} selected works / GitHub source evidence</p>
+        </div>
+      </section>
+
+      <section
+        v-for="(project, index) in projects"
+        :key="project.title"
+        class="feature-spread issue-section"
+        :class="`spread-variant-${(index % 3) + 1}`"
+        :data-page="String(index + 5).padStart(2, '0')"
       >
-        <div class="section-inner w-full">
-           <div class="flex flex-col lg:flex-row gap-12 w-full">
-              <!-- Left: Opening Credits -->
-              <div class="flex-1 flex flex-col justify-center">
-                 <span class="card-number mb-6 block text-8xl font-display text-paper-warm border-b border-rule pb-4">{{ String(idx + 1).padStart(2, '0') }}</span>
-                 <span class="card-role text-accent-blue font-bold uppercase tracking-widest text-sm mb-4 block">{{ project.role }} · {{ project.year }}</span>
-                 <h2 class="card-title text-5xl lg:text-7xl font-editorial font-semibold leading-tight text-ink mb-6">{{ project.title }}</h2>
-                 <p class="card-summary text-lg text-ink-muted leading-relaxed max-w-xl">{{ project.summary }}</p>
-                 <div class="mt-10">
-                   <a :href="project.link" target="_blank" class="btn-primary inline-flex items-center gap-2">
-                     {{ c.source }} <ArrowUpRight class="w-5 h-5" />
-                   </a>
-                 </div>
-              </div>
-              
-              <!-- Right: Technical Breakdown -->
-              <div class="flex-1 bg-paper-warm p-10 lg:p-14 border border-rule flex flex-col justify-center">
-                 <h3 class="font-display text-3xl text-ink mb-8 border-b border-rule pb-6">{{ c.technicalBreakdown || 'Technical Breakdown' }}</h3>
-                 <div v-if="project.caseStudy" class="space-y-8">
-                    <div>
-                      <span class="text-accent-red font-bold uppercase text-xs tracking-wider block mb-2">{{ c.constraint }}</span>
-                      <p class="text-ink-muted leading-relaxed text-base">{{ project.caseStudy.constraint }}</p>
-                    </div>
-                    <div>
-                      <span class="text-accent-red font-bold uppercase text-xs tracking-wider block mb-2">{{ c.decision }}</span>
-                      <p class="text-ink-muted leading-relaxed text-base">{{ project.caseStudy.decision }}</p>
-                    </div>
-                    <div>
-                      <span class="text-accent-red font-bold uppercase text-xs tracking-wider block mb-2">{{ c.outcome }}</span>
-                      <p class="text-ink-muted leading-relaxed text-base">{{ project.caseStudy.outcome }}</p>
-                    </div>
-                 </div>
-                 
-                 <div class="card-tags flex flex-wrap gap-2 mt-10">
-                   <span v-for="tag in project.tags" :key="tag" class="px-3 py-1 bg-ink/5 border border-ink/10 text-accent-blue text-xs font-bold uppercase tracking-wider rounded">{{ tag }}</span>
-                 </div>
-              </div>
-           </div>
+        <span class="spread-number" aria-hidden="true">{{ String(index + 1).padStart(2, '0') }}</span>
+
+        <div class="spread-text">
+          <p class="spread-kicker">{{ c.openingCredits }} / {{ project.year }}</p>
+          <h2>{{ project.title }}</h2>
+          <p>{{ project.summary }}</p>
+          <div class="spread-tags">
+            <span v-for="tag in project.tags" :key="tag" class="tag-chip">{{ tag }}</span>
+          </div>
+          <a :href="project.link" target="_blank" rel="noreferrer" class="text-link">
+            {{ c.source }}
+            <ArrowUpRight aria-hidden="true" />
+          </a>
+        </div>
+
+        <div class="spread-breakdown" v-if="project.caseStudy">
+          <article>
+            <span>{{ c.constraint }}</span>
+            <p>{{ project.caseStudy.constraint }}</p>
+          </article>
+          <article>
+            <span>{{ c.decision }}</span>
+            <p>{{ project.caseStudy.decision }}</p>
+          </article>
+          <article>
+            <span>{{ c.outcome }}</span>
+            <p>{{ project.caseStudy.outcome }}</p>
+          </article>
         </div>
       </section>
 
-      <!-- ──────── CAREER ──────── -->
-      <section id="career" class="horizontal-section page-section" data-scene>
-        <div class="section-inner">
-          <div class="section-label" data-reveal>
-            <span class="section-num">{{ c.careerNum }}</span>
-            <span class="section-rule" aria-hidden="true"></span>
+      <section id="career" class="issue-section career-section" data-scene data-motion="index">
+        <span class="chapter-ghost" aria-hidden="true">10</span>
+        <div class="section-shell career-layout">
+          <div class="section-header">
+            <p class="section-label">{{ c.careerLabel }}</p>
+            <span class="section-strike" aria-hidden="true"></span>
+            <h2>{{ c.careerTitle }}</h2>
           </div>
-          <h2 class="section-title" data-reveal>
-            {{ c.careerTitle }} <em>{{ c.careerTitleEm }}</em>
-          </h2>
-          <p class="section-body" data-reveal>{{ c.careerBody }}</p>
 
-          <div class="career-grid">
-            <!-- Timeline -->
-            <div class="timeline" data-reveal>
-              <div
-                v-for="item in profile.timelineItems"
-                :key="`${item.period}-${item.title}`"
-                class="timeline-item"
-              >
-                <span class="timeline-period">{{ item.period }}</span>
-                <h3 class="timeline-title">{{ item.title }}</h3>
-                <span class="timeline-role">{{ item.role }}</span>
-                <p class="timeline-desc">{{ item.description }}</p>
+          <div class="index-list">
+            <article v-for="(item, index) in profile.timelineItems" :key="`${item.period}-${item.title}`" class="index-row">
+              <span class="index-page">{{ String(index + 11).padStart(2, '0') }}</span>
+              <div>
+                <p>{{ item.period }}</p>
+                <h3>{{ item.title }}</h3>
+                <small>{{ item.role }}</small>
               </div>
-            </div>
+              <p>{{ item.description }}</p>
+            </article>
+          </div>
 
-            <!-- Skills -->
-            <div class="skills-list" data-reveal>
-              <div
-                v-for="group in profile.skillGroups"
-                :key="group.category"
-                class="skill-group"
-              >
-                <span class="skill-group-label">{{ group.category }}</span>
-                <p class="skill-group-items">{{ group.items.join(' · ') }}</p>
-              </div>
-            </div>
+          <div class="skill-ticket-grid">
+            <article v-for="group in profile.skillGroups" :key="group.category" class="skill-ticket">
+              <span>{{ group.category }}</span>
+              <p>{{ group.items.join(' / ') }}</p>
+            </article>
           </div>
         </div>
       </section>
 
-      <!-- ──────── CONTACT ──────── -->
-      <section id="contact" class="horizontal-section page-section" data-scene>
-        <div class="section-inner">
-          <div class="section-label" data-reveal>
-            <span class="section-num">{{ c.contactNum }}</span>
-            <span class="section-rule" aria-hidden="true"></span>
-          </div>
+      <section id="contact" class="issue-section contact-section" data-scene data-motion="back-cover">
+        <span class="chapter-ghost" aria-hidden="true">99</span>
+        <div class="section-shell back-cover-card">
+          <span class="contact-sticker">{{ c.contactLabel }}</span>
+          <h2>{{ c.contactTitle }}</h2>
+          <p>{{ c.contactBody }}</p>
 
-          <div class="contact-inner" data-reveal>
-            <h2 class="contact-title">
-              {{ c.contactTitle }} <em>{{ c.contactTitleEm }}</em>
-            </h2>
-            <p class="contact-body">{{ c.contactBody }}</p>
-            <div class="contact-actions">
-              <a
-                :href="`mailto:${profile.contactActions.emailValue}`"
-                class="btn-primary"
-              >
-                <Mail class="btn-icon" aria-hidden="true" />
-                {{ c.sendEmail }}
-              </a>
-              <a
-                href="https://linkedin.com/in/farid-aprilian"
-                target="_blank"
-                rel="noreferrer"
-                class="btn-secondary"
-              >
-                <Linkedin class="btn-icon" aria-hidden="true" />
-                {{ c.linkedin }}
-              </a>
-              <a
-                :href="`tel:${profile.contactActions.callValue}`"
-                class="btn-secondary"
-              >
-                <Phone class="btn-icon" aria-hidden="true" />
-                {{ c.phone }}
-              </a>
-            </div>
+          <div class="contact-actions">
+            <a :href="`mailto:${profile.contactActions.emailValue}`" class="btn-primary">
+              <Mail class="btn-icon" aria-hidden="true" />
+              {{ c.sendEmail }}
+            </a>
+            <a href="https://linkedin.com/in/farid-aprilian" target="_blank" rel="noreferrer" class="btn-secondary">
+              <Linkedin class="btn-icon" aria-hidden="true" />
+              {{ c.linkedin }}
+            </a>
+            <a :href="`tel:${profile.contactActions.callValue}`" class="btn-secondary">
+              <Phone class="btn-icon" aria-hidden="true" />
+              {{ c.phone }}
+            </a>
           </div>
         </div>
       </section>
-      </div> <!-- end horizontal-scroll-wrapper -->
     </main>
 
     <footer class="site-footer">

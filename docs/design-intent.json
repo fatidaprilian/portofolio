@@ -1,170 +1,128 @@
 {
   "mode": "project-specific",
-  "status": "refined-for-ui-implementation",
+  "status": "refined-for-implementation",
   "updatedAt": "2026-05-03",
   "project": {
     "name": "portofolio",
     "domain": "Personal portfolio for a designer-minded creative developer",
-    "runtimeConstraint": "Existing Vue 3 and Vite application with Tailwind CSS 3, Lenis, lucide-vue-next, and local fontsource packages.",
-    "architectureConstraint": "Single-page portfolio experience using existing repo data as content evidence, with no backend or new runtime dependency required for this pass."
+    "runtimeConstraint": "Existing Vue 3, Vite, Tailwind CSS, Lenis, GSAP, lucide-vue-next, and local fontsource packages.",
+    "architectureConstraint": "Single-page portfolio experience using existing local data modules as content evidence."
   },
   "confirmedAssumptions": [
-    "The user selected the Rank 1 Gemini research direction: The Narrative Thread, described as a cinematic narrative concept.",
-    "The current visual direction should be reset from the existing warm editorial portfolio while retaining useful content evidence.",
-    "Repository evidence may inform project chapters, but the design must feel authored as a designer portfolio rather than a GitHub index."
+    "The user has pivoted from the previous dark cinematic pass to a bright editorial magazine direction.",
+    "The user wants vertical scrolling rather than a full horizontal page model.",
+    "The loader must be a real entry gate that waits for content, fonts, and initial render readiness before allowing interaction.",
+    "Each section should use a different movement grammar while staying inside one editorial print system."
   ],
-  "researchIntake": {
-    "userSuppliedResearch": "Riset Konsep Visual Portfolio Developer Kreatif.md",
-    "usedSignals": [
-      "chaptered storytelling",
-      "cinematic pacing",
-      "fluid project transitions",
-      "high-end typography",
-      "continuous thread as navigation and progress"
-    ],
-    "fitFiltering": [
-      "Horizontal scroll is translated into vertical chapter progression for accessibility and mobile control.",
-      "WebGL and Three.js claims remain research inspiration only; this pass uses native CSS and existing dependencies.",
-      "Awwwards examples are treated as pattern evidence and not as surfaces to copy."
-    ]
-  },
   "visualDirection": {
-    "name": "The Narrative Thread",
-    "summary": "A portfolio staged as a cinematic storyboard where one luminous thread connects identity, craft, projects, and contact.",
-    "firstViewportBet": "A diagonal film-thread crossing a black frame, with oversized cinematic type and a director-monitor project preview.",
+    "name": "Editorial Magazine Issue",
+    "summary": "A bright interactive magazine issue where each scroll is a new editorial page and every section uses a distinct print-production motion.",
+    "firstViewportBet": "A cropped 01 chapter number, asymmetric cover spread, red line-strike reveal, and a local GitHub portrait displayed as a profile-scale square proof.",
     "distinctiveMoves": [
-      "Diagonal light thread that behaves as visual continuity instead of wallpaper.",
-      "Projects framed as chapters with opening credits, constraint, decision, and outcome beats.",
-      "Metadata uses film-production language while the copy remains grounded in real technical work."
+      "Pre-Press Check loader blocks entry until the issue is composed.",
+      "Cover spread uses word-stagger typesetting, a line-strike reveal, and the local GitHub portrait as a right-page square profile proof.",
+      "Editor note uses column reflow motion.",
+      "Process grid uses typesetting rule lines drawn before copy appears.",
+      "Project spreads alternate compositions instead of using repeated cards.",
+      "Career reads as an issue index and contact reads as a back cover."
     ]
   },
   "motionPaletteDecision": {
     "productCategorySignal": "creative-developer-portfolio",
-    "decision": "Use high-motion cinematic chapter transitions and a mixed film palette: black reel, ivory subtitle, signal red, oxidized teal, and silver metadata.",
-    "densityDecisionSource": "The user explicitly wants the impressive designer direction first; reduced-motion and slow-network fallbacks keep the experience responsible.",
-    "spatialDecision": "No new 3D or WebGL dependency in this pass. Spatial depth is created with layered film frames, thread transforms, scroll progress, and parallax-like CSS transforms."
+    "decision": "Use bright editorial print motion with paper white, black ink, vivid red, active blue, and yellow proof marks.",
+    "densityDecisionSource": "The user explicitly wants a designer/agency-level personal portfolio and asked for unique section motion.",
+    "spatialDecision": "Use vertical editorial pages and GSAP ScrollTrigger rather than a horizontal-only model. No WebGL is needed for this pass because print-production motion delivers the selected anchor."
   },
   "conceptualAnchor": {
-    "name": "Cinematic storyboard thread",
-    "anchorReference": "35mm film strip, director storyboard wall, and projector light path",
-    "agentResearchMode": "user-supplied-research-plus-current-repo-evidence",
-    "sourceDomain": "cinematic-spatial-interface",
-    "specificReferencePoint": "A physical storyboard wall where frames are connected by a marked continuity thread from opening shot to final contact.",
-    "rationale": "The anchor gives structure to storytelling, motion, typography, and project evidence without copying any single portfolio reference.",
-    "signatureMotion": "Scenes enter as if a frame is pulled through a projector gate: slight vertical lift, mask reveal, and thread glow shift over 560ms with reduced-motion fallback.",
-    "typographicDecision": "Fraunces carries cinematic scene titles, Bebas Neue carries poster-scale opening credits, and Manrope carries readable body and technical metadata.",
-    "visualRiskBudget": "High distinctiveness with strict contrast, keyboard, and reduced-motion safeguards.",
-    "motionRiskBudget": "Motion is allowed for hierarchy and continuity; it must not hide content or become required to understand navigation.",
-    "cohesionChecks": [
-      "No dashboard mental model",
-      "Thread motion derives from the film-strip anchor",
-      "Project metadata remains readable without animation"
-    ]
+    "name": "Indonesian editorial magazine pre-press issue",
+    "anchorReference": "Premium printed magazine production: pre-press marks, asymmetric spreads, cropped chapter numbers, column rules, issue index, and back cover",
+    "agentResearchMode": "current-user-brief-plus-project-docs-plus-official-gsap-docs",
+    "sourceDomain": "experimental-editorial-structure",
+    "specificReferencePoint": "A magazine issue being checked before print, then opened through cover, editor note, feature spreads, index, and back cover.",
+    "rationale": "The anchor gives a coherent reason for the loader, section layout, palette, typography, and motion variety without copying any individual portfolio.",
+    "signatureMotion": "Pre-press marks calibrate, a red strike line pulls open the issue, then each section uses a different print-production reveal.",
+    "typographicDecision": "Bebas Neue carries chapter numbers and issue markers, Fraunces carries editorial headlines and quotes, and Manrope carries body, metadata, stack tags, and controls.",
+    "visualRiskBudget": "High visual authorship with WCAG contrast, keyboard access, and reduced-motion fallback.",
+    "motionRiskBudget": "Motion can be expressive, but content must be rendered before entry and readable without animation."
   },
   "derivedTokenLogic": {
-    "anchorReference": "35mm film strip, director storyboard wall, and projector light path",
-    "colorDerivationSource": "Black reel for stage, ivory for subtitle legibility, signal red for scene markers, oxidized teal for technical evidence, and silver for metadata.",
-    "spacingDerivationSource": "Large poster openings, narrow subtitle measures, and strong frame gutters follow cinema poster and storyboard wall rhythm.",
-    "typographyDerivationSource": "Display type behaves like opening credits, serif titles behave like chapter cards, body type behaves like production notes, and metadata behaves like slate markings.",
-    "motionDerivationSource": "Projector-gate reveal, chapter advance, and thread glow create continuity; reduced motion exposes all frames immediately.",
-    "validationRule": "Every visible motif must serve identity, project sequencing, navigation, or technical evidence. Decorative lines or glows without story function fail review."
+    "anchorReference": "Premium printed magazine production",
+    "colorDerivationSource": "Paper white and warm stock for editorial surfaces, black ink for main reading, red for issue marks and line-strike motion, blue for technical links/status, yellow for proof marks.",
+    "spacingDerivationSource": "Large margins, strong gutters, rule lines, and cropped chapter numbers follow magazine spread composition.",
+    "typographyDerivationSource": "Display numbers, editorial serif headlines, and clean sans metadata create role contrast.",
+    "motionDerivationSource": "Pre-press calibration, typesetting stagger, column reflow, rule-line draw, page lift, index tick, and sticker/back-cover reveal.",
+    "validationRule": "Every motion and line must map to a print-production, chapter, navigation, or evidence function."
   },
   "aiSafeUiAudit": {
     "status": "completed",
-    "failureDefinition": "A generic portfolio would use a centered hero, equal cards, dark slate gradients, and decorative glow. This direction rejects those.",
-    "interchangeabilityTest": "Renaming the page to a SaaS, agency, or dashboard would break the film thread, chapter credits, and storyboard evidence structure.",
+    "failureDefinition": "A generic portfolio would use centered hero text, equal project cards, soft shadows, and decorative grid wallpaper.",
+    "interchangeabilityTest": "Renaming this to a SaaS or agency site would break the issue numbers, pre-press loader, editorial section grammar, and project feature spreads.",
     "requiredProductSpecificSignals": [
-      "Projects are written as scene chapters with constraint, decision, and outcome.",
-      "The light thread is both progress marker and content connector.",
-      "Technical stack appears as production metadata, not generic badges."
+      "Issue 01 marker visible in the first viewport.",
+      "Project evidence is presented as editorial feature spreads with constraint, decision, and outcome.",
+      "The loader behaves as pre-press composition and gates actual entry until content is ready."
     ],
-    "paletteExplorationRule": "Use a non-SaaS cinematic palette with strong contrast and a color role for each chapter state.",
-    "backgroundPatternRule": "Lines are allowed only as thread, frame, progress, or storyboard alignment marks."
+    "backgroundPatternRule": "Rules and lines are allowed only as column, chapter, loader, or issue markers."
   },
   "colorTruth": {
-    "format": "hex-derived-from-anchor",
+    "format": "hex",
     "paletteRoles": [
-      {
-        "role": "stage",
-        "value": "#070707",
-        "purpose": "cinematic black frame"
-      },
-      {
-        "role": "subtitle",
-        "value": "#f6efe4",
-        "purpose": "primary readable text"
-      },
-      {
-        "role": "signal",
-        "value": "#f24b36",
-        "purpose": "scene marker and call-to-action emphasis"
-      },
-      {
-        "role": "technicalEvidence",
-        "value": "#2fd3c6",
-        "purpose": "stack, proof, and technical metadata"
-      },
-      {
-        "role": "silver",
-        "value": "#b9b3a8",
-        "purpose": "secondary metadata"
-      }
+      { "role": "paper", "value": "#FAFAF7", "purpose": "primary page background" },
+      { "role": "paperWarm", "value": "#F0EDE3", "purpose": "secondary editorial stock" },
+      { "role": "ink", "value": "#1A1A16", "purpose": "primary readable text" },
+      { "role": "mutedInk", "value": "#6B6B60", "purpose": "metadata and support copy" },
+      { "role": "accentRed", "value": "#E84A2F", "purpose": "chapter marker, CTA, loader strike line" },
+      { "role": "accentBlue", "value": "#0057FF", "purpose": "technical link and active status" },
+      { "role": "accentYellow", "value": "#F5C842", "purpose": "proof marks and editorial highlights" },
+      { "role": "rule", "value": "#D4D0C4", "purpose": "column rules and structural separators" }
     ],
-    "productSpecificBehavior": "The thread changes from signal red to oxidized teal when the user moves from story to technical evidence."
+    "productSpecificBehavior": "Red marks entry and chapter motion, blue marks technical proof, yellow marks pre-press proofing."
   },
   "tokenSystem": {
     "sourceOfTruth": "docs/design-intent.json",
-    "taxonomyOrder": [
-      "primitive",
-      "semantic",
-      "component"
-    ],
+    "taxonomyOrder": ["primitive", "semantic", "component"],
     "requireSemanticAliases": true,
     "componentTokensConsumeSemantic": true,
-    "forbidDirectComponentPrimitiveBypass": false,
-    "implementationNote": "This repository currently uses Tailwind plus CSS utility classes; this pass defines root CSS variables to reduce future hardcoded color drift."
+    "implementationNote": "CSS custom properties mirror the documented palette and Tailwind aliases."
   },
   "crossViewportAdaptation": {
     "adaptByRecomposition": true,
     "touchTargetMinPx": 44,
     "mutationRules": {
-      "mobile": "The diagonal thread becomes a vertical progress spine. Chapters stack with the primary project action near the top and side navigation hidden.",
-      "tablet": "The storyboard rail sits above chapter content while project evidence uses two-column regrouping.",
-      "desktop": "The chapter rail becomes sticky and the hero uses split composition with a director-monitor preview."
+      "mobile": "Single-column issue flow, smaller chapter numbers, section motion simplified to opacity/translate, project spreads stack.",
+      "tablet": "Two-column editorial groups appear for process/career while project spreads remain vertical.",
+      "desktop": "Asymmetric cover spread, sticky issue rail, large cropped chapter numbers, and varied feature-spread layouts."
     }
   },
   "motionSystem": {
     "allowMeaningfulMotion": true,
-    "signature": "Projector-gate scene reveal with thread glow shift.",
-    "duration": "220ms for controls, 560ms for chapter reveals, 900ms for opening hero choreography.",
-    "easing": "cubic-bezier(0.16, 1, 0.3, 1)",
-    "reducedMotion": "Disable transforms, marquee drift, and reveal masks; preserve chapter order and all content."
+    "loader": "Pre-Press Check overlay waits for initial render, fonts, image preload, and minimum stage duration before unlocking scroll.",
+    "sectionSignatures": [
+      "cover: word stagger, red strike line, and local square portrait proof",
+      "editor note: column reflow",
+      "process: rule line draw then cell reveal",
+      "projects: alternating feature-spread lift and metadata wipe",
+      "career: index tick reveal",
+      "contact: back-cover sticker reveal"
+    ],
+    "library": "GSAP ScrollTrigger for scroll-bound section choreography, scoped with gsap.matchMedia for desktop behavior.",
+    "reducedMotion": "Disable transforms and GSAP choreography; all content renders visible and loader exits quickly after readiness."
   },
   "componentMorphology": {
     "primarySurfaces": [
-      "cinematic-hero",
-      "chapter-rail",
-      "story-beats",
-      "project-scenes",
-      "career-roll",
-      "contact-frame"
+      "prepress-loader",
+      "issue-cover",
+      "editor-note",
+      "typesetting-grid",
+      "feature-spreads",
+      "issue-index",
+      "back-cover"
     ],
-    "stateKeys": [
-      "default",
-      "hover",
-      "focus-visible",
-      "active",
-      "disabled",
-      "loading",
-      "empty",
-      "error",
-      "success",
-      "transition"
-    ],
+    "stateKeys": ["default", "hover", "focus-visible", "active", "disabled", "loading", "transition"],
     "rules": [
-      "Repeated project chapters may share the film-frame grammar but must vary by chapter metadata and evidence layout.",
-      "Interactive controls use visible focus and minimum 44px target size.",
-      "Cards use tight film-frame radii and never become rounded SaaS panels."
+      "No soft-shadow card stacks.",
+      "Borders and rule lines must express magazine structure.",
+      "Repeated projects must vary layout by feature spread variant."
     ]
   },
   "accessibilityPolicy": {
@@ -179,132 +137,88 @@
     "statusMessagesAndDynamicStateAccess": true
   },
   "designExecutionPolicy": {
-    "representationStrategy": "single-page-cinematic-storyboard",
+    "representationStrategy": "vertical-interactive-editorial-issue",
     "requireSurfacePlan": true,
     "requireViewportMutationPlan": true,
     "requireInteractionStateMatrix": true,
     "requireSignatureMoveRationale": true,
     "requireRepoEvidenceAlignment": true,
-    "forbidGenericLayoutFallbackWithoutReason": true
+    "oldDesignRegressionTest": "The result must not read as the previous portfolio simplified or as dark cinematic residue."
   },
   "designExecutionHandoff": {
     "version": "ui-handoff-v1",
-    "primaryExperienceGoal": "Convince the visitor within the first viewport that the owner is a designer-minded developer with motion taste and grounded engineering proof.",
+    "primaryExperienceGoal": "Make the first impression feel like a personal portfolio designed at agency taste level while keeping project evidence scannable.",
     "surfacePlan": [
-      {
-        "surfaceId": "hero",
-        "role": "opening shot",
-        "goal": "Establish cinematic identity and immediately expose project proof."
-      },
-      {
-        "surfaceId": "projects",
-        "role": "chapter sequence",
-        "goal": "Turn repository-backed work into narrative scenes with constraint, decision, and outcome."
-      },
-      {
-        "surfaceId": "contact",
-        "role": "final frame",
-        "goal": "Make the collaboration path obvious without losing the cinematic voice."
-      }
+      { "surfaceId": "loader", "role": "pre-press check", "goal": "Gate entry until content is ready and introduce the issue language." },
+      { "surfaceId": "home", "role": "cover spread", "goal": "Establish designer-minded developer positioning with the local GitHub portrait as a right-page square profile proof." },
+      { "surfaceId": "intent", "role": "editor note", "goal": "State the design/product point of view." },
+      { "surfaceId": "process", "role": "typesetting grid", "goal": "Show working method as an editorial system." },
+      { "surfaceId": "projects", "role": "feature spreads", "goal": "Show real projects with varied layouts." },
+      { "surfaceId": "career", "role": "issue index", "goal": "Make timeline and skills scannable." },
+      { "surfaceId": "contact", "role": "back cover", "goal": "Create a memorable collaboration close." }
     ],
     "contentPriorityMap": {
-      "primary": [
-        "designer-minded developer identity",
-        "featured project proof",
-        "project chapter sequence",
-        "contact action"
-      ],
-      "secondary": [
-        "career story",
-        "skills",
-        "process"
-      ],
-      "deferred": [
-        "long-form personal FAQ",
-        "legacy visual details"
-      ]
-    },
-    "viewportMutationPlan": {
-      "mobile": {
-        "primaryOperation": "vertical story spine",
-        "forbiddenPatterns": [
-          "horizontal-only navigation",
-          "scale-only desktop shrink"
-        ]
-      },
-      "tablet": {
-        "primaryOperation": "top storyboard rail and grouped chapters",
-        "forbiddenPatterns": [
-          "uniform equal cards"
-        ]
-      },
-      "desktop": {
-        "primaryOperation": "sticky chapter rail with split hero and large film frames",
-        "forbiddenPatterns": [
-          "dashboard chrome",
-          "generic landing hero"
-        ]
-      }
+      "primary": ["identity", "project evidence", "contact action"],
+      "secondary": ["process", "career", "skills"],
+      "deferred": ["decorative production details"]
     }
   },
-  "libraryResearchStatus": "not-needed",
+  "libraryResearchStatus": "verified",
   "libraryDecisions": [
     {
-      "library": "@studio-freight/lenis",
-      "purpose": "Existing smooth scrolling dependency already present in package.json.",
-      "verifiedAt": null,
-      "sourceUrl": null,
-      "stableVersion": "existing ^1.0.42",
-      "fallbackIfUnavailable": "Native browser scroll with CSS scroll-behavior disabled for reduced motion."
+      "library": "gsap",
+      "purpose": "Word-stagger, loader timeline, and scroll section choreography.",
+      "verifiedAt": "2026-05-03",
+      "sourceUrl": "https://gsap.com/docs/v3/Installation/",
+      "stableVersion": "package.json ^3.15.0, official docs support npm install and plugin registration.",
+      "fallbackIfUnavailable": "CSS transitions plus IntersectionObserver reveals."
     },
     {
-      "library": "lucide-vue-next",
-      "purpose": "Existing icon dependency for link and action affordances.",
-      "verifiedAt": null,
-      "sourceUrl": null,
-      "stableVersion": "existing ^0.331.0",
-      "fallbackIfUnavailable": "Text links with accessible labels."
+      "library": "GSAP ScrollTrigger",
+      "purpose": "Scroll-bound section reveals and class/state choreography.",
+      "verifiedAt": "2026-05-03",
+      "sourceUrl": "https://gsap.com/docs/v3/Plugins/ScrollTrigger/",
+      "stableVersion": "Bundled with GSAP 3, registered explicitly.",
+      "fallbackIfUnavailable": "IntersectionObserver adds reveal classes."
+    },
+    {
+      "library": "gsap.matchMedia",
+      "purpose": "Responsive animation setup and cleanup.",
+      "verifiedAt": "2026-05-03",
+      "sourceUrl": "https://gsap.com/docs/v3/GSAP/gsap.matchMedia%28%29",
+      "stableVersion": "Added in GSAP 3.11 and compatible with current package range.",
+      "fallbackIfUnavailable": "Manual window.matchMedia guards."
     }
   ],
   "reviewRubric": {
     "version": "ui-rubric-v1",
     "genericityAutoFail": true,
     "genericitySignals": [
-      "centered hero with generic value proposition",
-      "equal portfolio card grid",
-      "decorative glow without thread or frame function",
-      "dark SaaS slate palette",
-      "project copy without constraint or outcome"
+      "old dark cinematic palette remains dominant",
+      "portfolio behaves as a simplified old design",
+      "all sections use the same fade-up motion",
+      "projects become repeated cards",
+      "loader is a fake progress animation without readiness gating"
     ],
     "validBoldSignals": [
-      "cinematic first viewport",
-      "thread-derived navigation and progress",
-      "project chapters with technical breakdown",
-      "responsive recomposition from diagonal thread to vertical spine",
-      "reduced-motion safe motion system"
+      "pre-press loader gates entry",
+      "issue cover first viewport",
+      "different motion grammar per section",
+      "vertical flow with editorial spreads",
+      "project evidence remains readable and varied"
     ]
   },
   "contextHygiene": {
-    "allowedSources": [
-      "current-user-brief",
-      "Gemini research markdown supplied by user",
-      "current repository files",
-      "public GitHub repository listing supplied by user"
-    ],
-    "taintedSources": [
-      "old UI palette as final direction",
-      "Awwwards surfaces copied one-to-one",
-      "prior unrelated project styles"
-    ],
-    "approvedExternalConstraintUsage": "Extract concepts, not assets or unique visual signatures."
+    "allowedSources": ["current-user-brief", "current-project-docs", "current-repo-files", "official-gsap-docs"],
+    "taintedSources": ["old cinematic implementation as final style", "Awwwards one-to-one copying", "generic magazine template"],
+    "approvedExternalConstraintUsage": "Extract print-production and editorial composition constraints only."
   },
   "forbiddenPatterns": [
-    "portfolio card grid as the main experience",
-    "dashboard shell",
-    "SaaS landing page hero",
-    "purple-blue gradient default",
-    "cyber terminal cliche",
-    "decorative background lines without navigation or story function",
-    "motion that hides content from keyboard users"
+    "dark glowing cinematic default",
+    "horizontal-only site navigation",
+    "soft-shadow project cards",
+    "centered generic hero",
+    "decorative grid wallpaper",
+    "loader that does not gate real readiness"
   ]
 }

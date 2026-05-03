@@ -27,7 +27,7 @@ Redesain ini bergerak dari dark cinematic yang klise menuju **editorial magazine
 **Tiga sinyal product-specific yang terlihat dari viewport pertama:**
 1. Nomor `01` raksasa (20vw+) terpotong di tepi kanan — bukan dekorasi, ini marker chapter.
 2. Garis horizontal merah yang "menarik diri" kiri→kanan sebelum teks muncul (*line strike reveal*).
-3. Layout dua kolom asimetris di hero: teks kiri sempit, ruang putih kanan besar — seperti spread majalah.
+3. Layout dua kolom asimetris di hero: teks kiri sempit, panel kanan memakai portrait GitHub lokal dalam kotak profile-scale supaya subject jelas tanpa terlihat low-res.
 
 ---
 
@@ -65,9 +65,9 @@ Semua tokens di CSS custom properties pada `:root`. Tailwind extend menggunakan 
 
 ## 6. Responsive Recomposition Plan
 
-- **Mobile:** Single column, nomor chapter kecil (6rem), horizontal scroll proyek menjadi swipe. CTA muncul di bawah teks.
-- **Tablet:** Grid 2-kolom muncul untuk career section, horizontal scroll proyek tetap aktif.
-- **Desktop:** Layout asimetris penuh. Chapter number raksasa aktif. Horizontal project track terlihat lebih dari 2 proyek sekaligus.
+- **Mobile:** Single column, nomor chapter kecil (6rem), project spread menjadi stack vertikal. CTA muncul di bawah teks.
+- **Tablet:** Grid 2-kolom muncul untuk process/career, project tetap vertikal dengan variasi komposisi.
+- **Desktop:** Layout asimetris penuh. Chapter number raksasa aktif. Project ditampilkan sebagai feature spread vertikal, bukan track horizontal.
 
 ---
 
@@ -78,7 +78,12 @@ Semua tokens di CSS custom properties pada `:root`. Tailwind extend menggunakan 
 | Page load | Headline dipecah per-kata, masuk stagger dari bawah (60ms delay/kata) |
 | Scroll masuk section | Garis merah menarik diri kiri→kanan, lalu teks fade-in |
 | Hover tombol | Scale 1.04, warna background berubah, custom cursor membesar |
-| Drag/klik project track | Slide horizontal smooth, snap ke proyek berikutnya |
+| Loading awal | Pre-press check menunggu render, font, dan asset siap sebelum user masuk |
+| Editor note | Kolom teks muncul seperti reflow majalah |
+| Process grid | Rule line digambar dulu, baru sel grid masuk stagger |
+| Project spreads | Setiap project punya movement berbeda: lift, wipe, rotate tipis, atau crop reveal |
+| Career index | Nomor halaman dan garis titik muncul seperti daftar isi |
+| Contact back cover | Sticker/highlight masuk sebagai closing mark |
 | Mouse move (desktop) | Custom cursor dot kecil mengikuti pointer |
 | `prefers-reduced-motion` | Semua animasi dinonaktifkan, konten langsung terlihat |
 
@@ -123,6 +128,6 @@ Semua tokens di CSS custom properties pada `:root`. Tailwind extend menggunakan 
 
 ## 12. Implementation Notes
 
-- GSAP digunakan untuk word-stagger dan ScrollTrigger line reveal
-- Horizontal scroll project menggunakan CSS `overflow-x: scroll` + `scroll-snap-type` (tanpa library tambahan)
+- GSAP digunakan untuk word-stagger, loader timeline, dan ScrollTrigger per-section reveal
+- Project menggunakan vertical feature spread dengan variasi layout, bukan horizontal-only scroll
 - Custom cursor menggunakan satu `div#cursor` di luar `#app`, digerakkan dengan `mousemove` event

@@ -12,17 +12,20 @@ const props = defineProps({
 
 const heroContainer = ref(null)
 const lightLine = ref(null)
-const titleLine1 = ref(null)
-const titleLine2 = ref(null)
-const titleLine3 = ref(null)
 const emit = defineEmits(['scrollTo'])
+
+const splitIntoWords = (text) => {
+  if (!text) return []
+  return text.split(' ').map((word) => ({ word: word + ' ' }))
+}
 
 onMounted(() => {
   const isReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
   
   if (isReducedMotion) {
     gsap.set(lightLine.value, { opacity: 0 })
-    gsap.set([titleLine1.value, titleLine2.value, titleLine3.value], { opacity: 1, y: 0 })
+    gsap.set('.word-reveal', { yPercent: 0 })
+    gsap.set('.eyebrow-line', { scaleX: 1 })
     return
   }
 
@@ -43,11 +46,18 @@ onMounted(() => {
     ease: 'expo.inOut'
   }, '+=0.2')
 
-  // 3. Title text emerges
-  tl.fromTo([titleLine1.value, titleLine2.value, titleLine3.value],
-    { opacity: 0, y: 40, rotationX: -15 },
-    { opacity: 1, y: 0, rotationX: 0, duration: 1.2, stagger: 0.15, ease: 'power3.out' },
+  // 3. Eyebrow line strike
+  tl.fromTo('.eyebrow-line',
+    { scaleX: 0 },
+    { scaleX: 1, duration: 0.8, ease: 'power3.out' },
     '-=0.8'
+  )
+
+  // 4. Word stagger emerges
+  tl.fromTo('.word-reveal',
+    { yPercent: 110 },
+    { yPercent: 0, duration: 1, stagger: 0.05, ease: 'power4.out' },
+    '-=0.6'
   )
 })
 </script>
@@ -59,47 +69,53 @@ onMounted(() => {
       <div class="light-line" ref="lightLine"></div>
     </div>
 
-    <!-- Ghost chapter number bg -->
-    <div class="hero-bg-number" aria-hidden="true">01</div>
+    <!-- Right Column (White space + 01) -->
+    <div class="absolute inset-y-0 right-0 w-[55%] pointer-events-none flex items-end justify-end overflow-hidden z-0 hidden lg:flex">
+      <div class="hero-bg-number" aria-hidden="true">01</div>
+    </div>
 
-    <div class="hero-content relative z-10">
-      <!-- Eyebrow -->
-      <div class="hero-eyebrow">
-        <span class="eyebrow-text">{{ c.eyebrow }}</span>
-      </div>
+    <!-- Left Column (Content) -->
+    <div class="relative z-10 w-full lg:w-[45%] h-full flex flex-col justify-center px-6 lg:pl-24 lg:pr-0">
+      <div class="hero-content">
+        <!-- Eyebrow -->
+        <div class="hero-eyebrow flex items-center gap-4 mb-6">
+          <span class="eyebrow-line"></span>
+          <span class="eyebrow-text text-accent-red font-bold uppercase tracking-widest text-xs">{{ c.eyebrow }}</span>
+        </div>
 
-      <!-- Role tag -->
-      <div class="hero-role-tag">{{ c.role }}</div>
+        <!-- Role tag -->
+        <div class="hero-role-tag mb-8 text-ink-muted text-sm tracking-wider uppercase font-bold">{{ c.role }}</div>
 
-      <!-- Big title -->
-      <h1 class="hero-title text-ink">
-        <span class="block perspective-1000">
-          <span class="block origin-bottom" ref="titleLine1">{{ c.heroLine1 }}</span>
-        </span>
-        <span class="block perspective-1000">
-          <em class="text-accent-red block origin-bottom" ref="titleLine2">{{ c.heroLine2 }}</em>
-        </span>
-        <span class="block perspective-1000">
-          <span class="block origin-bottom" ref="titleLine3">{{ c.heroLine3 }}</span>
-        </span>
-      </h1>
+        <!-- Big title -->
+        <h1 class="hero-title text-ink mb-8">
+          <span class="block overflow-hidden pb-2">
+            <span v-for="(w, i) in splitIntoWords(c.heroLine1)" :key="'l1'+i" class="word-reveal inline-block">{{ w.word }}</span>
+          </span>
+          <span class="block overflow-hidden pb-2">
+            <em v-for="(w, i) in splitIntoWords(c.heroLine2)" :key="'l2'+i" class="word-reveal inline-block text-accent-red pr-3">{{ w.word }}</em>
+          </span>
+          <span class="block overflow-hidden pb-2">
+            <span v-for="(w, i) in splitIntoWords(c.heroLine3)" :key="'l3'+i" class="word-reveal inline-block">{{ w.word }}</span>
+          </span>
+        </h1>
 
-      <p class="hero-body" data-reveal>{{ c.heroBody }}</p>
+        <p class="hero-body text-ink-muted text-lg leading-relaxed max-w-md mb-10" data-reveal>{{ c.heroBody }}</p>
 
-      <div class="hero-actions" data-reveal>
-        <button type="button" class="btn-primary" @click="emit('scrollTo', 'projects')">
-          <ArrowRight class="btn-icon" aria-hidden="true" />
-          {{ c.ctaView }}
-        </button>
-        <a
-          href="https://github.com/fatidaprilian"
-          target="_blank"
-          rel="noreferrer"
-          class="btn-secondary"
-        >
-          <Github class="btn-icon" aria-hidden="true" />
-          {{ c.ctaGithub }}
-        </a>
+        <div class="hero-actions flex gap-4" data-reveal>
+          <button type="button" class="btn-primary" @click="emit('scrollTo', 'projects')">
+            <ArrowRight class="btn-icon" aria-hidden="true" />
+            {{ c.ctaView }}
+          </button>
+          <a
+            href="https://github.com/fatidaprilian"
+            target="_blank"
+            rel="noreferrer"
+            class="btn-secondary"
+          >
+            <Github class="btn-icon" aria-hidden="true" />
+            {{ c.ctaGithub }}
+          </a>
+        </div>
       </div>
     </div>
   </section>
@@ -111,7 +127,6 @@ onMounted(() => {
   min-height: 100vh;
   display: flex;
   align-items: center; /* Center horizontally/vertically for cinematic feel */
-  padding: 0 clamp(24px, 6vw, 80px);
   overflow: hidden;
 }
 
@@ -141,11 +156,17 @@ onMounted(() => {
   }
 }
 
-.hero-content {
-  max-width: 900px;
+.eyebrow-line {
+  display: inline-block;
+  width: 100px;
+  height: 2px;
+  background: var(--accent-red);
+  transform-origin: left;
 }
 
-.perspective-1000 {
-  perspective: 1000px;
+.hero-title em {
+  font-family: 'Fraunces', serif;
+  font-style: italic;
+  font-weight: 500;
 }
 </style>
