@@ -1,12 +1,10 @@
 import { createApp } from 'vue'
-import '@fontsource/manrope/latin-400.css'
-import '@fontsource/manrope/latin-500.css'
-import '@fontsource/manrope/latin-600.css'
-import '@fontsource/manrope/latin-700.css'
-import '@fontsource/manrope/latin-800.css'
-import '@fontsource/bebas-neue/latin-400.css'
-import '@fontsource/fraunces/latin-500.css'
-import '@fontsource/fraunces/latin-600.css'
+
+// Voice triplet — variable subsets keep total budget compact.
+import '@fontsource-variable/fraunces'
+import '@fontsource-variable/inter'
+import '@fontsource-variable/jetbrains-mono'
+
 import './style.css'
 import App from './App.vue'
 

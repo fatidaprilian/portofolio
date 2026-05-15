@@ -1,89 +1,91 @@
 <script setup>
-import { computed, nextTick, onMounted, onUnmounted, ref } from 'vue'
+import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
 import Lenis from '@studio-freight/lenis'
 import gsap from 'gsap'
-import ScrollTrigger from 'gsap/ScrollTrigger'
-import {
-  ArrowDown,
-  ArrowUpRight,
-  Github,
-  Linkedin,
-  Mail,
-  Phone,
-} from 'lucide-vue-next'
+import { ArrowDown, ArrowUpRight, Github, Linkedin, Mail, Phone } from 'lucide-vue-next'
 import { getCareerProfileByLanguage } from './data/careerProfile'
 import { getProjectsByLanguage } from './data/projects'
+import Ornament from './components/Ornament.vue'
 
+// -----------------------------------------------------------------
+// State
+// -----------------------------------------------------------------
 const currentYear = new Date().getFullYear()
 const lang = ref('id')
-const activeSection = ref('home')
-const scrollProgress = ref(0)
-const isScrolled = ref(false)
-const isLoading = ref(true)
-const isContentReady = ref(false)
-const loaderProgress = ref(9)
-const loaderStage = ref('Checking paper stock')
+const themePref = ref('auto') // auto | light | dark
+const resolvedTheme = ref('light')
+const themeAnnouncement = ref('')
 
-const sectionIds = ['home', 'intent', 'process', 'projects', 'career', 'contact']
-const loaderStages = [
-  'Checking paper stock',
-  'Drawing registration marks',
-  'Composing type columns',
-  'Binding project spreads',
-  'Opening Issue 01',
-]
-
+// -----------------------------------------------------------------
+// Copy (bilingual)
+// -----------------------------------------------------------------
 const copy = {
   id: {
     skip: 'Lewati ke konten utama',
-    issue: 'Issue 01',
-    prepress: 'Pre-Press Check',
-    ready: 'Issue ready',
-    folio: 'Portofolio Farid Eka Aprilian',
-    eyebrow: 'Creative Developer Portfolio',
-    role: 'Designer-minded developer',
-    heroLine1: 'Produk yang',
-    heroLine2: 'berpikir seperti',
-    heroLine3: 'editorial.',
-    heroBody:
-      'Saya membangun web product dengan rasa desain, struktur teknis, dan proof-of-work yang bisa diperiksa.',
-    ctaView: 'Buka proyek',
+    issue: 'Catalog 2026',
+    edition: 'Edition I',
+    eyebrow: 'Catalog of Selected Rooms',
+    coverHeadline: ['Karya yang dibaca ', 'seperti ', { italic: 'pameran kecil.' }],
+    coverBody:
+      'Saya membangun produk web sebagai sebuah katalog: setiap proyek punya wall label, curator’s note, dan plat sendiri. Bukan rapi karena minimalis — rapi karena dikurasi.',
+    ctaView: 'Buka denah ruang',
     ctaGithub: 'GitHub',
-    intentLabel: 'Editor Note',
-    intentTitle: 'Bukan sekadar portfolio. Ini argumen visual.',
-    intentQuote:
-      'Kalau kode punya arsitektur, interface juga harus punya sikap.',
-    intentBody:
-      'Setiap bagian dibuat seperti halaman majalah: ada hirarki, ritme, aksen, dan bukti kerja. Tujuannya bukan ramai, tapi punya keputusan.',
-    processLabel: 'Typesetting Grid',
-    processTitle: 'Cara kerja dibentuk sebagai sistem editorial.',
-    projectsLabel: 'Feature Spreads',
-    projectsTitle: 'Project sebagai artikel utama, bukan kartu katalog.',
-    openingCredits: 'Opening Credits',
+    roomI: 'Room I',
+    roomII: 'Room II',
+    roomIII: 'Room III',
+    roomIV: 'Room IV',
+    roomV: 'Room V',
+    roomVI: 'Room VI',
+    intentLabel: 'Curator’s Note · Room II',
+    intentTitle: 'Sikap, bukan sekadar portofolio.',
+    intentBodyP1:
+      'Bagi saya, antarmuka punya pendapat. Kalau kode punya arsitektur, layar juga harus punya hierarki, ritme, dan alasan. Halaman ini ditata seperti katalog pameran kecil supaya setiap proyek bisa berdiri di ruangnya sendiri.',
+    intentBodyP2:
+      'Tidak ada kartu yang berbaris seragam, tidak ada hero yang berlomba mencolok. Yang ada wall label, plate panel, dan curator’s note. Pembaca yang lambat akan menemukan lebih banyak.',
+    intentPullQuote: '“Detail yang tidak dijelaskan di mana pun adalah cara halus untuk menunjukkan ketelitian.”',
+    intentMetaTitle: 'Editorial premise',
+    intentMetaItems: [
+      ['Anchor', 'Exhibition Catalog'],
+      ['Voice', 'Curator'],
+      ['Reading', 'Slow on purpose'],
+    ],
+    methodLabel: 'Method · Room III',
+    methodTitle: 'Empat sudut yang saya pegang setiap kali memulai ruang baru.',
+    methodMeta: '04 Beats',
+    floorLabel: 'Floor Plan · Room IV',
+    floorTitle: 'Denah ruang. Setiap baris satu proyek.',
+    floorMeta: 'Selected works',
+    floorHead: ['Room', 'Plate', 'Title', '', 'Note'],
     constraint: 'Constraint',
     decision: 'Decision',
     outcome: 'Outcome',
-    source: 'Lihat Source',
-    careerLabel: 'Issue Index',
-    careerTitle: 'Timeline produksi dan stack.',
-    contactLabel: 'Back Cover',
-    contactTitle: 'Frame berikutnya bisa kita mulai.',
+    source: 'View source',
+    careerLabel: 'Biography · Room V',
+    careerTitle: 'Linimasa kerja, dibaca sebagai indeks.',
+    careerMeta: 'Career index',
+    skillLabel: 'Stack technical',
+    educationLabel: 'Pendidikan',
+    contactLabel: 'Back wall · Room VI',
+    contactTitle: 'Mau buka ruang berikutnya bareng?',
     contactBody:
-      'Kalau butuh developer yang bisa ikut mikir produk, motion, dan struktur engineering, saya terbuka untuk ngobrol.',
-    sendEmail: 'Kirim Email',
+      'Kalau butuh developer yang ikut memikirkan produk, motion, dan struktur engineering dengan rasa katalog, saya terbuka untuk ngobrol.',
+    contactMeta: 'Open for collaboration',
+    sendEmail: 'Kirim email',
     phone: 'Telepon',
     linkedin: 'LinkedIn',
     github: 'GitHub',
-    footerText: 'Dibangun dengan Vue, disusun sebagai editorial issue.',
-    rail: {
-      home: 'Cover',
-      intent: 'Note',
-      process: 'Process',
-      projects: 'Work',
-      career: 'Index',
-      contact: 'Back',
-    },
-    beats: [
+    colophonLabel: 'Colophon',
+    colophonTitle: 'Catatan teknis dan kunci plate code.',
+    colophonBody: [
+      ['Type', 'Fraunces (Undercase, OFL), Inter (Rasmus Andersson, OFL), JetBrains Mono (JetBrains, OFL).'],
+      ['Build', 'Vue 3, Vite, Tailwind, Lenis. Tanpa cursor kustom, tanpa marquee logo, tanpa scroll text reveal per kata.'],
+      ['Photography', 'Saat ini setiap ruang menampilkan plate panel tipografis. Foto installation view akan menggantikan plat ini bertahap.'],
+      ['Plate code', 'PR.MMYY menandai bulan dan tahun proyek dimulai. Hanya colophon ini yang menjelaskannya.'],
+      ['Color space', 'Token semantik OKLCH, dengan dua mode terderivasi (bukan invert).'],
+    ],
+    footerLeft: 'Catalog 2026 / printed in browser',
+    themeLabels: { auto: 'Auto', light: 'Light', dark: 'Dark' },
+    methodBeats: [
       { num: '01', title: 'Intent', body: 'Membaca tujuan produk dan batasan sebelum memilih bentuk visual atau teknis.' },
       { num: '02', title: 'System', body: 'Membentuk alur, state, dan struktur supaya UI tidak hanya terlihat bagus.' },
       { num: '03', title: 'Motion', body: 'Gerak dipakai untuk continuity, feedback, dan hierarchy, bukan dekorasi.' },
@@ -92,54 +94,71 @@ const copy = {
   },
   en: {
     skip: 'Skip to main content',
-    issue: 'Issue 01',
-    prepress: 'Pre-Press Check',
-    ready: 'Issue ready',
-    folio: 'Farid Eka Aprilian Portfolio',
-    eyebrow: 'Creative Developer Portfolio',
-    role: 'Designer-minded developer',
-    heroLine1: 'Products that',
-    heroLine2: 'think like',
-    heroLine3: 'editorial.',
-    heroBody:
-      'I build web products with design taste, technical structure, and inspectable proof-of-work.',
-    ctaView: 'Open projects',
+    issue: 'Catalog 2026',
+    edition: 'Edition I',
+    eyebrow: 'Catalog of Selected Rooms',
+    coverHeadline: ['Work read ', 'like a small ', { italic: 'exhibition.' }],
+    coverBody:
+      'I build web products as a catalog: every project gets a wall label, a curator’s note, and its own plate. Not tidy because it is minimal — tidy because it is curated.',
+    ctaView: 'Open the floor plan',
     ctaGithub: 'GitHub',
-    intentLabel: 'Editor Note',
-    intentTitle: 'Not just a portfolio. A visual argument.',
-    intentQuote:
-      'If code has architecture, an interface should have a point of view.',
-    intentBody:
-      'Every section behaves like a magazine page: hierarchy, rhythm, accent, and evidence. The goal is not noise, but decisions.',
-    processLabel: 'Typesetting Grid',
-    processTitle: 'The working method becomes an editorial system.',
-    projectsLabel: 'Feature Spreads',
-    projectsTitle: 'Projects as feature articles, not catalogue cards.',
-    openingCredits: 'Opening Credits',
+    roomI: 'Room I',
+    roomII: 'Room II',
+    roomIII: 'Room III',
+    roomIV: 'Room IV',
+    roomV: 'Room V',
+    roomVI: 'Room VI',
+    intentLabel: 'Curator’s Note · Room II',
+    intentTitle: 'A point of view, not just a portfolio.',
+    intentBodyP1:
+      'For me, an interface has an opinion. If code has architecture, a screen should have hierarchy, rhythm, and reasons. This page is composed like a small show catalog so every project can stand in its own room.',
+    intentBodyP2:
+      'No tile of uniform cards, no hero competing for loudness. Just wall labels, plate panels, and curator’s notes. The slow reader finds more here.',
+    intentPullQuote: '“A detail that is never explained anywhere is a quiet way to show care.”',
+    intentMetaTitle: 'Editorial premise',
+    intentMetaItems: [
+      ['Anchor', 'Exhibition Catalog'],
+      ['Voice', 'Curator'],
+      ['Reading', 'Slow on purpose'],
+    ],
+    methodLabel: 'Method · Room III',
+    methodTitle: 'Four corners I hold whenever I open a new room.',
+    methodMeta: '04 Beats',
+    floorLabel: 'Floor Plan · Room IV',
+    floorTitle: 'The floor plan. One row per project.',
+    floorMeta: 'Selected works',
+    floorHead: ['Room', 'Plate', 'Title', '', 'Note'],
     constraint: 'Constraint',
     decision: 'Decision',
     outcome: 'Outcome',
-    source: 'View Source',
-    careerLabel: 'Issue Index',
-    careerTitle: 'Production timeline and stack.',
-    contactLabel: 'Back Cover',
-    contactTitle: 'The next frame can start here.',
+    source: 'View source',
+    careerLabel: 'Biography · Room V',
+    careerTitle: 'Career timeline, read as an index.',
+    careerMeta: 'Career index',
+    skillLabel: 'Technical stack',
+    educationLabel: 'Education',
+    contactLabel: 'Back wall · Room VI',
+    contactTitle: 'Want to open the next room together?',
     contactBody:
-      'If you need a developer who can think through product, motion, and engineering structure, I am open to talk.',
-    sendEmail: 'Send Email',
+      'If you need a developer who thinks about product, motion, and engineering structure with a curatorial sensibility, I am open to talk.',
+    contactMeta: 'Open for collaboration',
+    sendEmail: 'Send email',
     phone: 'Phone',
     linkedin: 'LinkedIn',
     github: 'GitHub',
-    footerText: 'Built with Vue, composed as an editorial issue.',
-    rail: {
-      home: 'Cover',
-      intent: 'Note',
-      process: 'Process',
-      projects: 'Work',
-      career: 'Index',
-      contact: 'Back',
-    },
-    beats: [
+    colophonLabel: 'Colophon',
+    colophonTitle: 'Production notes and plate code key.',
+    colophonBody: [
+      ['Type', 'Fraunces (Undercase, OFL), Inter (Rasmus Andersson, OFL), JetBrains Mono (JetBrains, OFL).'],
+      ['Build', 'Vue 3, Vite, Tailwind, Lenis. No custom cursor, no logo marquee, no per-word scroll reveal.'],
+      ['Photography', 'For now each room shows a typeset plate panel. Installation views will replace these plates over time.'],
+      ['Plate code', 'PR.MMYY marks the month and year a project commenced. Only this colophon decodes it.'],
+      ['Color space', 'OKLCH semantic tokens with two derived modes (not an inverted single image).'],
+    ],
+    footerLeft: 'Catalog 2026 / printed in browser',
+    footerCenter: 'No cursor. No marquee. No template.',
+    themeLabels: { auto: 'Auto', light: 'Light', dark: 'Dark' },
+    methodBeats: [
       { num: '01', title: 'Intent', body: 'Read product goals and constraints before choosing visual or technical form.' },
       { num: '02', title: 'System', body: 'Shape flow, state, and structure so the UI is not only good looking.' },
       { num: '03', title: 'Motion', body: 'Motion is for continuity, feedback, and hierarchy, not decoration.' },
@@ -152,660 +171,607 @@ const c = computed(() => copy[lang.value])
 const projects = computed(() => getProjectsByLanguage(lang.value))
 const profile = computed(() => getCareerProfileByLanguage(lang.value))
 
-const railSections = computed(() =>
-  sectionIds.map((id, index) => ({
-    id,
-    label: c.value.rail[id],
-    num: String(index + 1).padStart(2, '0'),
-  }))
-)
+// Roman plate numbering for floor plan rows
+const romanList = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X']
+const romanFor = (index) => romanList[index] ?? String(index + 1)
 
-const heroWords = computed(() => {
-  const lines = [c.value.heroLine1, c.value.heroLine2, c.value.heroLine3]
+// Project monogram (first 2 letters) used on typeset plate panels
+const monogramFor = (title) => {
+  const cleaned = title.replace(/[^a-z]/gi, '')
+  return cleaned.slice(0, 2).toUpperCase() || 'PR'
+}
 
-  return lines.flatMap((line, lineIndex) => {
-    const words = line.split(' ')
-
-    return words.map((word, wordIndex) => ({
-      text: `${word}${wordIndex === words.length - 1 ? '' : '\u00A0'}`,
-      key: `${lineIndex}-${wordIndex}-${word}`,
-      accent: lineIndex === 1,
-      lineBreak: wordIndex === words.length - 1,
-    }))
-  })
-})
-
-let lenis = null
-let lenisRaf = null
-let scrollRafId = null
-let sceneObserver = null
-let cursorEl = null
-let cursorRafId = null
-let mouseX = -100
-let mouseY = -100
-let currentX = -100
-let currentY = -100
-let gsapContext = null
-let matchMediaContext = null
-
+// -----------------------------------------------------------------
+// Theme management — tri-state with no-flash inline script in index.html
+// -----------------------------------------------------------------
 const isReducedMotion = () =>
   typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
-const wait = (ms) => new Promise((resolve) => {
-  window.setTimeout(resolve, ms)
-})
-
-const waitForFrame = () => new Promise((resolve) => {
-  requestAnimationFrame(() => requestAnimationFrame(resolve))
-})
-
-const withTimeout = (promise, timeoutMs) => Promise.race([
-  promise,
-  wait(timeoutMs),
-])
-
-const preloadImage = (src, timeoutMs = 1400) => new Promise((resolve) => {
-  const image = new Image()
-  let done = false
-
-  const finish = () => {
-    if (done) return
-    done = true
-    image.onload = null
-    image.onerror = null
-    resolve()
+const applyTheme = (pref) => {
+  themePref.value = pref
+  const matches = window.matchMedia('(prefers-color-scheme: dark)').matches
+  const next = pref === 'auto' ? (matches ? 'dark' : 'light') : pref
+  resolvedTheme.value = next
+  document.documentElement.setAttribute('data-theme', next)
+  document.documentElement.setAttribute('data-theme-pref', pref)
+  try {
+    localStorage.setItem('portfolio-theme', pref)
+  } catch (_) {
+    // localStorage unavailable; ignore
   }
-
-  window.setTimeout(finish, timeoutMs)
-  image.onload = finish
-  image.onerror = finish
-  image.decoding = 'async'
-  image.src = src
-})
-
-const setLoaderStep = (index, progress) => {
-  loaderStage.value = loaderStages[index] ?? loaderStages[loaderStages.length - 1]
-  loaderProgress.value = progress
+  themeAnnouncement.value = `${c.value.themeLabels[pref]} theme`
 }
 
-const updateScroll = () => {
-  if (scrollRafId) return
-
-  scrollRafId = requestAnimationFrame(() => {
-    const max = document.documentElement.scrollHeight - window.innerHeight
-    scrollProgress.value = max > 0 ? Math.min(100, (window.scrollY / max) * 100) : 0
-    isScrolled.value = window.scrollY > 36
-    scrollRafId = null
-  })
+let mediaQuery = null
+const onSchemeChange = () => {
+  if (themePref.value === 'auto') applyTheme('auto')
 }
 
-const scrollToSection = (id) => {
-  const element = document.getElementById(id)
-  if (!element) return
-  element.scrollIntoView({ behavior: isReducedMotion() ? 'auto' : 'smooth', block: 'start' })
-}
-
+// -----------------------------------------------------------------
+// Lang
+// -----------------------------------------------------------------
 const toggleLang = () => {
   lang.value = lang.value === 'id' ? 'en' : 'id'
-  localStorage.setItem('portfolio-lang', lang.value)
-}
-
-const animateCursor = () => {
-  currentX += (mouseX - currentX) * 0.18
-  currentY += (mouseY - currentY) * 0.18
-
-  if (cursorEl) {
-    cursorEl.style.transform = `translate3d(calc(${currentX}px - 50%), calc(${currentY}px - 50%), 0)`
+  try {
+    localStorage.setItem('portfolio-lang', lang.value)
+  } catch (_) {
+    // ignore
   }
-
-  cursorRafId = requestAnimationFrame(animateCursor)
 }
 
-const onMouseMove = (event) => {
-  mouseX = event.clientX
-  mouseY = event.clientY
-}
-
-const setCursorHover = (value) => {
-  if (cursorEl) cursorEl.classList.toggle('is-hovering', value)
-}
-
-const initCursor = () => {
-  cursorEl = document.getElementById('cursor')
-  if (!cursorEl || !window.matchMedia('(pointer: fine)').matches) return
-
-  window.addEventListener('mousemove', onMouseMove)
-  animateCursor()
-
-  document.querySelectorAll('a, button, .feature-spread').forEach((element) => {
-    element.addEventListener('mouseenter', () => setCursorHover(true))
-    element.addEventListener('mouseleave', () => setCursorHover(false))
-  })
-}
-
-const initSectionObserver = () => {
-  sceneObserver = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (!entry.isIntersecting) return
-        const id = entry.target.getAttribute('id')
-        if (id && sectionIds.includes(id)) {
-          activeSection.value = id
-        }
-        entry.target.classList.add('is-scene-visible')
-      })
-    },
-    { threshold: 0.28, rootMargin: '-8% 0px -42% 0px' }
-  )
-
-  document.querySelectorAll('[data-scene]').forEach((element) => sceneObserver.observe(element))
-}
-
-const showAllMotionTargets = () => {
-  document.querySelectorAll('[data-reveal], .cover-word, .issue-section').forEach((element) => {
-    element.classList.add('is-visible')
-  })
-}
-
-const initAnimations = () => {
-  showAllMotionTargets()
-
-  if (isReducedMotion()) {
-    return
-  }
-
-  gsap.registerPlugin(ScrollTrigger)
-  gsapContext = gsap.context(() => {
-    gsap.fromTo('.cover-strike', { scaleX: 0 }, { scaleX: 1, duration: 0.75, ease: 'power3.out' })
-    gsap.fromTo(
-      '.cover-word',
-      { yPercent: 110, opacity: 0 },
-      { yPercent: 0, opacity: 1, duration: 0.78, stagger: 0.055, ease: 'power4.out', delay: 0.08 }
-    )
-    gsap.fromTo(
-      '.cover-meta, .cover-actions, .cover-proof',
-      { y: 26, opacity: 0 },
-      { y: 0, opacity: 1, duration: 0.7, stagger: 0.08, ease: 'power3.out', delay: 0.45 }
-    )
-
-    gsap.utils.toArray('[data-motion="column-reflow"]').forEach((section) => {
-      gsap.timeline({
-        scrollTrigger: { trigger: section, start: 'top 72%', once: true },
-      })
-        .from(section.querySelector('.section-strike'), { scaleX: 0, duration: 0.65, ease: 'power3.out' })
-        .from(section.querySelectorAll('.editor-column'), {
-          y: 46,
-          opacity: 0,
-          duration: 0.72,
-          stagger: 0.12,
-          ease: 'power3.out',
-        }, '-=0.22')
-        .from(section.querySelector('.pull-quote'), {
-          clipPath: 'inset(0 100% 0 0)',
-          duration: 0.78,
-          ease: 'power4.inOut',
-        }, '-=0.35')
-    })
-
-    gsap.utils.toArray('[data-motion="rule-grid"]').forEach((section) => {
-      gsap.timeline({
-        scrollTrigger: { trigger: section, start: 'top 70%', once: true },
-      })
-        .from(section.querySelector('.section-strike'), { scaleX: 0, duration: 0.65, ease: 'power3.out' })
-        .from(section.querySelectorAll('.beat-cell'), {
-          y: 34,
-          opacity: 0,
-          duration: 0.58,
-          stagger: { amount: 0.42, from: 'start' },
-          ease: 'power3.out',
-        }, '-=0.12')
-    })
-
-    gsap.utils.toArray('.feature-spread').forEach((spread, index) => {
-      const direction = index % 2 === 0 ? -1 : 1
-      gsap.timeline({
-        scrollTrigger: { trigger: spread, start: 'top 74%', once: true },
-      })
-        .from(spread.querySelector('.spread-number'), {
-          xPercent: 18 * direction,
-          opacity: 0,
-          duration: 0.7,
-          ease: 'power3.out',
-        })
-        .from(spread.querySelector('.spread-text'), {
-          y: 48,
-          opacity: 0,
-          duration: 0.72,
-          ease: 'power3.out',
-        }, '-=0.36')
-        .from(spread.querySelector('.spread-breakdown'), {
-          x: 54 * direction,
-          rotate: 1.2 * direction,
-          opacity: 0,
-          duration: 0.78,
-          ease: 'power3.out',
-        }, '-=0.48')
-        .from(spread.querySelectorAll('.tag-chip'), {
-          y: 18,
-          opacity: 0,
-          duration: 0.42,
-          stagger: 0.045,
-          ease: 'power2.out',
-        }, '-=0.22')
-    })
-
-    gsap.utils.toArray('[data-motion="index"]').forEach((section) => {
-      gsap.timeline({
-        scrollTrigger: { trigger: section, start: 'top 70%', once: true },
-      })
-        .from(section.querySelector('.section-strike'), { scaleX: 0, duration: 0.65, ease: 'power3.out' })
-        .from(section.querySelectorAll('.index-row'), {
-          x: -42,
-          opacity: 0,
-          duration: 0.56,
-          stagger: 0.09,
-          ease: 'power3.out',
-        }, '-=0.18')
-        .from(section.querySelectorAll('.skill-ticket'), {
-          y: 24,
-          opacity: 0,
-          duration: 0.48,
-          stagger: 0.06,
-          ease: 'power3.out',
-        }, '-=0.24')
-    })
-
-    gsap.utils.toArray('[data-motion="back-cover"]').forEach((section) => {
-      gsap.timeline({
-        scrollTrigger: { trigger: section, start: 'top 74%', once: true },
-      })
-        .from(section.querySelector('.back-cover-card'), {
-          y: 54,
-          opacity: 0,
-          duration: 0.76,
-          ease: 'power3.out',
-        })
-        .from(section.querySelector('.contact-sticker'), {
-          scale: 0.7,
-          rotate: -8,
-          opacity: 0,
-          duration: 0.62,
-          ease: 'back.out(1.6)',
-        }, '-=0.36')
-    })
-  })
-
-  matchMediaContext = gsap.matchMedia()
-  matchMediaContext.add('(min-width: 900px)', () => {
-    gsap.utils.toArray('.issue-section').forEach((section, index) => {
-      gsap.to(section.querySelector('.chapter-ghost'), {
-        yPercent: index % 2 === 0 ? -8 : 8,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: section,
-          start: 'top bottom',
-          end: 'bottom top',
-          scrub: 0.7,
-        },
-      })
-    })
-  })
-
-  ScrollTrigger.refresh()
-}
+// -----------------------------------------------------------------
+// Smooth scroll (Lenis) — disabled when reduced-motion
+// -----------------------------------------------------------------
+let lenis = null
+let lenisRaf = null
 
 const initLenis = () => {
   if (isReducedMotion()) return
-
   lenis = new Lenis({
-    duration: 1.08,
-    easing: (time) => Math.min(1, 1.001 - Math.pow(2, -10 * time)),
+    duration: 1.05,
+    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
   })
-
-  lenis.on('scroll', ScrollTrigger.update)
-
   const run = (time) => {
     if (!lenis) return
     lenis.raf(time)
     lenisRaf = requestAnimationFrame(run)
   }
-
   lenisRaf = requestAnimationFrame(run)
 }
 
-const prepareEntry = async () => {
-  document.documentElement.classList.add('is-preloading')
-  setLoaderStep(0, 9)
-
-  const minimumDuration = wait(isReducedMotion() ? 450 : 1750)
-
-  try {
-    setLoaderStep(1, 28)
-    await nextTick()
-    await waitForFrame()
-
-    setLoaderStep(2, 52)
-    if (document.fonts?.ready) {
-      await withTimeout(document.fonts.ready, 1700)
-    }
-
-    setLoaderStep(3, 78)
-    await preloadImage('/avatar-github.jpg')
-    await waitForFrame()
-
-    setLoaderStep(4, 92)
-    await minimumDuration
-  } finally {
-    isContentReady.value = true
-    loaderProgress.value = 100
-    loaderStage.value = c.value.ready
-    await wait(isReducedMotion() ? 80 : 520)
-    isLoading.value = false
-    document.documentElement.classList.remove('is-preloading')
-    await waitForFrame()
-    initAnimations()
-    updateScroll()
+// -----------------------------------------------------------------
+// Anchor navigation with focus management — moves focus to <h1> of
+// the destination room. This is the interaction-design signature.
+// -----------------------------------------------------------------
+const goToRoom = (id) => {
+  const target = document.getElementById(id)
+  if (!target) return
+  if (lenis && !isReducedMotion()) {
+    lenis.scrollTo(target, { offset: -64 })
+  } else {
+    target.scrollIntoView({ behavior: isReducedMotion() ? 'auto' : 'smooth', block: 'start' })
   }
+  // Move focus to the first heading in the room for screen readers
+  window.setTimeout(() => {
+    const heading = target.querySelector('h1, h2')
+    if (heading) {
+      heading.setAttribute('tabindex', '-1')
+      heading.focus({ preventScroll: true })
+    }
+  }, 380)
 }
 
-onMounted(() => {
-  const saved = localStorage.getItem('portfolio-lang')
-  if (saved === 'id' || saved === 'en') lang.value = saved
+// -----------------------------------------------------------------
+// Opening sequence — once per session, <= 1.2s, three elements.
+// GSAP is restricted to this orchestration only.
+// -----------------------------------------------------------------
+const playOpeningSequence = () => {
+  if (isReducedMotion()) return
+  const root = document.querySelector('#cover')
+  if (!root) return
+  const tl = gsap.timeline({ defaults: { ease: 'cubic-bezier(0.22, 1, 0.36, 1)' } })
+  tl.from(root.querySelector('.eyebrow'), { y: 18, opacity: 0, duration: 0.55 })
+    .from(root.querySelector('h1'), { y: 28, opacity: 0, duration: 0.7 }, '-=0.32')
+    .from(root.querySelector('.cover-body'), { y: 18, opacity: 0, duration: 0.55 }, '-=0.4')
+    .from(root.querySelector('.cover-actions'), { y: 14, opacity: 0, duration: 0.45 }, '-=0.35')
+    .from(root.querySelector('.plate-cover'), { opacity: 0, duration: 0.6 }, '-=0.6')
+}
+
+// -----------------------------------------------------------------
+// Lifecycle
+// -----------------------------------------------------------------
+onMounted(async () => {
+  // Restore lang
+  try {
+    const savedLang = localStorage.getItem('portfolio-lang')
+    if (savedLang === 'id' || savedLang === 'en') lang.value = savedLang
+  } catch (_) {
+    /* ignore */
+  }
+
+  // Restore theme pref (the no-flash script already set the resolved theme)
+  let pref = 'auto'
+  try {
+    const saved = localStorage.getItem('portfolio-theme')
+    if (saved === 'auto' || saved === 'light' || saved === 'dark') pref = saved
+  } catch (_) {
+    /* ignore */
+  }
+  applyTheme(pref)
+
+  // React to system theme changes when in auto mode
+  mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
+  if (mediaQuery.addEventListener) mediaQuery.addEventListener('change', onSchemeChange)
+  else mediaQuery.addListener(onSchemeChange)
 
   initLenis()
-  initCursor()
-  initSectionObserver()
-  window.addEventListener('scroll', updateScroll, { passive: true })
-  window.addEventListener('resize', updateScroll)
-  prepareEntry()
+  await nextTick()
+  playOpeningSequence()
 })
 
 onUnmounted(() => {
-  document.documentElement.classList.remove('is-preloading')
-  window.removeEventListener('scroll', updateScroll)
-  window.removeEventListener('resize', updateScroll)
-  window.removeEventListener('mousemove', onMouseMove)
-  if (scrollRafId) cancelAnimationFrame(scrollRafId)
-  if (cursorRafId) cancelAnimationFrame(cursorRafId)
   if (lenisRaf) cancelAnimationFrame(lenisRaf)
   if (lenis) {
     lenis.destroy()
     lenis = null
   }
-  if (sceneObserver) sceneObserver.disconnect()
-  if (matchMediaContext) matchMediaContext.revert()
-  if (gsapContext) gsapContext.revert()
-  ScrollTrigger.getAll().forEach((trigger) => trigger.kill())
+  if (mediaQuery) {
+    if (mediaQuery.removeEventListener) mediaQuery.removeEventListener('change', onSchemeChange)
+    else mediaQuery.removeListener(onSchemeChange)
+  }
+})
+
+// Re-announce on language change
+watch(lang, () => {
+  themeAnnouncement.value = `${c.value.themeLabels[themePref.value]} theme`
 })
 </script>
 
 <template>
-  <div id="cursor" aria-hidden="true"></div>
+  <a href="#cover" class="skip-link">{{ c.skip }}</a>
 
-  <div
-    class="editorial-app"
-    :class="{ 'is-loading': isLoading, 'is-ready': !isLoading }"
-    :style="{ '--scroll-progress': `${scrollProgress}%` }"
-    :aria-busy="isLoading ? 'true' : 'false'"
-  >
-    <Transition name="loader-fade">
-      <section v-if="isLoading" class="prepress-loader" aria-live="polite" aria-label="Loading portfolio">
-        <div class="loader-marks" aria-hidden="true">
-          <span></span>
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
+  <span class="sr-only" role="status" aria-live="polite" style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0;">
+    {{ themeAnnouncement }}
+  </span>
 
-        <div class="loader-sheet">
-          <p class="loader-kicker">{{ c.prepress }}</p>
-          <h1>{{ c.issue }}</h1>
-          <div class="loader-strike" aria-hidden="true">
-            <span :style="{ width: `${loaderProgress}%` }"></span>
-          </div>
-          <div class="loader-meta">
-            <span>{{ loaderStage }}</span>
-            <strong>{{ loaderProgress }}%</strong>
-          </div>
-          <p class="loader-folio">{{ c.folio }}</p>
-        </div>
-      </section>
-    </Transition>
-
-    <a href="#main-content" class="skip-link">{{ c.skip }}</a>
-
-    <div class="progress-bar" aria-hidden="true"></div>
-
-    <nav class="site-nav" :class="{ 'is-scrolled': isScrolled }" aria-label="Primary navigation">
-      <button type="button" class="brand-mark" @click="scrollToSection('home')" aria-label="Go to cover">
-        <span>FA</span>
-        <small>{{ c.issue }}</small>
+  <div class="catalog-app">
+    <!-- ========== Top frame ========== -->
+    <header class="catalog-frame" role="banner">
+      <button type="button" class="brand-mark" @click="goToRoom('cover')" aria-label="Cover">
+        <span>Farid Aprilian</span>
+        <span class="brand-mono">FA · {{ c.issue }}</span>
       </button>
 
-      <div class="nav-actions">
-        <a href="https://github.com/fatidaprilian" target="_blank" rel="noreferrer" class="nav-icon-btn" :aria-label="c.github">
-          <Github aria-hidden="true" />
-        </a>
-        <button type="button" class="lang-btn" @click="toggleLang" aria-label="Switch language">
+      <div class="frame-meta" aria-hidden="true">
+        Plate {{ resolvedTheme === 'dark' ? 'B' : 'A' }} · {{ projects.length }} rooms · {{ currentYear }}
+      </div>
+
+      <div class="frame-actions">
+        <div class="theme-segment" role="group" aria-label="Theme preference">
+          <button
+            type="button"
+            :class="{ 'is-active': themePref === 'auto' }"
+            @click="applyTheme('auto')"
+            aria-label="Auto theme"
+          >
+            {{ c.themeLabels.auto }}
+          </button>
+          <button
+            type="button"
+            :class="{ 'is-active': themePref === 'light' }"
+            @click="applyTheme('light')"
+            aria-label="Light theme"
+          >
+            {{ c.themeLabels.light }}
+          </button>
+          <button
+            type="button"
+            :class="{ 'is-active': themePref === 'dark' }"
+            @click="applyTheme('dark')"
+            aria-label="Dark theme"
+          >
+            {{ c.themeLabels.dark }}
+          </button>
+        </div>
+
+        <button type="button" class="lang-toggle" @click="toggleLang" aria-label="Switch language">
           {{ lang === 'id' ? 'EN' : 'ID' }}
         </button>
       </div>
-    </nav>
+    </header>
 
-    <aside class="issue-rail" aria-label="Issue sections">
-      <button
-        v-for="section in railSections"
-        :key="section.id"
-        type="button"
-        class="rail-item"
-        :class="{ 'is-active': activeSection === section.id }"
-        @click="scrollToSection(section.id)"
-      >
-        <span>{{ section.num }}</span>
-        <strong>{{ section.label }}</strong>
-      </button>
-    </aside>
+    <main class="catalog-main" id="main-content">
+      <!-- ========== Room I — Cover ========== -->
+      <section id="cover" class="room cover-room" aria-labelledby="cover-heading">
+        <div class="folio-bar" aria-hidden="true">
+          <span class="folio-numeral">I</span>
+          <span class="folio-kicker">Cover · Plate PR.0526</span>
+          <span class="folio-page">01 / 06</span>
+        </div>
 
-    <main
-      id="main-content"
-      class="issue-main"
-      :inert="isLoading"
-      :aria-hidden="isLoading ? 'true' : 'false'"
-    >
-      <section id="home" class="cover-section issue-section" data-scene>
-        <span class="chapter-ghost" aria-hidden="true">01</span>
-        <div class="cover-grid">
-          <div class="cover-meta">
-            <span class="cover-strike"></span>
-            <p>{{ c.eyebrow }}</p>
-          </div>
+        <div class="plate-spread">
+          <div class="plate-label" aria-hidden="true">Catalog 2026 — Edition I — Plate I</div>
 
-          <div class="cover-copy">
-            <p class="role-tag">{{ c.role }}</p>
-            <h1 class="cover-title">
-              <span
-                v-for="word in heroWords"
-                :key="word.key"
-                class="word-wrap"
-                :class="{ 'is-accent': word.accent, 'is-break': word.lineBreak }"
-              >
-                <span class="cover-word">{{ word.text }}</span>
+          <figure class="plate-frame plate-cover" data-tone="copper">
+            <div class="cover-portrait">
+              <img src="/avatar-github.jpg" alt="Farid Eka Aprilian portrait" decoding="async" fetchpriority="high" />
+            </div>
+            <Ornament name="ampersand" />
+            <figcaption class="cover-stamp">
+              <span class="cover-stamp-left">Catalog 2026 · Plate I</span>
+              <span class="cover-stamp-right">
+                PR.0526<sup class="dagger" aria-hidden="true">†</sup>
               </span>
-            </h1>
-            <p class="cover-body">{{ c.heroBody }}</p>
+            </figcaption>
+          </figure>
 
+          <div class="cover-headline">
+            <p class="eyebrow">{{ c.eyebrow }}</p>
+            <h1 id="cover-heading">
+              <template v-for="(part, i) in c.coverHeadline" :key="i">
+                <em v-if="typeof part === 'object'">{{ part.italic }}</em>
+                <span v-else>{{ part }}</span>
+              </template>
+            </h1>
+            <p class="cover-body">{{ c.coverBody }}</p>
             <div class="cover-actions">
-              <button type="button" class="btn-primary" @click="scrollToSection('projects')">
+              <button type="button" class="btn" @click="goToRoom('floor-plan')">
                 <ArrowDown class="btn-icon" aria-hidden="true" />
                 {{ c.ctaView }}
               </button>
-              <a href="https://github.com/fatidaprilian" target="_blank" rel="noreferrer" class="btn-secondary">
+              <a href="https://github.com/fatidaprilian" target="_blank" rel="noreferrer" class="btn btn-ghost">
                 <Github class="btn-icon" aria-hidden="true" />
                 {{ c.ctaGithub }}
               </a>
             </div>
+            <p class="cover-footnote">
+              <button type="button" class="footnote-link" @click="goToRoom('colophon')">
+                <span aria-hidden="true">†</span>
+                <span>{{ lang === 'id' ? 'kunci plate code di colophon' : 'plate code key in the colophon' }}</span>
+              </button>
+            </p>
           </div>
 
-          <div class="cover-proof">
-            <figure class="cover-proof-figure">
-              <img
-                src="/avatar-github.jpg"
-                alt="Farid Eka Aprilian GitHub profile portrait"
-                decoding="async"
-                fetchpriority="high"
-              />
-            </figure>
-            <div class="cover-proof-meta">
-              <span>{{ c.issue }}</span>
-              <strong>{{ projects.length }}</strong>
-              <p>repository-backed feature spreads</p>
+          <div class="plate-rule" aria-hidden="true"></div>
+        </div>
+      </section>
+
+      <!-- ========== Room II — Curator's Note ========== -->
+      <section id="intent" class="room" aria-labelledby="intent-heading">
+        <Ornament name="wave-rule" class="section-wave" />
+
+        <div class="folio-bar" aria-hidden="true">
+          <span class="folio-numeral">II</span>
+          <span class="folio-kicker">{{ c.intentLabel }}</span>
+          <span class="folio-page">02 / 06</span>
+        </div>
+
+        <div class="room-header">
+          <span class="room-numeral-large">{{ c.intentLabel }}</span>
+          <h2 id="intent-heading">{{ c.intentTitle }}</h2>
+          <span class="room-header-meta">PR.0526 · 02 / 06</span>
+        </div>
+
+        <div class="editor-note">
+          <aside class="margin-note" aria-hidden="true">
+            <Ornament name="manicule" class="margin-manicule" />
+            <span>{{ c.intentMetaTitle }}</span>
+          </aside>
+          <div class="editor-body">
+            <p class="first-paragraph">{{ c.intentBodyP1 }}</p>
+            <blockquote class="pull-quote">{{ c.intentPullQuote }}</blockquote>
+            <p>{{ c.intentBodyP2 }}</p>
+          </div>
+          <div class="editor-meta">
+            <dl>
+              <template v-for="(item, idx) in c.intentMetaItems" :key="idx">
+                <dt>{{ item[0] }}</dt>
+                <dd>{{ item[1] }}</dd>
+              </template>
+            </dl>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== Room III — Method beats ========== -->
+      <section id="method" class="room" data-tone="sunken" aria-labelledby="method-heading">
+        <div class="folio-bar" aria-hidden="true">
+          <span class="folio-numeral">III</span>
+          <span class="folio-kicker">{{ c.methodLabel }}</span>
+          <span class="folio-page">03 / 06</span>
+        </div>
+
+        <div class="room-header">
+          <span class="room-numeral-large">{{ c.methodLabel }}</span>
+          <h2 id="method-heading">{{ c.methodTitle }}</h2>
+          <span class="room-header-meta">{{ c.methodMeta }} · 03 / 06</span>
+        </div>
+
+        <div class="method-beats">
+          <article v-for="beat in c.methodBeats" :key="beat.num">
+            <span>{{ beat.num }}</span>
+            <h3>{{ beat.title }}</h3>
+            <p>{{ beat.body }}</p>
+          </article>
+        </div>
+      </section>
+
+      <!-- ========== Room IV — Floor Plan (project index) ========== -->
+      <section id="floor-plan" class="room" aria-labelledby="floor-heading">
+        <div class="asterism-divider" aria-hidden="true">
+          <Ornament name="asterism" />
+        </div>
+
+        <div class="folio-bar" aria-hidden="true">
+          <span class="folio-numeral">IV</span>
+          <span class="folio-kicker">{{ c.floorLabel }}</span>
+          <span class="folio-page">04 / 06</span>
+        </div>
+
+        <div class="room-header">
+          <span class="room-numeral-large">{{ c.floorLabel }}</span>
+          <h2 id="floor-heading">{{ c.floorTitle }}</h2>
+          <span class="room-header-meta">{{ c.floorMeta }} · 04 / 06</span>
+        </div>
+
+        <nav class="floor-plan" aria-label="Project index">
+          <div class="floor-plan-head" aria-hidden="true">
+            <span>{{ c.floorHead[0] }}</span>
+            <span>{{ c.floorHead[1] }}</span>
+            <span>{{ c.floorHead[2] }}</span>
+            <span></span>
+            <span>{{ c.floorHead[4] }}</span>
+          </div>
+
+          <a
+            v-for="(project, index) in projects"
+            :key="project.title"
+            :href="`#project-${index}`"
+            class="room-row"
+            @click.prevent="goToRoom(`project-${index}`)"
+          >
+            <span class="room-numeral">Room {{ romanFor(index + 1) }}</span>
+            <span class="room-plate-code">{{ project.plateCode }}</span>
+            <span class="room-title">
+              <span class="room-title-text">{{ project.title }}</span>
+              <span class="leader-dots" aria-hidden="true"></span>
+            </span>
+            <span></span>
+            <span class="room-meta">
+              <span class="meta-year">{{ project.year }}</span>
+              {{ project.summary }}
+            </span>
+          </a>
+        </nav>
+      </section>
+
+      <!-- ========== Project rooms (one plate spread per project) ========== -->
+      <section
+        v-for="(project, index) in projects"
+        :id="`project-${index}`"
+        :key="`project-room-${index}`"
+        class="room"
+        :data-tone="index % 2 === 1 ? 'sunken' : null"
+        :aria-labelledby="`project-${index}-heading`"
+      >
+        <div class="folio-bar" aria-hidden="true">
+          <span class="folio-numeral">{{ romanFor(index + 1) }}</span>
+          <span class="folio-kicker">Plate {{ project.plateCode }} · {{ project.title }}</span>
+          <span class="folio-page">Room {{ romanFor(index + 1) }} of {{ projects.length }}</span>
+        </div>
+
+        <div class="plate-spread">
+          <div class="plate-label" aria-hidden="true">
+            Room {{ romanFor(index + 1) }} · {{ project.plateCode }}
+          </div>
+
+          <figure class="plate-frame plate-typeset" :data-tone="project.accent || 'copper'">
+            <div class="plate-glyph" aria-hidden="true">{{ monogramFor(project.title) }}</div>
+            <figcaption class="plate-foot">
+              <span>{{ project.plateCode }}</span>
+              <span>{{ project.year }} · {{ project.role }}</span>
+            </figcaption>
+          </figure>
+
+          <div class="plate-caption">
+            <dl class="wall-label">
+              <dt>Year</dt>
+              <dd>{{ project.year }}</dd>
+              <dt>Role</dt>
+              <dd>{{ project.role }}</dd>
+              <dt>Plate</dt>
+              <dd>{{ project.plateCode }}</dd>
+            </dl>
+
+            <h2 :id="`project-${index}-heading`" class="plate-title">
+              {{ project.title }}
+            </h2>
+
+            <p class="plate-summary">{{ project.summary }}</p>
+
+            <a :href="project.link" target="_blank" rel="noreferrer" class="text-link plate-source">
+              {{ c.source }}
+              <ArrowUpRight aria-hidden="true" />
+            </a>
+          </div>
+
+          <div class="plate-rule" aria-hidden="true"></div>
+        </div>
+
+        <div v-if="project.caseStudy" class="curator-note">
+          <aside class="margin-note" aria-hidden="true">
+            <span class="margin-roman">{{ romanFor(index + 1) }}</span>
+            <span v-if="index === 0" class="margin-fleuron">
+              <Ornament name="fleuron" />
+            </span>
+            <span>Curator’s note</span>
+          </aside>
+
+          <div class="curator-body">
+            <article>
+              <span class="curator-kicker"><em>i.</em> {{ c.constraint }}</span>
+              <p>{{ project.caseStudy.constraint }}</p>
+            </article>
+            <article>
+              <span class="curator-kicker"><em>ii.</em> {{ c.decision }}</span>
+              <p>{{ project.caseStudy.decision }}</p>
+            </article>
+            <article>
+              <span class="curator-kicker"><em>iii.</em> {{ c.outcome }}</span>
+              <p>{{ project.caseStudy.outcome }}</p>
+            </article>
+          </div>
+
+          <div class="curator-meta">
+            <span>Stack</span>
+            <div class="tag-row">
+              <span v-for="tag in project.tags" :key="tag" class="tag-chip">{{ tag }}</span>
             </div>
           </div>
         </div>
       </section>
 
-      <section id="intent" class="issue-section editor-note-section" data-scene data-motion="column-reflow">
-        <span class="chapter-ghost" aria-hidden="true">02</span>
-        <div class="section-shell editor-note-grid">
-          <div class="section-header">
-            <p class="section-label">{{ c.intentLabel }}</p>
-            <span class="section-strike" aria-hidden="true"></span>
-            <h2>{{ c.intentTitle }}</h2>
-          </div>
-
-          <blockquote class="pull-quote editor-column">{{ c.intentQuote }}</blockquote>
-          <p class="editor-column note-body">{{ c.intentBody }}</p>
-          <div class="editor-column note-stamp" aria-hidden="true">
-            <span>Opinionated</span>
-            <strong>Layout / Motion / Code</strong>
-          </div>
-        </div>
-      </section>
-
-      <section id="process" class="issue-section process-section" data-scene data-motion="rule-grid">
-        <span class="chapter-ghost" aria-hidden="true">03</span>
-        <div class="section-shell">
-          <div class="section-header section-header-wide">
-            <p class="section-label">{{ c.processLabel }}</p>
-            <span class="section-strike" aria-hidden="true"></span>
-            <h2>{{ c.processTitle }}</h2>
-          </div>
-
-          <div class="beats-grid">
-            <article v-for="beat in c.beats" :key="beat.num" class="beat-cell">
-              <span>{{ beat.num }}</span>
-              <h3>{{ beat.title }}</h3>
-              <p>{{ beat.body }}</p>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <section id="projects" class="issue-section projects-intro" data-scene>
-        <span class="chapter-ghost" aria-hidden="true">04</span>
-        <div class="section-shell project-intro-grid">
-          <p class="section-label">{{ c.projectsLabel }}</p>
-          <h2>{{ c.projectsTitle }}</h2>
-          <p>{{ c.projectsLabel }} / {{ projects.length }} selected works / GitHub source evidence</p>
-        </div>
-      </section>
-
-      <section
-        v-for="(project, index) in projects"
-        :key="project.title"
-        class="feature-spread issue-section"
-        :class="`spread-variant-${(index % 3) + 1}`"
-        :data-page="String(index + 5).padStart(2, '0')"
-      >
-        <span class="spread-number" aria-hidden="true">{{ String(index + 1).padStart(2, '0') }}</span>
-
-        <div class="spread-text">
-          <p class="spread-kicker">{{ c.openingCredits }} / {{ project.year }}</p>
-          <h2>{{ project.title }}</h2>
-          <p>{{ project.summary }}</p>
-          <div class="spread-tags">
-            <span v-for="tag in project.tags" :key="tag" class="tag-chip">{{ tag }}</span>
-          </div>
-          <a :href="project.link" target="_blank" rel="noreferrer" class="text-link">
-            {{ c.source }}
-            <ArrowUpRight aria-hidden="true" />
-          </a>
+      <!-- ========== Room V — Career index ========== -->
+      <section id="career" class="room" aria-labelledby="career-heading">
+        <div class="folio-bar" aria-hidden="true">
+          <span class="folio-numeral">V</span>
+          <span class="folio-kicker">{{ c.careerLabel }}</span>
+          <span class="folio-page">05 / 06</span>
         </div>
 
-        <div class="spread-breakdown" v-if="project.caseStudy">
-          <article>
-            <span>{{ c.constraint }}</span>
-            <p>{{ project.caseStudy.constraint }}</p>
-          </article>
-          <article>
-            <span>{{ c.decision }}</span>
-            <p>{{ project.caseStudy.decision }}</p>
-          </article>
-          <article>
-            <span>{{ c.outcome }}</span>
-            <p>{{ project.caseStudy.outcome }}</p>
+        <div class="room-header">
+          <span class="room-numeral-large">{{ c.careerLabel }}</span>
+          <h2 id="career-heading">{{ c.careerTitle }}</h2>
+          <span class="room-header-meta">{{ c.careerMeta }} · 05 / 06</span>
+        </div>
+
+        <div class="career-rows" role="list">
+          <article
+            v-for="(item, index) in profile.timelineItems"
+            :key="`${item.period}-${item.title}`"
+            class="room-row"
+            role="listitem"
+          >
+            <span class="room-numeral">Entry {{ String(index + 1).padStart(2, '0') }}</span>
+            <span class="career-period">{{ item.period }}</span>
+            <span class="room-title">
+              {{ item.title }}
+              <span class="career-role">{{ item.role }}</span>
+            </span>
+            <span></span>
+            <span class="room-meta">{{ item.description }}</span>
           </article>
         </div>
-      </section>
 
-      <section id="career" class="issue-section career-section" data-scene data-motion="index">
-        <span class="chapter-ghost" aria-hidden="true">10</span>
-        <div class="section-shell career-layout">
-          <div class="section-header">
-            <p class="section-label">{{ c.careerLabel }}</p>
-            <span class="section-strike" aria-hidden="true"></span>
-            <h2>{{ c.careerTitle }}</h2>
-          </div>
-
-          <div class="index-list">
-            <article v-for="(item, index) in profile.timelineItems" :key="`${item.period}-${item.title}`" class="index-row">
-              <span class="index-page">{{ String(index + 11).padStart(2, '0') }}</span>
-              <div>
-                <p>{{ item.period }}</p>
-                <h3>{{ item.title }}</h3>
-                <small>{{ item.role }}</small>
-              </div>
-              <p>{{ item.description }}</p>
-            </article>
-          </div>
-
-          <div class="skill-ticket-grid">
-            <article v-for="group in profile.skillGroups" :key="group.category" class="skill-ticket">
+        <div class="skill-list">
+          <aside class="margin-note" aria-hidden="true">{{ c.skillLabel }}</aside>
+          <div class="skill-body">
+            <article v-for="group in profile.skillGroups" :key="group.category">
               <span>{{ group.category }}</span>
-              <p>{{ group.items.join(' / ') }}</p>
+              <p>{{ group.items.join(' · ') }}</p>
             </article>
+          </div>
+          <div class="curator-meta">
+            <span>{{ c.educationLabel }}</span>
+            <ul class="ledger-list" role="list">
+              <li v-for="edu in profile.educationItems" :key="edu.institution" class="ledger-row">
+                <span class="ledger-tier">{{ edu.tier }}</span>
+                <span class="ledger-period">{{ edu.period }}</span>
+                <span class="ledger-institution">{{ edu.institution }}</span>
+                <span class="ledger-degree">{{ edu.degree }}</span>
+              </li>
+            </ul>
           </div>
         </div>
       </section>
 
-      <section id="contact" class="issue-section contact-section" data-scene data-motion="back-cover">
-        <span class="chapter-ghost" aria-hidden="true">99</span>
-        <div class="section-shell back-cover-card">
-          <span class="contact-sticker">{{ c.contactLabel }}</span>
-          <h2>{{ c.contactTitle }}</h2>
-          <p>{{ c.contactBody }}</p>
+      <!-- ========== Room VI — Back wall (contact) ========== -->
+      <section id="contact" class="room" data-tone="sunken" aria-labelledby="contact-heading">
+        <div class="folio-bar" aria-hidden="true">
+          <span class="folio-numeral">VI</span>
+          <span class="folio-kicker">{{ c.contactLabel }}</span>
+          <span class="folio-page">06 / 06</span>
+        </div>
 
-          <div class="contact-actions">
-            <a :href="`mailto:${profile.contactActions.emailValue}`" class="btn-primary">
-              <Mail class="btn-icon" aria-hidden="true" />
-              {{ c.sendEmail }}
-            </a>
-            <a href="https://linkedin.com/in/farid-aprilian" target="_blank" rel="noreferrer" class="btn-secondary">
-              <Linkedin class="btn-icon" aria-hidden="true" />
-              {{ c.linkedin }}
-            </a>
-            <a :href="`tel:${profile.contactActions.callValue}`" class="btn-secondary">
-              <Phone class="btn-icon" aria-hidden="true" />
-              {{ c.phone }}
-            </a>
+        <div class="room-header">
+          <span class="room-numeral-large">{{ c.contactLabel }}</span>
+          <h2 id="contact-heading">{{ c.contactTitle }}</h2>
+          <span class="room-header-meta">{{ c.contactMeta }} · 06 / 06</span>
+        </div>
+
+        <div class="editor-note">
+          <aside class="margin-note" aria-hidden="true">Closing</aside>
+          <div class="editor-body">
+            <p class="first-paragraph">{{ c.contactBody }}</p>
+            <div class="contact-actions">
+              <a :href="`mailto:${profile.contactActions.emailValue}`" class="btn">
+                <Mail class="btn-icon" aria-hidden="true" />
+                {{ c.sendEmail }}
+              </a>
+              <a href="https://linkedin.com/in/farid-aprilian" target="_blank" rel="noreferrer" class="btn btn-ghost">
+                <Linkedin class="btn-icon" aria-hidden="true" />
+                {{ c.linkedin }}
+              </a>
+              <a :href="`tel:${profile.contactActions.callValue}`" class="btn btn-ghost">
+                <Phone class="btn-icon" aria-hidden="true" />
+                {{ c.phone }}
+              </a>
+            </div>
+          </div>
+          <div class="editor-meta">
+            <dl>
+              <dt>Email</dt>
+              <dd>{{ profile.contactActions.emailValue }}</dd>
+              <dt>Phone</dt>
+              <dd>{{ profile.contactActions.callValue }}</dd>
+              <dt>LinkedIn</dt>
+              <dd>{{ profile.contactActions.linkedinValue }}</dd>
+            </dl>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========== Colophon ========== -->
+      <section id="colophon" class="room" aria-labelledby="colophon-heading">
+        <div class="folio-bar" aria-hidden="true">
+          <span class="folio-numeral">·</span>
+          <span class="folio-kicker">{{ c.colophonLabel }}</span>
+          <span class="folio-page">end · {{ currentYear }}</span>
+        </div>
+
+        <div class="room-header">
+          <span class="room-numeral-large">{{ c.colophonLabel }}</span>
+          <h2 id="colophon-heading">{{ c.colophonTitle }}</h2>
+          <span class="room-header-meta">{{ currentYear }}</span>
+        </div>
+
+        <div class="colophon-list">
+          <aside class="margin-note" aria-hidden="true">
+            <Ornament name="wax-seal" class="margin-seal" />
+            <span>About this site</span>
+          </aside>
+          <div class="colophon-body">
+            <dl>
+              <template v-for="(row, idx) in c.colophonBody" :key="idx">
+                <dt>{{ row[0] }}</dt>
+                <dd>{{ row[1] }}</dd>
+              </template>
+            </dl>
+          </div>
+          <div class="colophon-key">
+            <strong>PR.MMYY key</strong>
+            <span>PR — project</span>
+            <span>MM — month commenced</span>
+            <span>YY — year commenced</span>
           </div>
         </div>
       </section>
     </main>
 
-    <footer class="site-footer">
-      <span>{{ c.footerText }}</span>
-      <span>{{ currentYear }}</span>
+    <footer class="catalog-footer">
+      <span class="footer-start">{{ c.footerLeft }}</span>
+      <span class="footer-center">{{ c.footerCenter }}</span>
+      <span class="footer-end">© {{ currentYear }} FA</span>
     </footer>
   </div>
 </template>

@@ -1,128 +1,183 @@
 {
   "mode": "project-specific",
   "status": "refined-for-implementation",
-  "updatedAt": "2026-05-03",
+  "updatedAt": "2026-05-15",
+  "version": "ui-handoff-v3-exhibition-catalog",
   "project": {
     "name": "portofolio",
     "domain": "Personal portfolio for a designer-minded creative developer",
-    "runtimeConstraint": "Existing Vue 3, Vite, Tailwind CSS, Lenis, GSAP, lucide-vue-next, and local fontsource packages.",
-    "architectureConstraint": "Single-page portfolio experience using existing local data modules as content evidence."
+    "runtimeConstraint": "Existing Vue 3, Vite, Tailwind, Lenis, GSAP. Add @fontsource-variable for Fraunces, Inter, JetBrains Mono. Drop @fontsource/bebas-neue and @fontsource/manrope.",
+    "architectureConstraint": "Single-page portfolio composed as an exhibition catalog: cover, floor plan (index), room-per-project plate spreads, curator's about, colophon."
   },
   "confirmedAssumptions": [
-    "The user has pivoted from the previous dark cinematic pass to a bright editorial magazine direction.",
-    "The user wants vertical scrolling rather than a full horizontal page model.",
-    "The loader must be a real entry gate that waits for content, fonts, and initial render readiness before allowing interaction.",
-    "Each section should use a different movement grammar while staying inside one editorial print system."
+    "User issued a final decision sheet selecting Exhibition Catalog anchor (option C), Fraunces+Inter+JetBrains Mono triplet, OKLCH role-first 8-token system, 4-bucket motion charter without cinematic, dual-mode theme that is not an invert, plate-code unexplained-element move.",
+    "Photography is not yet captured. Interim renders use typeset plate panels (identification + chapter function) and the existing GitHub avatar in the hero only.",
+    "Custom cursor and grain overlay are removed. Lenis remains for smooth scroll only when reduced-motion is not requested."
   ],
+  "visualResetStrategy": {
+    "previousAnchor": "Editorial magazine pre-press issue (v2)",
+    "newAnchor": "Printed exhibition catalog (v3)",
+    "discardedFromPrevious": [
+      "Pre-press loader gating real readiness",
+      "Bebas Neue display chapter numbers",
+      "Manrope body",
+      "Three-accent palette (red/blue/yellow)",
+      "Card-style project breakdown blocks",
+      "Custom cursor and rule-line column wallpaper",
+      "Magazine spread alternating-variant rhythm"
+    ],
+    "preservedAsContentEvidence": [
+      "Project entries in src/data/projects.js",
+      "Career profile content in src/data/careerProfile.js",
+      "Bilingual ID/EN copy strategy",
+      "GitHub avatar asset at /public/avatar-github.jpg"
+    ],
+    "regressionTestCriteria": [
+      "Result must not read as the magazine issue with a different palette.",
+      "Hero composition is wide installation view + small wall label, not headline-stack with side proof.",
+      "Project list is a numbered floor plan, not a card grid or alternating spread variants.",
+      "Theme switch reveals two distinct moods (warm paper vs cool slate), not an inverted same image."
+    ]
+  },
   "visualDirection": {
-    "name": "Editorial Magazine Issue",
-    "summary": "A bright interactive magazine issue where each scroll is a new editorial page and every section uses a distinct print-production motion.",
-    "firstViewportBet": "A cropped 01 chapter number, asymmetric cover spread, red line-strike reveal, and a local GitHub portrait displayed as a profile-scale square proof.",
+    "name": "Exhibition Catalog",
+    "summary": "A printed exhibition catalog where each project is a numbered room. Wall labels carry metadata, curator's notes carry argument, plate panels carry identity, colophon decodes craft.",
+    "firstViewportBet": "A wide installation view dominates with a small wall label (year, role, plate code PR.MMYY) at lower-left. Headline set in Fraunces with opsz pushed near max so the hairline serif stays present.",
     "distinctiveMoves": [
-      "Pre-Press Check loader blocks entry until the issue is composed.",
-      "Cover spread uses word-stagger typesetting, a line-strike reveal, and the local GitHub portrait as a right-page square profile proof.",
-      "Editor note uses column reflow motion.",
-      "Process grid uses typesetting rule lines drawn before copy appears.",
-      "Project spreads alternate compositions instead of using repeated cards.",
-      "Career reads as an issue index and contact reads as a back cover."
+      "Photography (or typeset plate panel during interim) is the protagonist; copy supports the image rather than competing with it.",
+      "Hanging-punctuation global, tabular-num metadata, Fraunces opsz fixed at ~120 regardless of render size.",
+      "Plate code PR.MMYY appears unexplained on every room; only the colophon decodes it."
     ]
   },
   "motionPaletteDecision": {
     "productCategorySignal": "creative-developer-portfolio",
-    "decision": "Use bright editorial print motion with paper white, black ink, vivid red, active blue, and yellow proof marks.",
-    "densityDecisionSource": "The user explicitly wants a designer/agency-level personal portfolio and asked for unique section motion.",
-    "spatialDecision": "Use vertical editorial pages and GSAP ScrollTrigger rather than a horizontal-only model. No WebGL is needed for this pass because print-production motion delivers the selected anchor."
+    "decision": "Curatorial pacing, not cinematic. CSS animation-timeline: view() carries plate reveals; GSAP is restricted to the once-per-session opening sequence and theme micro-state. Default global easing cubic-bezier(0.65, 0, 0.35, 1).",
+    "densityDecisionSource": "User explicitly rejected scroll text reveal per word, parallax 3D, and custom cursor.",
+    "spatialDecision": "Vertical scroll. No horizontal-only navigation. No WebGL. Composition uses three named CSS grid templates: plate-spread, index-floorplan, editor-note."
+  },
+  "designFlexibilityPolicy": {
+    "locked": [
+      "Anchor: exhibition catalog",
+      "Voice triplet: Fraunces author / Inter system / JetBrains Mono machine",
+      "Role-first OKLCH token system, 4 raw + 8 semantic",
+      "Dual mode that is not an invert (light hue 80, dark hue 250, accent hue 25)",
+      "Tri-state theme toggle (auto/light/dark) with no-flash inline script and color-scheme",
+      "WCAG 2.2 AA contrast floor",
+      "No custom cursor, no decorative noise grain, no marquee tech logos",
+      "Plate code as the unexplained element decoded only in colophon"
+    ],
+    "flexible": [
+      "Exact OKLCH primitive values may shift to satisfy contrast or measured perceptual balance",
+      "Photography vs typeset plate panel ratio shifts as installation photos arrive",
+      "Plate-reveal implementation may swap to IntersectionObserver fallback if browser support data demands it",
+      "Lenis may be removed if dual-mode + reduced-motion cleanup proves cleaner without it"
+    ]
   },
   "conceptualAnchor": {
-    "name": "Indonesian editorial magazine pre-press issue",
-    "anchorReference": "Premium printed magazine production: pre-press marks, asymmetric spreads, cropped chapter numbers, column rules, issue index, and back cover",
-    "agentResearchMode": "current-user-brief-plus-project-docs-plus-official-gsap-docs",
-    "sourceDomain": "experimental-editorial-structure",
-    "specificReferencePoint": "A magazine issue being checked before print, then opened through cover, editor note, feature spreads, index, and back cover.",
-    "rationale": "The anchor gives a coherent reason for the loader, section layout, palette, typography, and motion variety without copying any individual portfolio.",
-    "signatureMotion": "Pre-press marks calibrate, a red strike line pulls open the issue, then each section uses a different print-production reveal.",
-    "typographicDecision": "Bebas Neue carries chapter numbers and issue markers, Fraunces carries editorial headlines and quotes, and Manrope carries body, metadata, stack tags, and controls.",
-    "visualRiskBudget": "High visual authorship with WCAG contrast, keyboard access, and reduced-motion fallback.",
-    "motionRiskBudget": "Motion can be expressive, but content must be rendered before entry and readable without animation."
+    "name": "Printed exhibition catalog",
+    "anchorReference": "Monographic show catalog: wall label, curator's note column, plate panel, floor plan, colophon",
+    "agentResearchMode": "current-user-final-decision-sheet-plus-current-repo-plus-MDN-animation-timeline",
+    "sourceDomain": "editorial-publishing-and-exhibition-design",
+    "specificReferencePoint": "A small monographic exhibition catalog with numbered rooms (ROOM I, ROOM II), each opening on a wide installation view, narrow caption column, and plate code on the wall label.",
+    "rationale": "The anchor maps directly onto the existing data shape (summary as wall label, caseStudy as curator's note, productContext as deep dive) and earns the slow editorial pacing the user wants without copying any web portfolio.",
+    "signatureMotion": "Plate reveal via CSS animation-timeline: view() — clip-path inset opens left-to-right from entry 0% to cover 30%. Reads like a curtain pulling across a plate panel.",
+    "typographicDecision": "Fraunces variable carries author voice (headline, plate title, pull quote) at opsz ~120 regardless of render size; Inter variable carries system voice (body, nav, wall label); JetBrains Mono variable carries machine voice (plate code, year, stack tags) with tabular-num on.",
+    "visualRiskBudget": "High visual authorship through type, color discipline, and composition; no decorative chrome.",
+    "motionRiskBudget": "Single signature reveal plus one opening orchestration; everything else is micro feedback."
   },
   "derivedTokenLogic": {
-    "anchorReference": "Premium printed magazine production",
-    "colorDerivationSource": "Paper white and warm stock for editorial surfaces, black ink for main reading, red for issue marks and line-strike motion, blue for technical links/status, yellow for proof marks.",
-    "spacingDerivationSource": "Large margins, strong gutters, rule lines, and cropped chapter numbers follow magazine spread composition.",
-    "typographyDerivationSource": "Display numbers, editorial serif headlines, and clean sans metadata create role contrast.",
-    "motionDerivationSource": "Pre-press calibration, typesetting stagger, column reflow, rule-line draw, page lift, index tick, and sticker/back-cover reveal.",
-    "validationRule": "Every motion and line must map to a print-production, chapter, navigation, or evidence function."
+    "anchorReference": "Printed exhibition catalog",
+    "colorDerivationSource": "Light surfaces derive from warm paper (hue 80) like a museum print catalog page; dark surfaces derive from cool slate (hue 250) like a dim gallery wall under spot lighting; accent terracotta (hue 25) is the single curatorial highlight, muted in dark.",
+    "spacingDerivationSource": "Generous catalog margins, hairline rule lines as leader lines, narrow caption measures (38ch) to force a slow read.",
+    "typographyDerivationSource": "Voice triplet Fraunces / Inter / JetBrains Mono; opsz lock on Fraunces titles; hanging-punctuation global; tabular-num on all metadata; text-wrap balance on display, pretty on body.",
+    "motionDerivationSource": "CSS animation-timeline: view() for plate reveal; GSAP only for opening sequence and theme micro-state.",
+    "colorSpace": "OKLCH",
+    "spatialBaseUnit": "4px",
+    "typeScaleMethod": "fluid clamp() with role-distinct steps; display 32-120, body 16-18, mono 11-14",
+    "motionBudget": "Micro 80-120ms, Standard 240-360ms, Editorial 700-1000ms; Cinematic banned",
+    "validationRule": "Every motion and rule line must map to a catalog function (identification, leader line, plate reveal, focus handoff). If the rationale is decoration only, derive again."
   },
   "aiSafeUiAudit": {
     "status": "completed",
-    "failureDefinition": "A generic portfolio would use centered hero text, equal project cards, soft shadows, and decorative grid wallpaper.",
-    "interchangeabilityTest": "Renaming this to a SaaS or agency site would break the issue numbers, pre-press loader, editorial section grammar, and project feature spreads.",
+    "failureDefinition": "An AI-safe portfolio would render a 3-column project grid with rounded cards, soft shadows, a centered hero tagline, generic Tailwind chrome, and a dark-mode invert.",
+    "interchangeabilityTest": "Renaming this site to a SaaS marketing page would break the wall-label metadata, plate code, floor plan numbering, curator's note, and colophon room. The anchor is product-specific.",
     "requiredProductSpecificSignals": [
-      "Issue 01 marker visible in the first viewport.",
-      "Project evidence is presented as editorial feature spreads with constraint, decision, and outcome.",
-      "The loader behaves as pre-press composition and gates actual entry until content is ready."
+      "Wall label visible in the first viewport carrying year, role, plate code.",
+      "Project list is a numbered floor plan with row-per-room layout, never a card grid.",
+      "Plate code (PR.MMYY) appears unexplained throughout and is decoded only in the colophon."
     ],
-    "backgroundPatternRule": "Rules and lines are allowed only as column, chapter, loader, or issue markers."
+    "backgroundPatternRule": "No grid wallpaper, calibration marks, scanlines, or noise. Hairline rules appear only as leader lines between wall label and caption."
   },
-  "colorTruth": {
-    "format": "hex",
-    "paletteRoles": [
-      { "role": "paper", "value": "#FAFAF7", "purpose": "primary page background" },
-      { "role": "paperWarm", "value": "#F0EDE3", "purpose": "secondary editorial stock" },
-      { "role": "ink", "value": "#1A1A16", "purpose": "primary readable text" },
-      { "role": "mutedInk", "value": "#6B6B60", "purpose": "metadata and support copy" },
-      { "role": "accentRed", "value": "#E84A2F", "purpose": "chapter marker, CTA, loader strike line" },
-      { "role": "accentBlue", "value": "#0057FF", "purpose": "technical link and active status" },
-      { "role": "accentYellow", "value": "#F5C842", "purpose": "proof marks and editorial highlights" },
-      { "role": "rule", "value": "#D4D0C4", "purpose": "column rules and structural separators" }
-    ],
-    "productSpecificBehavior": "Red marks entry and chapter motion, blue marks technical proof, yellow marks pre-press proofing."
+  "productionContentPolicy": {
+    "noPlaceholderCopy": true,
+    "noTestingDemoSampleLabels": true,
+    "interimPhotographyHandling": "Until installation photography is captured, rooms render typeset plate panels (large plate code + project monogram + year). The colophon explicitly states this interim state.",
+    "userFacingFlowsHaveOperableUI": true
   },
   "tokenSystem": {
-    "sourceOfTruth": "docs/design-intent.json",
+    "sourceOfTruth": "docs/design-intent.json -> colorTruth, plus src/style.css :root and [data-theme] blocks",
     "taxonomyOrder": ["primitive", "semantic", "component"],
     "requireSemanticAliases": true,
     "componentTokensConsumeSemantic": true,
-    "implementationNote": "CSS custom properties mirror the documented palette and Tailwind aliases."
+    "implementationNote": "Primitives (paper, ink, slate, terracotta) defined once. Semantic roles (--surface-page, --surface-raised, --surface-sunken, --ink-primary, --ink-secondary, --ink-tertiary, --rule, --accent) switch by [data-theme]. Tailwind extend mirrors semantic names."
+  },
+  "colorTruth": {
+    "format": "oklch",
+    "rawPrimitives": [
+      { "name": "paper", "value": "oklch(0.97 0.008 80)", "purpose": "warm light surface base" },
+      { "name": "ink", "value": "oklch(0.20 0.020 80)", "purpose": "warm near-black for light-mode text" },
+      { "name": "slate", "value": "oklch(0.16 0.012 250)", "purpose": "cool dark surface base for dark mode" },
+      { "name": "terracotta", "value": "oklch(0.55 0.18 25)", "purpose": "single curatorial accent" }
+    ],
+    "semanticRoles": [
+      { "role": "surface-page", "light": "oklch(0.97 0.008 80)", "dark": "oklch(0.16 0.012 250)" },
+      { "role": "surface-raised", "light": "oklch(0.99 0.005 80)", "dark": "oklch(0.21 0.014 250)" },
+      { "role": "surface-sunken", "light": "oklch(0.94 0.012 80)", "dark": "oklch(0.13 0.010 250)" },
+      { "role": "ink-primary", "light": "oklch(0.20 0.020 80)", "dark": "oklch(0.92 0.012 80)" },
+      { "role": "ink-secondary", "light": "oklch(0.45 0.020 80)", "dark": "oklch(0.70 0.014 80)" },
+      { "role": "ink-tertiary", "light": "oklch(0.62 0.015 80)", "dark": "oklch(0.55 0.012 80)" },
+      { "role": "rule", "light": "oklch(0.85 0.010 80)", "dark": "oklch(0.30 0.012 250)" },
+      { "role": "accent", "light": "oklch(0.55 0.18 25)", "dark": "oklch(0.62 0.14 25)" }
+    ],
+    "productSpecificBehavior": "Light mode reads as a museum print catalog page in daylight. Dark mode reads as the same catalog under dim spot lighting. The shift in hue family (warm 80 vs cool 250) is intentional: the two modes carry different moods on purpose, not an inverted same image."
   },
   "crossViewportAdaptation": {
     "adaptByRecomposition": true,
-    "touchTargetMinPx": 44,
+    "touchTargetMinPx": 24,
+    "touchTargetPreferredPx": 44,
     "mutationRules": {
-      "mobile": "Single-column issue flow, smaller chapter numbers, section motion simplified to opacity/translate, project spreads stack.",
-      "tablet": "Two-column editorial groups appear for process/career while project spreads remain vertical.",
-      "desktop": "Asymmetric cover spread, sticky issue rail, large cropped chapter numbers, and varied feature-spread layouts."
+      "mobile": "Single-column floor plan; plate panels stack; wall label moves above the photo; nav collapses to brand mark plus theme toggle.",
+      "tablet": "Plate spread becomes 8/4; index floor plan compresses spacers; curator's note margin annotations remain inline.",
+      "desktop": "Full asymmetric plate-spread (1fr 7fr 1fr 3fr), index-floorplan (1fr 1fr 6fr 1fr 3fr), editor-note (2fr 7fr 3fr) grids active."
     }
   },
   "motionSystem": {
     "allowMeaningfulMotion": true,
-    "loader": "Pre-Press Check overlay waits for initial render, fonts, image preload, and minimum stage duration before unlocking scroll.",
-    "sectionSignatures": [
-      "cover: word stagger, red strike line, and local square portrait proof",
-      "editor note: column reflow",
-      "process: rule line draw then cell reveal",
-      "projects: alternating feature-spread lift and metadata wipe",
-      "career: index tick reveal",
-      "contact: back-cover sticker reveal"
-    ],
-    "library": "GSAP ScrollTrigger for scroll-bound section choreography, scoped with gsap.matchMedia for desktop behavior.",
-    "reducedMotion": "Disable transforms and GSAP choreography; all content renders visible and loader exits quickly after readiness."
+    "buckets": {
+      "micro": { "duration": "80-120ms", "easing": "ease-out", "use": "hover, focus ring, button press" },
+      "standard": { "duration": "240-360ms", "easing": "cubic-bezier(0.65, 0, 0.35, 1)", "use": "state change, panel open, theme switch" },
+      "editorial": { "duration": "700-1000ms", "easing": "cubic-bezier(0.22, 1, 0.36, 1)", "use": "plate reveal, room transition" },
+      "cinematic": "banned"
+    },
+    "plateReveal": "CSS animation-timeline: view() with clip-path: inset(0 100% 0 0) -> inset(0 0 0 0), entry 0% to cover 30%. Static end-state is the accessible default; motion is decorative timing only.",
+    "library": "No new motion library. GSAP (already installed) is restricted to the once-per-session opening sequence (3 elements, <= 1.2s) and theme micro-state.",
+    "reducedMotion": "All clip-path reveals and GSAP timelines disabled; static rest-state is the design."
   },
   "componentMorphology": {
     "primarySurfaces": [
-      "prepress-loader",
-      "issue-cover",
+      "wall-label",
+      "plate-spread",
+      "index-floorplan",
       "editor-note",
-      "typesetting-grid",
-      "feature-spreads",
-      "issue-index",
-      "back-cover"
+      "colophon-room",
+      "theme-segment-control"
     ],
-    "stateKeys": ["default", "hover", "focus-visible", "active", "disabled", "loading", "transition"],
+    "stateKeys": ["default", "hover", "focus-visible", "active", "disabled", "loading", "empty", "error", "transition"],
     "rules": [
       "No soft-shadow card stacks.",
-      "Borders and rule lines must express magazine structure.",
-      "Repeated projects must vary layout by feature spread variant."
+      "No 3-column tile grids for projects; floor plan rows only.",
+      "Plate panels look like typeset plate art, not framed thumbnails.",
+      "Repetition between rooms is intentional: the catalog grammar is consistent."
     ]
   },
   "accessibilityPolicy": {
@@ -131,94 +186,134 @@
     "nonTextContrast": true,
     "useOfColorOnlyProhibited": true,
     "focusVisible": true,
+    "focusVisibleSpec": "2px solid oklch(--accent), 4px offset, in both themes; contrast >= 3:1 against adjacent surface verified.",
     "targetSizeMinimum": true,
     "keyboardAccess": true,
     "reflowRequired": true,
-    "statusMessagesAndDynamicStateAccess": true
+    "statusMessagesAndDynamicStateAccess": true,
+    "themeToggleAnnouncement": "aria-live polite region announces 'Auto theme', 'Light theme', or 'Dark theme'."
   },
   "designExecutionPolicy": {
-    "representationStrategy": "vertical-interactive-editorial-issue",
+    "representationStrategy": "vertical-exhibition-catalog",
     "requireSurfacePlan": true,
     "requireViewportMutationPlan": true,
     "requireInteractionStateMatrix": true,
     "requireSignatureMoveRationale": true,
     "requireRepoEvidenceAlignment": true,
-    "oldDesignRegressionTest": "The result must not read as the previous portfolio simplified or as dark cinematic residue."
+    "oldDesignRegressionTest": "Result must not read as v2 magazine issue palette-swapped or as v1 dark cinematic. Plate spread, floor plan, and colophon are mandatory visual differentiators."
   },
   "designExecutionHandoff": {
-    "version": "ui-handoff-v1",
-    "primaryExperienceGoal": "Make the first impression feel like a personal portfolio designed at agency taste level while keeping project evidence scannable.",
+    "version": "ui-handoff-v3",
+    "primaryExperienceGoal": "Make the visitor walk through a catalog of rooms with the pacing of a curated exhibition: read wall label, look, read curator's note, move on. Decode plate codes only at the colophon.",
     "surfacePlan": [
-      { "surfaceId": "loader", "role": "pre-press check", "goal": "Gate entry until content is ready and introduce the issue language." },
-      { "surfaceId": "home", "role": "cover spread", "goal": "Establish designer-minded developer positioning with the local GitHub portrait as a right-page square profile proof." },
-      { "surfaceId": "intent", "role": "editor note", "goal": "State the design/product point of view." },
-      { "surfaceId": "process", "role": "typesetting grid", "goal": "Show working method as an editorial system." },
-      { "surfaceId": "projects", "role": "feature spreads", "goal": "Show real projects with varied layouts." },
-      { "surfaceId": "career", "role": "issue index", "goal": "Make timeline and skills scannable." },
-      { "surfaceId": "contact", "role": "back cover", "goal": "Create a memorable collaboration close." }
+      { "surfaceId": "cover-room", "role": "installation view", "goal": "Establish the protagonist with a wide installation view and a small wall label carrying year, role, and plate code." },
+      { "surfaceId": "intent-room", "role": "curator's note", "goal": "State the design and product point of view in editor-note grid." },
+      { "surfaceId": "process-room", "role": "method note", "goal": "Show working method as four numbered method beats." },
+      { "surfaceId": "floor-plan", "role": "index", "goal": "List rooms as numbered floor-plan rows with thumbnail-or-plate, title, and one-line summary." },
+      { "surfaceId": "project-room", "role": "plate spread", "goal": "Open each project on a wide plate (photo or typeset plate panel) with curator's note carrying constraint/decision/outcome." },
+      { "surfaceId": "career-room", "role": "biographical index", "goal": "Show timeline as numbered floor-plan rows with year-period and role." },
+      { "surfaceId": "contact-room", "role": "back wall", "goal": "Close the catalog with a contact action set in editor-note grid." },
+      { "surfaceId": "colophon-room", "role": "colophon", "goal": "Decode plate codes, credit type and tools, state interim photography note." }
     ],
     "contentPriorityMap": {
       "primary": ["identity", "project evidence", "contact action"],
       "secondary": ["process", "career", "skills"],
-      "deferred": ["decorative production details"]
+      "tertiary": ["colophon decoding"]
     }
   },
   "libraryResearchStatus": "verified",
   "libraryDecisions": [
     {
-      "library": "gsap",
-      "purpose": "Word-stagger, loader timeline, and scroll section choreography.",
-      "verifiedAt": "2026-05-03",
-      "sourceUrl": "https://gsap.com/docs/v3/Installation/",
-      "stableVersion": "package.json ^3.15.0, official docs support npm install and plugin registration.",
-      "fallbackIfUnavailable": "CSS transitions plus IntersectionObserver reveals."
+      "library": "@fontsource-variable/fraunces",
+      "purpose": "Author voice (headline, plate title, curator's note opener) with opsz axis lock.",
+      "verifiedAt": "2026-05-15",
+      "sourceUrl": "https://fontsource.org/fonts/fraunces",
+      "stableVersion": "Latest variable subset; latin slice only.",
+      "fallbackIfUnavailable": "system serif stack (ui-serif, Georgia, serif)."
     },
     {
-      "library": "GSAP ScrollTrigger",
-      "purpose": "Scroll-bound section reveals and class/state choreography.",
-      "verifiedAt": "2026-05-03",
-      "sourceUrl": "https://gsap.com/docs/v3/Plugins/ScrollTrigger/",
-      "stableVersion": "Bundled with GSAP 3, registered explicitly.",
-      "fallbackIfUnavailable": "IntersectionObserver adds reveal classes."
+      "library": "@fontsource-variable/inter",
+      "purpose": "System voice (body, nav, wall label, metadata).",
+      "verifiedAt": "2026-05-15",
+      "sourceUrl": "https://fontsource.org/fonts/inter",
+      "stableVersion": "Latest variable subset; latin slice only.",
+      "fallbackIfUnavailable": "system sans stack (ui-sans-serif, system-ui, Helvetica Neue, Arial, sans-serif)."
     },
     {
-      "library": "gsap.matchMedia",
-      "purpose": "Responsive animation setup and cleanup.",
-      "verifiedAt": "2026-05-03",
-      "sourceUrl": "https://gsap.com/docs/v3/GSAP/gsap.matchMedia%28%29",
-      "stableVersion": "Added in GSAP 3.11 and compatible with current package range.",
-      "fallbackIfUnavailable": "Manual window.matchMedia guards."
+      "library": "@fontsource-variable/jetbrains-mono",
+      "purpose": "Machine voice (plate code, year, stack tags) with tnum feature on metadata blocks.",
+      "verifiedAt": "2026-05-15",
+      "sourceUrl": "https://fontsource.org/fonts/jetbrains-mono",
+      "stableVersion": "Latest variable subset; latin slice only.",
+      "fallbackIfUnavailable": "system mono stack (ui-monospace, SFMono-Regular, Menlo, Consolas, monospace)."
+    },
+    {
+      "library": "CSS animation-timeline: view()",
+      "purpose": "Plate reveal on entry; native scroll-driven animation.",
+      "verifiedAt": "2026-05-15",
+      "sourceUrl": "https://developer.mozilla.org/en-US/docs/Web/CSS/animation-timeline/view",
+      "stableVersion": "Browser-native; no library required.",
+      "fallbackIfUnavailable": "Static end-state is the accessible default; no fallback choreography needed."
+    },
+    {
+      "library": "gsap (already installed)",
+      "purpose": "Once-per-session opening orchestration and theme micro-state.",
+      "verifiedAt": "2026-05-15",
+      "sourceUrl": "https://gsap.com/docs/v3/",
+      "stableVersion": "package.json ^3.15.0",
+      "fallbackIfUnavailable": "CSS-only opening using transition + intersection observer or no animation."
+    },
+    {
+      "library": "@studio-freight/lenis (already installed)",
+      "purpose": "Smooth scroll only when reduced-motion is not requested.",
+      "verifiedAt": "2026-05-15",
+      "sourceUrl": "https://lenis.studiofreight.com/",
+      "stableVersion": "package.json ^1.0.42",
+      "fallbackIfUnavailable": "Native scroll."
     }
   ],
   "reviewRubric": {
-    "version": "ui-rubric-v1",
+    "version": "ui-rubric-v3",
     "genericityAutoFail": true,
     "genericitySignals": [
-      "old dark cinematic palette remains dominant",
-      "portfolio behaves as a simplified old design",
-      "all sections use the same fade-up motion",
-      "projects become repeated cards",
-      "loader is a fake progress animation without readiness gating"
+      "project list rendered as a 3-column card grid",
+      "soft shadow on every surface",
+      "centered hero with one tagline",
+      "rounded-2xl + shadow-lg + gradient default Tailwind chrome",
+      "dark mode reads as inverted light mode",
+      "custom cursor or noise grain overlay reappears",
+      "scroll text reveal per word reappears",
+      "marquee of tech logos appears anywhere"
     ],
     "validBoldSignals": [
-      "pre-press loader gates entry",
-      "issue cover first viewport",
-      "different motion grammar per section",
-      "vertical flow with editorial spreads",
-      "project evidence remains readable and varied"
+      "wide installation view dominates first viewport with small wall label at lower-left",
+      "floor-plan numbered rows used for project list",
+      "plate code (PR.MMYY) appears unexplained on every room and is decoded only in the colophon",
+      "Fraunces opsz lock visible across renders",
+      "two distinct moods between light and dark (warm paper vs cool slate), not an invert"
     ]
   },
   "contextHygiene": {
-    "allowedSources": ["current-user-brief", "current-project-docs", "current-repo-files", "official-gsap-docs"],
-    "taintedSources": ["old cinematic implementation as final style", "Awwwards one-to-one copying", "generic magazine template"],
-    "approvedExternalConstraintUsage": "Extract print-production and editorial composition constraints only."
+    "allowedSources": ["current-user-final-decision-sheet", "current-project-docs", "current-repo-files", "MDN animation-timeline", "fontsource official docs"],
+    "taintedSources": ["v1 dark cinematic visual residue", "v2 editorial magazine palette and Bebas Neue", "external website style copying"],
+    "approvedExternalConstraintUsage": "Borrow only the conceptual frame of an exhibition catalog (wall label, curator's note, plate, floor plan, colophon). Do not copy any specific museum's brand."
   },
   "forbiddenPatterns": [
-    "dark glowing cinematic default",
-    "horizontal-only site navigation",
-    "soft-shadow project cards",
-    "centered generic hero",
+    "marquee of tech logos",
+    "custom cursor",
+    "noise grain overlay",
+    "scroll text reveal per word",
+    "parallax 3D",
+    "neon glow",
+    "balanced 3-column card grid for projects",
+    "soft shadow on every surface",
+    "centered minimal hero with one tagline",
     "decorative grid wallpaper",
-    "loader that does not gate real readiness"
-  ]
+    "calibration marks as wallpaper",
+    "dark mode as inverted light mode",
+    "loader that fakes work without readiness gating"
+  ],
+  "repoEvidence": {
+    "designEvidenceSummary": "Existing data shape (summary, caseStudy, productContext, impactMetrics, tags, year, link) maps directly onto exhibition-catalog tiers: wall label, curator's note, deep dive. Project entries already contain enough metadata for plate codes and floor-plan rows; commencement month is derived from project context and added as plateCode field."
+  }
 }

@@ -2,6 +2,7 @@ const projectSource = [
   {
     title: 'bumbuserbaguna',
     year: '2026',
+    plateCode: 'PR.0126',
     type: 'featured',
     accent: 'copper',
     link: 'https://github.com/fatidaprilian/bumbuserbaguna',
@@ -52,6 +53,7 @@ const projectSource = [
   {
     title: 'Agentic-Senior-Core',
     year: '2026',
+    plateCode: 'PR.0226',
     type: 'standard',
     accent: 'bark',
     link: 'https://github.com/fatidaprilian/Agentic-Senior-Core',
@@ -94,6 +96,7 @@ const projectSource = [
   {
     title: 'ecommercevespa-client',
     year: '2026',
+    plateCode: 'PR.0925',
     type: 'standard',
     accent: 'clay',
     link: 'https://github.com/fatidaprilian/ecommercevespa-client',
@@ -136,6 +139,7 @@ const projectSource = [
   {
     title: 'digital-credential-platform',
     year: '2025',
+    plateCode: 'PR.0625',
     type: 'standard',
     accent: 'bark',
     link: 'https://github.com/fatidaprilian/digital-credential-platform',
@@ -179,6 +183,7 @@ const projectSource = [
   {
     title: 'war-tiket-bot',
     year: '2026',
+    plateCode: 'PR.0326',
     type: 'standard',
     accent: 'clay',
     link: 'https://github.com/fatidaprilian/war-tiket-bot',
@@ -226,6 +231,7 @@ export const getProjectsByLanguage = (language = 'id') => {
   return projectSource.map((projectItem) => ({
     title: projectItem.title,
     year: projectItem.year,
+    plateCode: projectItem.plateCode,
     type: projectItem.type,
     accent: projectItem.accent,
     link: projectItem.link,

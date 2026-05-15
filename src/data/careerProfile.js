@@ -63,12 +63,14 @@ const careerProfileSource = {
     educationLabel: 'Pendidikan',
     educationItems: [
       {
-        period: 'Sept. 2023 - Present',
+        tier: 'S1',
+        period: 'Sept. 2023 — Present',
         institution: 'Universitas Bina Sarana Informatika (BSI)',
-        degree: 'Bachelor of Information Technology (S1)'
+        degree: 'Bachelor of Information Technology'
       },
       {
-        period: 'July 2020 - May 2023',
+        tier: 'SMK',
+        period: 'July 2020 — May 2023',
         institution: 'SMK Mekanik Cibinong',
         degree: 'High School Diploma'
       }
@@ -153,12 +155,14 @@ const careerProfileSource = {
     educationLabel: 'Education',
     educationItems: [
       {
-        period: 'Sept. 2023 - Present',
+        tier: 'S1',
+        period: 'Sept. 2023 — Present',
         institution: 'Universitas Bina Sarana Informatika (BSI)',
-        degree: 'Bachelor of Information Technology (S1)'
+        degree: 'Bachelor of Information Technology'
       },
       {
-        period: 'July 2020 - May 2023',
+        tier: 'SMK',
+        period: 'July 2020 — May 2023',
         institution: 'SMK Mekanik Cibinong',
         degree: 'High School Diploma'
       }
