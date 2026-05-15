@@ -5,30 +5,48 @@
   <meta charset="UTF-8" />
   <link rel="icon" type="image/jpeg" href="/avatar-github.jpg" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Farid Eka Aprilian — Full-stack Engineer</title>
-  <meta name="description" content="Farid Eka Aprilian — Full-stack Engineer & Product Builder. Building scalable web products with strong architecture and measurable outcomes." />
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f5f3ec" />
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#101421" />
+  <title>Farid Eka Aprilian — Catalog of Work</title>
+  <meta name="description" content="Farid Eka Aprilian — Full-stack engineer working at the intersection of product, type, and editorial system design. A catalog of selected rooms." />
 
-  <!-- Open Graph / Facebook / WhatsApp -->
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://faridekaaprilian.vercel.app/" />
-  <meta property="og:title" content="Farid Eka Aprilian — Full-stack Engineer" />
-  <meta property="og:description" content="Building scalable web products with strong architecture and measurable outcomes." />
-  <meta property="og:image" content="https://faridekaaprilian.vercel.app/og-image.jpg?v=2" />
+  <meta property="og:title" content="Farid Eka Aprilian — Catalog of Work" />
+  <meta property="og:description" content="A catalog of selected rooms. Full-stack engineering with editorial discipline." />
+  <meta property="og:image" content="https://faridekaaprilian.vercel.app/og-image.jpg?v=3" />
 
-  <!-- Twitter / X -->
   <meta property="twitter:card" content="summary_large_image" />
   <meta property="twitter:url" content="https://faridekaaprilian.vercel.app/" />
-  <meta property="twitter:title" content="Farid Eka Aprilian — Full-stack Engineer" />
-  <meta property="twitter:description" content="Building scalable web products with strong architecture and measurable outcomes." />
-  <meta property="twitter:image" content="https://faridekaaprilian.vercel.app/og-image.jpg?v=2" />
+  <meta property="twitter:title" content="Farid Eka Aprilian — Catalog of Work" />
+  <meta property="twitter:description" content="A catalog of selected rooms. Full-stack engineering with editorial discipline." />
+  <meta property="twitter:image" content="https://faridekaaprilian.vercel.app/og-image.jpg?v=3" />
 
-  <!-- Performance Preloads -->
   <link rel="preload" as="image" href="/avatar-github.jpg" fetchpriority="high" />
   <link rel="dns-prefetch" href="https://api.web3forms.com" />
-  <script type="module" crossorigin src="/assets/index-crPG1QMg.js"></script>
-  <link rel="modulepreload" crossorigin href="/assets/vendor-CaMoYjEm.js">
-  <link rel="stylesheet" crossorigin href="/assets/vendor-58a_C2xs.css">
-  <link rel="stylesheet" crossorigin href="/assets/index-BwEIsr0d.css">
+
+  <script>
+    // No-flash theme bootstrap. Reads localStorage.theme (auto | light | dark)
+    // and writes data-theme on <html> before paint so dark mode never flashes light.
+    (function () {
+      try {
+        var saved = localStorage.getItem('portfolio-theme');
+        var pref = saved === 'light' || saved === 'dark' || saved === 'auto' ? saved : 'auto';
+        var resolved = pref === 'auto'
+          ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
+          : pref;
+        document.documentElement.setAttribute('data-theme', resolved);
+        document.documentElement.setAttribute('data-theme-pref', pref);
+      } catch (_) {
+        document.documentElement.setAttribute('data-theme', 'light');
+        document.documentElement.setAttribute('data-theme-pref', 'auto');
+      }
+    })();
+  </script>
+  <script type="module" crossorigin src="/assets/index-BaqdHY1n.js"></script>
+  <link rel="modulepreload" crossorigin href="/assets/vendor-DkB8jupR.js">
+  <link rel="stylesheet" crossorigin href="/assets/vendor-BnKsTWVP.css">
+  <link rel="stylesheet" crossorigin href="/assets/index--RklN8AM.css">
 </head>
 
 <body>
