@@ -1,41 +1,40 @@
-# Flow and Layout Overview — Risograph Indie Zine Portfolio
+# Flow and Layout Overview — Kinetic Grid Shift & Liquid Glassmorphism
 
-This document provides a technical flow and layout map of the personal portfolio. The entire experience is delivered as a single-page interactive risograph zine divided into six distinct stages and a final colophon spec.
+This document provides a technical flow and layout map of the personal portfolio website. The entire experience is delivered as a single-page interactive glassmorphic layout divided into six distinct responsive sections.
 
-## 1. Interaction & Navigation Flow
+## 1. Interaction and Navigation Flow
 
-The portfolio utilizes focus-managed anchor navigation. When clicking a navigational link (such as a floor plan row), the browser scrolls to the section via Lenis and dynamically moves standard keyboard focus to the first heading in the target section, ensuring excellent accessibility for screen readers.
+The portfolio utilizes focus-managed anchor navigation. When clicking a navigation link, the browser scrolls to the section via Lenis and dynamically moves standard keyboard focus to the first heading in the target section, ensuring excellent accessibility for screen readers.
 
 ```mermaid
 graph TD
-    A["Skip Link: Go to Main Content"] --> B["Stage I: Zine Cover"]
+    A["Skip Link: Go to Main Content"] --> B["Home (Hero Section)"]
     
-    SubGraph NavigationHeader ["Slim Top Frame Header"]
-        H1["Brand Mark (Logo)"] --> B
-        H2["Theme Selector (Auto / Light / Dark)"] --> H5["Apply Semantic OKLCH Theme"]
-        H3["Language Selector (ID / EN)"] --> H6["Trigger reactive computed translations"]
-    End
+    subgraph NavigationHeader ["Slim Top Navigation Header"]
+        H1["Brand Logo"] --> B
+        H2["Theme Selector (Auto / Light / Dark)"] --> H5["Apply Semantic oklch Theme"]
+        H3["Language Selector (ID / EN)"] --> H6["Toggle Computed Translations"]
+    end
 
-    B -->|"CTA: View Floor Plan"| E["Stage IV: Specimen Index Matrix"]
-    B -->|"CTA: GitHub Link"| ExtGithub["External GitHub Profile"]
+    B -->|"CTA: View Portfolio"| D["Works (Selected Projects)"]
+    B -->|"CTA: Get in Touch"| G["Contact (Transmissions Form)"]
 
-    C["Stage II: Curator Note & Specimen"] --> D["Stage III: Layout Parameters (Beats)"]
-    D --> E
+    B --> C["About (Biography & Specimens)"]
+    C --> D
+    D -->|"CTA: Case Details"| D1["Slide-In Spec Drawer"]
+    D --> E["Skills (Tech Stack capsules)"]
+    E --> F["Experience (Career Timeline)"]
+    F --> G
     
-    E -->|"Click Spec Row (Spec I - X)"| F["Asymmetrical Spreads (Project Plates)"]
-    F -->|"View Case Study Log"| F
-    F -->|"View Source Link"| ExtSource["External Repository Source"]
+    G -->|"Send Message Form"| Send["Trigger latency state simulation"]
+    G -->|"CTA: Mailto"| Mailto["mailto:email"]
+    G -->|"CTA: Phone"| Phone["tel:phone"]
+    G -->|"CTA: LinkedIn"| ExtLinkedIn["External LinkedIn"]
     
-    F --> G["Stage V: Milestone Registry (Timeline & Stack)"]
-    G --> H["Stage VI: Transmission Desk (Contact)"]
-    H -->|"Send Email"| Mailto["mailto:email"]
-    H -->|"LinkedIn Link"| ExtLinkedIn["External LinkedIn"]
-    H -->|"Phone Link"| Tel["tel:phone"]
-    
-    H --> I["Colophon Specification"]
+    G --> H["Colophon Specification & Footer"]
 ```
 
-## 2. Layout Structure & Responsive Recomposition
+## 2. Layout Structure and Responsive Recomposition
 
 On viewport size mutations, the sections re-arrange dynamically from a complex multi-column grid layout (desktop) into a stacked reading format (mobile).
 
@@ -43,41 +42,42 @@ On viewport size mutations, the sections re-arrange dynamically from a complex m
 
 ```
 +-------------------------------------------------------+
-|  FA · Catalog 2026   [Spec Grid]   [Theme Auto]  [EN] | <-- Slim Header
+|  Farid Eka Aprilian    [Home] [About] [Works]   [EN]  | <-- Slim Header
 +-------------------------------------------------------+
 |                                                       |
 |   FARID EKA                                +-------+  |
-|   APRILIAN                                 |  / \  |  | <-- Stage I: Zine Cover
-|   Karya yang dibaca seperti pameran.       | ( * ) |  |     (asymmetric poster +
-|   [Open Floor Plan]  [GitHub]              |  \ /  |  |      offset halftone frame)
+|   APRILIAN                                 |  / \  |  | <-- Home (Hero):
+|   Crafting interfaces that are alive       | ( * ) |  |     (asymmetric poster +
+|   [View Portfolio]  [Get in Touch]         |  \ /  |  |      rotating vector target)
 |                                            +-------+  |
 +-------------------------------------------------------+
 |                                                       |
-|   STAGE II: CURATOR'S NOTE & TYPOGRAPHY SPECIMEN      | <-- Stage II: Designer commentary
+|   ABOUT: DESIGNING DIGITAL PRODUCTS WITH INTENT       | <-- About: Biography and Italic quote
 |                                                       |
 +-------------------------------------------------------+
 |                                                       |
-|   [ 01 Intent ]  [ 02 System ]  [ 03 Motion ]  [ 04 ] | <-- Stage III: Method beats
-|                                                       |
-+-------------------------------------------------------+
-|                                                       |
-|   +-----------------------+ +-----------------------+ | <-- Stage IV: 2x2 Asymmetric
-|   | SPEC I: Project A     | | SPEC II: Project B    | |     Modular Specimen Index
+|   WORKS: SELECTED PROJECTS (2x2 Grid Matrix)          | <-- Works Grid: Frosted glass cards
+|   +-----------------------+ +-----------------------+ |     with animated slide-in case
+|   | Project A (01)        | | Project B (02)        | |     drawers
 |   +-----------------------+ +-----------------------+ |
-|   | SPEC III: Project C   | | SPEC IV: Project D    | |
+|   | Project C (03)        | | Project D (04)        | |
 |   +-----------------------+ +-----------------------+ |
 +-------------------------------------------------------+
 |                                                       |
-|   STAGE V: PROJECT SPREADS (3-Column Layout)          | <-- Project details, Monogram Plates,
-|   - Design Token Specs | Plate Frame | Details        |     and Constraint-Decision logs
+|   SKILLS: TECHNICAL & CREATIVE STACK                  | <-- Skills: Glowing glass capsules
+|   [ HTML ] [ CSS ] [ Javascript ] [ Vue ] [ Tailwind ] |
 |                                                       |
 +-------------------------------------------------------+
 |                                                       |
-|   STAGE VI: BIOGRAPHY & REGISTER TABLE                | <-- Career timeline index
-|                                                       |
+|   EXPERIENCE: PROFESSIONAL TIMELINE                   | <-- Experience: Vertical chronological
+|   o-- [ UI/UX Designer & Developer ]                  |     chronology timeline
+|   o-- [ Frontend Engineer ]                           |
 +-------------------------------------------------------+
 |                                                       |
-|   TRANSMISSION DESK & TOKEN METRICS                   | <-- Contact and Colophon key
+|   CONTACT: TRANSMISSIONS DESK & FORM                  | <-- Contact form and active
+|                                                       |     social/transmissions links
++-------------------------------------------------------+
 |                                                       |
+|   COLOPHON SPECIFICATION & FOOTER                     | <-- Technical specifications colophon
 +-------------------------------------------------------+
 ```
