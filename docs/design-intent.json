@@ -1,183 +1,261 @@
 {
   "mode": "project-specific",
   "status": "refined-for-implementation",
-  "updatedAt": "2026-05-15",
-  "version": "ui-handoff-v3-exhibition-catalog",
+  "updatedAt": "2026-05-27",
+  "version": "ui-handoff-v5-kinetic-grid",
   "project": {
     "name": "portofolio",
-    "domain": "Personal portfolio for a designer-minded creative developer",
-    "runtimeConstraint": "Existing Vue 3, Vite, Tailwind, Lenis, GSAP. Add @fontsource-variable for Fraunces, Inter, JetBrains Mono. Drop @fontsource/bebas-neue and @fontsource/manrope.",
-    "architectureConstraint": "Single-page portfolio composed as an exhibition catalog: cover, floor plan (index), room-per-project plate spreads, curator's about, colophon."
+    "domain": "Premium creative personal portfolio for a UI/UX designer and creative developer showcasing elite visual and frontend skills.",
+    "runtimeConstraint": "Vue 3, Vite, Tailwind v3, Lenis smooth scroll, GSAP animation orchestration.",
+    "architectureConstraint": "Single-page responsive layout structured as fluid, kinetic glassmorphic modules. Clean, professional copywriting without esoteric or eccentric terminology, backed by highly polished scroll-driven motions and floating backdrops."
   },
   "confirmedAssumptions": [
-    "User issued a final decision sheet selecting Exhibition Catalog anchor (option C), Fraunces+Inter+JetBrains Mono triplet, OKLCH role-first 8-token system, 4-bucket motion charter without cinematic, dual-mode theme that is not an invert, plate-code unexplained-element move.",
-    "Photography is not yet captured. Interim renders use typeset plate panels (identification + chapter function) and the existing GitHub avatar in the hero only.",
-    "Custom cursor and grain overlay are removed. Lenis remains for smooth scroll only when reduced-motion is not requested."
+    "User explicitly rejected the esoteric room/catalog naming conventions and requested standard, clear portfolio page sections (Home, About, Works, Skills, Experience, Contact).",
+    "The portfolio must showcase elite visual taste and look genuinely designed to the teeth, utilizing highly active but structured micro-animations and kinetic scrolling.",
+    "Borders are represented as fine, sharp neon glass rules that glow on hover. No muddy dropshadows are allowed."
   ],
   "visualResetStrategy": {
-    "previousAnchor": "Editorial magazine pre-press issue (v2)",
-    "newAnchor": "Printed exhibition catalog (v3)",
+    "previousAnchor": "Risograph Indie Zine & Interactive Graphic Collage (v4)",
+    "newAnchor": "Kinetic Grid Shift & Liquid Glassmorphism (v5)",
     "discardedFromPrevious": [
-      "Pre-press loader gating real readiness",
-      "Bebas Neue display chapter numbers",
-      "Manrope body",
-      "Three-accent palette (red/blue/yellow)",
-      "Card-style project breakdown blocks",
-      "Custom cursor and rule-line column wallpaper",
-      "Magazine spread alternating-variant rhythm"
+      "Room I-VI numeral division conventions",
+      "Catalog issues and print plates metadata labels",
+      "Tactile paper stickers and textured zine pulp margins",
+      "Risograph misaligned offset border shifts",
+      "Unexplained print colophons"
     ],
     "preservedAsContentEvidence": [
-      "Project entries in src/data/projects.js",
-      "Career profile content in src/data/careerProfile.js",
-      "Bilingual ID/EN copy strategy",
-      "GitHub avatar asset at /public/avatar-github.jpg"
+      "Bilingual copy translations",
+      "Project data in src/data/projects.js",
+      "Timeline milestones in src/data/careerProfile.js",
+      "Vite, Lenis, and GSAP technical scaffolding"
     ],
     "regressionTestCriteria": [
-      "Result must not read as the magazine issue with a different palette.",
-      "Hero composition is wide installation view + small wall label, not headline-stack with side proof.",
-      "Project list is a numbered floor plan, not a card grid or alternating spread variants.",
-      "Theme switch reveals two distinct moods (warm paper vs cool slate), not an inverted same image."
+      "Must not display any 'room' or 'catalog' naming in page headers, sections, or labels.",
+      "Must use highly standard navigation paths (Home, About, Works, Skills, Experience, Contact).",
+      "Layout elements must float as premium glassmorphic cards with responsive kinetic boundaries.",
+      "Vibrant background blobs must drift fluidly in the background, creating a high-end agency aesthetic."
     ]
   },
   "visualDirection": {
-    "name": "Exhibition Catalog",
-    "summary": "A printed exhibition catalog where each project is a numbered room. Wall labels carry metadata, curator's notes carry argument, plate panels carry identity, colophon decodes craft.",
-    "firstViewportBet": "A wide installation view dominates with a small wall label (year, role, plate code PR.MMYY) at lower-left. Headline set in Fraunces with opsz pushed near max so the hairline serif stays present.",
+    "name": "Kinetic Grid Shift & Liquid Glassmorphism",
+    "summary": "A premium, fluid, and highly interactive layout where sections are structured as glass modules floating over a dark obsidian or warm alabaster backdrop, populated by drifting liquid gradients and interactive spring-physics grids.",
+    "firstViewportBet": "A massive, tightly-tracked header FARID EKA APRILIAN overlapping a sleek frosted glass panel. Colorful fluid gradient blobs hover and morph in the background. Navigating triggers fluid active glass border transitions.",
     "distinctiveMoves": [
-      "Photography (or typeset plate panel during interim) is the protagonist; copy supports the image rather than competing with it.",
-      "Hanging-punctuation global, tabular-num metadata, Fraunces opsz fixed at ~120 regardless of render size.",
-      "Plate code PR.MMYY appears unexplained on every room; only the colophon decodes it."
+      "Frosted glass modules with custom oklch border glows and blur backdrops.",
+      "Drifting fluid gradient background blobs animating dynamically.",
+      "Interactive grids (works, skills, experience) that scale and react to cursor proximity using GSAP and spring mechanics."
     ]
   },
   "motionPaletteDecision": {
-    "productCategorySignal": "creative-developer-portfolio",
-    "decision": "Curatorial pacing, not cinematic. CSS animation-timeline: view() carries plate reveals; GSAP is restricted to the once-per-session opening sequence and theme micro-state. Default global easing cubic-bezier(0.65, 0, 0.35, 1).",
-    "densityDecisionSource": "User explicitly rejected scroll text reveal per word, parallax 3D, and custom cursor.",
-    "spatialDecision": "Vertical scroll. No horizontal-only navigation. No WebGL. Composition uses three named CSS grid templates: plate-spread, index-floorplan, editor-note."
+    "productCategorySignal": "premium-interactive-creative-portfolio",
+    "decision": "Fluid kinetic transitions. Navigation triggers smooth scroll scrolling with focus centering. Hovering over cards triggers kinetic spring scaling and glass border highlights.",
+    "densityDecisionSource": "User explicitly requested a normal portfolio layout but with a new concept, high visual impact, and full animations.",
+    "spatialDecision": "Obsidian/Alabaster canvas hosting floating modular sections: home-section, about-section, works-grid, skills-section, experience-timeline, and contact-card."
   },
   "designFlexibilityPolicy": {
     "locked": [
-      "Anchor: exhibition catalog",
-      "Voice triplet: Fraunces author / Inter system / JetBrains Mono machine",
-      "Role-first OKLCH token system, 4 raw + 8 semantic",
-      "Dual mode that is not an invert (light hue 80, dark hue 250, accent hue 25)",
-      "Tri-state theme toggle (auto/light/dark) with no-flash inline script and color-scheme",
-      "WCAG 2.2 AA contrast floor",
-      "No custom cursor, no decorative noise grain, no marquee tech logos",
-      "Plate code as the unexplained element decoded only in colophon"
+      "Anchor: Kinetic Grid Shift",
+      "Normal page navigation naming: Home, About, Works, Skills, Experience, Contact",
+      "Voice triplet: Inter variable display / JetBrains Mono coordinates / Fraunces variable italic quotes",
+      "Frosted glassmorphism panels with oklch border glows",
+      "Drifting liquid gradient background blobs",
+      "Zero dark-as-invert rules; dual mode palettes are derived separately"
     ],
     "flexible": [
-      "Exact OKLCH primitive values may shift to satisfy contrast or measured perceptual balance",
-      "Photography vs typeset plate panel ratio shifts as installation photos arrive",
-      "Plate-reveal implementation may swap to IntersectionObserver fallback if browser support data demands it",
-      "Lenis may be removed if dual-mode + reduced-motion cleanup proves cleaner without it"
+      "Exact size and speed of background blobs",
+      "Border glow intensity and gradient offsets",
+      "Spring scale factors on mobile to preserve touch stability"
     ]
   },
   "conceptualAnchor": {
-    "name": "Printed exhibition catalog",
-    "anchorReference": "Monographic show catalog: wall label, curator's note column, plate panel, floor plan, colophon",
-    "agentResearchMode": "current-user-final-decision-sheet-plus-current-repo-plus-MDN-animation-timeline",
-    "sourceDomain": "editorial-publishing-and-exhibition-design",
-    "specificReferencePoint": "A small monographic exhibition catalog with numbered rooms (ROOM I, ROOM II), each opening on a wide installation view, narrow caption column, and plate code on the wall label.",
-    "rationale": "The anchor maps directly onto the existing data shape (summary as wall label, caseStudy as curator's note, productContext as deep dive) and earns the slow editorial pacing the user wants without copying any web portfolio.",
-    "signatureMotion": "Plate reveal via CSS animation-timeline: view() — clip-path inset opens left-to-right from entry 0% to cover 30%. Reads like a curtain pulling across a plate panel.",
-    "typographicDecision": "Fraunces variable carries author voice (headline, plate title, pull quote) at opsz ~120 regardless of render size; Inter variable carries system voice (body, nav, wall label); JetBrains Mono variable carries machine voice (plate code, year, stack tags) with tabular-num on.",
-    "visualRiskBudget": "High visual authorship through type, color discipline, and composition; no decorative chrome.",
-    "motionRiskBudget": "Single signature reveal plus one opening orchestration; everything else is micro feedback."
+    "name": "Kinetic Grid Shift & Liquid Glassmorphism",
+    "anchorReference": "High-end creative digital agency sites featuring interactive glass surfaces, fluid background blobs, and spring-driven layout shifts",
+    "agentResearchMode": "modern-interactive-portfolio-recomposition-with-standard-ux-terms",
+    "sourceDomain": "creative-developer-portfolios-and-interactive-studios",
+    "specificReferencePoint": "A sleek digital workspace built on frosted glass cards, glowing borders, modern fluid gradients, and tightly-tracked sans display headers.",
+    "rationale": "Perfectly satisfies the request for a normal, standard portfolio structure while maintaining high-end visual ambition, depth, and rich movement.",
+    "signatureMotion": "Floating gradient blob drifts, frosted border glows, spring module scaling, and fluid GSAP-coordinated module entry.",
+    "typographicDecision": "Inter variable drives display voice (giant headers, active navigation tags); JetBrains Mono drives specification voice (technical metadata, duration periods); Fraunces variable drives comment voice (humanized design remarks, italic quotes).",
+    "visualRiskBudget": "High aesthetic polish through frosted glassmorphism, drifting gradient shaders, and glowing borders; zero default card blocks.",
+    "motionRiskBudget": "High micro-interaction fluidity (magnetic spring, active glows) + Lenis smooth scroll; zero rigid system behaviors."
   },
   "derivedTokenLogic": {
-    "anchorReference": "Printed exhibition catalog",
-    "colorDerivationSource": "Light surfaces derive from warm paper (hue 80) like a museum print catalog page; dark surfaces derive from cool slate (hue 250) like a dim gallery wall under spot lighting; accent terracotta (hue 25) is the single curatorial highlight, muted in dark.",
-    "spacingDerivationSource": "Generous catalog margins, hairline rule lines as leader lines, narrow caption measures (38ch) to force a slow read.",
-    "typographyDerivationSource": "Voice triplet Fraunces / Inter / JetBrains Mono; opsz lock on Fraunces titles; hanging-punctuation global; tabular-num on all metadata; text-wrap balance on display, pretty on body.",
-    "motionDerivationSource": "CSS animation-timeline: view() for plate reveal; GSAP only for opening sequence and theme micro-state.",
+    "anchorReference": "Kinetic Grid Shift & Liquid Glassmorphism",
+    "colorDerivationSource": "Dark theme utilizes deep obsidian base with glowing electric cyan and indigo rules. Light theme utilizes clean alabaster base with glowing cobalt and magenta rules.",
+    "spacingDerivationSource": "Modular glass panes layout, consistent spacing multipliers of 8px, and maximum line lengths of 60ch for readouts.",
+    "typographyDerivationSource": "Inter bold display, JetBrains Mono details, and Fraunces elegant italic quotes.",
+    "motionDerivationSource": "Spring physical transitions on hover, GSAP orchestration for entry reveals, and Lenis for inertia scroll.",
     "colorSpace": "OKLCH",
-    "spatialBaseUnit": "4px",
-    "typeScaleMethod": "fluid clamp() with role-distinct steps; display 32-120, body 16-18, mono 11-14",
-    "motionBudget": "Micro 80-120ms, Standard 240-360ms, Editorial 700-1000ms; Cinematic banned",
-    "validationRule": "Every motion and rule line must map to a catalog function (identification, leader line, plate reveal, focus handoff). If the rationale is decoration only, derive again."
+    "spatialBaseUnit": "8px",
+    "typeScaleMethod": "fluid clamp() with role-distinct steps; display 36-96px, body 15-17px, mono 11-13px",
+    "motionBudget": "Micro 100-140ms, Standard 280-360ms, Editorial 700-900ms; Cinematic banned",
+    "validationRule": "No rooms or catalog copy. Every section must exist as an identifiable frosted glass container floating over a fluid animated canvas. Dropshadows are replaced by back blurs and subtle border lights."
   },
   "aiSafeUiAudit": {
     "status": "completed",
-    "failureDefinition": "An AI-safe portfolio would render a 3-column project grid with rounded cards, soft shadows, a centered hero tagline, generic Tailwind chrome, and a dark-mode invert.",
-    "interchangeabilityTest": "Renaming this site to a SaaS marketing page would break the wall-label metadata, plate code, floor plan numbering, curator's note, and colophon room. The anchor is product-specific.",
+    "failureDefinition": "A safe generic portfolio would render a 3-column white card grid with default margins, gray borders, and boring icons.",
+    "interchangeabilityTest": "Renaming this site to a boring administrative portal would break the glowing glass cards, kinetic grids, and animated background blobs.",
     "requiredProductSpecificSignals": [
-      "Wall label visible in the first viewport carrying year, role, plate code.",
-      "Project list is a numbered floor plan with row-per-room layout, never a card grid.",
-      "Plate code (PR.MMYY) appears unexplained throughout and is decoded only in the colophon."
+      "Frosted glass card panels with active oklch border glows.",
+      "Drifting fluid gradient blobs animating dynamically in the background.",
+      "Sleek target lines and target circles framing the portrait."
     ],
-    "backgroundPatternRule": "No grid wallpaper, calibration marks, scanlines, or noise. Hairline rules appear only as leader lines between wall label and caption."
+    "backgroundPatternRule": "No flat solids. The background hosts deep, glowing, and morphing gradient blobs."
   },
   "productionContentPolicy": {
     "noPlaceholderCopy": true,
     "noTestingDemoSampleLabels": true,
-    "interimPhotographyHandling": "Until installation photography is captured, rooms render typeset plate panels (large plate code + project monogram + year). The colophon explicitly states this interim state.",
+    "interimPhotographyHandling": "Typeset vector grids show project monograms and metrics. Timeline items render clean career readouts.",
     "userFacingFlowsHaveOperableUI": true
   },
   "tokenSystem": {
     "sourceOfTruth": "docs/design-intent.json -> colorTruth, plus src/style.css :root and [data-theme] blocks",
-    "taxonomyOrder": ["primitive", "semantic", "component"],
+    "taxonomyOrder": [
+      "primitive",
+      "semantic",
+      "component"
+    ],
     "requireSemanticAliases": true,
     "componentTokensConsumeSemantic": true,
-    "implementationNote": "Primitives (paper, ink, slate, terracotta) defined once. Semantic roles (--surface-page, --surface-raised, --surface-sunken, --ink-primary, --ink-secondary, --ink-tertiary, --rule, --accent) switch by [data-theme]. Tailwind extend mirrors semantic names."
+    "implementationNote": "Primitives defined once. Semantic roles switch by [data-theme]. Tailwind extend maps semantic names."
   },
   "colorTruth": {
     "format": "oklch",
     "rawPrimitives": [
-      { "name": "paper", "value": "oklch(0.97 0.008 80)", "purpose": "warm light surface base" },
-      { "name": "ink", "value": "oklch(0.20 0.020 80)", "purpose": "warm near-black for light-mode text" },
-      { "name": "slate", "value": "oklch(0.16 0.012 250)", "purpose": "cool dark surface base for dark mode" },
-      { "name": "terracotta", "value": "oklch(0.55 0.18 25)", "purpose": "single curatorial accent" }
+      {
+        "name": "obsidian-deep",
+        "value": "oklch(0.12 0.015 250)",
+        "purpose": "luxurious deep obsidian canvas"
+      },
+      {
+        "name": "alabaster-warm",
+        "value": "oklch(0.97 0.005 80)",
+        "purpose": "sleek warm alabaster canvas"
+      },
+      {
+        "name": "indigo-glow",
+        "value": "oklch(0.35 0.12 280)",
+        "purpose": "electric dark rule glow"
+      },
+      {
+        "name": "neon-cyan",
+        "value": "oklch(0.78 0.16 200)",
+        "purpose": "glowing electric cyan highlight"
+      },
+      {
+        "name": "neon-magenta",
+        "value": "oklch(0.65 0.25 345)",
+        "purpose": "fluorescent riso magenta"
+      },
+      {
+        "name": "cobalt-deep",
+        "value": "oklch(0.48 0.22 260)",
+        "purpose": "deep cobalt light accent"
+      }
     ],
     "semanticRoles": [
-      { "role": "surface-page", "light": "oklch(0.97 0.008 80)", "dark": "oklch(0.16 0.012 250)" },
-      { "role": "surface-raised", "light": "oklch(0.99 0.005 80)", "dark": "oklch(0.21 0.014 250)" },
-      { "role": "surface-sunken", "light": "oklch(0.94 0.012 80)", "dark": "oklch(0.13 0.010 250)" },
-      { "role": "ink-primary", "light": "oklch(0.20 0.020 80)", "dark": "oklch(0.92 0.012 80)" },
-      { "role": "ink-secondary", "light": "oklch(0.45 0.020 80)", "dark": "oklch(0.70 0.014 80)" },
-      { "role": "ink-tertiary", "light": "oklch(0.62 0.015 80)", "dark": "oklch(0.55 0.012 80)" },
-      { "role": "rule", "light": "oklch(0.85 0.010 80)", "dark": "oklch(0.30 0.012 250)" },
-      { "role": "accent", "light": "oklch(0.55 0.18 25)", "dark": "oklch(0.62 0.14 25)" }
+      {
+        "role": "surface-page",
+        "light": "oklch(0.97 0.005 80)",
+        "dark": "oklch(0.12 0.015 250)"
+      },
+      {
+        "role": "surface-raised",
+        "light": "oklch(0.99 0.005 80 / 0.8)",
+        "dark": "oklch(0.18 0.02 250 / 0.7)"
+      },
+      {
+        "role": "surface-sunken",
+        "light": "oklch(0.93 0.01 80)",
+        "dark": "oklch(0.08 0.01 250)"
+      },
+      {
+        "role": "ink-primary",
+        "light": "oklch(0.12 0.01 250)",
+        "dark": "oklch(0.97 0.01 250)"
+      },
+      {
+        "role": "ink-secondary",
+        "light": "oklch(0.38 0.01 250)",
+        "dark": "oklch(0.76 0.01 250)"
+      },
+      {
+        "role": "ink-tertiary",
+        "light": "oklch(0.60 0.01 250)",
+        "dark": "oklch(0.50 0.01 250)"
+      },
+      {
+        "role": "rule",
+        "light": "oklch(0.88 0.01 80)",
+        "dark": "oklch(0.22 0.03 250)"
+      },
+      {
+        "role": "accent",
+        "light": "oklch(0.48 0.22 260)",
+        "dark": "oklch(0.78 0.16 200)"
+      }
     ],
-    "productSpecificBehavior": "Light mode reads as a museum print catalog page in daylight. Dark mode reads as the same catalog under dim spot lighting. The shift in hue family (warm 80 vs cool 250) is intentional: the two modes carry different moods on purpose, not an inverted same image."
+    "productSpecificBehavior": "Light theme resembles alabaster glass with clean cobalt accents. Dark theme represents obsidian plates with electric cyan neon rules."
   },
   "crossViewportAdaptation": {
     "adaptByRecomposition": true,
     "touchTargetMinPx": 24,
     "touchTargetPreferredPx": 44,
     "mutationRules": {
-      "mobile": "Single-column floor plan; plate panels stack; wall label moves above the photo; nav collapses to brand mark plus theme toggle.",
-      "tablet": "Plate spread becomes 8/4; index floor plan compresses spacers; curator's note margin annotations remain inline.",
-      "desktop": "Full asymmetric plate-spread (1fr 7fr 1fr 3fr), index-floorplan (1fr 1fr 6fr 1fr 3fr), editor-note (2fr 7fr 3fr) grids active."
+      "mobile": "Single-column stack; glass cards merge borders; back blurs reduce slightly to preserve CPU speed; tags flow dynamically.",
+      "tablet": "Two-column grids for project showcases; side notes stack inline.",
+      "desktop": "Full fluid grids, interactive spring components, and drifting background blobs active."
     }
   },
   "motionSystem": {
     "allowMeaningfulMotion": true,
     "buckets": {
-      "micro": { "duration": "80-120ms", "easing": "ease-out", "use": "hover, focus ring, button press" },
-      "standard": { "duration": "240-360ms", "easing": "cubic-bezier(0.65, 0, 0.35, 1)", "use": "state change, panel open, theme switch" },
-      "editorial": { "duration": "700-1000ms", "easing": "cubic-bezier(0.22, 1, 0.36, 1)", "use": "plate reveal, room transition" },
+      "micro": {
+        "duration": "100-140ms",
+        "easing": "ease-out",
+        "use": "hover focus glass border glows and spring scales"
+      },
+      "standard": {
+        "duration": "280-360ms",
+        "easing": "cubic-bezier(0.65, 0, 0.35, 1)",
+        "use": "panel transitions, operational theme swaps"
+      },
+      "editorial": {
+        "duration": "700-900ms",
+        "easing": "cubic-bezier(0.22, 1, 0.36, 1)",
+        "use": "module reveals and GSAP-orchestrated intro"
+      },
       "cinematic": "banned"
     },
-    "plateReveal": "CSS animation-timeline: view() with clip-path: inset(0 100% 0 0) -> inset(0 0 0 0), entry 0% to cover 30%. Static end-state is the accessible default; motion is decorative timing only.",
-    "library": "No new motion library. GSAP (already installed) is restricted to the once-per-session opening sequence (3 elements, <= 1.2s) and theme micro-state.",
-    "reducedMotion": "All clip-path reveals and GSAP timelines disabled; static rest-state is the design."
+    "plateReveal": "Scroll-driven view timelines for module border drawings.",
+    "library": "GSAP package used for once-per-session intro animations only.",
+    "reducedMotion": "All background blob animations, GSAP timelines, and hover scales disabled; static glass panels operate perfectly."
   },
   "componentMorphology": {
     "primarySurfaces": [
-      "wall-label",
-      "plate-spread",
-      "index-floorplan",
-      "editor-note",
-      "colophon-room",
-      "theme-segment-control"
+      "hero-section",
+      "about-section",
+      "works-grid",
+      "skills-section",
+      "experience-timeline",
+      "contact-card"
     ],
-    "stateKeys": ["default", "hover", "focus-visible", "active", "disabled", "loading", "empty", "error", "transition"],
+    "stateKeys": [
+      "default",
+      "hover",
+      "focus-visible",
+      "active",
+      "disabled",
+      "loading",
+      "empty",
+      "error",
+      "transition"
+    ],
     "rules": [
-      "No soft-shadow card stacks.",
-      "No 3-column tile grids for projects; floor plan rows only.",
-      "Plate panels look like typeset plate art, not framed thumbnails.",
-      "Repetition between rooms is intentional: the catalog grammar is consistent."
+      "All depth is carried by frosted back blurs and subtle double-line glows. Drop shadows are banned.",
+      "Active buttons and links use spring physics on hover.",
+      "Section edges are outlined by oklch border rules that illuminate on hover."
     ]
   },
   "accessibilityPolicy": {
@@ -186,134 +264,199 @@
     "nonTextContrast": true,
     "useOfColorOnlyProhibited": true,
     "focusVisible": true,
-    "focusVisibleSpec": "2px solid oklch(--accent), 4px offset, in both themes; contrast >= 3:1 against adjacent surface verified.",
+    "focusVisibleSpec": "2px solid oklch(--accent), 4px offset, in both modes.",
     "targetSizeMinimum": true,
     "keyboardAccess": true,
     "reflowRequired": true,
     "statusMessagesAndDynamicStateAccess": true,
-    "themeToggleAnnouncement": "aria-live polite region announces 'Auto theme', 'Light theme', or 'Dark theme'."
+    "themeToggleAnnouncement": "Screen readers announce theme transitions."
   },
   "designExecutionPolicy": {
-    "representationStrategy": "vertical-exhibition-catalog",
+    "representationStrategy": "fluid-portfolio-grid",
     "requireSurfacePlan": true,
     "requireViewportMutationPlan": true,
     "requireInteractionStateMatrix": true,
     "requireSignatureMoveRationale": true,
     "requireRepoEvidenceAlignment": true,
-    "oldDesignRegressionTest": "Result must not read as v2 magazine issue palette-swapped or as v1 dark cinematic. Plate spread, floor plan, and colophon are mandatory visual differentiators."
+    "oldDesignRegressionTest": "Design must avoid all room/catalog terminology. Leftover terracotta and zine pulp colors are entirely banned."
   },
   "designExecutionHandoff": {
-    "version": "ui-handoff-v3",
-    "primaryExperienceGoal": "Make the visitor walk through a catalog of rooms with the pacing of a curated exhibition: read wall label, look, read curator's note, move on. Decode plate codes only at the colophon.",
+    "version": "ui-handoff-v5",
+    "primaryExperienceGoal": "Give the visitor the feeling of interacting with a state-of-the-art, beautifully animated developer portfolio, proving aesthetic taste and coding capabilities.",
     "surfacePlan": [
-      { "surfaceId": "cover-room", "role": "installation view", "goal": "Establish the protagonist with a wide installation view and a small wall label carrying year, role, and plate code." },
-      { "surfaceId": "intent-room", "role": "curator's note", "goal": "State the design and product point of view in editor-note grid." },
-      { "surfaceId": "process-room", "role": "method note", "goal": "Show working method as four numbered method beats." },
-      { "surfaceId": "floor-plan", "role": "index", "goal": "List rooms as numbered floor-plan rows with thumbnail-or-plate, title, and one-line summary." },
-      { "surfaceId": "project-room", "role": "plate spread", "goal": "Open each project on a wide plate (photo or typeset plate panel) with curator's note carrying constraint/decision/outcome." },
-      { "surfaceId": "career-room", "role": "biographical index", "goal": "Show timeline as numbered floor-plan rows with year-period and role." },
-      { "surfaceId": "contact-room", "role": "back wall", "goal": "Close the catalog with a contact action set in editor-note grid." },
-      { "surfaceId": "colophon-room", "role": "colophon", "goal": "Decode plate codes, credit type and tools, state interim photography note." }
+      {
+        "surfaceId": "hero-home",
+        "role": "hero section",
+        "goal": "Introduce the designer-developer with bold headers, floating glass panels, and active cursor spring buttons."
+      },
+      {
+        "surfaceId": "about-bio",
+        "role": "biography sheet",
+        "goal": "Display designer commentary and philosophy paired with elegant serif typography and target grids."
+      },
+      {
+        "surfaceId": "works-grid",
+        "role": "project matrix",
+        "goal": "Grid of selected works as glowing glass modules that expand into animated project cards."
+      },
+      {
+        "surfaceId": "skills-matrix",
+        "role": "stack chips",
+        "goal": "Display technical skills as responsive floating capsules."
+      },
+      {
+        "surfaceId": "experience-timeline",
+        "role": "career registry",
+        "goal": "Vertical chronological timeline showing professional milestones."
+      },
+      {
+        "surfaceId": "contact-section",
+        "role": "transmissions card",
+        "goal": "Animated, glowing form allowing clients to reach out."
+      }
     ],
     "contentPriorityMap": {
-      "primary": ["identity", "project evidence", "contact action"],
-      "secondary": ["process", "career", "skills"],
-      "tertiary": ["colophon decoding"]
+      "primary": [
+        "works index",
+        "creative identity",
+        "collaboration actions"
+      ],
+      "secondary": [
+        "skills matrix",
+        "career milestones"
+      ],
+      "tertiary": [
+        "design token specifications"
+      ]
     }
   },
   "libraryResearchStatus": "verified",
   "libraryDecisions": [
     {
       "library": "@fontsource-variable/fraunces",
-      "purpose": "Author voice (headline, plate title, curator's note opener) with opsz axis lock.",
-      "verifiedAt": "2026-05-15",
+      "purpose": "Philosophy log voice (designer reviews, personal footnotes, italicized notes).",
+      "verifiedAt": "2026-05-27",
       "sourceUrl": "https://fontsource.org/fonts/fraunces",
-      "stableVersion": "Latest variable subset; latin slice only.",
-      "fallbackIfUnavailable": "system serif stack (ui-serif, Georgia, serif)."
+      "stableVersion": "Latest variable subset",
+      "fallbackIfUnavailable": "system serif stack"
     },
     {
       "library": "@fontsource-variable/inter",
-      "purpose": "System voice (body, nav, wall label, metadata).",
-      "verifiedAt": "2026-05-15",
+      "purpose": "System controls voice (oversized titles, buttons, primary labels).",
+      "verifiedAt": "2026-05-27",
       "sourceUrl": "https://fontsource.org/fonts/inter",
-      "stableVersion": "Latest variable subset; latin slice only.",
-      "fallbackIfUnavailable": "system sans stack (ui-sans-serif, system-ui, Helvetica Neue, Arial, sans-serif)."
+      "stableVersion": "Latest variable subset",
+      "fallbackIfUnavailable": "system sans stack"
     },
     {
       "library": "@fontsource-variable/jetbrains-mono",
-      "purpose": "Machine voice (plate code, year, stack tags) with tnum feature on metadata blocks.",
-      "verifiedAt": "2026-05-15",
+      "purpose": "Specification machine voice (dimension ticks, padding annotations, design tokens).",
+      "verifiedAt": "2026-05-27",
       "sourceUrl": "https://fontsource.org/fonts/jetbrains-mono",
-      "stableVersion": "Latest variable subset; latin slice only.",
-      "fallbackIfUnavailable": "system mono stack (ui-monospace, SFMono-Regular, Menlo, Consolas, monospace)."
-    },
-    {
-      "library": "CSS animation-timeline: view()",
-      "purpose": "Plate reveal on entry; native scroll-driven animation.",
-      "verifiedAt": "2026-05-15",
-      "sourceUrl": "https://developer.mozilla.org/en-US/docs/Web/CSS/animation-timeline/view",
-      "stableVersion": "Browser-native; no library required.",
-      "fallbackIfUnavailable": "Static end-state is the accessible default; no fallback choreography needed."
-    },
-    {
-      "library": "gsap (already installed)",
-      "purpose": "Once-per-session opening orchestration and theme micro-state.",
-      "verifiedAt": "2026-05-15",
-      "sourceUrl": "https://gsap.com/docs/v3/",
-      "stableVersion": "package.json ^3.15.0",
-      "fallbackIfUnavailable": "CSS-only opening using transition + intersection observer or no animation."
-    },
-    {
-      "library": "@studio-freight/lenis (already installed)",
-      "purpose": "Smooth scroll only when reduced-motion is not requested.",
-      "verifiedAt": "2026-05-15",
-      "sourceUrl": "https://lenis.studiofreight.com/",
-      "stableVersion": "package.json ^1.0.42",
-      "fallbackIfUnavailable": "Native scroll."
+      "stableVersion": "Latest variable subset",
+      "fallbackIfUnavailable": "system mono stack"
     }
   ],
   "reviewRubric": {
-    "version": "ui-rubric-v3",
+    "version": "ui-rubric-v5",
     "genericityAutoFail": true,
     "genericitySignals": [
-      "project list rendered as a 3-column card grid",
-      "soft shadow on every surface",
-      "centered hero with one tagline",
-      "rounded-2xl + shadow-lg + gradient default Tailwind chrome",
-      "dark mode reads as inverted light mode",
-      "custom cursor or noise grain overlay reappears",
-      "scroll text reveal per word reappears",
-      "marquee of tech logos appears anywhere"
+      "card stacks without back blurs or animations",
+      "gray shadows or muddy gradients",
+      "rooms, catalogs, or zine wording",
+      "static layouts that feel rigid",
+      "logo marquees"
     ],
     "validBoldSignals": [
-      "wide installation view dominates first viewport with small wall label at lower-left",
-      "floor-plan numbered rows used for project list",
-      "plate code (PR.MMYY) appears unexplained on every room and is decoded only in the colophon",
-      "Fraunces opsz lock visible across renders",
-      "two distinct moods between light and dark (warm paper vs cool slate), not an invert"
+      "frosted glass cards with oklch active borders",
+      "morphing fluid gradient background blobs",
+      "kinetic module spring-scale hover responses",
+      "sleek targets framing images"
     ]
   },
   "contextHygiene": {
-    "allowedSources": ["current-user-final-decision-sheet", "current-project-docs", "current-repo-files", "MDN animation-timeline", "fontsource official docs"],
-    "taintedSources": ["v1 dark cinematic visual residue", "v2 editorial magazine palette and Bebas Neue", "external website style copying"],
-    "approvedExternalConstraintUsage": "Borrow only the conceptual frame of an exhibition catalog (wall label, curator's note, plate, floor plan, colophon). Do not copy any specific museum's brand."
+    "allowedSources": [
+      "current-user-uiux-designer-focus",
+      "current-project-docs",
+      "current-repo-files",
+      "MDN view-timeline",
+      "fontsource variable docs"
+    ],
+    "taintedSources": [
+      "v3 museum catalog terracotta colors and curatorial names",
+      "v4 zine pulp paper textures and offset print borders"
+    ],
+    "approvedExternalConstraintUsage": "Adopt only the fluid, sleek kinetic grid visual concept. Do not copy external landing branding."
   },
   "forbiddenPatterns": [
-    "marquee of tech logos",
-    "custom cursor",
-    "noise grain overlay",
-    "scroll text reveal per word",
-    "parallax 3D",
-    "neon glow",
-    "balanced 3-column card grid for projects",
-    "soft shadow on every surface",
-    "centered minimal hero with one tagline",
-    "decorative grid wallpaper",
-    "calibration marks as wallpaper",
-    "dark mode as inverted light mode",
-    "loader that fakes work without readiness gating"
+    "logo marquees",
+    "noise wallpaper textures",
+    "rigid table layouts",
+    "curator room terms",
+    "zine paper textures",
+    "print coordinates",
+    "terracotta clay colors"
   ],
   "repoEvidence": {
-    "designEvidenceSummary": "Existing data shape (summary, caseStudy, productContext, impactMetrics, tags, year, link) maps directly onto exhibition-catalog tiers: wall label, curator's note, deep dive. Project entries already contain enough metadata for plate codes and floor-plan rows; commencement month is derived from project context and added as plateCode field."
+    "designEvidenceSummary": "Site integrates smoothly with GSAP and Lenis. Modular components map perfectly to the new grid shift layout."
+  },
+  "researchDossier": {
+    "metadata": {
+      "researchVerifiedAt": "2026-05-27",
+      "freshnessWindowDays": 90,
+      "freshnessRule": "Research verified on 2026-05-27. Bypassed by explicit zero-based redesign.",
+      "antiRepeatLedger": {
+        "blocklistFromHistory": true,
+        "ledgerScope": "signature-level-descriptors-only",
+        "ledgerMaxEntriesPerCategory": 3,
+        "previousAnchors": [
+          {
+            "summary": "Monographic show catalog: wall label, curator's note column, plate panel, floor plan, colophon (v3)",
+            "source": "migrated-from-existing-design-intent",
+            "blockedBecause": "previously-shipped-direction"
+          },
+          {
+            "summary": "Risograph Indie Zine: misaligned offset print borders, tactile stickers, paper margins (v4)",
+            "source": "new-visual-redesign-contract",
+            "blockedBecause": "user-explicit-rejection"
+          }
+        ],
+        "previousPalettes": [
+          {
+            "summary": "Terracotta and slate-green curatorial exhibition catalog palette.",
+            "source": "migrated-from-existing-design-intent",
+            "blockedBecause": "previously-shipped-palette-behavior"
+          },
+          {
+            "summary": "Risograph pink, teal, neon green zine color separation palette.",
+            "source": "new-visual-redesign-contract",
+            "blockedBecause": "user-explicit-rejection"
+          }
+        ],
+        "previousMotionSignatures": [
+          {
+            "summary": "Slow static editorial catalog transitions.",
+            "source": "migrated-from-existing-design-intent",
+            "blockedBecause": "previously-shipped-motion-signature"
+          },
+          {
+            "summary": "Tactile sticker tilts and circular specs rotations.",
+            "source": "new-visual-redesign-contract",
+            "blockedBecause": "user-explicit-rejection"
+          }
+        ],
+        "previousTypographyChoices": []
+      },
+      "userExplicitRedesignBypassesFreshness": true,
+      "statusAwareValidation": {
+        "seedStatuses": [
+          "seed-needs-design-synthesis",
+          "seed-generated-during-init",
+          "seed-generated-during-upgrade"
+        ],
+        "seedSkipsDossierShape": true,
+        "activeRequiresFreshOrExplicitRedesign": true
+      }
+    }
   }
 }

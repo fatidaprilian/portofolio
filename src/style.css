@@ -2,83 +2,82 @@
 @tailwind components;
 @tailwind utilities;
 
-/* =============================================================
-   v3.0 — Exhibition Catalog
-   Token system: 4 raw primitives -> 8 semantic role tokens.
-   Components NEVER call raw primitives. Both modes are derived,
-   not inverted: light = warm paper (hue 80), dark = cool slate
-   (hue 250), accent terracotta (hue 25) muted in dark.
-   ============================================================= */
+/* ==========================================================================
+   v5.0 — Kinetic Grid Shift & Liquid Glassmorphism Design System
+   ========================================================================== */
 
 @layer base {
   :root {
-    /* Raw primitives (4 colors). Reference only. */
-    --paper: oklch(0.97 0.008 80);
-    --ink: oklch(0.20 0.020 80);
-    --slate: oklch(0.16 0.012 250);
-    --terracotta: oklch(0.55 0.18 25);
+    /* Color Primitives (Obsidian and Alabaster cores with neon accents) */
+    --obsidian-deep: oklch(0.12 0.015 250);
+    --alabaster-warm: oklch(0.97 0.005 80);
+    
+    --indigo-glow: oklch(0.35 0.12 280);
+    --neon-cyan: oklch(0.78 0.16 200);
+    --neon-magenta: oklch(0.65 0.25 345);
+    
+    --cobalt-deep: oklch(0.48 0.22 260);
+    --slate-light: oklch(0.60 0.01 250);
 
-    /* Spatial scale (4px base) */
-    --space-1: 4px;
-    --space-2: 8px;
-    --space-3: 12px;
-    --space-4: 16px;
-    --space-5: 24px;
-    --space-6: 32px;
-    --space-7: 48px;
-    --space-8: 72px;
-    --space-9: 112px;
-    --space-10: 168px;
-    --space-11: 248px;
+    /* Typographic Triplet Voice Mapping */
+    --font-system: 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
+    --font-spec: 'JetBrains Mono Variable', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    --font-comment: 'Fraunces Variable', ui-serif, Georgia, serif;
 
-    /* Type role primitives — voice triplet */
-    --font-author: 'Fraunces Variable', ui-serif, Georgia, serif;
-    --font-system: 'Inter Variable', ui-sans-serif, system-ui, 'Helvetica Neue', Arial, sans-serif;
-    --font-machine: 'JetBrains Mono Variable', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    /* Spacing Base Scale (8px system) */
+    --space-1: 8px;
+    --space-2: 16px;
+    --space-3: 24px;
+    --space-4: 32px;
+    --space-5: 48px;
+    --space-6: 64px;
+    --space-7: 96px;
+    --space-8: 128px;
+    --space-9: 192px;
 
-    /* Motion buckets */
-    --ease-default: cubic-bezier(0.65, 0, 0.35, 1);
-    --ease-editorial: cubic-bezier(0.22, 1, 0.36, 1);
-    --dur-micro: 110ms;
-    --dur-standard: 280ms;
-    --dur-editorial: 820ms;
+    /* Transition & Animation Charter */
+    --ease-standard: cubic-bezier(0.25, 0.8, 0.25, 1);
+    --ease-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    --ease-fluid: cubic-bezier(0.4, 0, 0.2, 1);
+    
+    --dur-micro: 120ms;
+    --dur-standard: 300ms;
+    --dur-editorial: 800ms;
 
     color-scheme: light;
   }
 
-  /* ----------------------------------------------------------
-     Semantic role tokens (light theme = default)
-     ---------------------------------------------------------- */
+  /* Theme mappings with lightness curves optimized per mode */
   :root,
   :root[data-theme='light'] {
-    --surface-page: oklch(0.97 0.008 80);
-    --surface-raised: oklch(0.99 0.005 80);
-    --surface-sunken: oklch(0.94 0.012 80);
-    --ink-primary: oklch(0.20 0.020 80);
-    --ink-secondary: oklch(0.45 0.020 80);
-    --ink-tertiary: oklch(0.62 0.015 80);
-    --rule: oklch(0.85 0.010 80);
-    --accent: oklch(0.55 0.18 25);
-    --accent-soft: oklch(0.55 0.18 25 / 0.12);
-    --selection-bg: oklch(0.55 0.18 25 / 0.22);
-    --plate-tone-a: oklch(0.93 0.018 80);
-    --plate-tone-b: oklch(0.88 0.022 80);
+    --surface-page: var(--alabaster-warm);
+    --surface-raised: oklch(0.99 0.005 80 / 0.75);
+    --surface-sunken: oklch(0.93 0.01 80);
+    --ink-primary: oklch(0.12 0.01 250);
+    --ink-secondary: oklch(0.38 0.01 250);
+    --ink-tertiary: oklch(0.60 0.01 250);
+    --rule: oklch(0.88 0.01 80);
+    --accent: var(--cobalt-deep);
+    --accent-glow: oklch(0.48 0.22 260 / 0.15);
+    --blob-a: oklch(0.85 0.12 345 / 0.35);
+    --blob-b: oklch(0.80 0.15 200 / 0.35);
+    --blob-c: oklch(0.92 0.08 120 / 0.3);
     color-scheme: light;
   }
 
   :root[data-theme='dark'] {
-    --surface-page: oklch(0.16 0.012 250);
-    --surface-raised: oklch(0.21 0.014 250);
-    --surface-sunken: oklch(0.13 0.010 250);
-    --ink-primary: oklch(0.92 0.012 80);
-    --ink-secondary: oklch(0.70 0.014 80);
-    --ink-tertiary: oklch(0.55 0.012 80);
-    --rule: oklch(0.30 0.012 250);
-    --accent: oklch(0.62 0.14 25);
-    --accent-soft: oklch(0.62 0.14 25 / 0.16);
-    --selection-bg: oklch(0.62 0.14 25 / 0.32);
-    --plate-tone-a: oklch(0.22 0.020 250);
-    --plate-tone-b: oklch(0.26 0.024 250);
+    --surface-page: var(--obsidian-deep);
+    --surface-raised: oklch(0.18 0.02 250 / 0.65);
+    --surface-sunken: oklch(0.08 0.01 250);
+    --ink-primary: oklch(0.97 0.01 250);
+    --ink-secondary: oklch(0.76 0.01 250);
+    --ink-tertiary: oklch(0.50 0.01 250);
+    --rule: oklch(0.22 0.03 250);
+    --accent: var(--neon-cyan);
+    --accent-glow: oklch(0.78 0.16 200 / 0.2);
+    --blob-a: oklch(0.25 0.15 280 / 0.45);
+    --blob-b: oklch(0.22 0.18 345 / 0.4);
+    --blob-c: oklch(0.18 0.12 200 / 0.45);
     color-scheme: dark;
   }
 
@@ -92,11 +91,9 @@
     background: var(--surface-page);
     color: var(--ink-primary);
     scroll-behavior: auto;
-    /* Hanging punctuation is the typographic signature. */
-    hanging-punctuation: first last;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    transition: background-color var(--dur-standard) var(--ease-default), color var(--dur-standard) var(--ease-default);
+    transition: background-color var(--dur-standard) var(--ease-standard), color var(--dur-standard) var(--ease-standard);
   }
 
   body {
@@ -106,23 +103,18 @@
     background: var(--surface-page);
     color: var(--ink-primary);
     font-family: var(--font-system);
-    font-feature-settings: 'ss01', 'cv11';
-    font-size: clamp(15px, 1.05vw + 0.6rem, 17px);
+    font-size: clamp(14px, 0.95vw + 0.62rem, 16px);
     line-height: 1.6;
     text-wrap: pretty;
   }
 
   #app {
     min-height: 100svh;
+    position: relative;
     isolation: isolate;
   }
 
-  h1,
-  h2,
-  h3,
-  p,
-  blockquote,
-  figure {
+  h1, h2, h3, h4, p, blockquote, figure {
     margin: 0;
   }
 
@@ -131,8 +123,7 @@
     text-decoration: none;
   }
 
-  button,
-  a {
+  button, a {
     -webkit-tap-highlight-color: transparent;
   }
 
@@ -141,11 +132,11 @@
   [tabindex]:focus-visible {
     outline: 2px solid var(--accent);
     outline-offset: 4px;
-    border-radius: 1px;
+    border-radius: 4px;
   }
 
   ::selection {
-    background: var(--selection-bg);
+    background: var(--accent-glow);
     color: var(--ink-primary);
   }
 
@@ -162,1775 +153,912 @@
   }
 }
 
-/* =============================================================
-   Component layer — catalog primitives
-   ============================================================= */
+/* ==========================================================================
+   Component Layer — Frosted Panels & Drifting Shaders
+   ========================================================================== */
 
 @layer components {
-  .catalog-app {
-    position: relative;
-    min-height: 100svh;
-    background: var(--surface-page);
-  }
-
-  /* ----- Skip link ----- */
-  .skip-link {
+  /* ----- Interactive Background Blobs ----- */
+  .fluid-backdrop {
     position: fixed;
-    top: 12px;
-    left: 12px;
-    z-index: 200;
-    min-height: 44px;
-    display: inline-flex;
-    align-items: center;
-    padding: 0 16px;
-    background: var(--ink-primary);
-    color: var(--surface-page);
-    font-family: var(--font-system);
-    font-size: 0.86rem;
-    font-weight: 600;
-    transform: translateY(-110%);
-    transition: transform var(--dur-standard) var(--ease-default);
-  }
-  .skip-link:focus {
-    transform: translateY(0);
+    inset: 0;
+    z-index: -10;
+    overflow: hidden;
+    pointer-events: none;
+    background: var(--surface-page);
+    transition: background-color var(--dur-standard) var(--ease-standard);
   }
 
-  /* ----- Top frame: slim banner with brand mark, theme tri-state, lang ----- */
-  .catalog-frame {
+  .blob {
+    position: absolute;
+    border-radius: 999px;
+    filter: blur(100px);
+    opacity: 0.85;
+    mix-blend-mode: normal;
+    transition: background-color var(--dur-standard) var(--ease-standard);
+  }
+
+  /* Morphing Blob A */
+  .blob-one {
+    top: -10%;
+    left: -10%;
+    width: 60vw;
+    height: 60vw;
+    background: var(--blob-a);
+    animation: drift-one 28s ease-in-out infinite alternate;
+  }
+
+  /* Morphing Blob B */
+  .blob-two {
+    bottom: -15%;
+    right: -10%;
+    width: 70vw;
+    height: 70vw;
+    background: var(--blob-b);
+    animation: drift-two 36s ease-in-out infinite alternate;
+  }
+
+  /* Morphing Blob C */
+  .blob-three {
+    top: 40%;
+    left: 45%;
+    width: 45vw;
+    height: 45vw;
+    background: var(--blob-c);
+    animation: drift-three 30s ease-in-out infinite alternate;
+  }
+
+  @keyframes drift-one {
+    0% { transform: translate(0, 0) scale(1) rotate(0deg); }
+    33% { transform: translate(10vw, 5vh) scale(1.1) rotate(120deg); }
+    66% { transform: translate(-5vw, 15vh) scale(0.9) rotate(240deg); }
+    100% { transform: translate(5vw, -5vh) scale(1.05) rotate(360deg); }
+  }
+
+  @keyframes drift-two {
+    0% { transform: translate(0, 0) scale(1) rotate(360deg); }
+    50% { transform: translate(-8vw, -12vh) scale(1.15) rotate(180deg); }
+    100% { transform: translate(8vw, 8vh) scale(0.9) rotate(0deg); }
+  }
+
+  @keyframes drift-three {
+    0% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(12vw, -10vh) scale(0.85); }
+    100% { transform: translate(-10vw, 10vh) scale(1.1); }
+  }
+
+  /* ----- Frosted Glass Panels ----- */
+  .glass-panel {
+    background: var(--surface-raised);
+    backdrop-filter: blur(20px) saturate(125%);
+    -webkit-backdrop-filter: blur(20px) saturate(125%);
+    border: 1px solid var(--rule);
+    border-radius: 16px;
+    padding: clamp(24px, 4vw, 48px);
+    transition: border-color var(--dur-standard) var(--ease-standard), 
+                box-shadow var(--dur-standard) var(--ease-standard), 
+                transform var(--dur-standard) var(--ease-standard);
+  }
+  .glass-panel:hover {
+    border-color: var(--accent);
+    box-shadow: 0 0 32px var(--accent-glow);
+  }
+
+  /* ----- Standard Navigation Header ----- */
+  .portfolio-header {
     position: sticky;
     top: 0;
-    z-index: 60;
-    display: grid;
-    grid-template-columns: auto 1fr auto;
-    align-items: center;
-    gap: clamp(16px, 3vw, 32px);
-    padding: 14px clamp(20px, 5vw, 96px);
-    background: color-mix(in oklch, var(--surface-page) 88%, transparent);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--rule);
-    transition: background var(--dur-standard) var(--ease-default), border-color var(--dur-standard) var(--ease-default);
-  }
-
-  .brand-mark {
-    display: inline-flex;
-    align-items: baseline;
-    gap: 12px;
-    border: 0;
-    background: transparent;
-    color: var(--ink-primary);
-    cursor: pointer;
-    padding: 0;
-    font-family: var(--font-author);
-    font-size: 1.05rem;
-    font-weight: 500;
-    font-variation-settings: 'opsz' 24, 'wght' 500, 'SOFT' 50;
-    letter-spacing: 0;
-  }
-
-  .brand-mark .brand-mono {
-    font-family: var(--font-machine);
-    font-size: 0.72rem;
-    color: var(--ink-tertiary);
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    font-variation-settings: 'wght' 500;
-    font-feature-settings: 'tnum';
-  }
-
-  .frame-meta {
+    z-index: 100;
     display: flex;
-    justify-content: center;
-    color: var(--ink-tertiary);
-    font-family: var(--font-machine);
-    font-size: 0.72rem;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    font-feature-settings: 'tnum';
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px clamp(16px, 6vw, 96px);
+    background: color-mix(in oklch, var(--surface-page) 75%, transparent);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--rule);
+    transition: background-color var(--dur-standard) var(--ease-standard);
   }
 
-  .frame-actions {
+  .nav-logo {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-  }
-
-  .theme-segment {
-    display: inline-flex;
-    border: 1px solid var(--rule);
-    padding: 2px;
-    gap: 0;
-    border-radius: 999px;
-    background: var(--surface-raised);
-  }
-  .theme-segment button {
-    min-width: 32px;
-    min-height: 28px;
-    padding: 0 10px;
+    font-weight: 900;
+    text-transform: uppercase;
+    font-size: 1.15rem;
+    letter-spacing: -0.04em;
+    cursor: pointer;
+    background: transparent;
     border: 0;
-    background: transparent;
-    color: var(--ink-tertiary);
-    font-family: var(--font-machine);
-    font-size: 0.7rem;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    cursor: pointer;
-    border-radius: 999px;
-    transition: color var(--dur-micro) var(--ease-default), background var(--dur-standard) var(--ease-default);
-  }
-  .theme-segment button:hover {
     color: var(--ink-primary);
   }
-  .theme-segment button.is-active {
-    background: var(--ink-primary);
-    color: var(--surface-page);
+
+  .nav-menu {
+    display: flex;
+    align-items: center;
+    gap: clamp(12px, 2vw, 32px);
   }
 
-  .lang-toggle {
-    min-width: 44px;
-    min-height: 32px;
-    border: 1px solid var(--rule);
-    border-radius: 999px;
-    background: transparent;
+  .nav-link {
+    font-size: 0.88rem;
+    font-weight: 600;
     color: var(--ink-secondary);
-    font-family: var(--font-machine);
-    font-size: 0.72rem;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
+    transition: color var(--dur-micro) var(--ease-standard);
     cursor: pointer;
-    padding: 0 12px;
-    transition: color var(--dur-micro) var(--ease-default), border-color var(--dur-micro) var(--ease-default);
+    background: transparent;
+    border: 0;
+    padding: 6px 12px;
+    border-radius: 6px;
   }
-  .lang-toggle:hover {
+  .nav-link:hover, .nav-link.is-active {
     color: var(--ink-primary);
-    border-color: var(--ink-secondary);
-  }
-
-  /* ----- Catalog rooms (sections) ----- */
-  .catalog-main {
-    position: relative;
-  }
-
-  .room {
-    position: relative;
-    padding: clamp(96px, 12vw, 192px) clamp(20px, 5vw, 96px);
-  }
-
-  .room + .room {
-    border-top: 1px solid var(--rule);
-  }
-
-  .room[data-tone='sunken'] {
     background: var(--surface-sunken);
   }
 
-  /* Plate caption is the catalog "wall label". */
-  .wall-label {
-    display: grid;
-    grid-template-columns: max-content 1fr;
-    gap: 4px 16px;
-    align-items: baseline;
-    color: var(--ink-secondary);
-    font-family: var(--font-machine);
-    font-size: 0.7rem;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    font-feature-settings: 'tnum';
-  }
-  .wall-label dt {
-    color: var(--ink-tertiary);
-  }
-  .wall-label dd {
-    margin: 0;
-    color: var(--ink-secondary);
-  }
-
-  /* ===========================================================
-     Template A — plate-spread (cover, project rooms)
-     1fr label  7fr plate  1fr spacer  3fr caption
-     =========================================================== */
-  .plate-spread {
-    display: grid;
-    grid-template-columns: 1fr 7fr 1fr 3fr;
-    grid-template-areas:
-      'label  plate  .       caption'
-      '.      plate  .       caption'
-      'rule   rule   rule    rule';
-    gap: clamp(16px, 2.5vw, 32px) clamp(20px, 3vw, 48px);
-    align-items: end;
-    isolation: isolate;
-  }
-
-  .plate-spread > .plate-label {
-    grid-area: label;
-    align-self: end;
-    writing-mode: vertical-rl;
-    transform: rotate(180deg);
-    color: var(--ink-tertiary);
-    font-family: var(--font-machine);
-    font-size: 0.7rem;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    font-feature-settings: 'tnum';
-    padding-bottom: 8px;
-  }
-
-  .plate-spread > .plate-frame {
-    grid-area: plate;
-  }
-
-  .plate-spread > .plate-caption {
-    grid-area: caption;
-    align-self: end;
-    max-width: 38ch;
-    color: var(--ink-secondary);
-  }
-
-  .plate-spread > .plate-rule {
-    grid-area: rule;
-    height: 1px;
-    background: var(--rule);
-    margin-top: clamp(48px, 8vw, 96px);
-  }
-
-  /* ----- Plate frame (image or typeset plate panel) ----- */
-  .plate-frame {
-    position: relative;
-    overflow: hidden;
-    background: var(--surface-raised);
+  /* ----- Interactive Theme Segment Controller ----- */
+  .theme-switch {
+    display: inline-flex;
+    background: var(--surface-sunken);
     border: 1px solid var(--rule);
-    aspect-ratio: 16 / 10;
-    isolation: isolate;
+    padding: 2px;
+    border-radius: 8px;
   }
-
-  .plate-frame img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-    filter: contrast(1.02) saturate(0.98);
+  .theme-switch button {
+    border: 0;
+    background: transparent;
+    color: var(--ink-secondary);
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: color var(--dur-micro) var(--ease-standard), background-color var(--dur-standard) var(--ease-standard);
   }
-
-  /* Cover plate: the existing GitHub avatar, framed as a curated portrait. */
-  .plate-cover {
-    aspect-ratio: 4 / 3;
-    background:
-      linear-gradient(180deg, var(--plate-tone-a) 0%, var(--plate-tone-b) 100%);
-    display: grid;
-    grid-template-rows: 1fr auto;
-    align-items: end;
+  .theme-switch button:hover {
+    color: var(--ink-primary);
   }
-  .plate-cover .cover-portrait {
-    width: min(56%, 360px);
-    aspect-ratio: 1;
-    margin: clamp(32px, 6vw, 64px) auto 0;
+  .theme-switch button.is-active {
     background: var(--surface-raised);
-    border: 1px solid var(--rule);
-    padding: 8px;
-    overflow: hidden;
-  }
-  .plate-cover .cover-portrait img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    filter: contrast(1.04) saturate(0.94);
-  }
-  .plate-cover .cover-stamp {
-    display: flex;
-    justify-content: space-between;
-    align-items: end;
-    padding: clamp(16px, 2.5vw, 32px);
-    color: var(--ink-secondary);
-    font-family: var(--font-machine);
-    font-size: 0.7rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    font-feature-settings: 'tnum';
+    color: var(--ink-primary);
+    box-shadow: 0 2px 8px oklch(0 0 0 / 0.05);
   }
 
-  /* Typeset plate panel (used until installation photography is shot). */
-  .plate-typeset {
-    aspect-ratio: 16 / 10;
+  /* ----- Premium Layout Containers ----- */
+  .section-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: clamp(64px, 8vw, 128px) clamp(16px, 6vw, 96px);
+  }
+
+  /* ----- Hero / Welcome Section ----- */
+  .hero-panel {
     display: grid;
-    grid-template-rows: 1fr auto;
-    padding: clamp(20px, 3vw, 48px);
-    background:
-      radial-gradient(ellipse at 30% 20%, var(--plate-tone-a) 0%, var(--plate-tone-b) 70%);
-    color: var(--ink-primary);
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 48px;
+    align-items: center;
   }
-  .plate-typeset .plate-glyph {
-    align-self: center;
-    justify-self: center;
-    font-family: var(--font-author);
-    font-variation-settings: 'opsz' 144, 'wght' 500, 'SOFT' 30;
-    font-size: clamp(7rem, 16vw, 16rem);
-    line-height: 0.85;
-    letter-spacing: -0.02em;
-    text-wrap: balance;
-    text-align: center;
-    color: var(--ink-primary);
-    user-select: none;
-  }
-  .plate-typeset .plate-foot {
-    display: flex;
-    justify-content: space-between;
-    align-items: end;
-    color: var(--ink-secondary);
-    font-family: var(--font-machine);
-    font-size: 0.7rem;
-    letter-spacing: 0.08em;
+  
+  .hero-headline {
+    font-family: var(--font-system);
+    font-size: clamp(2.8rem, 5.8vw, 5.5rem);
+    font-weight: 900;
+    line-height: 0.95;
+    letter-spacing: -0.05em;
     text-transform: uppercase;
-    font-feature-settings: 'tnum';
-  }
-
-  /* ----- Cover headline ----- */
-  .cover-room {
-    padding-top: clamp(56px, 9vw, 128px);
-    padding-bottom: clamp(80px, 11vw, 160px);
-  }
-
-  .cover-headline {
-    grid-area: caption;
-    align-self: end;
-    max-width: 38ch;
-  }
-
-  .cover-headline .eyebrow {
-    display: block;
-    margin-bottom: 24px;
-    color: var(--accent);
-    font-family: var(--font-machine);
-    font-size: 0.74rem;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    font-feature-settings: 'tnum';
-  }
-
-  .cover-headline h1 {
-    font-family: var(--font-author);
-    font-size: clamp(2.4rem, 4.6vw, 4.6rem);
-    line-height: 1.0;
-    /* Signature: opsz fixed near max regardless of render size. */
-    font-variation-settings: 'opsz' 120, 'wght' 460, 'SOFT' 30;
-    letter-spacing: -0.018em;
-    text-wrap: balance;
     color: var(--ink-primary);
   }
-
-  .cover-headline h1 em {
+  .hero-headline em {
     font-style: italic;
-    font-variation-settings: 'opsz' 120, 'wght' 420, 'SOFT' 60;
     color: var(--accent);
+    font-family: var(--font-comment);
+    font-weight: 400;
+    text-transform: none;
+    letter-spacing: -0.02em;
   }
 
-  .cover-headline .cover-body {
+  .hero-desc {
     margin-top: 24px;
     color: var(--ink-secondary);
-    font-size: clamp(0.96rem, 0.6vw + 0.78rem, 1.05rem);
-    line-height: 1.65;
+    font-size: clamp(1rem, 0.5vw + 0.9rem, 1.15rem);
+    line-height: 1.6;
+    max-width: 48ch;
   }
 
-  .cover-headline .cover-actions {
-    margin-top: 32px;
+  .hero-actions {
+    margin-top: 36px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+
+  /* Premium Draggable / Floating Buttons with Proximity Spring */
+  .btn-premium {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--ink-primary);
+    color: var(--surface-page);
+    font-weight: 700;
+    font-size: 0.92rem;
+    padding: 14px 28px;
+    border-radius: 99px;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: transform var(--dur-standard) var(--ease-spring), 
+                box-shadow var(--dur-standard) var(--ease-standard),
+                background-color var(--dur-micro) var(--ease-standard);
+  }
+  .btn-premium:hover {
+    transform: scale(1.05) translateY(-2px);
+    box-shadow: 0 12px 24px var(--accent-glow);
+  }
+
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--surface-raised);
+    color: var(--ink-primary);
+    font-weight: 700;
+    font-size: 0.92rem;
+    padding: 14px 28px;
+    border-radius: 99px;
+    cursor: pointer;
+    border: 1px solid var(--rule);
+    transition: transform var(--dur-standard) var(--ease-spring), 
+                border-color var(--dur-micro) var(--ease-standard),
+                background-color var(--dur-micro) var(--ease-standard);
+  }
+  .btn-secondary:hover {
+    transform: scale(1.05) translateY(-2px);
+    border-color: var(--accent);
+    background: var(--surface-sunken);
+  }
+
+  /* About Portrait Target Vectors */
+  .portrait-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 380px;
+    justify-self: center;
+    aspect-ratio: 1;
+  }
+  
+  .target-circle {
+    position: absolute;
+    inset: -12px;
+    border: 1px dashed var(--accent);
+    border-radius: 999px;
+    animation: rotate-clockwise 45s linear infinite;
+    opacity: 0.65;
+    pointer-events: none;
+  }
+
+  .target-lines {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+  }
+  .target-lines::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: -20px;
+    right: -20px;
+    height: 1px;
+    background: var(--rule);
+    opacity: 0.5;
+  }
+  .target-lines::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: -20px;
+    bottom: -20px;
+    width: 1px;
+    background: var(--rule);
+    opacity: 0.5;
+  }
+
+  .portrait-container {
+    width: 100%;
+    height: 100%;
+    border-radius: 999px;
+    overflow: hidden;
+    border: 2px solid var(--ink-primary);
+    position: relative;
+    z-index: 2;
+    background: var(--surface-sunken);
+  }
+  .portrait-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--dur-editorial) var(--ease-standard), filter var(--dur-standard) var(--ease-standard);
+    filter: grayscale(0.5) contrast(1.05);
+  }
+  .portrait-wrapper:hover img {
+    transform: scale(1.04);
+    filter: grayscale(0) contrast(1.02);
+  }
+
+  @keyframes rotate-clockwise {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  /* ----- Selected Works Grid Matrix ----- */
+  .works-matrix {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px;
+    margin-top: 48px;
+  }
+
+  .work-card {
+    cursor: pointer;
+  }
+  .work-card:hover {
+    transform: translateY(-4px) scale(1.01);
+  }
+
+  .work-card-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 16px;
+    margin-bottom: 24px;
+  }
+  .work-card-index {
+    font-family: var(--font-spec);
+    font-size: 0.76rem;
+    font-weight: 700;
+    color: var(--accent);
+  }
+  .work-card-year {
+    font-family: var(--font-spec);
+    font-size: 0.72rem;
+    color: var(--ink-tertiary);
+  }
+
+  .work-card h3 {
+    font-size: clamp(1.4rem, 2vw, 2rem);
+    font-weight: 900;
+    letter-spacing: -0.04em;
+    text-transform: uppercase;
+    color: var(--ink-primary);
+    margin-bottom: 12px;
+    transition: color var(--dur-micro) var(--ease-standard);
+  }
+  .work-card:hover h3 {
+    color: var(--accent);
+  }
+
+  .work-card p {
+    color: var(--ink-secondary);
+    font-size: 0.94rem;
+    line-height: 1.55;
+    margin-bottom: 24px;
+  }
+
+  .work-card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid var(--rule);
+    padding-top: 16px;
+    font-family: var(--font-spec);
+    font-size: 0.76rem;
+    font-weight: 700;
+    color: var(--ink-tertiary);
+    text-transform: uppercase;
+  }
+  .work-card-action {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    color: var(--accent);
+    transition: transform var(--dur-micro) var(--ease-standard);
+  }
+  .work-card:hover .work-card-action {
+    transform: translateX(4px);
+  }
+
+  /* ----- Interactive Project Detail Drawer / Slide-in Spec Sheet ----- */
+  .spec-drawer-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    background: oklch(from var(--surface-page) l c h / 0.5);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .spec-drawer {
+    width: 100%;
+    max-width: 650px;
+    height: 100%;
+    background: var(--surface-raised);
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+    border-left: 1px solid var(--rule);
+    display: flex;
+    flex-direction: column;
+    box-shadow: -16px 0 64px oklch(0 0 0 / 0.15);
+    transition: transform var(--dur-standard) var(--ease-standard);
+  }
+
+  .spec-drawer-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 32px;
+    border-bottom: 1px solid var(--rule);
+  }
+  
+  .spec-drawer-title {
+    font-size: 1.35rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    color: var(--ink-primary);
+  }
+
+  .btn-close {
+    background: var(--surface-sunken);
+    border: 1px solid var(--rule);
+    width: 36px;
+    height: 36px;
+    border-radius: 99px;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    color: var(--ink-primary);
+    transition: transform var(--dur-micro) var(--ease-spring), border-color var(--dur-micro) var(--ease-standard);
+  }
+  .btn-close:hover {
+    transform: scale(1.1) rotate(90deg);
+    border-color: var(--accent);
+  }
+
+  .spec-drawer-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 32px;
+    display: grid;
+    gap: 32px;
+  }
+
+  .spec-drawer-hero {
+    border: 1px solid var(--rule);
+    border-radius: 12px;
+    padding: 48px 24px;
+    background: var(--surface-sunken);
+    display: grid;
+    place-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .spec-drawer-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, var(--accent-glow) 0%, transparent 80%);
+    opacity: 0.5;
+  }
+
+  .spec-drawer-monogram {
+    font-family: var(--font-system);
+    font-size: 5rem;
+    font-weight: 950;
+    letter-spacing: -0.05em;
+    color: var(--accent);
+    opacity: 0.9;
+    z-index: 1;
+  }
+
+  .spec-drawer-metadata {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 24px;
+  }
+  .spec-metadata-item {
+    display: grid;
+    gap: 4px;
+  }
+  .spec-metadata-label {
+    font-family: var(--font-spec);
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    color: var(--ink-tertiary);
+    letter-spacing: 0.08em;
+  }
+  .spec-metadata-val {
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: var(--ink-primary);
+  }
+
+  .spec-drawer-log {
+    display: grid;
+    gap: 20px;
+  }
+  .spec-log-item {
+    padding-top: 16px;
+    border-top: 1px solid var(--rule);
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: 24px;
+  }
+  .spec-log-kicker {
+    font-family: var(--font-spec);
+    font-size: 0.76rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--accent);
+    letter-spacing: 0.04em;
+  }
+  .spec-log-desc {
+    font-size: 0.94rem;
+    color: var(--ink-secondary);
+    line-height: 1.6;
+  }
+
+  /* ----- Skills Grid Capsules ----- */
+  .skills-matrix {
     display: flex;
     flex-wrap: wrap;
     gap: 12px;
+    margin-top: 32px;
   }
 
-  /* ----- Buttons / links ----- */
-  .btn {
-    min-height: 44px;
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    padding: 0 18px;
-    border: 1px solid var(--ink-primary);
-    background: var(--ink-primary);
-    color: var(--surface-page);
-    font-family: var(--font-system);
-    font-size: 0.88rem;
-    font-weight: 500;
-    letter-spacing: 0;
-    cursor: pointer;
-    transition: background var(--dur-micro) var(--ease-default),
-                color var(--dur-micro) var(--ease-default),
-                border-color var(--dur-micro) var(--ease-default);
+  .skill-capsule {
+    background: var(--surface-raised);
+    border: 1px solid var(--rule);
+    padding: 10px 20px;
+    border-radius: 99px;
+    font-family: var(--font-spec);
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--ink-secondary);
+    transition: transform var(--dur-standard) var(--ease-spring), 
+                border-color var(--dur-micro) var(--ease-standard),
+                color var(--dur-micro) var(--ease-standard),
+                box-shadow var(--dur-standard) var(--ease-standard);
   }
-  .btn:hover {
+  .skill-capsule:hover {
+    transform: scale(1.08) translateY(-2px);
+    border-color: var(--accent);
+    color: var(--ink-primary);
+    box-shadow: 0 8px 20px var(--accent-glow);
+  }
+
+  /* ----- Experience Chronology Timeline ----- */
+  .experience-timeline {
+    position: relative;
+    margin-top: 48px;
+    display: grid;
+    gap: 16px;
+  }
+  .experience-timeline::before {
+    content: '';
+    position: absolute;
+    left: 20px;
+    top: 12px;
+    bottom: 12px;
+    width: 1px;
+    background: var(--rule);
+  }
+
+  .timeline-item {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 24px;
+    align-items: start;
+    position: relative;
+  }
+  
+  .timeline-dot {
+    width: 40px;
+    height: 40px;
+    border-radius: 99px;
+    border: 1.5px solid var(--rule);
+    background: var(--surface-page);
+    display: grid;
+    place-items: center;
+    position: relative;
+    z-index: 10;
+    transition: border-color var(--dur-micro) var(--ease-standard);
+  }
+  .timeline-item:hover .timeline-dot {
+    border-color: var(--accent);
+  }
+  
+  .timeline-pulse {
+    width: 8px;
+    height: 8px;
+    border-radius: 99px;
+    background: var(--rule);
+    transition: background-color var(--dur-micro) var(--ease-standard), transform var(--dur-standard) var(--ease-spring);
+  }
+  .timeline-item:hover .timeline-pulse {
     background: var(--accent);
-    border-color: var(--accent);
-    color: var(--surface-page);
+    transform: scale(1.2);
   }
 
-  .btn-ghost {
-    background: transparent;
-    color: var(--ink-primary);
-    border-color: var(--rule);
-  }
-  .btn-ghost:hover {
-    background: transparent;
-    color: var(--accent);
-    border-color: var(--accent);
+  .timeline-card {
+    margin-top: -2px;
   }
 
-  .btn .btn-icon {
-    width: 16px;
-    height: 16px;
-  }
-
-  .text-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    border-bottom: 1px solid var(--accent);
-    padding-bottom: 2px;
-    color: var(--ink-primary);
-    font-family: var(--font-system);
-    font-size: 0.86rem;
-    transition: color var(--dur-micro) var(--ease-default);
-  }
-  .text-link:hover {
-    color: var(--accent);
-  }
-  .text-link svg {
-    width: 14px;
-    height: 14px;
-  }
-
-  /* ===========================================================
-     Template B — index-floorplan
-     1fr room#   1fr spacer   6fr title-thumb   1fr spacer   3fr summary
-     Rows of projects, never a card grid.
-     =========================================================== */
-  .floor-plan {
-    display: grid;
-    grid-template-columns: 1fr 1fr 6fr 1fr 3fr;
-    gap: 0;
-  }
-
-  .floor-plan-head {
-    grid-column: 1 / -1;
-    display: grid;
-    grid-template-columns: subgrid;
-    padding-bottom: 24px;
-    border-bottom: 1px solid var(--ink-primary);
-    color: var(--ink-tertiary);
-    font-family: var(--font-machine);
-    font-size: 0.7rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    font-feature-settings: 'tnum';
-  }
-  .floor-plan-head span {
-    padding: 0 16px 0 0;
-  }
-  .floor-plan-head span:nth-child(1) {
-    grid-column: 1 / 2;
-  }
-  .floor-plan-head span:nth-child(2) {
-    grid-column: 3 / 4;
-  }
-  .floor-plan-head span:nth-child(3) {
-    grid-column: 5 / 6;
-  }
-
-  .room-row {
-    grid-column: 1 / -1;
-    display: grid;
-    grid-template-columns: subgrid;
+  .timeline-header {
+    display: flex;
+    justify-content: space-between;
     align-items: baseline;
-    padding: 28px 0;
-    border-bottom: 1px solid var(--rule);
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+  .timeline-role {
+    font-size: 1.15rem;
+    font-weight: 900;
     color: var(--ink-primary);
-    cursor: pointer;
-    text-decoration: none;
-    transition: background var(--dur-standard) var(--ease-default);
   }
-  .room-row:last-child {
-    border-bottom: 1px solid var(--rule);
-  }
-  .room-row:hover {
-    background: color-mix(in oklch, var(--surface-raised) 60%, transparent);
-  }
-
-  .room-row .room-numeral {
-    grid-column: 1 / 2;
-    color: var(--accent);
-    font-family: var(--font-machine);
-    font-size: 0.78rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    font-feature-settings: 'tnum';
-    padding-right: 16px;
-  }
-  .room-row .room-plate-code {
-    grid-column: 2 / 3;
-    color: var(--ink-tertiary);
-    font-family: var(--font-machine);
+  .timeline-period {
+    font-family: var(--font-spec);
     font-size: 0.74rem;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    font-feature-settings: 'tnum';
-    padding-right: 16px;
-  }
-  .room-row .room-title {
-    grid-column: 3 / 4;
-    font-family: var(--font-author);
-    font-size: clamp(1.5rem, 2.2vw, 2.1rem);
-    line-height: 1.05;
-    /* opsz lock signature even at small render size */
-    font-variation-settings: 'opsz' 120, 'wght' 480, 'SOFT' 40;
-    letter-spacing: -0.012em;
-    color: var(--ink-primary);
-    padding-right: 24px;
-    transition: color var(--dur-micro) var(--ease-default);
-  }
-  .room-row:hover .room-title {
     color: var(--accent);
+    font-weight: 700;
   }
-  .room-row .room-meta {
-    grid-column: 5 / 6;
+  .timeline-institution {
+    font-family: var(--font-spec);
+    font-size: 0.8rem;
+    color: var(--ink-tertiary);
+    margin-bottom: 12px;
+    display: block;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .timeline-desc {
     color: var(--ink-secondary);
     font-size: 0.94rem;
     line-height: 1.55;
   }
-  .room-row .room-meta .meta-year {
-    display: inline-block;
-    margin-right: 12px;
-    color: var(--ink-tertiary);
-    font-family: var(--font-machine);
-    font-size: 0.74rem;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    font-feature-settings: 'tnum';
-  }
 
-  /* ===========================================================
-     Template C — editor-note (about, deep dive, contact)
-     2fr margin-note  7fr body  3fr meta
-     =========================================================== */
-  .editor-note {
+  /* ----- Contact Forms ----- */
+  .contact-panel {
     display: grid;
-    grid-template-columns: 2fr 7fr 3fr;
-    gap: clamp(16px, 2.5vw, 32px);
-    align-items: start;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 48px;
   }
 
-  .editor-note .margin-note {
-    color: var(--ink-tertiary);
-    font-family: var(--font-machine);
-    font-size: 0.74rem;
-    line-height: 1.5;
-    letter-spacing: 0.04em;
+  .contact-info {
+    display: grid;
+    gap: 24px;
+    align-content: start;
+  }
+
+  .contact-info-title {
+    font-size: 1.8rem;
+    font-weight: 900;
     text-transform: uppercase;
-    font-feature-settings: 'tnum';
-    padding-top: 0.4em;
-  }
-
-  .editor-note .editor-body {
-    max-width: 60ch;
+    letter-spacing: -0.03em;
     color: var(--ink-primary);
   }
 
-  .editor-note .editor-body h2 {
-    font-family: var(--font-author);
-    font-size: clamp(1.8rem, 3.2vw, 3rem);
-    line-height: 1.05;
-    font-variation-settings: 'opsz' 120, 'wght' 480, 'SOFT' 30;
-    letter-spacing: -0.012em;
-    text-wrap: balance;
-    margin-bottom: 24px;
-  }
-
-  .editor-note .editor-body p,
-  .editor-note .editor-body blockquote {
-    color: var(--ink-secondary);
-    font-size: 1.04rem;
-    line-height: 1.7;
-    text-wrap: pretty;
-  }
-  .editor-note .editor-body p + p {
-    margin-top: 18px;
-  }
-
-  /* Drop cap on first paragraph only */
-  .editor-note .editor-body .first-paragraph::first-letter {
-    -webkit-initial-letter: 3 2;
-    initial-letter: 3 2;
-    font-family: var(--font-author);
-    font-variation-settings: 'opsz' 144, 'wght' 580, 'SOFT' 30;
-    color: var(--ink-primary);
-    margin-right: 0.16em;
-    line-height: 0.9;
-  }
-
-  .editor-note .editor-body blockquote.pull-quote {
-    border-left: 2px solid var(--accent);
-    padding: 12px 0 12px 20px;
-    margin: 32px 0;
-    font-family: var(--font-author);
-    font-size: clamp(1.2rem, 1.6vw, 1.5rem);
-    font-style: italic;
-    font-variation-settings: 'opsz' 96, 'wght' 380, 'SOFT' 60;
-    line-height: 1.4;
-    color: var(--ink-primary);
-  }
-
-  .editor-note .editor-meta {
-    color: var(--ink-secondary);
-  }
-  .editor-note .editor-meta dl {
-    display: grid;
-    grid-template-columns: max-content 1fr;
-    gap: 6px 14px;
-    font-family: var(--font-machine);
-    font-size: 0.74rem;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    font-feature-settings: 'tnum';
-  }
-  .editor-note .editor-meta dt {
-    color: var(--ink-tertiary);
-  }
-  .editor-note .editor-meta dd {
-    color: var(--ink-secondary);
-    margin: 0;
-  }
-
-  /* ----- Section header ----- */
-  .room-header {
-    display: grid;
-    grid-template-columns: 2fr 7fr 3fr;
-    gap: clamp(16px, 2.5vw, 32px);
-    align-items: end;
-    margin-bottom: clamp(48px, 7vw, 96px);
-  }
-  .room-header .room-numeral-large {
-    color: var(--accent);
-    font-family: var(--font-machine);
-    font-size: 0.74rem;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    font-feature-settings: 'tnum';
-  }
-  .room-header h2 {
-    font-family: var(--font-author);
-    font-size: clamp(2rem, 3.4vw, 3.4rem);
-    line-height: 1.0;
-    font-variation-settings: 'opsz' 120, 'wght' 460, 'SOFT' 30;
-    letter-spacing: -0.018em;
-    text-wrap: balance;
-    color: var(--ink-primary);
-    max-width: 24ch;
-  }
-  .room-header .room-header-meta {
-    color: var(--ink-tertiary);
-    font-family: var(--font-machine);
-    font-size: 0.72rem;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    font-feature-settings: 'tnum';
-    text-align: right;
-    align-self: end;
-    padding-bottom: 0.3em;
-  }
-
-  /* ----- Curator's note: constraint / decision / outcome ----- */
-  .curator-note {
-    display: grid;
-    grid-template-columns: 2fr 7fr 3fr;
-    gap: clamp(16px, 2.5vw, 32px);
-    align-items: start;
-    margin-top: clamp(40px, 6vw, 80px);
-  }
-  .curator-note .margin-note {
-    color: var(--ink-tertiary);
-    font-family: var(--font-machine);
-    font-size: 0.74rem;
-    line-height: 1.5;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    font-feature-settings: 'tnum';
-    padding-top: 0.4em;
-  }
-  .curator-note .curator-body {
-    max-width: 60ch;
-    display: grid;
-    gap: 32px;
-  }
-  .curator-note .curator-body article {
-    display: grid;
-    grid-template-columns: max-content 1fr;
-    gap: 8px 24px;
-    align-items: baseline;
-    padding-top: 16px;
-    border-top: 1px solid var(--rule);
-  }
-  .curator-note .curator-body article > span {
-    color: var(--accent);
-    font-family: var(--font-machine);
-    font-size: 0.72rem;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    font-feature-settings: 'tnum';
-  }
-  .curator-note .curator-body article > p {
-    color: var(--ink-secondary);
-    font-size: 1.0rem;
-    line-height: 1.65;
-    text-wrap: pretty;
-  }
-  .curator-note .curator-meta {
-    color: var(--ink-tertiary);
-    font-family: var(--font-machine);
-    font-size: 0.72rem;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    font-feature-settings: 'tnum';
-  }
-  .curator-note .curator-meta .tag-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    margin-top: 12px;
-  }
-  .curator-note .curator-meta .tag-chip {
-    display: inline-flex;
-    align-items: center;
-    border: 1px solid var(--rule);
-    padding: 4px 10px;
-    color: var(--ink-secondary);
-    font-family: var(--font-machine);
-    font-size: 0.7rem;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    font-feature-settings: 'tnum';
-  }
-
-  /* ----- Method beats (process room) ----- */
-  .method-beats {
-    display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: clamp(16px, 2.5vw, 32px);
-    margin-top: clamp(40px, 6vw, 80px);
-  }
-  .method-beats article {
-    padding-top: 20px;
-    border-top: 1px solid var(--rule);
-  }
-  .method-beats article > span {
-    display: block;
-    color: var(--accent);
-    font-family: var(--font-machine);
-    font-size: 0.74rem;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    font-feature-settings: 'tnum';
-    margin-bottom: 12px;
-  }
-  .method-beats article h3 {
-    font-family: var(--font-author);
-    font-size: 1.4rem;
-    line-height: 1.1;
-    font-variation-settings: 'opsz' 120, 'wght' 480, 'SOFT' 30;
-    letter-spacing: -0.01em;
-    color: var(--ink-primary);
-    margin-bottom: 10px;
-  }
-  .method-beats article p {
-    color: var(--ink-secondary);
-    font-size: 0.96rem;
-    line-height: 1.6;
-  }
-
-  /* ----- Career index (reuse floor-plan grid) ----- */
-  .career-rows {
-    display: grid;
-    grid-template-columns: 1fr 1fr 6fr 1fr 3fr;
-  }
-  .career-rows .room-row {
-    grid-template-columns: subgrid;
-    cursor: default;
-  }
-  .career-rows .room-row:hover {
-    background: transparent;
-  }
-  .career-rows .room-row:hover .room-title {
-    color: var(--ink-primary);
-  }
-  .career-rows .career-period {
-    grid-column: 2 / 3;
-    color: var(--ink-tertiary);
-    font-family: var(--font-machine);
-    font-size: 0.72rem;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    font-feature-settings: 'tnum';
-    padding-right: 16px;
-  }
-  .career-rows .career-role {
-    display: block;
-    margin-top: 6px;
-    color: var(--accent);
-    font-family: var(--font-machine);
-    font-size: 0.72rem;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    font-feature-settings: 'tnum';
-  }
-
-  /* ----- Skill list ----- */
-  .skill-list {
-    margin-top: clamp(48px, 6vw, 80px);
-    display: grid;
-    grid-template-columns: 2fr 7fr 3fr;
-    gap: clamp(16px, 2.5vw, 32px);
-    align-items: start;
-  }
-  .skill-list .margin-note {
-    color: var(--ink-tertiary);
-    font-family: var(--font-machine);
-    font-size: 0.74rem;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-  }
-  .skill-list .skill-body {
-    display: grid;
-    gap: 28px;
-    max-width: 60ch;
-  }
-  .skill-list .skill-body article {
-    padding-top: 16px;
-    border-top: 1px solid var(--rule);
-  }
-  .skill-list .skill-body article > span {
-    display: block;
-    color: var(--accent);
-    font-family: var(--font-machine);
-    font-size: 0.72rem;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    font-feature-settings: 'tnum';
-    margin-bottom: 8px;
-  }
-  .skill-list .skill-body article > p {
+  .contact-info p {
     color: var(--ink-secondary);
     font-size: 1rem;
-    line-height: 1.65;
-  }
-
-  /* ----- Colophon room ----- */
-  .colophon-list {
-    display: grid;
-    grid-template-columns: 2fr 7fr 3fr;
-    gap: clamp(16px, 2.5vw, 32px);
-    align-items: start;
-  }
-  .colophon-list .colophon-body dl {
-    display: grid;
-    grid-template-columns: max-content 1fr;
-    gap: 14px 32px;
-    color: var(--ink-secondary);
-    font-size: 0.96rem;
     line-height: 1.6;
-  }
-  .colophon-list .colophon-body dt {
-    color: var(--ink-tertiary);
-    font-family: var(--font-machine);
-    font-size: 0.74rem;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    font-feature-settings: 'tnum';
-    padding-top: 0.2em;
-  }
-  .colophon-list .colophon-body dd {
-    margin: 0;
-    color: var(--ink-secondary);
+    max-width: 36ch;
   }
 
-  .colophon-list .colophon-key {
+  .contact-links {
     display: grid;
-    gap: 8px;
-    color: var(--ink-tertiary);
-    font-family: var(--font-machine);
-    font-size: 0.74rem;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    font-feature-settings: 'tnum';
+    gap: 16px;
+    margin-top: 16px;
   }
-  .colophon-list .colophon-key strong {
-    color: var(--ink-primary);
-    font-weight: 500;
-  }
-
-  /* ----- Footer ----- */
-  .catalog-footer {
-    display: grid;
-    grid-template-columns: 1fr auto 1fr;
+  .contact-link-item {
+    display: flex;
     align-items: center;
-    gap: 24px;
-    padding: 32px clamp(20px, 5vw, 96px);
-    border-top: 1px solid var(--rule);
-    color: var(--ink-tertiary);
-    font-family: var(--font-machine);
-    font-size: 0.72rem;
-    letter-spacing: 0.06em;
+    gap: 12px;
+    font-family: var(--font-spec);
+    font-size: 0.84rem;
+    font-weight: 700;
+    color: var(--ink-secondary);
+    transition: color var(--dur-micro) var(--ease-standard);
+  }
+  .contact-link-item:hover {
+    color: var(--accent);
+  }
+  .contact-link-icon {
+    color: var(--accent);
+  }
+
+  .contact-form {
+    display: grid;
+    gap: 20px;
+  }
+
+  .form-group {
+    position: relative;
+    display: grid;
+    gap: 6px;
+  }
+  .form-label {
+    font-family: var(--font-spec);
+    font-size: 0.68rem;
     text-transform: uppercase;
-    font-feature-settings: 'tnum';
+    color: var(--ink-tertiary);
+    letter-spacing: 0.08em;
+    font-weight: 700;
   }
-  .catalog-footer .footer-center {
-    text-align: center;
+  
+  .form-input, .form-textarea {
+    width: 100%;
+    background: var(--surface-sunken);
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    padding: 12px 16px;
+    color: var(--ink-primary);
+    font-family: inherit;
+    font-size: 0.94rem;
+    outline: none;
+    transition: border-color var(--dur-micro) var(--ease-standard), background-color var(--dur-micro) var(--ease-standard);
   }
-  .catalog-footer .footer-end {
-    text-align: right;
-  }
-
-  /* ===========================================================
-     Plate reveal — CSS-native scroll-driven animation
-     Uses animation-timeline: view() where supported.
-     Static end-state is the accessible default.
-     =========================================================== */
-  @supports (animation-timeline: view()) {
-    @keyframes plate-curtain {
-      from {
-        clip-path: inset(0 100% 0 0);
-      }
-      to {
-        clip-path: inset(0 0 0 0);
-      }
-    }
-    .plate-frame {
-      animation: plate-curtain linear both;
-      animation-timeline: view();
-      animation-range: entry 0% cover 30%;
-    }
+  .form-input:focus, .form-textarea:focus {
+    border-color: var(--accent);
+    background: var(--surface-page);
   }
 
-  /* Cover plate is part of the opening sequence — disable scroll-driven curtain. */
-  .cover-room .plate-frame {
-    animation: none;
+  .form-textarea {
+    resize: vertical;
+    min-height: 120px;
+  }
+
+  .form-message {
+    font-size: 0.82rem;
+    font-weight: 700;
+  }
+  .form-message.is-success {
+    color: oklch(0.65 0.15 140);
+  }
+  .form-message.is-error {
+    color: oklch(0.60 0.18 20);
+  }
+
+  /* ----- Interactive Section Headings ----- */
+  .section-header {
+    margin-bottom: clamp(32px, 6vw, 64px);
+  }
+  .section-kicker {
+    font-family: var(--font-spec);
+    font-size: 0.76rem;
+    font-weight: 700;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    display: block;
+    margin-bottom: 8px;
+  }
+  .section-title {
+    font-family: var(--font-system);
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 900;
+    line-height: 1.0;
+    letter-spacing: -0.04em;
+    text-transform: uppercase;
+    color: var(--ink-primary);
+  }
+
+  /* ----- Editorial Philosophy Quotes ----- */
+  .philosophy-quote {
+    border-left: 3px solid var(--accent);
+    padding: 12px 0 12px 24px;
+    margin: 32px 0;
+    font-family: var(--font-comment);
+    font-size: clamp(1.15rem, 1.8vw, 1.35rem);
+    font-style: italic;
+    line-height: 1.5;
+    color: var(--ink-primary);
+    max-width: 44ch;
+  }
+
+  /* ----- Global Footer ----- */
+  .portfolio-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid var(--rule);
+    padding: 24px clamp(16px, 6vw, 96px);
+    font-family: var(--font-spec);
+    font-size: 0.74rem;
+    color: var(--ink-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
   }
 }
 
-/* =============================================================
-   Responsive recomposition — anchor demands recomposition,
-   not scaling.
-   ============================================================= */
+/* ==========================================================================
+   Responsive Shifts & Viewports
+   ========================================================================== */
 
 @media (max-width: 1024px) {
-  .plate-spread {
-    grid-template-columns: 8fr 4fr;
-    grid-template-areas:
-      'plate    plate'
-      'caption  caption'
-      'rule     rule';
-  }
-  .plate-spread > .plate-label {
-    display: none;
-  }
-  .room-header {
-    grid-template-columns: 2fr 8fr 2fr;
-  }
-  .editor-note {
-    grid-template-columns: 2fr 8fr 2fr;
-  }
-  .curator-note {
-    grid-template-columns: 2fr 8fr 2fr;
-  }
-  .skill-list,
-  .colophon-list {
-    grid-template-columns: 2fr 8fr 2fr;
-  }
-  .floor-plan {
-    grid-template-columns: 1fr 1fr 7fr 0fr 3fr;
-  }
-  .career-rows {
-    grid-template-columns: 1fr 1fr 7fr 0fr 3fr;
-  }
-  .method-beats {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
-@media (max-width: 720px) {
-  .room {
-    padding: 80px clamp(20px, 6vw, 32px);
-  }
-  .catalog-frame {
-    padding: 12px clamp(20px, 6vw, 32px);
-    grid-template-columns: auto auto;
-    grid-template-rows: auto;
-    row-gap: 8px;
-  }
-  .frame-meta {
-    display: none;
-  }
-  .plate-spread {
+  .hero-panel {
     grid-template-columns: 1fr;
-    grid-template-areas:
-      'plate'
-      'caption'
-      'rule';
-    gap: 32px;
+    gap: 40px;
   }
-  .plate-spread > .plate-caption {
-    max-width: 100%;
-  }
-  .room-header {
-    grid-template-columns: 1fr;
-    gap: 16px;
-  }
-  .room-header .room-header-meta {
-    text-align: left;
-  }
-  .editor-note,
-  .curator-note,
-  .skill-list,
-  .colophon-list {
-    grid-template-columns: 1fr;
-    gap: 16px;
-  }
-  .editor-note .margin-note,
-  .curator-note .margin-note,
-  .skill-list .margin-note {
+  .portrait-wrapper {
     order: -1;
+    max-width: 280px;
   }
-  /* Floor plan: collapse subgrid into stacked rows but keep numbering. */
-  .floor-plan,
-  .career-rows {
+  .contact-panel {
     grid-template-columns: 1fr;
-  }
-  .floor-plan-head {
-    display: none;
-  }
-  .room-row {
-    display: grid;
-    grid-template-columns: max-content 1fr;
-    gap: 4px 16px;
-    padding: 24px 0;
-  }
-  .room-row .room-numeral {
-    grid-column: 1 / 2;
-    grid-row: 1;
-  }
-  .room-row .room-plate-code {
-    grid-column: 2 / 3;
-    grid-row: 1;
-    text-align: right;
-  }
-  .room-row .room-title {
-    grid-column: 1 / -1;
-    grid-row: 2;
-    padding-top: 8px;
-    padding-right: 0;
-    font-size: 1.6rem;
-  }
-  .room-row .room-meta {
-    grid-column: 1 / -1;
-    grid-row: 3;
-    padding-top: 8px;
-  }
-  .career-rows .room-row {
-    grid-template-columns: max-content 1fr;
-  }
-  .career-rows .career-period {
-    grid-column: 2 / 3;
-    grid-row: 1;
-    text-align: right;
-  }
-  .method-beats {
-    grid-template-columns: 1fr;
-    gap: 24px;
-  }
-  .catalog-footer {
-    grid-template-columns: 1fr;
-    text-align: left;
-    gap: 8px;
-  }
-  .catalog-footer .footer-center,
-  .catalog-footer .footer-end {
-    text-align: left;
-  }
-  .plate-cover .cover-portrait {
-    width: min(70%, 280px);
+    gap: 40px;
   }
 }
 
-/* =============================================================
-   Reduced motion — disable curtains and heavy transitions.
-   Static end-state is the design.
-   ============================================================= */
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation: none !important;
-    transition: none !important;
-    scroll-behavior: auto !important;
-  }
-  .plate-frame {
-    clip-path: none !important;
-  }
-}
-
-/* =============================================================
-   Catalog enrichments — folio bar, leader dots, plate tones,
-   curator numerals, cover stamp, footnote dagger.
-   These build on the v3.0 layer; they do not redefine tokens.
-   ============================================================= */
-
-@layer components {
-  /* ----------- Folio bar (running header per room) ----------- */
-  .folio-bar {
-    display: grid;
-    grid-template-columns: max-content 1fr max-content;
-    align-items: center;
-    gap: clamp(16px, 3vw, 32px);
-    padding-bottom: clamp(20px, 3vw, 36px);
-    margin-bottom: clamp(40px, 6vw, 72px);
-    border-bottom: 1px solid var(--rule);
-    color: var(--ink-tertiary);
-    font-family: var(--font-machine);
-    font-size: 0.7rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    font-feature-settings: 'tnum';
-  }
-
-  .folio-numeral {
-    font-family: var(--font-author);
-    font-size: clamp(1.4rem, 2.4vw, 2.1rem);
-    font-style: italic;
-    font-variation-settings: 'opsz' 120, 'wght' 380, 'SOFT' 80;
-    color: var(--accent);
-    line-height: 1;
-    letter-spacing: 0;
-    text-transform: none;
-  }
-
-  .folio-kicker {
-    color: var(--ink-secondary);
-    letter-spacing: 0.14em;
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
-  }
-
-  .folio-page {
-    text-align: right;
-    color: var(--ink-tertiary);
-    letter-spacing: 0.1em;
-  }
-
-  /* Cover-room folio bar: keep tighter top spacing because the
-     plate dominates the first viewport. */
-  .cover-room .folio-bar {
-    margin-bottom: clamp(56px, 8vw, 96px);
-  }
-
-  /* ----------- Cover stamp split + dagger ----------- */
-  .plate-cover .cover-stamp {
-    justify-content: space-between;
-  }
-  .plate-cover .cover-stamp .cover-stamp-left,
-  .plate-cover .cover-stamp .cover-stamp-right {
-    color: var(--ink-secondary);
-  }
-  .dagger {
-    margin-left: 4px;
-    color: var(--accent);
-    font-family: var(--font-author);
-    font-style: italic;
-    font-size: 0.72em;
-    font-variation-settings: 'opsz' 96, 'wght' 460, 'SOFT' 80;
-    vertical-align: super;
-    line-height: 0;
-  }
-
-  /* Cover footnote — clickable but quiet, points to colophon. */
-  .cover-footnote {
-    margin-top: 22px;
-    color: var(--ink-tertiary);
-    font-family: var(--font-machine);
-    font-size: 0.7rem;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    font-feature-settings: 'tnum';
-  }
-  .footnote-link {
-    display: inline-flex;
-    align-items: baseline;
-    gap: 6px;
-    border: 0;
-    background: transparent;
-    padding: 4px 0;
-    color: var(--ink-tertiary);
-    font: inherit;
-    cursor: pointer;
-    transition: color var(--dur-micro) var(--ease-default);
-  }
-  .footnote-link:hover {
-    color: var(--accent);
-  }
-  .footnote-link span:first-child {
-    font-family: var(--font-author);
-    font-style: italic;
-    font-size: 1.1em;
-    color: var(--accent);
-  }
-
-  /* ----------- Floor-plan leader dots (table-of-contents style) ----------- */
-  .floor-plan .room-title {
-    display: flex;
-    align-items: baseline;
+@media (max-width: 720px) {
+  .portfolio-header {
+    padding: 12px 20px;
+    flex-direction: column;
     gap: 12px;
-    overflow: hidden;
-    min-width: 0;
   }
-  .floor-plan .room-title .room-title-text {
-    flex: 0 0 auto;
-    color: inherit;
-    transition: color var(--dur-micro) var(--ease-default);
-  }
-  .floor-plan .room-title .leader-dots {
-    flex: 1 1 auto;
-    align-self: end;
-    height: 1em;
-    margin-bottom: 0.2em;
-    background-image: radial-gradient(circle at center, var(--rule) 0.8px, transparent 1.2px);
-    background-size: 6px 6px;
-    background-repeat: repeat-x;
-    background-position: 0 center;
-    transition: background-image var(--dur-micro) var(--ease-default);
-  }
-  .floor-plan .room-row:hover .leader-dots {
-    background-image: radial-gradient(circle at center, var(--accent) 0.8px, transparent 1.2px);
-  }
-
-  /* ----------- Plate typeset tone variants ----------- */
-  /* Default already comes from .plate-typeset; tones override
-     the radial gradient hue/chroma so 5 rooms feel curated. */
-  .plate-typeset[data-tone='copper'] {
-    --plate-tone-a: oklch(0.93 0.040 60);
-    --plate-tone-b: oklch(0.85 0.060 45);
-  }
-  .plate-typeset[data-tone='bark'] {
-    --plate-tone-a: oklch(0.88 0.030 70);
-    --plate-tone-b: oklch(0.78 0.045 60);
-  }
-  .plate-typeset[data-tone='clay'] {
-    --plate-tone-a: oklch(0.90 0.045 35);
-    --plate-tone-b: oklch(0.82 0.070 25);
-  }
-  :root[data-theme='dark'] .plate-typeset[data-tone='copper'] {
-    --plate-tone-a: oklch(0.26 0.030 50);
-    --plate-tone-b: oklch(0.32 0.045 40);
-  }
-  :root[data-theme='dark'] .plate-typeset[data-tone='bark'] {
-    --plate-tone-a: oklch(0.24 0.022 70);
-    --plate-tone-b: oklch(0.30 0.030 55);
-  }
-  :root[data-theme='dark'] .plate-typeset[data-tone='clay'] {
-    --plate-tone-a: oklch(0.26 0.040 30);
-    --plate-tone-b: oklch(0.32 0.060 20);
-  }
-
-  /* Cover plate tone — slightly cooler than typeset rooms so
-     the protagonist reads as "the print", not a room. */
-  .plate-cover[data-tone='copper'] {
-    background:
-      linear-gradient(180deg, oklch(0.94 0.030 60) 0%, oklch(0.88 0.045 50) 100%);
-  }
-  :root[data-theme='dark'] .plate-cover[data-tone='copper'] {
-    background:
-      linear-gradient(180deg, oklch(0.24 0.020 250) 0%, oklch(0.30 0.035 240) 100%);
-  }
-
-  /* Subtle initial of the project monogram in italic when hovered,
-     reinforcing the editorial signature. */
-  .plate-typeset .plate-glyph {
-    transition: font-variation-settings var(--dur-standard) var(--ease-default);
-  }
-  .plate-frame:hover .plate-glyph {
-    font-variation-settings: 'opsz' 144, 'wght' 460, 'SOFT' 90;
-    font-style: italic;
-  }
-
-  /* ----------- Plate caption typography classes ----------- */
-  .plate-title {
-    font-family: var(--font-author);
-    font-size: clamp(1.6rem, 2.6vw, 2.4rem);
-    line-height: 1.05;
-    font-variation-settings: 'opsz' 120, 'wght' 480, 'SOFT' 30;
-    letter-spacing: -0.012em;
-    text-wrap: balance;
-    color: var(--ink-primary);
-    margin: 16px 0 14px;
-  }
-  .plate-summary {
-    color: var(--ink-secondary);
-    line-height: 1.65;
-    font-size: 1rem;
-    max-width: 38ch;
-  }
-  .plate-source {
-    margin-top: 20px;
-  }
-
-  /* ----------- Curator article kicker (i. ii. iii.) ----------- */
-  .curator-kicker {
-    display: inline-flex;
-    align-items: baseline;
-    gap: 8px;
-  }
-  .curator-kicker em {
-    font-family: var(--font-author);
-    font-style: italic;
-    font-variation-settings: 'opsz' 96, 'wght' 460, 'SOFT' 80;
-    font-size: 1.18em;
-    color: var(--accent);
-    letter-spacing: 0;
-    text-transform: none;
-    line-height: 1;
-  }
-
-  /* ----------- Margin-note Roman numeral (chapter mark) ----------- */
-  .margin-note .margin-roman {
-    display: block;
-    margin-bottom: 8px;
-    font-family: var(--font-author);
-    font-style: italic;
-    font-size: clamp(1.6rem, 2.4vw, 2.4rem);
-    font-variation-settings: 'opsz' 120, 'wght' 380, 'SOFT' 80;
-    color: var(--accent);
-    letter-spacing: 0;
-    text-transform: none;
-    line-height: 1;
-  }
-
-  /* ----------- Contact action group ----------- */
-  .contact-actions {
-    display: flex;
+  .nav-menu {
     flex-wrap: wrap;
-    gap: 12px;
-    margin-top: 32px;
-  }
-
-  /* ----------- Italic em accent in display headlines ----------- */
-  /* Keep italic terracotta only in the cover headline, where it
-     functions as the "exhibition" anchor word. Other headings stay
-     neutral so the cover italic reads as a deliberate signature. */
-  .cover-headline h1 em {
-    color: var(--accent);
-    /* Italic Fraunces benefits from slightly tighter letter-spacing
-       at this opsz so the descenders read as one phrase. */
-    letter-spacing: -0.01em;
-  }
-}
-
-/* =============================================================
-   Folio bar mobile recomposition
-   ============================================================= */
-@media (max-width: 720px) {
-  .folio-bar {
-    grid-template-columns: max-content 1fr;
-    grid-template-rows: auto auto;
-    row-gap: 4px;
-  }
-  .folio-numeral {
-    grid-row: 1;
-  }
-  .folio-page {
-    grid-row: 1;
-    grid-column: 2;
-  }
-  .folio-kicker {
-    grid-row: 2;
-    grid-column: 1 / -1;
-    white-space: normal;
-  }
-
-  /* On phone, leader dots collapse — title and meta already stack. */
-  .floor-plan .room-title .leader-dots {
-    display: none;
-  }
-}
-
-/* =============================================================
-   Catalog++ texture pass
-   Goal: add tactile catalog-honest detail without breaking the
-   anchor. No neon, no holographic, no glitch. The references are
-   physical: paper grain, platemark inset (etched plate border),
-   academic transcript ruling, and emboss on monograms.
-   ============================================================= */
-
-@layer components {
-  /* ----------------------------------------------------------
-     Paper grain — only on plate panels, very subtle. Uses
-     stacked tiny radial gradients to fake a fiber texture so
-     the plate reads like printed stock under raking light.
-     Strength dialed down (0.025-0.04 alpha) to stay AA-safe.
-     ---------------------------------------------------------- */
-  .plate-frame::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    z-index: 1;
-    background-image:
-      radial-gradient(circle at 12% 18%, oklch(0 0 0 / 0.04) 0.6px, transparent 1.4px),
-      radial-gradient(circle at 78% 32%, oklch(0 0 0 / 0.035) 0.5px, transparent 1.2px),
-      radial-gradient(circle at 42% 72%, oklch(0 0 0 / 0.04) 0.6px, transparent 1.4px),
-      radial-gradient(circle at 88% 84%, oklch(0 0 0 / 0.03) 0.5px, transparent 1.2px),
-      radial-gradient(circle at 22% 58%, oklch(0 0 0 / 0.035) 0.55px, transparent 1.3px);
-    background-size: 7px 7px, 9px 9px, 11px 11px, 5px 5px, 8px 8px;
-    background-position: 0 0, 2px 1px, 1px 3px, 4px 2px, 3px 4px;
-    mix-blend-mode: multiply;
-    opacity: 0.9;
-  }
-  :root[data-theme='dark'] .plate-frame::before {
-    background-image:
-      radial-gradient(circle at 12% 18%, oklch(1 0 0 / 0.025) 0.6px, transparent 1.4px),
-      radial-gradient(circle at 78% 32%, oklch(1 0 0 / 0.022) 0.5px, transparent 1.2px),
-      radial-gradient(circle at 42% 72%, oklch(1 0 0 / 0.025) 0.6px, transparent 1.4px),
-      radial-gradient(circle at 88% 84%, oklch(1 0 0 / 0.020) 0.5px, transparent 1.2px),
-      radial-gradient(circle at 22% 58%, oklch(1 0 0 / 0.022) 0.55px, transparent 1.3px);
-    mix-blend-mode: screen;
-  }
-
-  /* ----------------------------------------------------------
-     Platemark inset — the inner rectangle pressed into a printed
-     plate by the etching press. Achieved with two stacked insets
-     using box-shadow for emboss illusion. Static, no animation.
-     ---------------------------------------------------------- */
-  .plate-frame::after {
-    content: '';
-    position: absolute;
-    inset: clamp(8px, 1.5vw, 16px);
-    pointer-events: none;
-    z-index: 2;
-    border: 1px solid oklch(0 0 0 / 0.10);
-    box-shadow:
-      inset 0 1px 0 oklch(1 0 0 / 0.35),
-      inset 0 -1px 0 oklch(0 0 0 / 0.06);
-    transition: inset var(--dur-standard) var(--ease-default),
-                border-color var(--dur-standard) var(--ease-default);
-  }
-  :root[data-theme='dark'] .plate-frame::after {
-    border-color: oklch(1 0 0 / 0.10);
-    box-shadow:
-      inset 0 1px 0 oklch(1 0 0 / 0.05),
-      inset 0 -1px 0 oklch(0 0 0 / 0.32);
-  }
-
-  /* Make sure children render above the texture overlays. */
-  .plate-frame > * {
-    position: relative;
-    z-index: 3;
-  }
-
-  /* ----------------------------------------------------------
-     Monogram emboss — letterpress effect via dual text-shadow.
-     Reads like the monogram is debossed into the plate stock.
-     Light mode: highlight below + shadow above. Dark mode: flips.
-     ---------------------------------------------------------- */
-  .plate-typeset .plate-glyph {
-    color: var(--ink-primary);
-    text-shadow:
-      0 1px 0 oklch(1 0 0 / 0.45),
-      0 -1px 0 oklch(0 0 0 / 0.10);
-    /* slight inset to compensate for the platemark frame */
-    padding: 0 clamp(8px, 1.2vw, 16px);
-  }
-  :root[data-theme='dark'] .plate-typeset .plate-glyph {
-    color: var(--ink-secondary);
-    text-shadow:
-      0 -1px 0 oklch(1 0 0 / 0.06),
-      0 1px 0 oklch(0 0 0 / 0.40);
-  }
-
-  /* Cover plate keeps the platemark, but no monogram emboss
-     because the portrait carries the texture. */
-  .plate-cover .plate-glyph {
-    text-shadow: none;
-  }
-
-  /* ----------------------------------------------------------
-     Education ledger — academic-transcript pattern. Tier badge,
-     period column, institution, degree. Hairline rules between
-     rows, tnum on dates. No card surface, no chip duplication.
-     ---------------------------------------------------------- */
-  .ledger-list {
-    list-style: none;
-    margin: 12px 0 0;
-    padding: 0;
-    border-top: 1px solid var(--rule);
-  }
-  .ledger-row {
-    display: grid;
-    grid-template-columns: max-content 1fr;
-    grid-template-rows: auto auto;
-    column-gap: 14px;
-    row-gap: 4px;
-    align-items: baseline;
-    padding: 14px 0;
-    border-bottom: 1px solid var(--rule);
-    color: var(--ink-secondary);
-  }
-
-  .ledger-tier {
-    grid-column: 1;
-    grid-row: 1 / span 2;
-    align-self: start;
-    min-width: 38px;
-    padding: 3px 8px;
-    border: 1px solid var(--accent);
-    color: var(--accent);
-    background: transparent;
-    font-family: var(--font-machine);
-    font-size: 0.66rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    text-align: center;
-    font-feature-settings: 'tnum';
-    line-height: 1.4;
-    margin-top: 2px;
-  }
-
-  .ledger-period {
-    grid-column: 2;
-    grid-row: 1;
-    color: var(--ink-tertiary);
-    font-family: var(--font-machine);
-    font-size: 0.7rem;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    font-feature-settings: 'tnum';
-  }
-
-  .ledger-institution {
-    grid-column: 2;
-    grid-row: 2;
-    color: var(--ink-primary);
-    font-family: var(--font-author);
-    font-size: 1rem;
-    line-height: 1.3;
-    font-variation-settings: 'opsz' 96, 'wght' 480, 'SOFT' 30;
-    letter-spacing: 0;
-    text-transform: none;
-  }
-
-  .ledger-degree {
-    grid-column: 2;
-    grid-row: 3;
-    color: var(--ink-secondary);
-    font-family: var(--font-system);
-    font-size: 0.86rem;
-    letter-spacing: 0;
-    text-transform: none;
-    font-feature-settings: normal;
-  }
-
-  /* ----------------------------------------------------------
-     Sunken room paper grain — extremely subtle paper warmth on
-     surface-sunken sections. Only visible at light mode; dark
-     mode skips it since slate already carries enough mood.
-     ---------------------------------------------------------- */
-  :root[data-theme='light'] .room[data-tone='sunken']::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    background-image:
-      radial-gradient(circle at 18% 24%, oklch(0 0 0 / 0.018) 0.5px, transparent 1.2px),
-      radial-gradient(circle at 72% 64%, oklch(0 0 0 / 0.015) 0.5px, transparent 1.2px);
-    background-size: 13px 13px, 17px 17px;
-    mix-blend-mode: multiply;
-    z-index: 0;
-  }
-  .room[data-tone='sunken'] {
-    position: relative;
-  }
-  .room[data-tone='sunken'] > * {
-    position: relative;
-    z-index: 1;
-  }
-}
-
-/* Reduced motion / forced colors keep the page accessible: textures
-   are decorative and degrade naturally. */
-@media (prefers-contrast: more), (forced-colors: active) {
-  .plate-frame::before,
-  .plate-frame::after,
-  .room[data-tone='sunken']::before {
-    display: none;
-  }
-  .ledger-tier {
-    border-color: CanvasText;
-    color: CanvasText;
-  }
-}
-
-@media (max-width: 720px) {
-  .ledger-row {
-    grid-template-columns: max-content 1fr;
-    column-gap: 12px;
-  }
-  .ledger-tier {
-    grid-row: 1;
-    min-width: 34px;
-  }
-  .ledger-period {
-    grid-row: 1;
-    grid-column: 2;
-    text-align: right;
-  }
-  .ledger-institution {
-    grid-column: 1 / -1;
-    grid-row: 2;
-  }
-  .ledger-degree {
-    grid-column: 1 / -1;
-    grid-row: 3;
-  }
-}
-
-/* =============================================================
-   Catalog ornaments — Reverse 1999 / classical printer marks
-   Used sparingly: one ornament per place, never repeating.
-   All ornaments inherit currentColor and are aria-hidden.
-   ============================================================= */
-
-@layer components {
-  .ornament {
-    color: var(--ink-tertiary);
-    fill: currentColor;
-    flex: none;
-    pointer-events: none;
-  }
-
-  /* ----- Cover plate watermark: oversized italic ampersand ----- */
-  .ornament-ampersand {
-    position: absolute;
-    right: clamp(20px, 3vw, 40px);
-    top: clamp(20px, 3vw, 40px);
-    z-index: 4;
-    font-family: var(--font-author);
-    font-style: italic;
-    font-variation-settings: 'opsz' 144, 'wght' 380, 'SOFT' 100;
-    font-size: clamp(4rem, 8vw, 7rem);
-    line-height: 0.85;
-    color: var(--accent);
-    opacity: 0.32;
-    user-select: none;
-    /* Bias the ampersand baseline so the swash hangs into the
-       plate corner rather than sitting on the edge. */
-    transform: translate(0, -0.06em);
-  }
-  .plate-cover .ornament-ampersand {
-    /* The cover plate is taller than typeset rooms; the ampersand
-       reads better when slightly larger and tucked in. */
-    font-size: clamp(5rem, 9vw, 8.5rem);
-    opacity: 0.36;
-  }
-  :root[data-theme='dark'] .ornament-ampersand {
-    opacity: 0.42;
-  }
-
-  /* ----- Section transition wave (above intent room folio bar) ----- */
-  .section-wave {
-    display: block;
-    width: 100%;
-    height: clamp(10px, 1.4vw, 16px);
-    margin-bottom: clamp(40px, 6vw, 72px);
-    color: var(--accent);
-    opacity: 0.55;
-  }
-
-  /* ----- Asterism divider (between method and floor-plan) ----- */
-  .asterism-divider {
-    display: flex;
     justify-content: center;
-    margin: 0 0 clamp(32px, 5vw, 56px);
+    gap: 8px;
   }
-  .asterism-divider .ornament {
-    width: clamp(36px, 4vw, 56px);
-    height: auto;
-    color: var(--ink-secondary);
-    opacity: 0.7;
+  .nav-link {
+    padding: 4px 8px;
+    font-size: 0.8rem;
   }
-
-  /* ----- Manicule in the intent margin note ----- */
-  .margin-note .margin-manicule {
-    display: block;
-    width: 32px;
-    height: auto;
-    margin-bottom: 12px;
-    color: var(--accent);
-    opacity: 0.85;
+  .section-container {
+    padding: 48px 20px;
   }
-
-  /* ----- Fleuron in the first project's curator margin ----- */
-  .margin-note .margin-fleuron {
-    display: block;
-    margin: 12px 0 8px;
+  .works-matrix {
+    grid-template-columns: 1fr;
   }
-  .margin-note .margin-fleuron .ornament {
-    width: clamp(48px, 5vw, 72px);
-    height: auto;
-    color: var(--accent);
-    opacity: 0.85;
+  .timeline-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
   }
-
-  /* ----- Wax seal in the colophon margin ----- */
-  .margin-note .margin-seal {
-    display: block;
-    width: clamp(96px, 10vw, 132px);
-    height: auto;
-    margin-bottom: 18px;
-    color: var(--accent);
-    opacity: 0.92;
-    /* Slight rotation gives the seal a hand-stamped feel. */
-    transform: rotate(-4deg);
-    transform-origin: center;
-    transition: transform var(--dur-standard) var(--ease-default);
-  }
-  .colophon-list:hover .margin-note .margin-seal {
-    transform: rotate(-1.5deg) scale(1.02);
-  }
-  :root[data-theme='dark'] .margin-note .margin-seal {
-    opacity: 0.85;
-  }
-
-  /* Curator's note kicker — italic Roman lowercase + fleuron pairing.
-     Already styled previously; this keeps the i./ii./iii. consistent
-     with the new ornamental personality. */
-  .curator-kicker em {
-    /* Stylistic alternate for italic numerals via Fraunces */
-    font-feature-settings: 'salt';
+  .portfolio-footer {
+    flex-direction: column;
+    gap: 12px;
+    text-align: center;
   }
 }
 
-/* On reduced motion, lock seal rotation; keep all ornaments static. */
+/* ==========================================================================
+   A11y reduced-motion override
+   ========================================================================== */
 @media (prefers-reduced-motion: reduce) {
-  .margin-note .margin-seal,
-  .colophon-list:hover .margin-note .margin-seal {
-    transform: rotate(-4deg) !important;
+  .blob {
+    animation: none !important;
+    opacity: 0.15 !important;
   }
-}
-
-@media (max-width: 720px) {
-  .ornament-ampersand {
-    right: 14px;
-    top: 14px;
-    font-size: clamp(3rem, 14vw, 5rem);
-    opacity: 0.42;
+  .target-circle {
+    animation: none !important;
   }
-  .margin-note .margin-seal {
-    width: 88px;
+  .portrait-wrapper:hover img {
+    transform: none !important;
   }
-  .margin-note .margin-manicule,
-  .margin-note .margin-fleuron .ornament {
-    /* On phone the margin-note collapses above body; align horizontally. */
-    margin-bottom: 8px;
+  .glass-panel:hover, .skill-capsule:hover, .btn-premium:hover, .btn-secondary:hover {
+    transform: none !important;
+  }
+  .btn-close:hover {
+    transform: none !important;
+  }
+  html {
+    scroll-behavior: auto !important;
   }
 }
