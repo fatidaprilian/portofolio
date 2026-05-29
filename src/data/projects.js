@@ -1,6 +1,6 @@
 const projectSource = [
   {
-    title: 'bumbuserbaguna',
+    title: 'Dermascope',
     year: '2026',
     plateCode: 'PR.0126',
     type: 'featured',
@@ -31,8 +31,8 @@ const projectSource = [
       }
     },
     productContext: {
-      id: 'Bumbuserbaguna dirancang sebagai modular monolith dengan batas modul jelas untuk menjaga kecepatan iterasi, akurasi analisis, dan privasi dokumen siswa.',
-      en: 'Bumbuserbaguna is designed as a modular monolith with clear module boundaries to preserve delivery speed, analysis accuracy, and student document privacy.'
+      id: 'Dermascope dirancang sebagai modular monolith dengan batas modul jelas untuk menjaga kecepatan iterasi, akurasi analisis, dan privasi dokumen siswa.',
+      en: 'Dermascope is designed as a modular monolith with clear module boundaries to preserve delivery speed, analysis accuracy, and student document privacy.'
     },
     impactMetrics: {
       id: ['Report 10 halaman < 2 menit', 'Draft presentasi < 3 menit', 'Target false-positive dispute < 5%'],
@@ -51,7 +51,7 @@ const projectSource = [
     tags: ['TypeScript', 'Modular Monolith', 'AI Gateway', 'Education']
   },
   {
-    title: 'Agentic-Senior-Core',
+    title: 'Agentic Core',
     year: '2026',
     plateCode: 'PR.0226',
     type: 'standard',
@@ -94,7 +94,7 @@ const projectSource = [
     tags: ['JavaScript', 'Automation', 'Developer Tools']
   },
   {
-    title: 'ecommercevespa-client',
+    title: 'Vespa Storefront',
     year: '2026',
     plateCode: 'PR.0925',
     type: 'standard',
@@ -137,7 +137,7 @@ const projectSource = [
     tags: ['TypeScript', 'Vue', 'E-commerce']
   },
   {
-    title: 'digital-credential-platform',
+    title: 'CertiFlow',
     year: '2025',
     plateCode: 'PR.0625',
     type: 'standard',
@@ -179,9 +179,8 @@ const projectSource = [
     },
     tags: ['TypeScript', 'Backend', 'Platform']
   },
-
   {
-    title: 'war-tiket-bot',
+    title: 'Ticket Conductor',
     year: '2026',
     plateCode: 'PR.0326',
     type: 'standard',
@@ -222,6 +221,92 @@ const projectSource = [
       }
     },
     tags: ['TypeScript', 'Automation', 'Experiment']
+  },
+  {
+    title: 'Airdrop Hunter',
+    year: '2026',
+    plateCode: 'PR.0426',
+    type: 'standard',
+    accent: 'prism',
+    link: 'https://github.com/fatidaprilian/airdrophunter',
+    role: {
+      id: 'AI Automation & Analytics',
+      en: 'AI Automation & Analytics'
+    },
+    summary: {
+      id: 'Platform pemantauan kanal Telegram otomatis yang menyaring postingan menggunakan AI untuk mengekstrak tugas airdrop terstruktur secara real-time.',
+      en: 'An automated Telegram channel monitor that leverages AI to filter posts and extract structured airdrop tasks in real-time.'
+    },
+    keyPoints: {
+      id: ['Monitoring Telegram real-time', 'Ekstraksi tugas berbasis AI', 'Checklist harian & pelacakan deadline'],
+      en: ['Real-time Telegram monitoring', 'AI-driven task extraction', 'Daily checklist & deadline tracking']
+    },
+    caseStudy: {
+      id: {
+        constraint: 'Kanal Telegram publik sangat bising dengan spam, membuat identifikasi tugas valid menjadi sangat lambat.',
+        decision: 'Membangun pipa pemrosesan pesan otomatis dengan integrasi LLM untuk klasifikasi spam dan ekstraksi metadata terstruktur.',
+        outcome: 'Menyaring lebih dari 90% kebisingan spam dan memberikan checklist tugas harian yang bersih untuk pengguna.'
+      },
+      en: {
+        constraint: 'Public Telegram channels are highly noisy with spam, making identification of valid tasks very slow.',
+        decision: 'Built an automated message processing pipeline integrated with an LLM for spam classification and structured metadata extraction.',
+        outcome: 'Filtered out over 90% of spam noise, providing users with a clean, actionable daily task checklist.'
+      }
+    },
+    preview: {
+      id: {
+        eyebrow: 'AI Automation Snapshot',
+        headline: 'Mengubah kebisingan Telegram menjadi tugas terstruktur yang dapat ditindaklanjuti.'
+      },
+      en: {
+        eyebrow: 'AI Automation Snapshot',
+        headline: 'Turning noisy Telegram chat feeds into clean, actionable tasks.'
+      }
+    },
+    tags: ['TypeScript', 'AI Integration', 'Telegram Bot', 'Automation']
+  },
+  {
+    title: 'Aura SQM',
+    year: '2026',
+    plateCode: 'PR.0526',
+    type: 'standard',
+    accent: 'bark',
+    link: 'https://github.com/fatidaprilian/aura-sqm',
+    role: {
+      id: 'Network Traffic Control',
+      en: 'Network Traffic Control'
+    },
+    summary: {
+      id: 'Sistem kontrol lalu lintas jaringan dinamis berbasis Golang yang dirancang untuk optimasi bandwidth dan pengurangan latensi di lingkungan OpenWrt.',
+      en: 'A dynamic network traffic control system built in Go, designed for bandwidth optimization and latency reduction in OpenWrt environments.'
+    },
+    keyPoints: {
+      id: ['Optimasi SQM berbasis Go', 'Interaksi kernel tc langsung', 'Ringan untuk hardware embedded'],
+      en: ['Go-based SQM optimization', 'Direct kernel tc interaction', 'Lightweight for embedded hardware']
+    },
+    caseStudy: {
+      id: {
+        constraint: 'Perangkat embedded OpenWrt memiliki keterbatasan CPU/RAM untuk menjalankan logika kontrol traffic yang rumit.',
+        decision: 'Mengembangkan daemon ultra-ringan berbasis Go yang berinteraksi langsung dengan subsistem tc (traffic control) kernel Linux.',
+        outcome: 'Mengurangi latensi jaringan secara signifikan tanpa memberikan beban overhead pada CPU router.'
+      },
+      en: {
+        constraint: 'Embedded OpenWrt hardware has limited CPU/RAM resources for executing complex traffic control logic.',
+        decision: 'Developed an ultra-lightweight Go-based daemon interacting directly with the Linux kernel tc (traffic control) subsystem.',
+        outcome: 'Significantly reduced network latency and bufferbloat without adding overhead to the router CPU.'
+      }
+    },
+    preview: {
+      id: {
+        eyebrow: 'System Daemon Snapshot',
+        headline: 'Kontrol lalu lintas jaringan tingkat kernel yang ultra-efisien.'
+      },
+      en: {
+        eyebrow: 'System Daemon Snapshot',
+        headline: 'Ultra-efficient, kernel-level network traffic management.'
+      }
+    },
+    tags: ['Go', 'Networking', 'OpenWrt', 'Linux Kernel']
   }
 ]
 
