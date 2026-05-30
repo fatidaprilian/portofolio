@@ -2,6 +2,7 @@
 import { computed, nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
 import Lenis from '@studio-freight/lenis'
 import gsap from 'gsap'
+import ScrollTrigger from 'gsap/ScrollTrigger'
 import { getCareerProfileByLanguage } from './data/careerProfile'
 import { getProjectsByLanguage } from './data/projects'
 
@@ -15,6 +16,9 @@ import Experience from './components/Experience.vue'
 import Contact from './components/Contact.vue'
 import Footer from './components/Footer.vue'
 import SpecDrawer from './components/SpecDrawer.vue'
+import CustomCursor from './components/CustomCursor.vue'
+
+gsap.registerPlugin(ScrollTrigger)
 
 // -----------------------------------------------------------------
 // State & Core Config
@@ -26,6 +30,8 @@ const resolvedTheme = ref('light')
 const themeAnnouncement = ref('')
 const activeProject = ref(null) // Holds selected project for slide-in drawer
 const activeSection = ref('home')
+const showPreloader = ref(true)
+const counterRef = ref(null)
 
 // -----------------------------------------------------------------
 // Copy (Bilingual & Normal Portfolio Sectioning)
@@ -34,12 +40,15 @@ const copy = {
   id: {
     skip: 'Lewati ke konten utama',
     issue: 'Karya Pilihan',
-    eyebrow: 'Desainer UI/UX & Pengembang Kreatif',
+    eyebrow: 'SYSTEMS ARCHITECTURE & INTERACTIVE DESIGN',
     coverHeadline: ['Membangun antarmuka ', 'yang hidup dan ', { italic: 'bermakna.' }],
     coverBody:
-      'Saya menjembatani kode performa tinggi dan desain visual yang matang. Membuat produk digital interaktif yang intuitif, aksesibel, dan dirancang dengan ketelitian penuh.',
+      'Menghubungkan ketelitian komputasi berkinerja tinggi dengan kepekaan sistem visual. Mentransformasi antarmuka digital menjadi pengalaman yang intuitif, aksesibel, dan terstruktur secara arsitektural.',
     ctaView: 'Lihat Portfolio',
     ctaContact: 'Hubungi Saya',
+    ctaDownloadCv: 'Unduh CV',
+
+
     
     homeLabel: 'Beranda',
     aboutLabel: 'Tentang',
@@ -52,7 +61,7 @@ const copy = {
     aboutBodyP1:
       'Bagi saya, antarmuka adalah media komunikasi. Setiap elemen di layar harus memiliki alasan, hierarki visual yang jelas, dan ritme yang menuntun pembaca secara intuitif.',
     aboutBodyP2:
-      'Dengan menggabungkan kepekaan visual seorang desainer grafis dan ketelitian teknis seorang developer, saya memastikan produk digital tidak hanya memukau tetapi juga aksesibel, berkinerja tinggi, dan mantap dirawat.',
+      'Dengan mengintegrasikan parameter visual arsitektural dan ketelitian logika komputasi, saya memastikan produk digital tidak hanya memukau tetapi juga aksesibel, berkinerja tinggi, dan mantap dirawat.',
     aboutPullQuote: '“Detail halus yang tidak didekorasikan secara berlebih adalah cara terbaik menunjukkan keahlian.”',
     
     worksTitle: 'Karya Pilihan',
@@ -68,7 +77,7 @@ const copy = {
     contactTitle: 'Mari Bekerja Sama',
     contactMeta: 'Terbuka untuk diskusi',
     contactBody:
-      'Jika Anda membutuhkan desainer-developer yang peduli pada alur produk, detail mikro, dan arsitektur engineering yang solid, silakan kirim pesan.',
+      'Jika Anda membutuhkan kolaborator yang peduli pada alur produk, detail mikro, dan arsitektur visual serta engineering yang solid, silakan kirim pesan.',
     sendEmail: 'Kirim Email',
     phone: 'Telepon',
     linkedin: 'LinkedIn',
@@ -96,12 +105,15 @@ const copy = {
   en: {
     skip: 'Skip to main content',
     issue: 'Selected Works',
-    eyebrow: 'UI/UX Designer & Creative Developer',
+    eyebrow: 'SYSTEMS ARCHITECTURE & INTERACTIVE DESIGN',
     coverHeadline: ['Crafting interfaces ', 'that are alive and ', { italic: 'purposeful.' }],
     coverBody:
-      'I bridge high-performance engineering and visual system authority. Designing interactive digital products that are intuitive, accessible, and structured with absolute care.',
+      'Uniting the rigor of high-performance computation with the sensibilities of visual systems. Transforming digital interfaces into highly intuitive, fully accessible, and structurally sound experiences.',
     ctaView: 'View Portfolio',
     ctaContact: 'Get in Touch',
+    ctaDownloadCv: 'Download CV',
+
+
     
     homeLabel: 'Home',
     aboutLabel: 'About',
@@ -114,7 +126,7 @@ const copy = {
     aboutBodyP1:
       'For me, an interface is a communication space. Every element on the screen must have an architectural reason, clear visual hierarchy, and rhythm that guides readers.',
     aboutBodyP2:
-      'Combining the visual sensibilities of a designer with the precision code of a developer, I ensure digital products are not only beautiful but also accessible, highly performant, and maintainable.',
+      'By integrating visual systems guidelines with computational rigor, I ensure digital products are not only beautiful but also accessible, highly performant, and structurally sound.',
     aboutPullQuote: '“A subtle detail that is never over-decorated is the quietest way to show skill.”',
     
     worksTitle: 'Selected Works',
@@ -130,7 +142,7 @@ const copy = {
     contactTitle: 'Let\'s Collaborate',
     contactMeta: 'Open for discussions',
     contactBody:
-      'If you need a developer who cares deeply about product flows, micro-interactions, and robust engineering architecture, let\'s start talking.',
+      'If you need a collaborator who cares deeply about product flows, spatial metrics, and robust engineering systems, let\'s start talking.',
     sendEmail: 'Send Email',
     phone: 'Phone',
     linkedin: 'LinkedIn',
@@ -203,20 +215,27 @@ const toggleLang = () => {
 // Smooth Scroll (Lenis)
 // -----------------------------------------------------------------
 let lenis = null
-let lenisRaf = null
+
+const lenisTicker = (time) => {
+  if (lenis) lenis.raf(time * 1000)
+}
 
 const initLenis = () => {
   if (isReducedMotion()) return
   lenis = new Lenis({
     duration: 1.1,
     easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+    smoothWheel: true
   })
-  const run = (time) => {
-    if (!lenis) return
-    lenis.raf(time)
-    lenisRaf = requestAnimationFrame(run)
-  }
-  lenisRaf = requestAnimationFrame(run)
+
+  // Sync scroll events with ScrollTrigger
+  lenis.on('scroll', ScrollTrigger.update)
+
+  // Use GSAP ticker to run Lenis raf loop
+  gsap.ticker.add(lenisTicker)
+
+  // Set lag smoothing to 0 to prevent synchronization jumps
+  gsap.ticker.lagSmoothing(0)
 }
 
 // -----------------------------------------------------------------
@@ -273,11 +292,77 @@ const playOpeningSequence = () => {
   if (isReducedMotion()) return
   const root = document.querySelector('#home')
   if (!root) return
+  
   const tl = gsap.timeline({ defaults: { ease: 'cubic-bezier(0.22, 1, 0.36, 1)' } })
-  tl.from(root.querySelector('.hero-headline'), { y: 36, opacity: 0, duration: 0.85 })
-    .from(root.querySelector('.hero-desc'), { y: 20, opacity: 0, duration: 0.6 }, '-=0.45')
-    .from(root.querySelector('.hero-actions'), { y: 16, opacity: 0, duration: 0.5 }, '-=0.35')
-    .from(root.querySelector('.portrait-wrapper'), { scale: 0.92, opacity: 0, duration: 0.75 }, '-=0.7')
+  
+  // Initialize mask children starts to translateY(115%)
+  gsap.set(root.querySelectorAll('.mask-reveal-child'), { y: '115%' })
+  
+  tl.from(root.querySelector('.section-kicker'), { y: 15, opacity: 0, duration: 0.7 })
+    .to(root.querySelectorAll('.mask-reveal-child'), { y: '0%', duration: 0.95, stagger: 0.12 }, '-=0.45')
+    .from(root.querySelector('.hero-desc'), { y: 12, opacity: 0, duration: 0.6 }, '-=0.6')
+    .from(root.querySelector('.hero-actions'), { y: 12, opacity: 0, duration: 0.5 }, '-=0.45')
+    .from(root.querySelector('.portrait-wrapper'), { scale: 0.92, opacity: 0, duration: 0.85 }, '-=0.7')
+}
+
+// -----------------------------------------------------------------
+// Cinematic Preloader Sequence
+// -----------------------------------------------------------------
+const startCinematicPreloader = () => {
+  if (isReducedMotion()) {
+    showPreloader.value = false
+    playOpeningSequence()
+    return
+  }
+
+  const tl = gsap.timeline({
+    onComplete: () => {
+      showPreloader.value = false
+      playOpeningSequence()
+    }
+  })
+
+  // 1. Initial State
+  gsap.set('#preloader', { clipPath: 'inset(0% 0 0% 0)' })
+  gsap.set('.pre-line', { scaleX: 0 })
+  gsap.set('header.portfolio-header', { opacity: 0, y: -16 })
+
+  // 2. Lines sweep: scaleX 0 -> 1
+  tl.to('.pre-line', {
+    scaleX: 1,
+    duration: 0.95,
+    ease: 'power2.inOut',
+    stagger: 0.1
+  })
+
+  // 3. Counter animate: 0 -> 100
+  const counterObj = { value: 0 }
+  tl.to(counterObj, {
+    value: 100,
+    duration: 2.3,
+    ease: 'power1.inOut',
+    onUpdate: () => {
+      if (counterRef.value) {
+        const roundedVal = Math.round(counterObj.value)
+        counterRef.value.textContent = roundedVal < 10 ? `0${roundedVal}` : roundedVal
+      }
+    }
+  }, '-=0.6')
+
+  // 4. Slide up exit: clip-path inset(0 0 100% 0)
+  tl.to('#preloader', {
+    clipPath: 'inset(0 0 100% 0)',
+    duration: 1.1,
+    ease: 'power4.inOut'
+  }, '+=0.2')
+
+  // 5. Nav fade in
+  tl.to('header.portfolio-header', {
+    opacity: 1,
+    y: 0,
+    duration: 0.8,
+    ease: 'power3.out'
+  }, '-=0.9')
 }
 
 // -----------------------------------------------------------------
@@ -306,15 +391,15 @@ onMounted(async () => {
   initLenis()
   initIntersectionObserver()
   await nextTick()
-  playOpeningSequence()
+  startCinematicPreloader()
 })
 
 onUnmounted(() => {
-  if (lenisRaf) cancelAnimationFrame(lenisRaf)
   if (lenis) {
     lenis.destroy()
     lenis = null
   }
+  gsap.ticker.remove(lenisTicker)
   if (observer) {
     observer.disconnect()
     observer = null
@@ -331,6 +416,15 @@ watch(lang, () => {
 </script>
 
 <template>
+  <!-- ========== Cinematic Count Loader ========== -->
+  <div id="preloader" class="preloader-overlay" v-if="showPreloader">
+    <div class="pre-line pre-line-top"></div>
+    <div class="pre-label">FARID EKA APRILIAN</div>
+    <div class="pre-counter" ref="counterRef">00</div>
+    <div class="pre-label">UI/UX &amp; CREATIVE DEV</div>
+    <div class="pre-line pre-line-bottom"></div>
+  </div>
+
   <a href="#home" class="sr-only focus:not-sr-only fixed top-4 left-4 z-50 bg-black text-white px-4 py-2 rounded-md font-semibold outline-none">{{ c.skip }}</a>
 
   <span class="sr-only" role="status" aria-live="polite">
@@ -380,6 +474,8 @@ watch(lang, () => {
     :c="c"
     @close="activeProject = null"
   />
+
+  <CustomCursor />
 </template>
 
 <style>

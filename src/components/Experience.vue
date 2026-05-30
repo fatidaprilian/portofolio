@@ -1,7 +1,47 @@
 <script setup>
+import { onMounted, onUnmounted } from 'vue'
+import gsap from 'gsap'
+import ScrollTrigger from 'gsap/ScrollTrigger'
+
+gsap.registerPlugin(ScrollTrigger)
+
 defineProps({
   c: { type: Object, required: true },
   profile: { type: Object, required: true }
+})
+
+let scrollTriggerInstance = null
+
+const initExperienceReveal = () => {
+  const isReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  if (isReduced) return
+
+  scrollTriggerInstance = ScrollTrigger.create({
+    trigger: '#experience',
+    start: 'top 85%',
+    onEnter: () => {
+      gsap.from('#experience .timeline-item', {
+        x: -32,
+        opacity: 0,
+        duration: 0.8,
+        ease: 'power3.out',
+        stagger: 0.16
+      })
+    },
+    once: true
+  })
+}
+
+onMounted(() => {
+  setTimeout(() => {
+    initExperienceReveal()
+  }, 150)
+})
+
+onUnmounted(() => {
+  if (scrollTriggerInstance) {
+    scrollTriggerInstance.kill()
+  }
 })
 </script>
 

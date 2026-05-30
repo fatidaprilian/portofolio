@@ -1,6 +1,10 @@
 <script setup>
-import { ref } from 'vue'
+import { onMounted, onUnmounted, ref } from 'vue'
 import { Mail, Phone, Linkedin } from 'lucide-vue-next'
+import gsap from 'gsap'
+import ScrollTrigger from 'gsap/ScrollTrigger'
+
+gsap.registerPlugin(ScrollTrigger)
 
 defineProps({
   c: { type: Object, required: true },
@@ -9,6 +13,8 @@ defineProps({
 
 const formState = ref({ name: '', email: '', message: '' })
 const formStatus = ref(null) // 'sending' | 'success' | 'error'
+
+let scrollTriggerInstance = null
 
 const handleFormSubmit = async () => {
   if (!formState.value.name || !formState.value.email || !formState.value.message) {
@@ -24,6 +30,40 @@ const handleFormSubmit = async () => {
     formStatus.value = null
   }, 4000)
 }
+
+const initContactReveal = () => {
+  const isReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  if (isReduced) return
+
+  // Set initial hidden state under masks
+  gsap.set('.contact-mask-child', { y: '115%' })
+
+  scrollTriggerInstance = ScrollTrigger.create({
+    trigger: '#contact',
+    start: 'top 80%',
+    onEnter: () => {
+      gsap.to('.contact-mask-child', {
+        y: '0%',
+        duration: 1.1,
+        ease: 'power4.out',
+        stagger: 0.14
+      })
+    },
+    once: true
+  })
+}
+
+onMounted(() => {
+  setTimeout(() => {
+    initContactReveal()
+  }, 150)
+})
+
+onUnmounted(() => {
+  if (scrollTriggerInstance) {
+    scrollTriggerInstance.kill()
+  }
+})
 </script>
 
 <template>
@@ -35,8 +75,20 @@ const handleFormSubmit = async () => {
 
     <div class="glass-panel contact-panel">
       <div class="contact-info">
-        <h3 class="contact-info-title">Let's talk</h3>
-        <p>{{ c.contactBody }}</p>
+        <!-- Cinematic Giant Display Header -->
+        <div class="contact-big-title flex flex-col gap-1 select-none text-left tracking-tighter uppercase font-black leading-none mb-6">
+          <div class="mask-reveal">
+            <span class="contact-mask-child block text-[clamp(2.5rem,7vw,5.5rem)]">LET'S</span>
+          </div>
+          <div class="mask-reveal">
+            <span class="contact-mask-child text-outline-stroke block text-[clamp(2.5rem,7vw,5.5rem)]">BUILD</span>
+          </div>
+          <div class="mask-reveal">
+            <span class="contact-mask-child block text-[clamp(2.5rem,7vw,5.5rem)]">TOGETHER</span>
+          </div>
+        </div>
+
+        <p class="mb-6">{{ c.contactBody }}</p>
         
         <div class="contact-links">
           <a :href="`mailto:${profile.contactActions.emailValue}`" class="contact-link-item">

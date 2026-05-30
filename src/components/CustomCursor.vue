@@ -54,6 +54,11 @@ const onPointerOut = (event) => {
 onMounted(() => {
   if (typeof window === 'undefined') return
 
+  // Only enable custom cursor style if the device supports hover
+  if (window.matchMedia('(hover: hover)').matches) {
+    document.body.classList.add('has-custom-cursor')
+  }
+
   mouse.x = window.innerWidth / 2
   mouse.y = window.innerHeight / 2
   renderedCursor.x.previous = mouse.x
@@ -67,6 +72,7 @@ onMounted(() => {
 
 onUnmounted(() => {
   if (typeof window === 'undefined') return
+  document.body.classList.remove('has-custom-cursor')
   window.removeEventListener('mousemove', onMouseMove)
   document.body.removeEventListener('pointerover', onPointerOver)
   document.body.removeEventListener('pointerout', onPointerOut)
@@ -104,40 +110,43 @@ onUnmounted(() => {
 
 .cursor-outer {
   position: absolute;
-  top: -15px;
-  left: -15px;
-  width: 30px;
-  height: 30px;
-  border: 1px solid rgba(206, 178, 150, 0.4);
+  top: -16px;
+  left: -16px;
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--accent);
+  opacity: 0.45;
   border-radius: 50%;
-  transition: width 0.22s ease-out, height 0.22s ease-out, top 0.22s ease-out, left 0.22s ease-out, background-color 0.22s ease-out, border-color 0.22s ease-out;
+  transition: width 0.22s ease-out, height 0.22s ease-out, top 0.22s ease-out, left 0.22s ease-out, background-color 0.22s ease-out, border-color 0.22s ease-out, opacity 0.22s ease-out;
   will-change: transform;
 }
 
 .cursor-inner {
   position: absolute;
-  top: -3px;
-  left: -3px;
-  width: 6px;
-  height: 6px;
-  background-color: rgba(206, 178, 150, 0.9);
+  top: -4px;
+  left: -4px;
+  width: 8px;
+  height: 8px;
+  background-color: var(--accent);
   border-radius: 50%;
-  transition: opacity 0.22s ease-out;
+  transition: transform 0.22s ease-out, opacity 0.22s ease-out;
   will-change: transform;
 }
 
 /* Hover States */
 .cursor-outer.is-hover {
-  width: 42px;
-  height: 42px;
-  top: -21px;
-  left: -21px;
-  background-color: rgba(206, 178, 150, 0.1);
-  border-color: rgba(206, 178, 150, 0.6);
+  width: 48px;
+  height: 48px;
+  top: -24px;
+  left: -24px;
+  background-color: var(--accent-glow);
+  border-color: var(--accent);
+  opacity: 0.85;
   backdrop-filter: blur(1px);
 }
 
 .cursor-inner.is-hover {
-  opacity: 0;
+  transform: scale(0.3);
+  opacity: 0.4;
 }
 </style>

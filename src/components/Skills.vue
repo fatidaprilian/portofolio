@@ -1,7 +1,54 @@
 <script setup>
-defineProps({
+import { computed, onMounted, onUnmounted } from 'vue'
+import gsap from 'gsap'
+import ScrollTrigger from 'gsap/ScrollTrigger'
+
+gsap.registerPlugin(ScrollTrigger)
+
+const props = defineProps({
   c: { type: Object, required: true },
   profile: { type: Object, required: true }
+})
+
+// Flatten all skill items from nested groups into a single cohesive list for neat layout wrap
+const allSkills = computed(() => {
+  if (!props.profile || !props.profile.skillGroups) return []
+  return props.profile.skillGroups.flatMap(group => group.items)
+})
+
+let scrollTriggerInstance = null
+
+const initSkillsReveal = () => {
+  const isReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  if (isReduced) return
+
+  scrollTriggerInstance = ScrollTrigger.create({
+    trigger: '#skills',
+    start: 'top 85%',
+    onEnter: () => {
+      gsap.from('#skills .skill-capsule', {
+        y: 24,
+        opacity: 0,
+        scale: 0.9,
+        duration: 0.65,
+        ease: 'power3.out',
+        stagger: 0.03
+      })
+    },
+    once: true
+  })
+}
+
+onMounted(() => {
+  setTimeout(() => {
+    initSkillsReveal()
+  }, 150)
+})
+
+onUnmounted(() => {
+  if (scrollTriggerInstance) {
+    scrollTriggerInstance.kill()
+  }
 })
 </script>
 
@@ -12,19 +59,14 @@ defineProps({
       <h2 id="skills-heading" class="section-title">{{ c.skillsTitle }}</h2>
     </div>
 
-    <div class="skills-matrix">
+    <!-- Flattened wrapping tag matrix cloud for perfect grid alignment -->
+    <div class="skills-matrix flex flex-wrap gap-3 justify-center max-w-4xl mx-auto mt-8">
       <span 
-        v-for="group in profile.skillGroups" 
-        :key="group.category"
-        class="flex flex-wrap gap-3"
+        v-for="skill in allSkills" 
+        :key="skill" 
+        class="skill-capsule block"
       >
-        <span 
-          v-for="skill in group.items" 
-          :key="skill" 
-          class="skill-capsule"
-        >
-          {{ skill }}
-        </span>
+        {{ skill }}
       </span>
     </div>
   </section>
