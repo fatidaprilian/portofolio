@@ -57,6 +57,8 @@ const projectSource = [
     type: 'standard',
     accent: 'bark',
     link: 'https://github.com/fatidaprilian/Agentic-Senior-Core',
+    liveUrl: 'https://agenticsenior.vercel.app',
+    screenshot: '/agenticsenior.png',
     role: {
       id: 'AI Workflow Kit',
       en: 'AI Workflow Kit'
@@ -100,9 +102,11 @@ const projectSource = [
     type: 'standard',
     accent: 'clay',
     link: 'https://github.com/fatidaprilian/ecommercevespa-client',
+    liveUrl: 'https://jakartascootershop.com',
+    screenshot: '/vespasite.png',
     role: {
-      id: 'Frontend System',
-      en: 'Frontend System'
+      id: 'Fullstack E-commerce',
+      en: 'Fullstack E-commerce'
     },
     summary: {
       id: 'Client storefront untuk flow e-commerce dengan fokus di performance, struktur, dan iterasi cepat.',
@@ -320,6 +324,8 @@ export const getProjectsByLanguage = (language = 'id') => {
     type: projectItem.type,
     accent: projectItem.accent,
     link: projectItem.link,
+    liveUrl: projectItem.liveUrl ?? null,
+    screenshot: projectItem.screenshot ?? null,
     tags: projectItem.tags,
     role: projectItem.role[supportedLanguage],
     summary: projectItem.summary[supportedLanguage],

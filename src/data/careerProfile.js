@@ -83,7 +83,7 @@ const careerProfileSource = {
       },
       {
         category: 'Languages and Web Tech',
-        items: ['JavaScript', 'TypeScript', 'PHP', 'HTML/CSS', 'English (Intermediate)', 'Indonesian (Native)']
+        items: ['JavaScript', 'TypeScript', 'PHP', 'HTML/CSS', 'English (Pre-Intermediate)', 'Indonesian (Native)']
       },
       {
         category: 'Frameworks and Tools',

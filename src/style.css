@@ -663,6 +663,42 @@
     z-index: 1;
   }
 
+  .spec-drawer-screenshot {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .spec-drawer-hero:has(.spec-drawer-screenshot) {
+    padding: 0;
+    overflow: hidden;
+  }
+
+  .btn-outline {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: transparent;
+    color: var(--ink-primary);
+    font-weight: 700;
+    font-size: 0.92rem;
+    padding: 14px 28px;
+    border-radius: 99px;
+    cursor: pointer;
+    border: 1.5px solid var(--rule);
+    transition: transform var(--dur-standard) var(--ease-spring),
+                border-color var(--dur-micro) var(--ease-standard),
+                background-color var(--dur-micro) var(--ease-standard);
+  }
+  .btn-outline:hover {
+    transform: scale(1.05) translateY(-2px);
+    border-color: var(--accent);
+    background: var(--surface-sunken);
+  }
+
   .spec-drawer-metadata {
     display: grid;
     grid-template-columns: repeat(3, 1fr);

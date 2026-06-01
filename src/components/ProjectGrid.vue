@@ -220,12 +220,25 @@ const getPreviewTheme = (accentLabel) => previewThemeByAccent[accentLabel] ?? pr
         >
           <TiltCard>
             <a
-              :href="project.link"
+              :href="project.liveUrl || project.link"
               target="_blank"
               rel="noreferrer"
               class="group flex items-start lg:items-center gap-4 lg:gap-6 py-7 md:py-8 border-b border-[#d7c2a8]/50 last:border-b-0 transition-colors duration-300 hover:bg-[#f5e5d2]/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#8f5d3f]/60 focus-visible:ring-offset-2 focus-visible:ring-offset-[#f5e9d8] -mx-5 md:-mx-8 lg:-mx-10 px-5 md:px-8 lg:px-10"
             >
           <div
+            v-if="project.screenshot"
+            class="hidden sm:block w-24 md:w-28 lg:w-32 flex-shrink-0"
+          >
+            <img
+              :src="project.screenshot"
+              :alt="project.title + ' screenshot'"
+              class="w-full rounded-xl border border-[#d7c2a8]/60 shadow-[0_16px_30px_-20px_rgba(30,17,12,0.8)] object-cover aspect-[16/10]"
+              decoding="async"
+              loading="lazy"
+            />
+          </div>
+          <div
+            v-else
             class="hidden sm:flex w-24 md:w-28 lg:w-32 min-h-16 md:min-h-20 rounded-xl border border-white/10 bg-gradient-to-br p-3 flex-col justify-between shadow-[0_16px_30px_-20px_rgba(30,17,12,0.8)]"
             :class="getPreviewTheme(project.accent).shellClassName"
           >

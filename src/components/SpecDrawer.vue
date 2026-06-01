@@ -38,7 +38,14 @@ const monogramFor = (title) => {
         
         <div class="spec-drawer-body">
           <div class="spec-drawer-hero">
-            <div class="spec-drawer-monogram" aria-hidden="true">
+            <img
+              v-if="activeProject.screenshot"
+              :src="activeProject.screenshot"
+              :alt="activeProject.title + ' screenshot'"
+              class="spec-drawer-screenshot"
+              decoding="async"
+            />
+            <div v-else class="spec-drawer-monogram" aria-hidden="true">
               {{ monogramFor(activeProject.title) }}
             </div>
           </div>
@@ -73,8 +80,24 @@ const monogramFor = (title) => {
             </div>
           </div>
           
-          <div class="mt-4 flex gap-4">
-            <a :href="activeProject.link" target="_blank" rel="noreferrer" class="btn-premium w-full justify-center">
+          <div class="mt-4 flex gap-3">
+            <a
+              v-if="activeProject.liveUrl"
+              :href="activeProject.liveUrl"
+              target="_blank"
+              rel="noreferrer"
+              class="btn-premium w-full justify-center"
+            >
+              <span>Live Site</span>
+              <ArrowUpRight class="w-4 h-4" aria-hidden="true" />
+            </a>
+            <a
+              :href="activeProject.link"
+              target="_blank"
+              rel="noreferrer"
+              class="w-full justify-center"
+              :class="activeProject.liveUrl ? 'btn-outline' : 'btn-premium'"
+            >
               <span>View Source</span>
               <ArrowUpRight class="w-4 h-4" aria-hidden="true" />
             </a>
