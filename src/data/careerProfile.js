@@ -3,7 +3,7 @@ const careerProfileSource = {
     heroLabel: 'Perjalanan Karir',
     heroTitle: 'Perjalanan profesional yang dibangun lewat produk nyata.',
     heroSummary:
-      'Mahasiswa Teknologi Informasi sekaligus Full-stack Web Developer dengan fokus pada web engineering, AI architecture, dan kualitas delivery. Nyaman bekerja dengan instruksi teknis berbahasa Inggris serta kolaborasi lintas tim.',
+      'Mahasiswa Teknologi Informasi sekaligus Full-stack Web Developer dengan fokus pada web engineering, AI architecture, dan kualitas delivery. Mampu membaca dan menulis dokumentasi teknis berbahasa Inggris serta berkolaborasi lintas tim.',
     quickFactsLabel: 'Fakta Singkat',
     quickFacts: [
       'S1 Teknologi Informasi, BSI (Semester 6)',
@@ -78,16 +78,32 @@ const careerProfileSource = {
     skillsLabel: 'Stack Teknis',
     skillGroups: [
       {
-        category: 'Core Competencies',
-        items: ['Prompt Engineering', 'Code Testing', 'AI Model Evaluation (LLM)', 'Neuro-Symbolic AI', 'Full-stack Web Development']
+        category: 'Languages',
+        items: ['JavaScript', 'TypeScript', 'Go', 'PHP', 'SQL']
       },
       {
-        category: 'Languages and Web Tech',
-        items: ['JavaScript', 'TypeScript', 'PHP', 'HTML/CSS', 'English (Pre-Intermediate)', 'Indonesian (Native)']
+        category: 'Web Technologies',
+        items: ['HTML5', 'CSS3', 'REST APIs']
       },
       {
-        category: 'Frameworks and Tools',
-        items: ['Next.js', 'NestJS', 'Bun', 'Git', 'Docker', 'VS Code', 'Google Antigravity', 'Microsoft Word']
+        category: 'Frameworks',
+        items: ['NestJS', 'Next.js', 'Vue 3', 'Laravel', 'Tailwind CSS']
+      },
+      {
+        category: 'Databases & ORM',
+        items: ['PostgreSQL', 'Prisma']
+      },
+      {
+        category: 'Tools & Infrastructure',
+        items: ['Git', 'GitHub Actions', 'Docker', 'Linux', 'Bun', 'OpenWrt', 'Linux tc']
+      },
+      {
+        category: 'Blockchain',
+        items: ['ethers.js', 'Web3Auth']
+      },
+      {
+        category: 'AI Tooling',
+        items: ['Prompt Engineering', 'LLM Integration', 'Structured Output Parsing', 'AI Agent Development']
       }
     ]
   },
@@ -95,7 +111,7 @@ const careerProfileSource = {
     heroLabel: 'Career Story',
     heroTitle: 'A professional journey built through real product delivery.',
     heroSummary:
-      'Information Technology undergraduate and Full-stack Web Developer focused on web engineering, AI architecture, and quality delivery. Comfortable with technical English instructions and cross-team collaboration.',
+      'Information Technology undergraduate and Full-stack Web Developer focused on web engineering, AI architecture, and quality delivery. Proficient in reading and written communication in English, with cross-team collaboration experience.',
     quickFactsLabel: 'Quick Facts',
     quickFacts: [
       'Information Technology Undergraduate, BSI (6th Semester)',
@@ -170,16 +186,32 @@ const careerProfileSource = {
     skillsLabel: 'Technical Stack',
     skillGroups: [
       {
-        category: 'Core Competencies',
-        items: ['Prompt Engineering', 'Code Testing', 'AI Model Evaluation (LLM)', 'Neuro-Symbolic AI', 'Full-stack Web Development']
+        category: 'Languages',
+        items: ['JavaScript', 'TypeScript', 'Go', 'PHP', 'SQL']
       },
       {
-        category: 'Languages and Web Tech',
-        items: ['JavaScript', 'TypeScript', 'PHP', 'HTML/CSS', 'English (Intermediate)', 'Indonesian (Native)']
+        category: 'Web Technologies',
+        items: ['HTML5', 'CSS3', 'REST APIs']
       },
       {
-        category: 'Frameworks and Tools',
-        items: ['Next.js', 'NestJS', 'Bun', 'Git', 'Docker', 'VS Code', 'Google Antigravity', 'Microsoft Word']
+        category: 'Frameworks',
+        items: ['NestJS', 'Next.js', 'Vue 3', 'Laravel', 'Tailwind CSS']
+      },
+      {
+        category: 'Databases & ORM',
+        items: ['PostgreSQL', 'Prisma']
+      },
+      {
+        category: 'Tools & Infrastructure',
+        items: ['Git', 'GitHub Actions', 'Docker', 'Linux', 'Bun', 'OpenWrt', 'Linux tc']
+      },
+      {
+        category: 'Blockchain',
+        items: ['ethers.js', 'Web3Auth']
+      },
+      {
+        category: 'AI Tooling',
+        items: ['Prompt Engineering', 'LLM Integration', 'Structured Output Parsing', 'AI Agent Development']
       }
     ]
   }

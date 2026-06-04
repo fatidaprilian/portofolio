@@ -148,40 +148,40 @@ const projectSource = [
     accent: 'bark',
     link: 'https://github.com/fatidaprilian/digital-credential-platform',
     role: {
-      id: 'Platform Backend',
-      en: 'Platform Backend'
+      id: 'Fullstack Web3 Platform',
+      en: 'Fullstack Web3 Platform'
     },
     summary: {
-      id: 'Platform untuk mengelola credential lifecycle dengan service boundary yang jelas.',
-      en: 'A platform for managing credential lifecycle with clearly defined service boundaries.'
+      id: 'Platform kredensial digital berbasis blockchain yang menerbitkan dan memverifikasi sertifikat sebagai NFT di jaringan Polygon Amoy.',
+      en: 'A blockchain-based digital credential platform that issues and verifies certificates as NFTs on the Polygon Amoy network.'
     },
     keyPoints: {
-      id: ['Domain modeling', 'Service layer', 'Data reliability'],
-      en: ['Domain modeling', 'Service layer', 'Data reliability']
+      id: ['Smart contract integration', 'Web3Auth login', 'IPFS credential storage'],
+      en: ['Smart contract integration', 'Web3Auth login', 'IPFS credential storage']
     },
     caseStudy: {
       id: {
-        constraint: 'Lifecycle credential butuh integritas data tinggi dengan modul yang mudah di-maintain.',
-        decision: 'Menetapkan service boundary per domain dan validasi ketat di setiap input boundary.',
-        outcome: 'Perubahan domain lebih terisolasi dan stabilitas data lintas modul meningkat.'
+        constraint: 'Kredensial harus bisa diverifikasi secara on-chain tanpa mengorbankan kemudahan login untuk pengguna non-crypto.',
+        decision: 'Menggunakan Web3Auth untuk autentikasi wallet yang familiar, dan ethers.js untuk interaksi langsung dengan smart contract di Polygon Amoy.',
+        outcome: 'Pengguna bisa login tanpa setup wallet manual, dan setiap sertifikat tercatat permanen di blockchain untuk verifikasi publik.'
       },
       en: {
-        constraint: 'Credential lifecycle required high data integrity with maintainable module boundaries.',
-        decision: 'Defined service boundaries per domain and applied strict validation at input boundaries.',
-        outcome: 'Domain changes became more isolated and cross-module data stability improved.'
+        constraint: 'Credentials had to be verifiable on-chain without sacrificing login simplicity for non-crypto users.',
+        decision: 'Used Web3Auth for familiar wallet authentication and ethers.js for direct smart contract interaction on Polygon Amoy.',
+        outcome: 'Users could log in without manual wallet setup, and every certificate was permanently recorded on-chain for public verification.'
       }
     },
     preview: {
       id: {
-        eyebrow: 'Platform Snapshot',
-        headline: 'Boundary service yang rapi untuk lifecycle kredensial digital.'
+        eyebrow: 'Web3 Platform Snapshot',
+        headline: 'Kredensial digital yang tercatat permanen di blockchain.'
       },
       en: {
-        eyebrow: 'Platform Snapshot',
-        headline: 'Clear service boundaries for digital credential lifecycle.'
+        eyebrow: 'Web3 Platform Snapshot',
+        headline: 'Digital credentials permanently recorded on blockchain.'
       }
     },
-    tags: ['TypeScript', 'Backend', 'Platform']
+    tags: ['TypeScript', 'NestJS', 'Next.js', 'Web3', 'Polygon', 'ethers.js']
   },
   {
     title: 'Ticket Conductor',

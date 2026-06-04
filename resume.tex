@@ -1,0 +1,189 @@
+%-------------------------
+% Resume — Farid Eka Aprilian
+%------------------------
+
+\documentclass[letterpaper,11pt]{article}
+
+\usepackage{latexsym}
+\usepackage[empty]{fullpage}
+\usepackage{titlesec}
+\usepackage{marvosym}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{verbatim}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{fancyhdr}
+\usepackage[english]{babel}
+\usepackage{tabularx}
+\input{glyphtounicode}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+\addtolength{\oddsidemargin}{-0.5in}
+\addtolength{\evensidemargin}{-0.5in}
+\addtolength{\textwidth}{1in}
+\addtolength{\topmargin}{-.5in}
+\addtolength{\textheight}{1.0in}
+
+\urlstyle{same}
+
+\raggedbottom
+\raggedright
+\setlength{\tabcolsep}{0in}
+
+\titleformat{\section}{
+  \vspace{-4pt}\scshape\raggedright\large
+}{}{0em}{}[\color{black}\titlerule \vspace{-5pt}]
+
+\pdfgentounicode=1
+
+\newcommand{\resumeItem}[1]{
+  \item\small{
+    {#1 \vspace{-2pt}}
+  }
+}
+
+\newcommand{\resumeSubheading}[4]{
+  \vspace{-2pt}\item
+    \begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}
+      \textbf{#1} & #2 \\
+      \textit{\small#3} & \textit{\small #4} \\
+    \end{tabular*}\vspace{-7pt}
+}
+
+\newcommand{\resumeSubSubheading}[2]{
+    \item
+    \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
+      \textit{\small#1} & \textit{\small #2} \\
+    \end{tabular*}\vspace{-7pt}
+}
+
+\newcommand{\resumeProjectHeading}[2]{
+    \item
+    \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
+      \small#1 & #2 \\
+    \end{tabular*}\vspace{-7pt}
+}
+
+\newcommand{\resumeSubItem}[1]{\resumeItem{#1}\vspace{-4pt}}
+
+\renewcommand\labelitemii{$\vcenter{\hbox{\tiny$\bullet$}}$}
+
+\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=0.15in, label={}]}
+\newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
+\newcommand{\resumeItemListStart}{\begin{itemize}}
+\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-5pt}}
+
+\begin{document}
+
+\begin{center}
+    \textbf{\Huge \scshape Farid Eka Aprilian} \\ \vspace{1pt}
+    \small +62-851-5546-1126 $|$ \href{mailto:faridaprilian214@gmail.com}{\underline{faridaprilian214@gmail.com}} $|$ 
+    \href{https://faridekaaprilian.vercel.app/}{\underline{faridekaaprilian.vercel.app}} \\ \vspace{1pt}
+    \href{https://www.linkedin.com/in/farid-aprilian/}{\underline{linkedin.com/in/farid-aprilian}} $|$
+    \href{https://github.com/fatidaprilian}{\underline{github.com/fatidaprilian}}
+\end{center}
+
+
+%-----------SUMMARY-----------
+\section{Summary}
+  \small{Third-year Information Technology undergraduate with hands-on experience building full-stack applications using TypeScript, Go, Next.js, Vue.js, and NestJS. Focused on backend systems, AI agent development, and developer tooling. Comfortable working with technical documentation and collaborating in English.}
+
+%-----------EDUCATION-----------
+\section{Education}
+  \resumeSubHeadingListStart
+    \resumeSubheading
+      {Universitas Bina Sarana Informatika (BSI)}{Indonesia}
+      {Bachelor's Degree in Information Technology (S1)}{Sept. 2023 -- Present}
+      \resumeItemListStart
+        \resumeItem{Coursework: data structures, database systems, software engineering.}
+      \resumeItemListEnd
+    \resumeSubheading
+      {SMK Mekanik Cibinong}{Cibinong, Indonesia}
+      {Vocational High School Diploma in Multimedia}{July 2020 -- May 2023}
+  \resumeSubHeadingListEnd
+
+
+%-----------EXPERIENCE-----------
+\section{Experience}
+  \resumeSubHeadingListStart
+
+    \resumeSubheading
+      {Freelance Web Developer}{Sept. 2025 -- Dec. 2025}
+      {Remote, team of 3}{Indonesia}
+      \resumeItemListStart
+        \resumeItem{Built an e-commerce storefront for a Vespa parts shop using Next.js 15 (App Router), covering catalog, cart, checkout, and order management.}
+        \resumeItem{Scoped features, set sprint milestones, and delivered the final handoff within the 3-month contract.}
+      \resumeItemListEnd
+
+    \resumeSubheading
+      {Web \& Content Intern (PKL)}{2022 (3 Months)}
+      {Agronesia}{Indonesia}
+      \resumeItemListStart
+        \resumeItem{Built product landing pages using HTML/CSS and produced photo and video content for social media campaigns.}
+      \resumeItemListEnd
+
+  \resumeSubHeadingListEnd
+
+
+%-----------PROJECTS-----------
+\section{Projects}
+    \resumeSubHeadingListStart
+      \resumeProjectHeading
+          {\textbf{Agentic-Senior-Core} $|$ \emph{Author} $|$ \href{https://www.npmjs.com/package/@ryuenn3123/agentic-senior-core}{\underline{npm}} $|$ \href{https://github.com/fatidaprilian/agentic-senior-core}{\underline{GitHub}}}{2026}
+          \resumeItemListStart
+            \resumeItem{Open-source npm package that bootstraps rule sets and review checklists for AI coding agents, with a token-saving CLI wrapper and GitHub Actions release pipeline.}
+          \resumeItemListEnd
+
+      \resumeProjectHeading
+          {\textbf{Vespa Storefront} $|$ \emph{Fullstack E-commerce}}{2026}
+          \resumeItemListStart
+            \resumeItem{E-commerce client focusing on fast catalog and checkout flows, separating smart and presentational layers for safe UI iterations.}
+          \resumeItemListEnd
+
+      \resumeProjectHeading
+          {\textbf{Dermascope} $|$ \emph{Solo developer}}{2026}
+          \resumeItemListStart
+            \resumeItem{TypeScript academic productivity tool with document parsing, similarity checking, and a resilient AI gateway with automatic LLM provider failover.}
+          \resumeItemListEnd
+
+      \resumeProjectHeading
+          {\textbf{Airdrop Hunter} $|$ \emph{Solo developer}}{2026}
+          \resumeItemListStart
+            \resumeItem{Real-time Telegram monitoring pipeline that filters crypto posts via LLM-based spam classification, cutting channel noise by over 90\%.}
+          \resumeItemListEnd
+
+      \resumeProjectHeading
+          {\textbf{Aura SQM} $|$ \emph{Solo developer}}{2026}
+          \resumeItemListStart
+            \resumeItem{Go traffic control daemon for OpenWrt devices (16--128\,MB RAM) that talks directly to the Linux kernel \texttt{tc} subsystem to prevent bufferbloat.}
+          \resumeItemListEnd
+
+      \resumeProjectHeading
+          {\textbf{CertiFlow} $|$ \emph{Solo developer}}{2025}
+          \resumeItemListStart
+            \resumeItem{Digital credential platform (NestJS, Prisma, PostgreSQL, Next.js) with Web3Auth login and ethers.js integration on the Polygon Amoy test network.}
+          \resumeItemListEnd
+    \resumeSubHeadingListEnd
+
+
+%-----------PROGRAMMING SKILLS-----------
+\section{Technical Skills}
+ \begin{itemize}[leftmargin=0.15in, label={}]
+    \small{\item{
+     \textbf{Programming Languages}{: JavaScript, TypeScript, Go, PHP, SQL} \\
+     \textbf{Web Technologies}{: HTML5, CSS3, REST APIs} \\
+     \textbf{Frameworks}{: NestJS, Next.js, Vue 3, Laravel, Tailwind CSS} \\
+     \textbf{Databases \& ORM}{: PostgreSQL, Prisma} \\
+     \textbf{Tools \& Infrastructure}{: Git, GitHub Actions, Docker, Linux, Bun, OpenWrt, Linux tc} \\
+     \textbf{Blockchain}{: ethers.js, Web3Auth} \\
+     \textbf{AI Tooling}{: Prompt Engineering, LLM Integration, Structured Output Parsing, AI Agent Development} \\
+     \textbf{Languages}{: Indonesian (Native), English (Reading \& Written Communication)}
+    }}
+ \end{itemize}
+
+\end{document}
