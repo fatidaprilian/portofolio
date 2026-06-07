@@ -13,63 +13,40 @@ defineProps({
 let scrollTriggerInstance = null
 
 const initExperienceReveal = () => {
-  const isReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-  if (isReduced) return
-
-  scrollTriggerInstance = ScrollTrigger.create({
-    trigger: '#experience',
-    start: 'top 85%',
-    onEnter: () => {
-      gsap.from('#experience .timeline-item', {
-        x: -32,
-        opacity: 0,
-        duration: 0.8,
-        ease: 'power3.out',
-        stagger: 0.16
-      })
-    },
-    once: true
-  })
+  // GSAP animation removed to guarantee visibility.
 }
 
 onMounted(() => {
-  setTimeout(() => {
-    initExperienceReveal()
-  }, 150)
+  // No-op
 })
 
 onUnmounted(() => {
-  if (scrollTriggerInstance) {
-    scrollTriggerInstance.kill()
-  }
+  // No-op
 })
 </script>
 
 <template>
   <section id="experience" class="section-container" aria-labelledby="experience-heading">
-    <div class="section-header">
-      <span class="section-kicker">{{ c.experienceMeta }}</span>
-      <h2 id="experience-heading" class="section-title">{{ c.experienceTitle }}</h2>
+    <div class="mb-12">
+      <span class="pill-tag inline-block mb-4">{{ c.experienceMeta }}</span>
+      <h2 id="experience-heading" class="display-section">{{ c.experienceTitle }}</h2>
     </div>
 
-    <div class="experience-timeline" role="list">
+    <div class="flex flex-col border-t border-[var(--hairline)]" role="list">
       <div
         v-for="item in profile.timelineItems"
         :key="`${item.period}-${item.title}`"
-        class="timeline-item"
+        class="list-row group hover:bg-[var(--surface-1)] transition-colors duration-300 p-4 md:p-6 -mx-4 md:-mx-6 rounded-xl cursor-default"
         role="listitem"
       >
-        <div class="timeline-dot">
-          <div class="timeline-pulse"></div>
+        <div class="flex flex-col gap-1">
+          <h3 class="text-xl md:text-2xl font-bold text-[var(--ink-primary)] tracking-tight">{{ item.title }}</h3>
+          <span class="text-[var(--ink-muted)] text-sm md:text-base">{{ item.role }}</span>
+          <p class="text-[var(--ink-muted)] mt-2 max-w-2xl leading-relaxed">{{ item.description }}</p>
         </div>
         
-        <div class="glass-panel timeline-card w-full">
-          <div class="timeline-header">
-            <h3 class="timeline-role">{{ item.title }}</h3>
-            <span class="timeline-period">{{ item.period }}</span>
-          </div>
-          <span class="timeline-institution">{{ item.role }}</span>
-          <p class="timeline-desc">{{ item.description }}</p>
+        <div class="self-start md:self-center shrink-0">
+          <span class="font-mono text-sm text-[var(--ink-muted)]">{{ item.period }}</span>
         </div>
       </div>
     </div>

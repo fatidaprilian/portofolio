@@ -39,60 +39,61 @@ const counterRef = ref(null)
 const copy = {
   id: {
     skip: 'Lewati ke konten utama',
-    issue: 'Karya Pilihan',
-    eyebrow: 'SYSTEMS ARCHITECTURE & INTERACTIVE DESIGN',
-    coverHeadline: ['Membangun antarmuka ', 'yang hidup dan ', { italic: 'bermakna.' }],
+    issue: 'Pilihan Karya',
+    eyebrow: 'Desain & Pengembangan Web',
+    coverHeadline: ['Halo, saya Farid Eka.', 'Seorang Web Developer.'],
     coverBody:
-      'Menghubungkan ketelitian komputasi berkinerja tinggi dengan kepekaan sistem visual. Mentransformasi antarmuka digital menjadi pengalaman yang intuitif, aksesibel, dan terstruktur secara arsitektural.',
+      'Saya membangun aplikasi web yang cepat, mudah digunakan, dan terstruktur dengan baik. Membantu mengubah ide kompleks menjadi produk digital yang rapi.',
     ctaView: 'Lihat Portfolio',
     ctaContact: 'Hubungi Saya',
     ctaDownloadCv: 'Unduh CV',
 
 
+
     
     homeLabel: 'Beranda',
     aboutLabel: 'Tentang',
-    worksLabel: 'Proyek',
+    worksLabel: 'Karya',
     skillsLabel: 'Keahlian',
     experienceLabel: 'Pengalaman',
     contactLabel: 'Kontak',
     
-    aboutTitle: 'Membuat produk digital dengan alasan.',
+    aboutTitle: 'Mendesain produk digital dengan tujuan.',
     aboutBodyP1:
-      'Bagi saya, antarmuka adalah media komunikasi. Setiap elemen di layar harus memiliki alasan, hierarki visual yang jelas, dan ritme yang menuntun pembaca secara intuitif.',
+      'Bagi saya, tampilan antarmuka adalah ruang untuk berkomunikasi. Setiap elemen di layar harus memiliki alasan, susunan yang jelas, dan alur yang menuntun pembaca secara alami.',
     aboutBodyP2:
-      'Dengan mengintegrasikan parameter visual arsitektural dan ketelitian logika komputasi, saya memastikan produk digital tidak hanya memukau tetapi juga aksesibel, berkinerja tinggi, dan mantap dirawat.',
-    aboutPullQuote: '“Detail halus yang tidak didekorasikan secara berlebih adalah cara terbaik menunjukkan keahlian.”',
+      'Dengan menggabungkan panduan visual dan kode pemrograman yang rapi, saya memastikan produk digital tidak hanya menarik tetapi juga mudah digunakan, cepat, dan mudah dirawat ke depannya.',
+    aboutPullQuote: '“Detail halus yang tidak berlebihan adalah cara terbaik menunjukkan keahlian.”',
     
-    worksTitle: 'Karya Pilihan',
-    worksMeta: 'Koleksi Proyek',
-    ctaDetails: 'Detail Kasus',
+    worksTitle: 'Pilihan Karya',
+    worksMeta: 'Daftar Proyek',
+    ctaDetails: 'Lihat Detail',
     
     skillsTitle: 'Peralatan Teknis & Desain',
-    skillsMeta: 'Teknologi dan Perangkat Kerja',
+    skillsMeta: 'Teknologi yang Digunakan',
     
     experienceTitle: 'Perjalanan Karir',
-    experienceMeta: 'Professional Milestones',
+    experienceMeta: 'Riwayat Pekerjaan',
     
     contactTitle: 'Mari Bekerja Sama',
     contactMeta: 'Terbuka untuk diskusi',
     contactBody:
-      'Jika Anda membutuhkan kolaborator yang peduli pada alur produk, detail mikro, dan arsitektur visual serta engineering yang solid, silakan kirim pesan.',
+      'Jika Anda membutuhkan rekan kerja yang peduli pada alur produk, detail desain, dan sistem kode yang kokoh, silakan kirim pesan.',
     sendEmail: 'Kirim Email',
     phone: 'Telepon',
     linkedin: 'LinkedIn',
     github: 'GitHub',
     
-    colophonLabel: 'Kolofon',
-    colophonTitle: 'Spesifikasi Teknis Situs',
+    colophonLabel: 'Informasi Situs',
+    colophonTitle: 'Spesifikasi Pembuatan',
     colophonBody: [
-      ['Tipografi', 'Inter (System/Controls), JetBrains Mono (Specs/Data), Fraunces (Italics commentary).'],
-      ['Pembangunan', 'Vue 3, Vite, Tailwind CSS, Lenis smooth scrolling, GSAP orchestration.'],
-      ['Aksesibilitas', 'Memenuhi standar kontras WCAG 2.2 AA floor, mendukung penuh keyboard dan reduced motion.'],
-      ['Skema Warna', 'Sistem token OKLCH semantik dengan dual mode derived (Alabaster Prism & Obsidian Cyber).'],
+      ['Tipografi', 'Inter (Sistem), JetBrains Mono (Data), Fraunces (Kutipan).'],
+      ['Teknologi', 'Vue 3, Vite, Tailwind CSS, Lenis (scroll halus), GSAP (animasi).'],
+      ['Aksesibilitas', 'Memenuhi standar kontras yang baik, mendukung penggunaan keyboard.'],
+      ['Skema Warna', 'Sistem warna OKLCH dengan pilihan mode Terang & Gelap.'],
     ],
     footerLeft: 'Portfolio 2026 / dirancang di browser',
-    themeLabels: { auto: 'Auto', light: 'Light', dark: 'Dark' },
+    themeLabels: { auto: 'Otomatis', light: 'Terang', dark: 'Gelap' },
     
     formName: 'Nama Lengkap',
     formEmail: 'Alamat Email',
@@ -105,13 +106,14 @@ const copy = {
   en: {
     skip: 'Skip to main content',
     issue: 'Selected Works',
-    eyebrow: 'SYSTEMS ARCHITECTURE & INTERACTIVE DESIGN',
-    coverHeadline: ['Crafting interfaces ', 'that are alive and ', { italic: 'purposeful.' }],
+    eyebrow: 'Web Design & Development',
+    coverHeadline: ['Hi, I\'m Farid Eka.', 'A Web Developer.'],
     coverBody:
-      'Uniting the rigor of high-performance computation with the sensibilities of visual systems. Transforming digital interfaces into highly intuitive, fully accessible, and structurally sound experiences.',
+      'I build fast, accessible, and well-structured web applications. Helping transform complex ideas into clean digital products.',
     ctaView: 'View Portfolio',
     ctaContact: 'Get in Touch',
     ctaDownloadCv: 'Download CV',
+
 
 
     
@@ -122,41 +124,41 @@ const copy = {
     experienceLabel: 'Experience',
     contactLabel: 'Contact',
     
-    aboutTitle: 'Designing digital products with intent.',
+    aboutTitle: 'Designing digital products with purpose.',
     aboutBodyP1:
-      'For me, an interface is a communication space. Every element on the screen must have an architectural reason, clear visual hierarchy, and rhythm that guides readers.',
+      'For me, an interface is a communication space. Every element on the screen must have a clear reason, logical hierarchy, and a natural flow that guides the user.',
     aboutBodyP2:
-      'By integrating visual systems guidelines with computational rigor, I ensure digital products are not only beautiful but also accessible, highly performant, and structurally sound.',
+      'By combining visual guidelines with clean code, I ensure digital products are not only beautiful but also accessible, fast, and easy to maintain.',
     aboutPullQuote: '“A subtle detail that is never over-decorated is the quietest way to show skill.”',
     
     worksTitle: 'Selected Works',
-    worksMeta: 'Project Index',
-    ctaDetails: 'Case Details',
+    worksMeta: 'Project List',
+    ctaDetails: 'View Details',
     
-    skillsTitle: 'Technical & Creative Stack',
-    skillsMeta: 'Technologies and Instruments',
+    skillsTitle: 'Technical & Design Tools',
+    skillsMeta: 'Technologies Used',
     
-    experienceTitle: 'Professional Timeline',
-    experienceMeta: 'Career Index',
+    experienceTitle: 'Career Timeline',
+    experienceMeta: 'Work History',
     
     contactTitle: 'Let\'s Collaborate',
     contactMeta: 'Open for discussions',
     contactBody:
-      'If you need a collaborator who cares deeply about product flows, spatial metrics, and robust engineering systems, let\'s start talking.',
+      'If you need a collaborator who cares deeply about product flows, design details, and robust code systems, let\'s start talking.',
     sendEmail: 'Send Email',
     phone: 'Phone',
     linkedin: 'LinkedIn',
     github: 'GitHub',
     
-    colophonLabel: 'Colophon',
-    colophonTitle: 'Sitemap Specs',
+    colophonLabel: 'Site Information',
+    colophonTitle: 'Build Specifications',
     colophonBody: [
-      ['Typography', 'Inter (System/Controls), JetBrains Mono (Specs/Data), Fraunces (Italics commentary).'],
-      ['Build', 'Vue 3, Vite, Tailwind CSS, Lenis smooth scrolling, GSAP orchestration.'],
-      ['Accessibility', 'Contrast pass WCAG 2.2 AA floor, supports full keyboard navigation and reduced motion.'],
-      ['Color space', 'OKLCH semantic role tokens with dual derived modes (Alabaster Prism & Obsidian Cyber).'],
+      ['Typography', 'Inter (System), JetBrains Mono (Data), Fraunces (Quotes).'],
+      ['Technologies', 'Vue 3, Vite, Tailwind CSS, Lenis (smooth scroll), GSAP (animation).'],
+      ['Accessibility', 'Meets good contrast standards, fully supports keyboard navigation.'],
+      ['Color Scheme', 'OKLCH color system with Light & Dark mode options.'],
     ],
-    footerLeft: 'Portfolio 2026 / printed in browser',
+    footerLeft: 'Portfolio 2026 / designed in browser',
     themeLabels: { auto: 'Auto', light: 'Light', dark: 'Dark' },
     
     formName: 'Full Name',
@@ -295,75 +297,19 @@ const playOpeningSequence = () => {
   
   const tl = gsap.timeline({ defaults: { ease: 'cubic-bezier(0.22, 1, 0.36, 1)' } })
   
-  // Initialize mask children starts to translateY(115%)
-  gsap.set(root.querySelectorAll('.mask-reveal-child'), { y: '115%' })
+  // Fade in nav immediately
+  gsap.to('header.top-nav', { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' })
+  
+  // Initialize mask children starts to translateY(115%) and rotated in 3D
+  gsap.set(root.querySelectorAll('.mask-reveal-child'), { y: '115%', rotationX: -60, transformPerspective: 800, transformOrigin: "50% 100%" })
   
   tl.from(root.querySelector('.section-kicker'), { y: 15, opacity: 0, duration: 0.7 })
-    .to(root.querySelectorAll('.mask-reveal-child'), { y: '0%', duration: 0.95, stagger: 0.12 }, '-=0.45')
-    .from(root.querySelector('.hero-desc'), { y: 12, opacity: 0, duration: 0.6 }, '-=0.6')
-    .from(root.querySelector('.hero-actions'), { y: 12, opacity: 0, duration: 0.5 }, '-=0.45')
-    .from(root.querySelector('.portrait-wrapper'), { scale: 0.92, opacity: 0, duration: 0.85 }, '-=0.7')
+    .to(root.querySelectorAll('.mask-reveal-child'), { y: '0%', rotationX: 0, duration: 1.2, stagger: 0.12, ease: "power4.out" }, '-=0.45')
+    .from(root.querySelector('.hero-desc'), { y: 20, rotationX: -30, opacity: 0, transformPerspective: 800, transformOrigin: "50% 0%", duration: 0.8, ease: "power3.out" }, '-=0.8')
+    .from(root.querySelector('.hero-actions'), { y: 12, opacity: 0, duration: 0.5 }, '-=0.5')
 }
 
-// -----------------------------------------------------------------
-// Cinematic Preloader Sequence
-// -----------------------------------------------------------------
-const startCinematicPreloader = () => {
-  if (isReducedMotion()) {
-    showPreloader.value = false
-    playOpeningSequence()
-    return
-  }
 
-  const tl = gsap.timeline({
-    onComplete: () => {
-      showPreloader.value = false
-      playOpeningSequence()
-    }
-  })
-
-  // 1. Initial State
-  gsap.set('#preloader', { clipPath: 'inset(0% 0 0% 0)' })
-  gsap.set('.pre-line', { scaleX: 0 })
-  gsap.set('header.portfolio-header', { opacity: 0, y: -16 })
-
-  // 2. Lines sweep: scaleX 0 -> 1
-  tl.to('.pre-line', {
-    scaleX: 1,
-    duration: 0.95,
-    ease: 'power2.inOut',
-    stagger: 0.1
-  })
-
-  // 3. Counter animate: 0 -> 100
-  const counterObj = { value: 0 }
-  tl.to(counterObj, {
-    value: 100,
-    duration: 2.3,
-    ease: 'power1.inOut',
-    onUpdate: () => {
-      if (counterRef.value) {
-        const roundedVal = Math.round(counterObj.value)
-        counterRef.value.textContent = roundedVal < 10 ? `0${roundedVal}` : roundedVal
-      }
-    }
-  }, '-=0.6')
-
-  // 4. Slide up exit: clip-path inset(0 0 100% 0)
-  tl.to('#preloader', {
-    clipPath: 'inset(0 0 100% 0)',
-    duration: 1.1,
-    ease: 'power4.inOut'
-  }, '+=0.2')
-
-  // 5. Nav fade in
-  tl.to('header.portfolio-header', {
-    opacity: 1,
-    y: 0,
-    duration: 0.8,
-    ease: 'power3.out'
-  }, '-=0.9')
-}
 
 // -----------------------------------------------------------------
 // Lifecycle
@@ -391,7 +337,8 @@ onMounted(async () => {
   initLenis()
   initIntersectionObserver()
   await nextTick()
-  startCinematicPreloader()
+  showPreloader.value = false
+  playOpeningSequence()
 })
 
 onUnmounted(() => {
@@ -416,14 +363,7 @@ watch(lang, () => {
 </script>
 
 <template>
-  <!-- ========== Cinematic Count Loader ========== -->
-  <div id="preloader" class="preloader-overlay" v-if="showPreloader">
-    <div class="pre-line pre-line-top"></div>
-    <div class="pre-label">FARID EKA APRILIAN</div>
-    <div class="pre-counter" ref="counterRef">00</div>
-    <div class="pre-label">UI/UX &amp; CREATIVE DEV</div>
-    <div class="pre-line pre-line-bottom"></div>
-  </div>
+
 
   <a href="#home" class="sr-only focus:not-sr-only fixed top-4 left-4 z-50 bg-black text-white px-4 py-2 rounded-md font-semibold outline-none">{{ c.skip }}</a>
 
@@ -431,12 +371,7 @@ watch(lang, () => {
     {{ themeAnnouncement }}
   </span>
 
-  <!-- ========== Drifting Shaders Canvas ========== -->
-  <div class="fluid-backdrop" aria-hidden="true">
-    <div class="blob blob-one"></div>
-    <div class="blob blob-two"></div>
-    <div class="blob blob-three"></div>
-  </div>
+
 
   <!-- ========== Premium Top Navigation Header ========== -->
   <Navbar

@@ -36,7 +36,7 @@ const careerProfileSource = {
       },
       {
         period: '2022 (3 Months)',
-        title: 'Web and Content Intern (PKL)',
+        title: 'Web and Content Intern',
         role: 'Agronesia, Indonesia',
         description:
           'Mendesain homepage katalog produk, membuat konten multimedia promosi, serta mengelola pencatatan data stok untuk kebutuhan operasional.'
@@ -144,7 +144,7 @@ const careerProfileSource = {
       },
       {
         period: '2022 (3 Months)',
-        title: 'Web and Content Intern (PKL)',
+        title: 'Web and Content Intern',
         role: 'Agronesia, Indonesia',
         description:
           'Designed product catalog homepages, created multimedia content for campaigns, and managed inventory data recording for operational tracking.'

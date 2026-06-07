@@ -6,34 +6,22 @@ defineProps({
 </script>
 
 <template>
-  <!-- Technical Colophon specs -->
-  <section id="colophon" class="section-container" aria-labelledby="colophon-heading">
-    <div class="section-header">
-      <span class="section-kicker">{{ c.colophonLabel }}</span>
-      <h2 id="colophon-heading" class="section-title">{{ c.colophonTitle }}</h2>
+  <section id="colophon" class="section-container border-t border-[var(--hairline)]" aria-labelledby="colophon-heading">
+    <div class="mb-12">
+      <span class="pill-tag inline-block mb-4">{{ c.colophonLabel }}</span>
+      <h2 id="colophon-heading" class="text-3xl md:text-4xl font-bold tracking-tight text-[var(--ink-primary)]">{{ c.colophonTitle }}</h2>
     </div>
 
-    <div class="colophon-matrix">
-      <aside class="margin-specs" aria-hidden="true">
-        <span class="font-mono text-[10px] text-tertiary">Site specifications</span>
-      </aside>
-      <div class="colophon-body">
-        <dl class="grid grid-cols-1 md:grid-cols-2 gap-6 gap-x-12">
-          <div v-for="(row, idx) in c.colophonBody" :key="idx" class="border-t border-rule pt-3">
-            <dt class="font-mono text-[10px] text-tertiary uppercase tracking-wider mb-1">{{ row[0] }}</dt>
-            <dd class="text-sm text-secondary">{{ row[1] }}</dd>
-          </div>
-        </dl>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+      <div v-for="(row, idx) in c.colophonBody" :key="idx" class="flex flex-col gap-2">
+        <dt class="font-mono text-xs text-[var(--ink-muted)] uppercase tracking-wider">{{ row[0] }}</dt>
+        <dd class="text-sm text-[var(--ink-primary)] leading-relaxed">{{ row[1] }}</dd>
       </div>
     </div>
   </section>
 
-  <!-- Global Footer -->
-  <footer class="portfolio-footer" role="contentinfo">
+  <footer class="border-t border-[var(--hairline)] py-8 px-6 md:px-12 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-[var(--ink-muted)]" role="contentinfo">
     <span>{{ c.footerLeft }}</span>
-    <span class="theme-announcement font-mono text-[10px]" aria-hidden="true">
-      OKLCH Semantics derived
-    </span>
     <span>© {{ currentYear }} Farid Eka Aprilian</span>
   </footer>
 </template>

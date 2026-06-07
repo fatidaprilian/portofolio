@@ -8,73 +8,47 @@ defineProps({
 const emit = defineEmits(['goToSection'])
 </script>
 
-
-
 <template>
-  <section id="home" class="max-w-[1200px] mx-auto w-full px-4 md:px-8 py-6 md:py-12 relative" aria-labelledby="home-heading">
-    <!-- Fine corner crop marks on the section level for premium visual detailing -->
-    <div class="crop-mark crop-mark-tl"></div>
-    <div class="crop-mark crop-mark-tr"></div>
-    <div class="crop-mark crop-mark-bl"></div>
-    <div class="crop-mark crop-mark-br"></div>
+  <section id="home" class="relative flex items-center min-h-screen overflow-hidden bg-[var(--surface-canvas)]" aria-labelledby="home-heading">
+    
+    <!-- Massive Background Typography (Sohub Style) -->
+    <div class="absolute inset-0 flex items-center justify-center pointer-events-none z-0 overflow-hidden select-none">
+      <h1 class="text-[clamp(8rem,25vw,30rem)] font-bold tracking-tighter leading-none text-[var(--ink-primary)] opacity-[0.03] dark:opacity-[0.05] whitespace-nowrap">
+        FARID
+      </h1>
+    </div>
 
-    <div class="glass-panel p-0 overflow-hidden flex flex-col lg:flex-row items-stretch">
-      <!-- COLUMN 1: Technical Coordinate Axis Sidebar (Implicit Authority) -->
-      <div class="hidden lg:flex coord-axis py-6" aria-hidden="true">
-        <span class="coord-item">SYS_INDEX // 001</span>
-        <span class="coord-item">LAT_40.7128N // LON_74.0060W</span>
-        <span class="coord-item">RENDER_KINETIC // STABLE</span>
-      </div>
-
-      <!-- COLUMN 2: Center Main Narrative Workspace Grid -->
-      <div class="flex-1 p-6 md:p-8 lg:p-10 flex flex-col justify-center relative border-r border-rule gap-y-6">
-        <div class="crop-mark crop-mark-tr"></div>
-        <div class="crop-mark crop-mark-br"></div>
-
-        <div>
-          <span class="section-kicker tracking-widest font-mono text-[10px] opacity-75 mb-4 block uppercase">{{ c.eyebrow }}</span>
-          <h1 id="home-heading" class="hero-headline flex flex-col gap-1 my-4">
-            <span class="mask-reveal">
-              <span class="mask-reveal-child block">FARID EKA</span>
-            </span>
-            <span class="mask-reveal">
-              <span class="mask-reveal-child text-outline-stroke block">APRILIAN_</span>
-            </span>
-          </h1>
-          <p class="hero-desc text-secondary leading-relaxed max-w-xl text-sm md:text-base">{{ c.coverBody }}</p>
+    <!-- Content Overlay (Bottom Left like Sohub) -->
+    <div class="relative z-20 w-full max-w-[1400px] mx-auto px-6 md:px-12 flex flex-col justify-end h-full pb-20 pt-[25vh] md:pb-32 pointer-events-none">
+      
+      <!-- Bottom Left Text Block -->
+      <div class="max-w-xl pointer-events-auto">
+        <!-- Profile Avatar -->
+        <div class="mb-6 w-16 h-16 md:w-20 md:h-20 rounded-full overflow-hidden border-2 border-[var(--surface-canvas)] shadow-lg ring-1 ring-[var(--hairline)]">
+          <img src="/avatar-github.jpg" alt="Farid Eka Aprilian" class="w-full h-full object-cover" />
         </div>
 
-        <!-- Technical layout separator line -->
-        <div class="w-16 h-px bg-rule" aria-hidden="true"></div>
-
-        <div class="hero-actions flex flex-wrap gap-4">
-          <button type="button" class="btn-premium" @click="emit('goToSection', 'works')">
+        <h2 id="home-heading" class="text-[clamp(2.5rem,5vw,4.5rem)] font-bold tracking-tight leading-[1.05] text-[var(--ink-primary)] mb-6">
+          <span class="mask-reveal">
+            <span class="mask-reveal-child block">{{ c.coverHeadline[0] }}</span>
+          </span>
+          <span class="mask-reveal">
+            <span class="mask-reveal-child block text-[var(--ink-muted)]">{{ c.coverHeadline[1] }}</span>
+          </span>
+        </h2>
+        
+        <p class="hero-desc text-[var(--ink-muted)] text-lg md:text-xl font-medium max-w-md leading-relaxed">
+          {{ c.coverBody }}
+        </p>
+        
+        <div class="hero-actions flex gap-6 mt-10 items-center">
+          <button type="button" class="group flex items-center gap-2 text-[var(--ink-primary)] font-bold tracking-wide uppercase text-sm hover:text-[var(--accent-blue)] transition-colors" @click="emit('goToSection', 'works')">
             {{ c.ctaView }}
-            <ArrowDown class="w-4 h-4" aria-hidden="true" />
-          </button>
-          <button type="button" class="btn-secondary" @click="emit('goToSection', 'contact')">
-            {{ c.ctaContact }}
+            <ArrowDown class="w-4 h-4 transition-transform group-hover:translate-y-1" aria-hidden="true" />
           </button>
         </div>
-
-
       </div>
 
-      <!-- COLUMN 3: Right Portrait Layout (Asymmetric Crosshairs and Crop Vectors) -->
-      <div class="p-6 lg:p-8 flex justify-center items-center relative min-w-[280px] lg:min-w-[340px] bg-surface-sunken/20">
-        <div class="crop-mark crop-mark-tl"></div>
-        <div class="crop-mark crop-mark-bl"></div>
-
-        <div class="portrait-wrapper relative">
-          <!-- Multi-ring crosshair vector system -->
-          <div class="target-circle"></div>
-          <div class="target-lines" aria-hidden="true"></div>
-          
-          <div class="portrait-container">
-            <img src="/avatar-github.jpg" alt="Farid Eka Aprilian UI/UX designer portrait" decoding="async" fetchpriority="high" />
-          </div>
-        </div>
-      </div>
     </div>
   </section>
 </template>

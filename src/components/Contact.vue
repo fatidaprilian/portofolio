@@ -22,7 +22,6 @@ const handleFormSubmit = async () => {
     return
   }
   formStatus.value = 'sending'
-  // Simulating transmission latency
   await new Promise((resolve) => setTimeout(resolve, 1200))
   formStatus.value = 'success'
   formState.value = { name: '', email: '', message: '' }
@@ -32,106 +31,84 @@ const handleFormSubmit = async () => {
 }
 
 const initContactReveal = () => {
-  const isReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-  if (isReduced) return
-
-  // Set initial hidden state under masks
-  gsap.set('.contact-mask-child', { y: '115%' })
-
-  scrollTriggerInstance = ScrollTrigger.create({
-    trigger: '#contact',
-    start: 'top 80%',
-    onEnter: () => {
-      gsap.to('.contact-mask-child', {
-        y: '0%',
-        duration: 1.1,
-        ease: 'power4.out',
-        stagger: 0.14
-      })
-    },
-    once: true
-  })
+  // GSAP animation removed to guarantee visibility.
 }
 
 onMounted(() => {
-  setTimeout(() => {
-    initContactReveal()
-  }, 150)
+  // No-op
 })
 
 onUnmounted(() => {
-  if (scrollTriggerInstance) {
-    scrollTriggerInstance.kill()
-  }
+  // No-op
 })
 </script>
 
 <template>
   <section id="contact" class="section-container" aria-labelledby="contact-heading">
-    <div class="section-header">
-      <span class="section-kicker">{{ c.contactMeta }}</span>
-      <h2 id="contact-heading" class="section-title">{{ c.contactTitle }}</h2>
+    <div class="mb-12">
+      <span class="pill-tag inline-block mb-4">{{ c.contactMeta }}</span>
+      <h2 id="contact-heading" class="display-section">{{ c.contactTitle }}</h2>
     </div>
 
-    <div class="glass-panel contact-panel">
-      <div class="contact-info">
-        <!-- Cinematic Giant Display Header -->
-        <div class="contact-big-title flex flex-col gap-1 select-none text-left tracking-tighter uppercase font-black leading-none mb-6">
-          <div class="mask-reveal">
-            <span class="contact-mask-child block text-[clamp(2.5rem,7vw,5.5rem)]">LET'S</span>
-          </div>
-          <div class="mask-reveal">
-            <span class="contact-mask-child text-outline-stroke block text-[clamp(2.5rem,7vw,5.5rem)]">BUILD</span>
-          </div>
-          <div class="mask-reveal">
-            <span class="contact-mask-child block text-[clamp(2.5rem,7vw,5.5rem)]">TOGETHER</span>
-          </div>
+    <div class="contact-grid grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-24 items-start">
+      <div class="flex flex-col gap-8">
+        <div class="flex flex-col gap-2 select-none text-left font-bold uppercase tracking-tighter leading-[0.85] text-[clamp(3.5rem,7vw,6.5rem)] text-[var(--ink-primary)]">
+          <span>LET'S</span>
+          <span class="text-[var(--accent-blue)]">BUILD</span>
+          <span>TOGETHER</span>
         </div>
 
-        <p class="mb-6">{{ c.contactBody }}</p>
+        <p class="text-lg text-[var(--ink-muted)] leading-relaxed max-w-md">{{ c.contactBody }}</p>
         
-        <div class="contact-links">
-          <a :href="`mailto:${profile.contactActions.emailValue}`" class="contact-link-item">
-            <Mail class="w-4 h-4 contact-link-icon" />
+        <div class="flex flex-col gap-4 mt-4">
+          <a :href="`mailto:${profile.contactActions.emailValue}`" class="flex items-center gap-3 text-[var(--ink-primary)] hover:text-[var(--accent-blue)] font-medium transition-colors duration-300">
+            <div class="w-10 h-10 rounded-full bg-[var(--surface-1)] flex items-center justify-center shrink-0">
+              <Mail class="w-4 h-4" />
+            </div>
             <span>{{ profile.contactActions.emailValue }}</span>
           </a>
-          <a :href="`tel:${profile.contactActions.callValue}`" class="contact-link-item">
-            <Phone class="w-4 h-4 contact-link-icon" />
+          <a :href="`tel:${profile.contactActions.callValue}`" class="flex items-center gap-3 text-[var(--ink-primary)] hover:text-[var(--accent-blue)] font-medium transition-colors duration-300">
+            <div class="w-10 h-10 rounded-full bg-[var(--surface-1)] flex items-center justify-center shrink-0">
+              <Phone class="w-4 h-4" />
+            </div>
             <span>{{ profile.contactActions.callValue }}</span>
           </a>
-          <a href="https://linkedin.com/in/farid-aprilian" target="_blank" rel="noreferrer" class="contact-link-item">
-            <Linkedin class="w-4 h-4 contact-link-icon" />
+          <a href="https://linkedin.com/in/farid-aprilian" target="_blank" rel="noreferrer" class="flex items-center gap-3 text-[var(--ink-primary)] hover:text-[var(--accent-blue)] font-medium transition-colors duration-300">
+            <div class="w-10 h-10 rounded-full bg-[var(--surface-1)] flex items-center justify-center shrink-0">
+              <Linkedin class="w-4 h-4" />
+            </div>
             <span>LinkedIn Profile</span>
           </a>
         </div>
       </div>
 
-      <form class="contact-form" @submit.prevent="handleFormSubmit">
-        <div class="form-group">
-          <label for="form-name" class="form-label">{{ c.formName }}</label>
+      <form class="surface-card flex flex-col gap-6" @submit.prevent="handleFormSubmit">
+        <div class="flex flex-col gap-2">
+          <label for="form-name" class="font-medium text-sm text-[var(--ink-muted)]">{{ c.formName }}</label>
           <input 
             id="form-name" 
             type="text" 
-            class="form-input" 
+            class="bg-[var(--surface-canvas)] border border-[var(--hairline)] focus:border-[var(--accent-blue)] focus:outline-none rounded-xl px-4 py-3 text-[var(--ink-primary)] w-full transition-colors duration-300" 
             v-model="formState.name"
             required 
           />
         </div>
-        <div class="form-group">
-          <label for="form-email" class="form-label">{{ c.formEmail }}</label>
+        <div class="flex flex-col gap-2">
+          <label for="form-email" class="font-medium text-sm text-[var(--ink-muted)]">{{ c.formEmail }}</label>
           <input 
             id="form-email" 
             type="email" 
-            class="form-input" 
+            class="bg-[var(--surface-canvas)] border border-[var(--hairline)] focus:border-[var(--accent-blue)] focus:outline-none rounded-xl px-4 py-3 text-[var(--ink-primary)] w-full transition-colors duration-300" 
             v-model="formState.email"
             required 
           />
         </div>
-        <div class="form-group">
-          <label for="form-message" class="form-label">{{ c.formMessage }}</label>
+        <div class="flex flex-col gap-2">
+          <label for="form-message" class="font-medium text-sm text-[var(--ink-muted)]">{{ c.formMessage }}</label>
           <textarea 
             id="form-message" 
-            class="form-textarea" 
+            rows="4"
+            class="bg-[var(--surface-canvas)] border border-[var(--hairline)] focus:border-[var(--accent-blue)] focus:outline-none rounded-xl px-4 py-3 text-[var(--ink-primary)] w-full resize-none transition-colors duration-300" 
             v-model="formState.message"
             required
           ></textarea>
@@ -139,17 +116,16 @@ onUnmounted(() => {
 
         <button 
           type="submit" 
-          class="btn-premium justify-center w-full"
+          class="btn-primary w-full py-3 mt-2 text-[15px]"
           :disabled="formStatus === 'sending'"
         >
           {{ formStatus === 'sending' ? c.formSending : c.formSend }}
         </button>
 
-        <!-- Dynamic accessibility logs feedback -->
-        <div v-if="formStatus === 'success'" class="form-message is-success" role="status">
+        <div v-if="formStatus === 'success'" class="text-sm font-medium text-green-400 mt-2 text-center" role="status">
           {{ c.formSuccess }}
         </div>
-        <div v-if="formStatus === 'error'" class="form-message is-error" role="status">
+        <div v-if="formStatus === 'error'" class="text-sm font-medium text-red-400 mt-2 text-center" role="status">
           {{ c.formError }}
         </div>
       </form>

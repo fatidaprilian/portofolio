@@ -17,18 +17,18 @@ const monogramFor = (title) => {
 <template>
   <Transition name="fade">
     <div 
-      class="spec-drawer-backdrop" 
+      class="fixed inset-0 z-[200] flex justify-end bg-black/60 backdrop-blur-sm" 
       @click="emit('close')"
       role="dialog"
       aria-modal="true"
       aria-labelledby="drawer-title"
     >
-      <div class="spec-drawer" @click.stop>
-        <div class="spec-drawer-header">
-          <h2 id="drawer-title" class="spec-drawer-title">{{ activeProject.title }}</h2>
+      <div class="w-full max-w-[650px] h-full bg-[var(--surface-1)] border-l border-[var(--hairline)] flex flex-col shadow-2xl overflow-hidden" @click.stop>
+        <div class="flex justify-between items-center p-6 md:p-8 border-b border-[var(--hairline)] shrink-0">
+          <h2 id="drawer-title" class="text-2xl font-bold tracking-tight text-[var(--ink-primary)]">{{ activeProject.title }}</h2>
           <button 
             type="button" 
-            class="btn-close" 
+            class="w-10 h-10 rounded-full flex items-center justify-center bg-[var(--surface-2)] text-[var(--ink-primary)] hover:bg-[var(--surface-canvas)] hover:text-[var(--accent-blue)] transition-colors duration-300" 
             @click="emit('close')" 
             aria-label="Close details"
           >
@@ -36,70 +36,66 @@ const monogramFor = (title) => {
           </button>
         </div>
         
-        <div class="spec-drawer-body">
-          <div class="spec-drawer-hero">
+        <div class="flex-1 overflow-y-auto p-6 md:p-8 flex flex-col gap-8">
+          <div class="w-full aspect-video rounded-xl overflow-hidden border border-[var(--hairline)] bg-[var(--surface-canvas)] flex items-center justify-center relative">
             <img
               v-if="activeProject.screenshot"
               :src="activeProject.screenshot"
               :alt="activeProject.title + ' screenshot'"
-              class="spec-drawer-screenshot"
+              class="w-full h-full object-cover"
               decoding="async"
             />
-            <div v-else class="spec-drawer-monogram" aria-hidden="true">
+            <div v-else class="text-6xl font-bold text-[var(--ink-muted)]" aria-hidden="true">
               {{ monogramFor(activeProject.title) }}
             </div>
+            <div class="absolute inset-0 bg-gradient-to-t from-[var(--surface-1)]/40 to-transparent pointer-events-none"></div>
           </div>
           
-          <div class="spec-drawer-metadata">
-            <div class="spec-metadata-item">
-              <span class="spec-metadata-label">Year</span>
-              <span class="spec-metadata-val">{{ activeProject.year }}</span>
+          <div class="grid grid-cols-3 gap-4 border-b border-[var(--hairline)] pb-6">
+            <div class="flex flex-col gap-1">
+              <span class="font-mono text-xs uppercase tracking-wider text-[var(--ink-muted)]">Year</span>
+              <span class="text-sm font-semibold text-[var(--ink-primary)]">{{ activeProject.year }}</span>
             </div>
-            <div class="spec-metadata-item">
-              <span class="spec-metadata-label">Role</span>
-              <span class="spec-metadata-val">{{ activeProject.role }}</span>
-            </div>
-            <div class="spec-metadata-item">
-              <span class="spec-metadata-label">Code</span>
-              <span class="spec-metadata-val">{{ activeProject.plateCode }}</span>
+            <div class="flex flex-col gap-1 col-span-2">
+              <span class="font-mono text-xs uppercase tracking-wider text-[var(--ink-muted)]">Role</span>
+              <span class="text-sm font-semibold text-[var(--ink-primary)]">{{ activeProject.role }}</span>
             </div>
           </div>
           
-          <div class="spec-drawer-log">
-            <div class="spec-log-item" v-if="activeProject.caseStudy?.constraint">
-              <span class="spec-log-kicker">Constraint</span>
-              <p class="spec-log-desc">{{ activeProject.caseStudy.constraint }}</p>
+          <div class="flex flex-col gap-6">
+            <div v-if="activeProject.caseStudy?.constraint" class="flex flex-col gap-2">
+              <span class="font-mono text-xs font-bold uppercase tracking-wider text-[var(--accent-blue)]">Constraint</span>
+              <p class="text-[var(--ink-muted)] text-base leading-relaxed">{{ activeProject.caseStudy.constraint }}</p>
             </div>
-            <div class="spec-log-item" v-if="activeProject.caseStudy?.decision">
-              <span class="spec-log-kicker">Decision</span>
-              <p class="spec-log-desc">{{ activeProject.caseStudy.decision }}</p>
+            <div v-if="activeProject.caseStudy?.decision" class="flex flex-col gap-2">
+              <span class="font-mono text-xs font-bold uppercase tracking-wider text-[var(--accent-blue)]">Decision</span>
+              <p class="text-[var(--ink-muted)] text-base leading-relaxed">{{ activeProject.caseStudy.decision }}</p>
             </div>
-            <div class="spec-log-item" v-if="activeProject.caseStudy?.outcome">
-              <span class="spec-log-kicker">Outcome</span>
-              <p class="spec-log-desc">{{ activeProject.caseStudy.outcome }}</p>
+            <div v-if="activeProject.caseStudy?.outcome" class="flex flex-col gap-2">
+              <span class="font-mono text-xs font-bold uppercase tracking-wider text-[var(--accent-blue)]">Outcome</span>
+              <p class="text-[var(--ink-muted)] text-base leading-relaxed">{{ activeProject.caseStudy.outcome }}</p>
             </div>
           </div>
           
-          <div class="mt-4 flex gap-3">
+          <div class="mt-4 flex flex-col md:flex-row gap-4">
             <a
               v-if="activeProject.liveUrl"
               :href="activeProject.liveUrl"
               target="_blank"
               rel="noreferrer"
-              class="btn-premium w-full justify-center"
+              class="btn-primary flex-1"
             >
               <span>Live Site</span>
-              <ArrowUpRight class="w-4 h-4" aria-hidden="true" />
+              <ArrowUpRight class="w-4 h-4 ml-1" aria-hidden="true" />
             </a>
             <a
               :href="activeProject.link"
               target="_blank"
               rel="noreferrer"
-              class="w-full justify-center"
-              :class="activeProject.liveUrl ? 'btn-outline' : 'btn-premium'"
+              class="btn-secondary flex-1"
             >
               <span>View Source</span>
-              <ArrowUpRight class="w-4 h-4" aria-hidden="true" />
+              <ArrowUpRight class="w-4 h-4 ml-1" aria-hidden="true" />
             </a>
           </div>
         </div>
