@@ -48,7 +48,7 @@ const onProjectLeave = () => {
 
 <template>
   <section id="works" class="section-container" aria-labelledby="works-heading">
-    <div class="mb-16 md:mb-24 flex flex-col md:flex-row md:items-end justify-between border-b border-[var(--hairline)] pb-8">
+    <div class="mb-8 md:mb-10 flex flex-col md:flex-row md:items-end justify-between border-b border-[var(--hairline)] pb-6">
       <div>
         <span class="pill-tag inline-block mb-4">{{ c.worksMeta }}</span>
         <h2 id="works-heading" class="display-section">{{ c.worksTitle }}</h2>
@@ -74,7 +74,7 @@ const onProjectLeave = () => {
         :aria-label="`View details for ${project.title}`"
         data-cursor="hover"
       >
-        <div class="flex flex-col md:flex-row items-start md:items-center justify-between py-10 md:py-14 px-2 md:px-4 group-hover:px-8 transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)]">
+        <div class="flex flex-col md:flex-row items-start md:items-center justify-between py-5 md:py-8 px-2 md:px-4 group-hover:px-8 transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)]">
           <div class="flex flex-col md:flex-row md:items-center gap-4 md:gap-12 w-full md:w-auto">
             <span class="font-mono text-sm text-[var(--ink-muted)] font-medium">0{{ index + 1 }}</span>
             <h3 class="font-system text-4xl md:text-5xl lg:text-7xl font-bold tracking-tighter text-[var(--ink-primary)] group-hover:text-[var(--accent-blue)] transition-colors duration-300">
