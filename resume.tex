@@ -1,5 +1,6 @@
 %-------------------------
 % Resume — Farid Eka Aprilian
+% ATS-friendly version: single column, standard section names, Times-family font.
 %------------------------
 
 \documentclass[letterpaper,11pt]{article}
@@ -7,7 +8,6 @@
 \usepackage{latexsym}
 \usepackage[empty]{fullpage}
 \usepackage{titlesec}
-\usepackage{marvosym}
 \usepackage[usenames,dvipsnames]{color}
 \usepackage{verbatim}
 \usepackage{enumitem}
@@ -15,6 +15,7 @@
 \usepackage{fancyhdr}
 \usepackage[english]{babel}
 \usepackage{tabularx}
+\usepackage{mathptmx} % Times-based font
 \input{glyphtounicode}
 
 \pagestyle{fancy}
@@ -36,8 +37,8 @@
 \setlength{\tabcolsep}{0in}
 
 \titleformat{\section}{
-  \vspace{-4pt}\scshape\raggedright\large
-}{}{0em}{}[\color{black}\titlerule \vspace{-5pt}]
+  \vspace{-2pt}\raggedright\large\bfseries
+}{}{0em}{}[\color{black}\titlerule \vspace{-3pt}]
 
 \pdfgentounicode=1
 
@@ -52,21 +53,14 @@
     \begin{tabular*}{0.97\textwidth}[t]{l@{\extracolsep{\fill}}r}
       \textbf{#1} & #2 \\
       \textit{\small#3} & \textit{\small #4} \\
-    \end{tabular*}\vspace{-7pt}
-}
-
-\newcommand{\resumeSubSubheading}[2]{
-    \item
-    \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
-      \textit{\small#1} & \textit{\small #2} \\
-    \end{tabular*}\vspace{-7pt}
+    \end{tabular*}\vspace{-5pt}
 }
 
 \newcommand{\resumeProjectHeading}[2]{
     \item
     \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
       \small#1 & #2 \\
-    \end{tabular*}\vspace{-7pt}
+    \end{tabular*}\vspace{-5pt}
 }
 
 \newcommand{\resumeSubItem}[1]{\resumeItem{#1}\vspace{-4pt}}
@@ -75,109 +69,108 @@
 
 \newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=0.15in, label={}]}
 \newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
-\newcommand{\resumeItemListStart}{\begin{itemize}}
-\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-5pt}}
+\newcommand{\resumeItemListStart}{\begin{itemize}[itemsep=0pt, topsep=0pt, parsep=2pt]}
+\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{1pt}}
 
 \begin{document}
 
 \begin{center}
-    \textbf{\Huge \scshape Farid Eka Aprilian} \\ \vspace{4pt}
+    \textbf{\Huge Farid Eka Aprilian} \\ \vspace{4pt}
     \small +62-851-5546-1126 $|$ \href{mailto:faridaprilian214@gmail.com}{faridaprilian214@gmail.com} \\ \vspace{2pt}
-    \textbf{\href{https://faridekaaprilian.vercel.app/}{Portfolio: faridekaaprilian.vercel.app}} $|$ 
-    \textbf{\href{https://github.com/fatidaprilian}{GitHub: github.com/fatidaprilian}} $|$ 
+    \href{https://faridekaaprilian.vercel.app/}{Portfolio: faridekaaprilian.vercel.app} $|$
+    \href{https://github.com/fatidaprilian}{GitHub: github.com/fatidaprilian} $|$
     \href{https://www.linkedin.com/in/farid-aprilian/}{LinkedIn: linkedin.com/in/farid-aprilian}
 \end{center}
 
-
 %-----------SUMMARY-----------
 \section{Summary}
-  \small{Third-year Information Technology undergraduate with experience building full-stack applications, backend services, and developer tools. Proficient in TypeScript, Go, Next.js, and NestJS, with a strong understanding of REST APIs, system design, technical documentation, and workflow automation. }
+  \small{Final-year Information Technology student (GPA 3.97/4.00) who builds full projects end to end: frontend in Next.js and React, backend in NestJS and Laravel, data in PostgreSQL, shipped with Docker. Maintainer of an open-source npm package now used inside 20+ different AI coding tools, with real users outside my own computer. Comfortable opening up someone else's code, connecting it to an API, and turning a blank database into a working demo. Looking for a Software Engineering Internship where I can write code that goes into production, not just a school assignment.}
 
 %-----------EDUCATION-----------
 \section{Education}
   \resumeSubHeadingListStart
     \resumeSubheading
-      {Universitas Bina Sarana Informatika (BSI)}{Indonesia}
-      {Bachelor's Degree in Information Technology (S1)}{Sept. 2023 -- Present}
+      {Universitas Bina Sarana Informatika (UBSI)}{Depok, Indonesia}
+      % TODO: cek ulang nomor semester saat ini sesuai kalender akademik kamu
+      {Bachelor's Degree in Information Technology (S1) $|$ GPA: 3.97 / 4.00}{Sept. 2023 -- Present}
       \resumeItemListStart
-        \resumeItem{Coursework: data structures, database systems, software engineering.}
+        \resumeItem{Semester 7. Coursework: Data Structures, Database Systems, Software Engineering, Cryptography, Image Processing.}
       \resumeItemListEnd
-    \resumeSubheading
-      {SMK Mekanik Cibinong}{Cibinong, Indonesia}
-      {Vocational High School Diploma in Multimedia}{July 2020 -- May 2023}
   \resumeSubHeadingListEnd
 
-
-%-----------EXPERIENCE-----------
-\section{Experience}
+%-----------CERTIFICATIONS-----------
+\section{Certifications \& Courses}
   \resumeSubHeadingListStart
-
     \resumeSubheading
-      {Freelance Web Developer}{Sept. 2025 -- Dec. 2025}
-      {Remote, team of 3}{Indonesia}
-      \resumeItemListStart
-        \resumeItem{Co-developed a responsive Next.js 15 storefront, implementing dynamic catalog and checkout flows.}
-        \resumeItem{Collaborated via Git in a team of 3, delivering project milestones on time within the 3-month contract.}
-      \resumeItemListEnd
-
+      {PCAP: Programming Essentials in Python}{Indonesia}
+      {Cisco Networking Academy \& OpenEDG Python Institute}{July 2024}
     \resumeSubheading
-      {Web \& Content Intern}{2022 (3 Months)}
-      {Agronesia}{Indonesia}
-      \resumeItemListStart
-        \resumeItem{Built responsive product landing pages using HTML/CSS and created marketing media content.}
-      \resumeItemListEnd
-
+      {BNSP Professional Certification (Analyst Scheme)}{Indonesia}
+      {In progress $|$ Live assessment: July 29, 2026}{}
   \resumeSubHeadingListEnd
-
 
 %-----------PROJECTS-----------
 \section{Projects}
     \resumeSubHeadingListStart
 
       \resumeProjectHeading
-          {\textbf{Agentic-Senior-Core} $|$ \emph{Author} $|$
-          \href{https://www.npmjs.com/package/@ryuenn3123/agentic-senior-core}{\underline{npm}} $|$
-          \href{https://github.com/fatidaprilian/agentic-senior-core}{\underline{GitHub}}}{2026}
+          {\textbf{Agentic Senior Core} (\emph{Creator \& Maintainer}) $|$
+          \href{https://www.npmjs.com/package/@ryuenn3123/agentic-senior-core}{npm} $|$
+          \href{https://github.com/fatidaprilian/Agentic-Senior-Core}{GitHub}}{2026}
           \resumeItemListStart
-            \resumeItem{Developed and maintained an open-source CLI package for AI agent workflow configuration, featuring automated CI/CD pipelines using GitHub Actions.}
+            \resumeItem{Open-source plugin that gives AI coding agents (Claude Code, Cursor, Codex, Copilot, and 20+ other hosts) a shared set of engineering rules, so they stop over-building simple requests.}
+            \resumeItem{Published as \texttt{@ryuenn3123/agentic-senior-core} on npm. Internal benchmarks show 30\% fewer tokens and 42\% lower cost on complex coding tasks versus no rules at all.}
           \resumeItemListEnd
 
       \resumeProjectHeading
-          {\textbf{Vespa Storefront} $|$ \emph{Fullstack E-commerce} $|$
-          \href{https://github.com/fatidaprilian/ecommercevespa-client}{\underline{GitHub}}}{2026}
+          {\textbf{Vespa Storefront} (\emph{Fullstack E-commerce \& ERP Integration}) $|$
+          \href{https://github.com/fatidaprilian/ecommercevespa-client}{GitHub}}{2026}
           \resumeItemListStart
-            \resumeItem{Built a full-stack e-commerce application with REST API integration, dynamic catalog routing, and responsive checkout workflows using Next.js.}
+            \resumeItem{Built a 3-service e-commerce platform (NestJS, Next.js, Docker) that syncs orders and pricing automatically with the store's Accurate accounting system, removing manual data entry between the two.}
+            \resumeItem{Wired up the Midtrans Snap payment integration so the charged amount is always computed from the server-stored order total rather than client input, closing off price manipulation at checkout by design.}
           \resumeItemListEnd
 
       \resumeProjectHeading
-          {\textbf{Dermascope} $|$ \emph{Solo Developer} $|$
-          \href{https://github.com/fatidaprilian/dermascope}{\underline{GitHub}}}{2026}
+          {\textbf{Digital Credential Platform} (\emph{Solo Developer}) $|$
+          \href{https://github.com/fatidaprilian/digital-credential-platform}{GitHub}}{2025}
           \resumeItemListStart
-            \resumeItem{Developed a browser-based facial skin analysis application using React, FastAPI, and OpenCV, implementing image preprocessing, facial region segmentation, and explainable skin condition scoring.}
-          \resumeItemListEnd
-
-      \resumeProjectHeading
-          {\textbf{CertiFlow} $|$ \emph{Solo Developer} $|$
-          \href{https://github.com/fatidaprilian/digital-credential-platform}{\underline{GitHub}}}{2025}
-          \resumeItemListStart
-            \resumeItem{Built a credential platform using NextJS, NestJS and PostgreSQL, designing optimized Prisma database schemas and secure user verification flows.}
+            \resumeItem{Designed and built a platform for issuing certificates as NFTs, with wallet-based login for credential holders and a separate JWT login for institutions.}
+            \resumeItem{Stored certificate records on the Polygon blockchain instead of a database alone, so an employer could verify one directly on-chain without needing to contact us. Backend ran on NestJS, Prisma, and PostgreSQL, with certificate files stored on IPFS.}
           \resumeItemListEnd
 
     \resumeSubHeadingListEnd
 
+%-----------EXPERIENCE-----------
+\section{Experience}
+  \resumeSubHeadingListStart
+
+    \resumeSubheading
+      {Freelance Web Developer}{Indonesia (Remote)}
+      {Team of 3}{Sept. 2025 -- Dec. 2025}
+      \resumeItemListStart
+        \resumeItem{Developed the Next.js storefront and checkout flow for a production e-commerce site and connected it to the backend API.}
+        \resumeItem{Used Git to coordinate with two other developers and hit every milestone across the 3-month contract.}
+      \resumeItemListEnd
+
+    \resumeSubheading
+      {Web \& Content Intern}{Indonesia}
+      {Agronesia}{2022 (3 Months)}
+      \resumeItemListStart
+        \resumeItem{Built product landing pages with HTML and CSS and produced marketing content for the company's social media.}
+      \resumeItemListEnd
+
+  \resumeSubHeadingListEnd
 
 %-----------PROGRAMMING SKILLS-----------
 \section{Technical Skills}
  \begin{itemize}[leftmargin=0.15in, label={}]
     \small{\item{
-     \textbf{Programming Languages}{: TypeScript, JavaScript, Go, PHP, SQL} \\
-     \textbf{Frameworks \& Web Technologies}{: Next.js, React, NestJS, Vue 3, Laravel, Tailwind CSS, HTML5, CSS3, REST APIs} \\
-     \textbf{Databases \& ORM}{: PostgreSQL, MySQL, Prisma} \\
-     \textbf{Developer Tools \& Infrastructure}{: Git, GitHub Actions, Docker, Linux, Bun} \\
-     \textbf{Architecture \& Documentation}{: draw.io, UML, System Flow Diagrams} \\
-     \textbf{AI Tools \& Integration}{: Prompt Engineering, LLM Integration, AI Agent Development} \\
-     \textbf{Languages}{: Indonesian (Native), English (Reading \& Written Communication)}
+     \textbf{Languages}{: TypeScript, JavaScript, Python, PHP, SQL} \\
+     \textbf{Frameworks \& Libraries}{: Next.js, React, NestJS, Laravel, FastAPI, Vitest, Tailwind CSS} \\
+     \textbf{Databases \& Infrastructure}{: PostgreSQL, MySQL, Prisma, Docker, Git, Linux} \\
+     \textbf{Other}{: REST API design and integration} \\
+     \textbf{Spoken Languages}{: Indonesian (Native), English (Reading \& Written Communication)}
     }}
   \end{itemize}
 
-  \end{document}
+\end{document}

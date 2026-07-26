@@ -17,12 +17,12 @@
     --ink-muted: oklch(0.70 0.0 0);
     --ink-inverse: oklch(0.12 0.015 250);
 
-    --accent-blue: oklch(0.60 0.15 250);
+    --accent-blue: oklch(0.65 0.25 35); /* Sharp Electric Orange for 2026 aesthetic */
     --hairline: oklch(0.22 0.03 250);
 
-    /* Gradients */
-    --gradient-violet: oklch(0.55 0.2 280);
-    --gradient-magenta: oklch(0.65 0.25 345);
+    /* Gradients removed to avoid "AI Slop" look, replaced with stark solid colors */
+    --gradient-violet: oklch(0.18 0.02 250);
+    --gradient-magenta: oklch(0.18 0.02 250);
 
     /* Typographic Triplet Voice Mapping */
     --font-system: 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
@@ -45,7 +45,7 @@
     --ink-muted: oklch(0.45 0.01 250);
     --ink-inverse: oklch(0.98 0.0 0);
 
-    --accent-blue: oklch(0.55 0.18 250);
+    --accent-blue: oklch(0.60 0.25 35); /* Sharp Electric Orange */
     --hairline: oklch(0.85 0.02 250);
     
     color-scheme: light;

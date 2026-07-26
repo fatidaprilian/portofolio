@@ -41,9 +41,9 @@ const copy = {
     skip: 'Lewati ke konten utama',
     issue: 'Pilihan Karya',
     eyebrow: 'Desain & Pengembangan Web',
-    coverHeadline: ['Halo, saya Farid Eka.', 'Seorang Web Developer.'],
+    coverHeadline: ['Halo, saya Farid Eka.', 'Full-Stack & Agentic Engineer.'],
     coverBody:
-      'Saya membangun aplikasi web yang cepat, mudah digunakan, dan terstruktur dengan baik. Membantu mengubah ide kompleks menjadi produk digital yang rapi.',
+      'Saya membangun sistem web berskala produksi dan arsitektur AI agentic. Berfokus pada integrasi kokoh dan antarmuka yang dirancang dengan niat.',
     ctaView: 'Lihat Portfolio',
     ctaContact: 'Hubungi Saya',
     ctaDownloadCv: 'Unduh CV',
@@ -107,9 +107,9 @@ const copy = {
     skip: 'Skip to main content',
     issue: 'Selected Works',
     eyebrow: 'Web Design & Development',
-    coverHeadline: ['Hi, I\'m Farid Eka.', 'A Web Developer.'],
+    coverHeadline: ['Hi, I\'m Farid Eka.', 'Full-Stack & Agentic Engineer.'],
     coverBody:
-      'I build fast, accessible, and well-structured web applications. Helping transform complex ideas into clean digital products.',
+      'I build production-grade web systems and agentic AI architectures. Focused on robust integrations and intentionally designed interfaces.',
     ctaView: 'View Portfolio',
     ctaContact: 'Get in Touch',
     ctaDownloadCv: 'Download CV',
