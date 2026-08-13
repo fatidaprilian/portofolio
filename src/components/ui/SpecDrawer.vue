@@ -89,6 +89,7 @@ const monogramFor = (title) => {
               <ArrowUpRight class="w-4 h-4 ml-1" aria-hidden="true" />
             </a>
             <a
+              v-if="activeProject.link && activeProject.link !== activeProject.liveUrl"
               :href="activeProject.link"
               target="_blank"
               rel="noreferrer"

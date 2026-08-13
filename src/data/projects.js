@@ -1,273 +1,213 @@
 const projectSource = [
   {
-    title: 'Dermascope',
+    title: 'Agentic Senior Core',
     year: '2026',
     plateCode: 'PR.0126',
     type: 'featured',
     accent: 'copper',
-    link: 'https://github.com/fatidaprilian/bumbuserbaguna',
-    role: {
-      id: 'Platform Product Engineering',
-      en: 'Platform Product Engineering'
-    },
-    summary: {
-      id: 'Platform produktivitas akademik end-to-end untuk drafting, validasi struktur, sitasi, presentasi, dan cek orisinalitas dalam satu alur.',
-      en: 'An end-to-end academic productivity platform covering drafting, structure validation, citations, presentation generation, and originality checks in one flow.'
-    },
-    keyPoints: {
-      id: ['Tool suite bertingkat untuk SMP sampai kampus', 'Deteksi exact, near-duplicate, dan paraphrase similarity', 'Reliability dengan graceful degradation saat AI provider bermasalah'],
-      en: ['Tiered tool suite from middle school to campus', 'Exact, near-duplicate, and paraphrase similarity detection', 'Reliability with graceful degradation during AI provider issues']
-    },
-    caseStudy: {
-      id: {
-        constraint: 'Akurasi analisis harus tinggi, tetapi biaya model tetap harus terkontrol saat trafik naik.',
-        decision: 'Membangun AI gateway berlapis dengan fallback provider dan aturan confidence per tipe tugas.',
-        outcome: 'Alur tetap stabil saat provider error dan proses dokumen panjang tetap responsif untuk pengguna.'
-      },
-      en: {
-        constraint: 'Analysis accuracy had to remain high while model cost stayed controlled during traffic spikes.',
-        decision: 'Implemented a layered AI gateway with provider fallback and confidence rules per task type.',
-        outcome: 'Flows stayed stable during provider outages and long-document tasks remained responsive.'
-      }
-    },
-    productContext: {
-      id: 'Dermascope dirancang sebagai modular monolith dengan batas modul jelas untuk menjaga kecepatan iterasi, akurasi analisis, dan privasi dokumen siswa.',
-      en: 'Dermascope is designed as a modular monolith with clear module boundaries to preserve delivery speed, analysis accuracy, and student document privacy.'
-    },
-    impactMetrics: {
-      id: ['Report 10 halaman < 2 menit', 'Draft presentasi < 3 menit', 'Target false-positive dispute < 5%'],
-      en: ['10-page report in < 2 minutes', 'Presentation draft in < 3 minutes', 'False-positive dispute target < 5%']
-    },
-    preview: {
-      id: {
-        eyebrow: 'Academic Platform Snapshot',
-        headline: 'One-stop academic assistant dari drafting sampai originality audit.'
-      },
-      en: {
-        eyebrow: 'Academic Platform Snapshot',
-        headline: 'A one-stop academic assistant from drafting to originality audits.'
-      }
-    },
-    tags: ['TypeScript', 'Modular Monolith', 'AI Gateway', 'Education']
-  },
-  {
-    title: 'Agentic Core',
-    year: '2026',
-    plateCode: 'PR.0226',
-    type: 'standard',
-    accent: 'bark',
     link: 'https://github.com/fatidaprilian/Agentic-Senior-Core',
-    liveUrl: 'https://agenticsenior.vercel.app',
+    liveUrl: 'https://www.npmjs.com/package/@ryuenn3123/agentic-senior-core',
     screenshot: '/agenticsenior.png',
     role: {
-      id: 'AI Workflow Kit',
-      en: 'AI Workflow Kit'
+      id: 'Creator & Maintainer',
+      en: 'Creator & Maintainer'
     },
     summary: {
-      id: 'Starter pack workflow untuk coding agent dengan aturan engineering yang ketat dan reusable.',
-      en: 'A starter workflow pack for coding agents with strict, reusable engineering guardrails.'
+      id: 'Plugin open-source yang memberikan aturan engineering bersama untuk AI coding agent (Claude Code, Cursor, Codex, Copilot, dan 20+ host lainnya) agar tidak over-building pada request sederhana.',
+      en: 'Open-source plugin that gives AI coding agents (Claude Code, Cursor, Codex, Copilot, and 20+ other hosts) a shared set of engineering rules, so they stop over-building simple requests.'
     },
     keyPoints: {
-      id: ['Agent workflow', 'Engineering guardrails', 'Reusable setup'],
-      en: ['Agent workflow', 'Engineering guardrails', 'Reusable setup']
+      id: [
+        'Dipublikasikan sebagai @ryuenn3123/agentic-senior-core di npm',
+        'Digunakan di 20+ alat AI coding dengan pengguna nyata',
+        'Benchmark internal: 30% lebih sedikit token & 42% lebih hemat biaya'
+      ],
+      en: [
+        'Published as @ryuenn3123/agentic-senior-core on npm',
+        'Used inside 20+ different AI coding tools',
+        'Internal benchmarks: 30% fewer tokens & 42% lower cost'
+      ]
     },
     caseStudy: {
       id: {
-        constraint: 'Tim butuh output konsisten lintas sesi tanpa kualitas engineering yang berubah-ubah.',
-        decision: 'Menyusun rulebook terstruktur, profile stack, dan checklist review berbasis evidence.',
-        outcome: 'Alur kerja agent menjadi repeatable dan review lebih cepat karena standar sudah eksplisit.'
+        constraint: 'AI coding agent sering memproduksi kode berlebihan (over-building) dan memboroskan token pada instruksi sederhana.',
+        decision: 'Menyusun set aturan engineering terstruktur (Agentic Senior Core) yang dapat di-load oleh 20+ host AI coding tool.',
+        outcome: 'Mengurangi konsumsi token hingga 30% dan menghemat biaya hingga 42% pada tugas pengkodean kompleks.'
       },
       en: {
-        constraint: 'The team needed consistent outputs across sessions without drifting engineering quality.',
-        decision: 'Built a structured rulebook, stack profiles, and evidence-based review checklists.',
-        outcome: 'Agent workflows became repeatable and review cycles sped up with explicit standards.'
+        constraint: 'AI coding agents frequently over-engineer simple requests and waste excessive tokens.',
+        decision: 'Designed a shared set of engineering rules (Agentic Senior Core) compatible across 20+ AI coding environments.',
+        outcome: 'Reduced token consumption by 30% and lowered cost by 42% on complex coding tasks.'
       }
     },
     preview: {
       id: {
-        eyebrow: 'Workflow Snapshot',
-        headline: 'Toolkit agentic untuk engineering flow yang konsisten.'
+        eyebrow: 'Open-Source npm Package',
+        headline: 'Engineering guardrails untuk 20+ AI coding tools.'
       },
       en: {
-        eyebrow: 'Workflow Snapshot',
-        headline: 'An agentic toolkit for consistent engineering workflows.'
+        eyebrow: 'Open-Source npm Package',
+        headline: 'Engineering guardrails for 20+ AI coding tools.'
       }
     },
-    tags: ['JavaScript', 'Automation', 'Developer Tools']
+    tags: ['TypeScript', 'npm Package', 'AI Architecture', 'Open Source']
   },
   {
-    title: 'Vespa Storefront',
+    title: 'Jakarta Scooter Shop',
     year: '2026',
-    plateCode: 'PR.0925',
-    type: 'standard',
+    plateCode: 'PR.0226',
+    type: 'featured',
     accent: 'clay',
-    link: 'https://github.com/fatidaprilian/ecommercevespa-client',
+    link: 'https://jakartascootershop.com',
     liveUrl: 'https://jakartascootershop.com',
     screenshot: '/vespasite.png',
     role: {
-      id: 'Fullstack E-commerce',
-      en: 'Fullstack E-commerce'
+      id: 'Fullstack E-commerce & ERP Integration',
+      en: 'Fullstack E-commerce & ERP Integration'
     },
     summary: {
-      id: 'Client storefront untuk flow e-commerce dengan fokus di performance, struktur, dan iterasi cepat.',
-      en: 'A storefront client for e-commerce flows, focused on performance, structure, and fast iteration.'
+      id: 'Platform e-commerce dibangun dengan NestJS dan Next.js, mensinkronkan stok dan harga secara real-time dengan Accurate ERP client menggunakan reservasi atomik dan validasi webhook.',
+      en: 'Built with NestJS and Next.js, synced stock and pricing in real time with client’s Accurate ERP using atomic reservations and webhook validation to prevent overselling.'
     },
     keyPoints: {
-      id: ['Catalog UX', 'Checkout flow', 'Component architecture'],
-      en: ['Catalog UX', 'Checkout flow', 'Component architecture']
+      id: [
+        'Sinkronisasi real-time stok & harga dengan Accurate ERP',
+        'Reservasi stok atomik & validasi webhook untuk cegah overselling',
+        'Integrasi Midtrans Snap dengan kalkulasi total order di server'
+      ],
+      en: [
+        'Real-time stock & pricing sync with Accurate ERP',
+        'Atomic stock reservation & webhook validation preventing overselling',
+        'Integrated Midtrans Snap with server-side order total calculation'
+      ]
     },
     caseStudy: {
       id: {
-        constraint: 'Flow katalog dan checkout harus cepat meski komponen UI berkembang cepat.',
-        decision: 'Pisahkan smart-presentational layer dan susun komponen reusable berbasis state boundaries.',
-        outcome: 'Perubahan fitur baru lebih aman tanpa merusak ritme interaksi pengguna utama.'
+        constraint: 'Mencegah overselling akibat selisih data stok ERP serta menutup celah manipulasi harga di sisi client saat checkout.',
+        decision: 'Mengimplementasikan reservasi stok atomik dengan verifikasi webhook ERP dan perhitungan total transaksi eksklusif di server sebelum memanggil Midtrans Snap.',
+        outcome: 'Sistem e-commerce berjalan stabil di lingkungan produksi tanpa risiko overselling maupun manipulasi harga.'
       },
       en: {
-        constraint: 'Catalog and checkout flows had to stay fast while UI components evolved quickly.',
-        decision: 'Separated smart and presentational layers with reusable components across state boundaries.',
-        outcome: 'New feature changes became safer without breaking key interaction rhythm.'
+        constraint: 'Prevent stock overselling from ERP delays and eliminate client-side price tampering during checkout.',
+        decision: 'Implemented atomic stock reservation verified via ERP webhooks and server-side calculation for Midtrans Snap.',
+        outcome: 'Production e-commerce storefront operating securely with zero overselling or price manipulation risks.'
       }
     },
     preview: {
       id: {
-        eyebrow: 'Storefront Snapshot',
-        headline: 'Flow katalog ke checkout dengan ritme interaksi yang rapi.'
+        eyebrow: 'Fullstack E-commerce & ERP',
+        headline: 'Sinkronisasi real-time ERP Accurate & checkout aman Midtrans.'
       },
       en: {
-        eyebrow: 'Storefront Snapshot',
-        headline: 'Catalog-to-checkout flow with a cleaner interaction rhythm.'
+        eyebrow: 'Fullstack E-commerce & ERP',
+        headline: 'Real-time Accurate ERP sync & secure Midtrans checkout.'
       }
     },
-    tags: ['TypeScript', 'Vue', 'E-commerce']
+    tags: ['NestJS', 'Next.js', 'Accurate ERP', 'Midtrans', 'PostgreSQL', 'Tailwind CSS']
   },
   {
-    title: 'CertiFlow',
+    title: 'Digital Credential Platform',
     year: '2025',
-    plateCode: 'PR.0625',
+    plateCode: 'PR.0325',
     type: 'standard',
     accent: 'bark',
     link: 'https://github.com/fatidaprilian/digital-credential-platform',
     role: {
-      id: 'Fullstack Web3 Platform',
-      en: 'Fullstack Web3 Platform'
+      id: 'Solo Developer',
+      en: 'Solo Developer'
     },
     summary: {
-      id: 'Platform kredensial digital berbasis blockchain yang menerbitkan dan memverifikasi sertifikat sebagai NFT di jaringan Polygon Amoy.',
-      en: 'A blockchain-based digital credential platform that issues and verifies certificates as NFTs on the Polygon Amoy network.'
+      id: 'Platform penerbitan sertifikat sebagai NFT dengan login berbasis wallet untuk pemegang kredensial dan JWT untuk institusi. Data tersimpan di blockchain Polygon & IPFS.',
+      en: 'Platform for issuing certificates as NFTs, with wallet-based login for credential holders and JWT login for institutions. Stored records on Polygon blockchain & IPFS.'
     },
     keyPoints: {
-      id: ['Smart contract integration', 'Web3Auth login', 'IPFS credential storage'],
-      en: ['Smart contract integration', 'Web3Auth login', 'IPFS credential storage']
+      id: [
+        'Verifikasi kredensial langsung secara on-chain di Polygon',
+        'Autentikasi ganda: Wallet (pemegang) & JWT (institusi)',
+        'Backend NestJS, Prisma, PostgreSQL & IPFS'
+      ],
+      en: [
+        'Direct on-chain Polygon verification without middleman',
+        'Dual authentication: Wallet (holders) & JWT (institutions)',
+        'NestJS, Prisma, PostgreSQL & IPFS backend'
+      ]
     },
     caseStudy: {
       id: {
-        constraint: 'Kredensial harus bisa diverifikasi secara on-chain tanpa mengorbankan kemudahan login untuk pengguna non-crypto.',
-        decision: 'Menggunakan Web3Auth untuk autentikasi wallet yang familiar, dan ethers.js untuk interaksi langsung dengan smart contract di Polygon Amoy.',
-        outcome: 'Pengguna bisa login tanpa setup wallet manual, dan setiap sertifikat tercatat permanen di blockchain untuk verifikasi publik.'
+        constraint: 'Kredensial harus dapat diverifikasi keabsahannya oleh pemberi kerja secara langsung tanpa perlu menghubungi pihak pengeluar.',
+        decision: 'Mencatat hash kredensial di blockchain Polygon dan menyimpan file di IPFS, didukung backend NestJS, Prisma, dan PostgreSQL.',
+        outcome: 'Pemberi kerja dapat memverifikasi keaslian sertifikat secara mandiri langsung dari blockchain.'
       },
       en: {
-        constraint: 'Credentials had to be verifiable on-chain without sacrificing login simplicity for non-crypto users.',
-        decision: 'Used Web3Auth for familiar wallet authentication and ethers.js for direct smart contract interaction on Polygon Amoy.',
-        outcome: 'Users could log in without manual wallet setup, and every certificate was permanently recorded on-chain for public verification.'
+        constraint: 'Employers needed direct credential verification without reaching out to the issuing institution.',
+        decision: 'Recorded certificate entries on Polygon blockchain and stored files on IPFS using NestJS, Prisma, and PostgreSQL.',
+        outcome: 'Employers can verify certificate authenticity directly on-chain.'
       }
     },
     preview: {
       id: {
-        eyebrow: 'Web3 Platform Snapshot',
-        headline: 'Kredensial digital yang tercatat permanen di blockchain.'
+        eyebrow: 'Blockchain & Web3 Platform',
+        headline: 'Verifikasi ijazah & sertifikat digital langsung on-chain.'
       },
       en: {
-        eyebrow: 'Web3 Platform Snapshot',
-        headline: 'Digital credentials permanently recorded on blockchain.'
+        eyebrow: 'Blockchain & Web3 Platform',
+        headline: 'Direct on-chain digital credential verification.'
       }
     },
-    tags: ['TypeScript', 'NestJS', 'Next.js', 'Web3', 'Polygon', 'ethers.js']
+    tags: ['NestJS', 'Next.js', 'Prisma', 'PostgreSQL', 'Polygon', 'IPFS', 'Solidity']
   },
   {
-    title: 'Ticket Conductor',
-    year: '2026',
-    plateCode: 'PR.0326',
-    type: 'standard',
-    accent: 'clay',
-    link: 'https://github.com/fatidaprilian/war-tiket-bot',
-    role: {
-      id: 'Automation Script',
-      en: 'Automation Script'
-    },
-    summary: {
-      id: 'Eksperimen automation bot dengan pendekatan praktikal untuk kebutuhan spesifik.',
-      en: 'An automation bot experiment built with a practical approach for specific use cases.'
-    },
-    keyPoints: {
-      id: ['Automation flow', 'Fast iteration', 'Script reliability'],
-      en: ['Automation flow', 'Fast iteration', 'Script reliability']
-    },
-    caseStudy: {
-      id: {
-        constraint: 'Eksperimen harus cepat, tapi hasil tetap dapat diulang saat kondisi berubah.',
-        decision: 'Menyusun script dengan guard input dan langkah retry terukur untuk titik rawan gagal.',
-        outcome: 'Eksperimen lebih aman dipakai ulang pada skenario mirip tanpa setup ulang panjang.'
-      },
-      en: {
-        constraint: 'Experiments had to move fast while staying repeatable under changing conditions.',
-        decision: 'Added input guards and measured retry steps for failure-prone execution points.',
-        outcome: 'Experiments became safer to reuse in similar scenarios without lengthy setup.'
-      }
-    },
-    preview: {
-      id: {
-        eyebrow: 'Experiment Snapshot',
-        headline: 'Eksperimen automasi yang cepat tapi tetap terukur.'
-      },
-      en: {
-        eyebrow: 'Experiment Snapshot',
-        headline: 'Fast automation experiments with measurable execution.'
-      }
-    },
-    tags: ['TypeScript', 'Automation', 'Experiment']
-  },
-  {
-    title: 'Airdrop Hunter',
+    title: 'Serba Serbi',
     year: '2026',
     plateCode: 'PR.0426',
     type: 'standard',
-    accent: 'prism',
-    link: 'https://github.com/fatidaprilian/airdrophunter',
+    accent: 'copper',
+    link: 'https://github.com/fatidaprilian/serbaserbi',
+    liveUrl: 'https://serbaserbi.faridekaaprilian.dev/',
+    screenshot: '/serbaserbi.jpeg',
     role: {
-      id: 'AI Automation & Analytics',
-      en: 'AI Automation & Analytics'
+      id: 'Freelance Web App / Legal & Financial Suite',
+      en: 'Freelance Web App / Legal & Financial Suite'
     },
     summary: {
-      id: 'Platform pemantauan kanal Telegram otomatis yang menyaring postingan menggunakan AI untuk mengekstrak tugas airdrop terstruktur secara real-time.',
-      en: 'An automated Telegram channel monitor that leverages AI to filter posts and extract structured airdrop tasks in real-time.'
+      id: 'Aplikasi web yang dirancang khusus untuk freelancer Indonesia untuk mengelola dokumen hukum dan keuangan (Faktur, Penawaran, dan Kontrak) secara mulus dengan dukungan mata uang ganda (IDR & USD) serta pembuatan PDF profesional yang siap cetak langsung di browser.',
+      en: 'A web application designed specifically for Indonesian freelancers to manage their legal and financial documents (Invoices, Quotations, and Contracts) seamlessly with dual currency (IDR & USD) and print-ready PDF generation directly in the browser.'
     },
     keyPoints: {
-      id: ['Monitoring Telegram real-time', 'Ekstraksi tugas berbasis AI', 'Checklist harian & pelacakan deadline'],
-      en: ['Real-time Telegram monitoring', 'AI-driven task extraction', 'Daily checklist & deadline tracking']
+      id: [
+        'Manajemen Invoice, Quotation, & Kontrak Freelancer',
+        'Dukungan Multi-Mata Uang Ganda (IDR & USD)',
+        'Generasi dokumen PDF profesional langsung di browser'
+      ],
+      en: [
+        'Freelancer Invoice, Quotation & Contract Management',
+        'Dual Currency Support (IDR & USD)',
+        'Print-ready professional PDF generation directly in-browser'
+      ]
     },
     caseStudy: {
       id: {
-        constraint: 'Kanal Telegram publik sangat bising dengan spam, membuat identifikasi tugas valid menjadi sangat lambat.',
-        decision: 'Membangun pipa pemrosesan pesan otomatis dengan integrasi LLM untuk klasifikasi spam dan ekstraksi metadata terstruktur.',
-        outcome: 'Menyaring lebih dari 90% kebisingan spam dan memberikan checklist tugas harian yang bersih untuk pengguna.'
+        constraint: 'Freelancer di Indonesia sering kesulitan mengelola dokumen legal & finansial yang rapi dan profesional tanpa biaya berlangganan software mahal.',
+        decision: 'Membangun aplikasi web Serba Serbi untuk mengelola Faktur, Penawaran, dan Kontrak secara mulus dengan dukungan IDR & USD serta penyerahan PDF langsung di browser.',
+        outcome: 'Memudahkan freelancer menerbitkan dokumen legal & keuangan siap cetak dengan alur kerja yang sangat cepat.'
       },
       en: {
-        constraint: 'Public Telegram channels are highly noisy with spam, making identification of valid tasks very slow.',
-        decision: 'Built an automated message processing pipeline integrated with an LLM for spam classification and structured metadata extraction.',
-        outcome: 'Filtered out over 90% of spam noise, providing users with a clean, actionable daily task checklist.'
+        constraint: 'A web application designed specifically for Indonesian freelancers to manage their legal and financial documents (Invoices, Quotations, and Contracts) seamlessly.',
+        decision: 'Built Serba Serbi to support dual currency (IDR & USD) and generate professional, print-ready PDF documents directly in the browser.',
+        outcome: 'Streamlined invoice and contract management for freelancers with client-side PDF export.'
       }
     },
     preview: {
       id: {
-        eyebrow: 'AI Automation Snapshot',
-        headline: 'Mengubah kebisingan Telegram menjadi tugas terstruktur yang dapat ditindaklanjuti.'
+        eyebrow: 'Freelancer Financial Suite',
+        headline: 'Manajemen Invoice, Quotation, & Kontrak untuk Freelancer Indonesia.'
       },
       en: {
-        eyebrow: 'AI Automation Snapshot',
-        headline: 'Turning noisy Telegram chat feeds into clean, actionable tasks.'
+        eyebrow: 'Freelancer Financial Suite',
+        headline: 'Legal & financial document management for Indonesian freelancers.'
       }
     },
-    tags: ['TypeScript', 'AI Integration', 'Telegram Bot', 'Automation']
+    tags: ['React', 'Next.js', 'PDF Generation', 'Financial Suite', 'TypeScript']
   },
   {
     title: 'Aura SQM',
@@ -290,14 +230,14 @@ const projectSource = [
     },
     caseStudy: {
       id: {
-        constraint: 'Perangkat embedded OpenWrt memiliki keterbatasan CPU/RAM untuk menjalankan logika kontrol traffic yang rumit.',
-        decision: 'Mengembangkan daemon ultra-ringan berbasis Go yang berinteraksi langsung dengan subsistem tc (traffic control) kernel Linux.',
-        outcome: 'Mengurangi latensi jaringan secara signifikan tanpa memberikan beban overhead pada CPU router.'
+        constraint: 'Perangkat embedded OpenWrt memiliki keterbatasan CPU/RAM untuk menjalankan logika kontrol traffic.',
+        decision: 'Mengembangkan daemon ultra-ringan berbasis Go yang berinteraksi langsung dengan subsistem tc kernel Linux.',
+        outcome: 'Mengurangi latensi jaringan secara signifikan tanpa beban overhead pada CPU router.'
       },
       en: {
-        constraint: 'Embedded OpenWrt hardware has limited CPU/RAM resources for executing complex traffic control logic.',
-        decision: 'Developed an ultra-lightweight Go-based daemon interacting directly with the Linux kernel tc (traffic control) subsystem.',
-        outcome: 'Significantly reduced network latency and bufferbloat without adding overhead to the router CPU.'
+        constraint: 'Embedded OpenWrt hardware has limited CPU/RAM resources for executing traffic control logic.',
+        decision: 'Developed an ultra-lightweight Go-based daemon interacting directly with the Linux kernel tc subsystem.',
+        outcome: 'Significantly reduced network latency and bufferbloat without router CPU overhead.'
       }
     },
     preview: {
@@ -336,3 +276,4 @@ export const getProjectsByLanguage = (language = 'id') => {
     caseStudy: projectItem.caseStudy?.[supportedLanguage] ?? null
   }))
 }
+

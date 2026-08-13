@@ -3,107 +3,86 @@ const careerProfileSource = {
     heroLabel: 'Perjalanan Karir',
     heroTitle: 'Perjalanan profesional yang dibangun lewat produk nyata.',
     heroSummary:
-      'Mahasiswa Teknologi Informasi sekaligus Full-stack Web Developer dengan fokus pada web engineering, AI architecture, dan kualitas delivery. Mampu membaca dan menulis dokumentasi teknis berbahasa Inggris serta berkolaborasi lintas tim.',
+      'Mahasiswa Teknologi Informasi semester akhir (IPK 3.98/4.00) di UBSI Depok yang membangun proyek lengkap end-to-end: frontend di Next.js dan React, backend di NestJS dan Laravel, data di PostgreSQL, dan dideploy dengan Docker. Maintainer package open-source npm (@ryuenn3123/agentic-senior-core) yang digunakan di 20+ alat AI coding dengan pengguna nyata. Terbiasa membaca kode orang lain, mengintegrasikannya ke API, dan mengubah database kosong menjadi demo yang berfungsi.',
     quickFactsLabel: 'Fakta Singkat',
     quickFacts: [
-      'S1 Teknologi Informasi, BSI (Semester 6)',
-      'Freelance Web Developer (2025)',
-      'Research Co-Author: Neuro-Symbolic AI (2026-sekarang)'
+      'S1 Teknologi Informasi, UBSI Depok (Semester 7 | IPK 3.98/4.00)',
+      'Creator & Maintainer @ryuenn3123/agentic-senior-core (20+ AI Tools)',
+      'Freelance Web Developer (Remote, Tim 3 orang | 2025)'
     ],
     contactActions: {
       callLabel: 'Telepon',
-      callValue: '+62-851-5546-1126',
+      callValue: '6285155461126',
       emailLabel: 'Email',
       emailValue: 'faridaprilian214@gmail.com',
       linkedinLabel: 'LinkedIn',
-      linkedinValue: 'linkedin.com/in/farid-aprilian'
+      linkedinValue: 'linkedin.com/in/farid-aprilian',
+      portfolioValue: 'faridekaaprilian.dev',
+      githubValue: 'github.com/fatidaprilian'
     },
     timelineLabel: 'Linimasa Pengalaman',
     timelineItems: [
       {
-        period: 'Jan. 2026 - Present',
-        title: 'Neuro-Symbolic AI Trading Architecture',
-        role: 'Research Co-Author',
-        description:
-          'Co-author riset akademik tentang arsitektur AI untuk trading system. Fokus pada data structuring, JSON processing, dan dokumentasi metodologi.'
-      },
-      {
-        period: 'Sept. 2025 - Dec. 2025',
+        period: 'Sept. 2025 – Dec. 2025',
         title: 'Freelance Web Developer',
-        role: 'Remote, Indonesia',
+        role: 'Remote, Indonesia (Tim 3 Orang)',
         description:
-          'Berkolaborasi dalam tim pengembangan untuk membangun platform e-commerce Vespa secara end-to-end, termasuk requirement management dan komunikasi client.'
+          'Mengembangkan storefront dan alur checkout Next.js untuk situs e-commerce produksi dan menghubungkannya ke API backend. Menggunakan Git untuk koordinasi tim 3 developer dan mencapai setiap milestone selama kontrak 3 bulan.'
       },
       {
-        period: '2022 (3 Months)',
-        title: 'Web and Content Intern',
+        period: '2022 (3 Bulan)',
+        title: 'Web & Content Intern',
         role: 'Agronesia, Indonesia',
         description:
-          'Mendesain homepage katalog produk, membuat konten multimedia promosi, serta mengelola pencatatan data stok untuk kebutuhan operasional.'
+          'Membangun landing page produk dengan HTML dan CSS serta memproduksi konten pemasaran untuk media sosial perusahaan.'
       }
     ],
-    faqLabel: 'FAQ Personal',
-    faqItems: [
+    certificationsLabel: 'Sertifikasi & Kursus',
+    certificationsItems: [
       {
-        question: 'Bagaimana cara kamu memastikan kualitas kerja?',
-        answer:
-          'Saya mulai dari requirement yang terukur, lanjut ke struktur teknis yang jelas, lalu validasi hasil melalui testing dan review sebelum delivery.'
+        title: 'PCAP: Programming Essentials in Python',
+        issuer: 'Cisco Networking Academy & OpenEDG Python Institute',
+        period: 'Juli 2024',
+        status: 'Terverifikasi'
       },
       {
-        question: 'Apakah kamu bisa kerja remote dan lintas tim?',
-        answer:
-          'Bisa. Saya terbiasa komunikasi async, dokumentasi progres, dan koordinasi lintas role agar pengambilan keputusan lebih cepat.'
-      },
-      {
-        question: 'Jenis project apa yang paling cocok dikerjakan bersama?',
-        answer:
-          'Project web product yang butuh fondasi rapi, iterasi cepat, dan maintainability jangka panjang akan jadi area kontribusi terbaik saya.'
+        title: 'Sertifikasi Profesi BNSP (Skema Analis, SKM-2019-62010-02)',
+        issuer: 'BNSP Indonesia',
+        period: 'Dinilai 29 Juli 2026',
+        status: 'Dinyatakan Kompeten | Sertifikat dalam proses penerbitan'
       }
     ],
     educationLabel: 'Pendidikan',
     educationItems: [
       {
         tier: 'S1',
-        period: 'Sept. 2023 — Present',
-        institution: 'Universitas Bina Sarana Informatika (BSI)',
-        degree: 'Bachelor of Information Technology'
-      },
-      {
-        tier: 'SMK',
-        period: 'July 2020 — May 2023',
-        institution: 'SMK Mekanik Cibinong',
-        degree: 'High School Diploma'
+        period: 'Sept. 2023 – Sekarang',
+        institution: 'Universitas Bina Sarana Informatika (UBSI) Depok, Indonesia',
+        degree: 'S1 Teknologi Informasi | IPK: 3.98 / 4.00 (Semester 7)',
+        details: 'Mata Kuliah: Struktur Data, Sistem Basis Data, Rekayasa Perangkat Lunak, Kriptografi, Pengolahan Citra.'
       }
     ],
-    skillsLabel: 'Stack Teknis',
+    skillsLabel: 'Keahlian Teknis',
     skillGroups: [
       {
-        category: 'Languages',
-        items: ['JavaScript', 'TypeScript', 'Go', 'PHP', 'SQL']
+        category: 'Bahasa Pemrograman',
+        items: ['TypeScript', 'JavaScript', 'Python', 'PHP', 'SQL']
       },
       {
-        category: 'Web Technologies',
-        items: ['HTML5', 'CSS3', 'REST APIs']
+        category: 'Framework & Library',
+        items: ['Next.js', 'React', 'NestJS', 'Laravel', 'FastAPI', 'Vitest', 'Tailwind CSS']
       },
       {
-        category: 'Frameworks',
-        items: ['NestJS', 'Next.js', 'Vue 3', 'Laravel', 'Tailwind CSS']
+        category: 'Basis Data & Infrastruktur',
+        items: ['PostgreSQL', 'MySQL', 'Prisma', 'Docker', 'Git', 'Linux']
       },
       {
-        category: 'Databases & ORM',
-        items: ['PostgreSQL', 'Prisma']
+        category: 'Lainnya',
+        items: ['REST API design & integration', 'AI-assisted development']
       },
       {
-        category: 'Tools & Infrastructure',
-        items: ['Git', 'GitHub Actions', 'Docker', 'Linux', 'Bun', 'OpenWrt', 'Linux tc']
-      },
-      {
-        category: 'Blockchain',
-        items: ['ethers.js', 'Web3Auth']
-      },
-      {
-        category: 'AI Tooling',
-        items: ['Prompt Engineering', 'LLM Integration', 'Structured Output Parsing', 'AI Agent Development']
+        category: 'Bahasa',
+        items: ['Indonesia (Penutur Asli)', 'Inggris (Membaca & Komunikasi Tertulis)']
       }
     ]
   },
@@ -111,107 +90,86 @@ const careerProfileSource = {
     heroLabel: 'Career Story',
     heroTitle: 'A professional journey built through real product delivery.',
     heroSummary:
-      'Information Technology undergraduate and Full-stack Web Developer focused on web engineering, AI architecture, and quality delivery. Proficient in reading and written communication in English, with cross-team collaboration experience.',
+      'Final-year Information Technology student (GPA 3.98/4.00) at UBSI Depok who builds full projects end to end: frontend in Next.js and React, backend in NestJS and Laravel, data in PostgreSQL, shipped with Docker. Maintainer of an open-source npm package (@ryuenn3123/agentic-senior-core) now used inside 20+ different AI coding tools, with real users outside my own computer. Comfortable opening up someone else’s code, connecting it to an API, and turning a blank database into a working demo.',
     quickFactsLabel: 'Quick Facts',
     quickFacts: [
-      'Information Technology Undergraduate, BSI (6th Semester)',
-      'Freelance Web Developer (2025)',
-      'Research Co-Author: Neuro-Symbolic AI (2026-present)'
+      'B.S. Information Technology, UBSI Depok (7th Sem | GPA 3.98/4.00)',
+      'Creator & Maintainer @ryuenn3123/agentic-senior-core (20+ AI Tools)',
+      'Freelance Web Developer (Remote, Team of 3 | 2025)'
     ],
     contactActions: {
       callLabel: 'Phone',
-      callValue: '+62-851-5546-1126',
+      callValue: '6285155461126',
       emailLabel: 'Email',
       emailValue: 'faridaprilian214@gmail.com',
       linkedinLabel: 'LinkedIn',
-      linkedinValue: 'linkedin.com/in/farid-aprilian'
+      linkedinValue: 'linkedin.com/in/farid-aprilian',
+      portfolioValue: 'faridekaaprilian.dev',
+      githubValue: 'github.com/fatidaprilian'
     },
     timelineLabel: 'Experience Timeline',
     timelineItems: [
       {
-        period: 'Jan. 2026 - Present',
-        title: 'Neuro-Symbolic AI Trading Architecture',
-        role: 'Research Co-Author',
-        description:
-          'Co-authoring academic research on an AI architecture for trading systems, focusing on data structuring, JSON processing, and methodology documentation.'
-      },
-      {
-        period: 'Sept. 2025 - Dec. 2025',
+        period: 'Sept. 2025 – Dec. 2025',
         title: 'Freelance Web Developer',
-        role: 'Remote, Indonesia',
+        role: 'Remote, Indonesia (Team of 3)',
         description:
-          'Collaborated within a development team to build a Vespa e-commerce platform end-to-end, including requirement management and direct client communication.'
+          'Developed the Next.js storefront and checkout flow for a production e-commerce site and connected it to the backend API. Used Git to coordinate with two other developers and hit every milestone across the 3-month contract.'
       },
       {
         period: '2022 (3 Months)',
-        title: 'Web and Content Intern',
+        title: 'Web & Content Intern',
         role: 'Agronesia, Indonesia',
         description:
-          'Designed product catalog homepages, created multimedia content for campaigns, and managed inventory data recording for operational tracking.'
+          'Built product landing pages with HTML and CSS and produced marketing content for the company’s social media.'
       }
     ],
-    faqLabel: 'Personal FAQ',
-    faqItems: [
+    certificationsLabel: 'Certifications & Courses',
+    certificationsItems: [
       {
-        question: 'How do you ensure high-quality delivery?',
-        answer:
-          'I start with measurable requirements, continue with clear technical structure, then validate through testing and review before delivery.'
+        title: 'PCAP: Programming Essentials in Python',
+        issuer: 'Cisco Networking Academy & OpenEDG Python Institute',
+        period: 'July 2024',
+        status: 'Verified'
       },
       {
-        question: 'Can you work remotely with cross-functional teams?',
-        answer:
-          'Yes. I am used to asynchronous communication, documented progress updates, and cross-role coordination for faster decisions.'
-      },
-      {
-        question: 'What type of projects are the best fit for your strengths?',
-        answer:
-          'Web product projects that require clean foundations, fast iteration, and long-term maintainability are where I contribute the most.'
+        title: 'BNSP Professional Certification (Analyst Scheme, SKM-2019-62010-02)',
+        issuer: 'BNSP Indonesia',
+        period: 'Assessed July 29, 2026',
+        status: 'Declared Competent | Certificate in issuance'
       }
     ],
     educationLabel: 'Education',
     educationItems: [
       {
-        tier: 'S1',
-        period: 'Sept. 2023 — Present',
-        institution: 'Universitas Bina Sarana Informatika (BSI)',
-        degree: 'Bachelor of Information Technology'
-      },
-      {
-        tier: 'SMK',
-        period: 'July 2020 — May 2023',
-        institution: 'SMK Mekanik Cibinong',
-        degree: 'High School Diploma'
+        tier: 'Bachelor\'s',
+        period: 'Sept. 2023 – Present',
+        institution: 'Universitas Bina Sarana Informatika (UBSI) Depok, Indonesia',
+        degree: 'Bachelor’s Degree in Information Technology (S1) | GPA: 3.98 / 4.00 (Semester 7)',
+        details: 'Coursework: Data Structures, Database Systems, Software Engineering, Cryptography, Image Processing.'
       }
     ],
-    skillsLabel: 'Technical Stack',
+    skillsLabel: 'Technical Skills',
     skillGroups: [
       {
         category: 'Languages',
-        items: ['JavaScript', 'TypeScript', 'Go', 'PHP', 'SQL']
+        items: ['TypeScript', 'JavaScript', 'Python', 'PHP', 'SQL']
       },
       {
-        category: 'Web Technologies',
-        items: ['HTML5', 'CSS3', 'REST APIs']
+        category: 'Frameworks & Libraries',
+        items: ['Next.js', 'React', 'NestJS', 'Laravel', 'FastAPI', 'Vitest', 'Tailwind CSS']
       },
       {
-        category: 'Frameworks',
-        items: ['NestJS', 'Next.js', 'Vue 3', 'Laravel', 'Tailwind CSS']
+        category: 'Databases & Infrastructure',
+        items: ['PostgreSQL', 'MySQL', 'Prisma', 'Docker', 'Git', 'Linux']
       },
       {
-        category: 'Databases & ORM',
-        items: ['PostgreSQL', 'Prisma']
+        category: 'Other',
+        items: ['REST API design and integration', 'AI-assisted development']
       },
       {
-        category: 'Tools & Infrastructure',
-        items: ['Git', 'GitHub Actions', 'Docker', 'Linux', 'Bun', 'OpenWrt', 'Linux tc']
-      },
-      {
-        category: 'Blockchain',
-        items: ['ethers.js', 'Web3Auth']
-      },
-      {
-        category: 'AI Tooling',
-        items: ['Prompt Engineering', 'LLM Integration', 'Structured Output Parsing', 'AI Agent Development']
+        category: 'Spoken Languages',
+        items: ['Indonesian (Native)', 'English (Reading & Written Communication)']
       }
     ]
   }
