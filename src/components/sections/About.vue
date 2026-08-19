@@ -32,26 +32,35 @@ defineProps({
         </div>
       </div>
 
-      <div class="lg:col-span-5 flex flex-col gap-8 w-full mt-8 lg:mt-0">
-        <blockquote class="border-l-2 border-[var(--accent-blue)] pl-6 text-xl italic leading-relaxed text-[var(--ink-primary)] font-[var(--font-comment)]">
+      <div class="lg:col-span-5 flex flex-col gap-6 w-full mt-8 lg:mt-0">
+        <blockquote class="border-l-2 border-[var(--accent-blue)] pl-6 text-xl italic leading-relaxed text-[var(--ink-primary)]">
           {{ c.aboutPullQuote }}
         </blockquote>
         
-        <div class="surface-card mt-4 flex flex-col gap-6">
-          <span class="font-mono text-[10px] text-[var(--ink-muted)] tracking-widest uppercase">Typography Scale</span>
+        <!-- Engineering Principles Matrix Card -->
+        <div class="spotlight-card p-6 flex flex-col gap-5">
+          <div class="flex items-center justify-between border-b border-[var(--hairline)] pb-3">
+            <span class="font-mono text-xs font-semibold text-[var(--ink-primary)] uppercase tracking-wider">
+              {{ c.principlesLabel || 'Engineering Principles' }}
+            </span>
+            <span class="font-mono text-[10px] text-[var(--accent-blue)] bg-[var(--surface-canvas)] border border-[var(--hairline)] px-2 py-0.5 rounded">
+              CORE PHILOSOPHY
+            </span>
+          </div>
           
           <div class="flex flex-col gap-4">
-            <div class="flex justify-between items-baseline border-b border-[var(--hairline)] pb-3">
-              <span class="font-mono text-xs text-[var(--ink-muted)]">Inter Display</span>
-              <span class="font-medium text-xl leading-none tracking-tight text-[var(--ink-primary)]">Aa Bb 123</span>
-            </div>
-            <div class="flex justify-between items-baseline border-b border-[var(--hairline)] pb-3">
-              <span class="font-mono text-xs text-[var(--ink-muted)]">Inter Variable</span>
-              <span class="text-base leading-none text-[var(--ink-primary)]">Aa Bb 123</span>
-            </div>
-            <div class="flex justify-between items-baseline pb-1">
-              <span class="font-mono text-xs text-[var(--ink-muted)]">JetBrains Mono</span>
-              <span class="font-mono text-sm leading-none text-[var(--ink-primary)]">Aa Bb 123</span>
+            <div
+              v-for="item in c.principles"
+              :key="item.tag"
+              class="flex flex-col gap-1 pb-3 border-b border-[var(--hairline)]/60 last:border-b-0 last:pb-0"
+            >
+              <div class="flex items-center gap-2">
+                <span class="font-mono text-[10px] font-bold text-[var(--accent-blue)]">{{ item.tag }}</span>
+                <h3 class="text-sm font-bold text-[var(--ink-primary)] tracking-tight">{{ item.title }}</h3>
+              </div>
+              <p class="text-xs text-[var(--ink-muted)] leading-relaxed pl-4">
+                {{ item.desc }}
+              </p>
             </div>
           </div>
         </div>

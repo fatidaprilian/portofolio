@@ -1,4 +1,6 @@
 <script setup>
+import { Command, Search } from 'lucide-vue-next'
+
 defineProps({
   c: { type: Object, required: true },
   themePref: { type: String, required: true },
@@ -6,16 +8,30 @@ defineProps({
   activeSection: { type: String, required: true }
 })
 
-const emit = defineEmits(['goToSection', 'applyTheme', 'toggleLang'])
+const emit = defineEmits(['goToSection', 'applyTheme', 'toggleLang', 'openCmdPalette'])
 </script>
 
 <template>
   <header class="top-nav" role="banner">
-    <button type="button" class="font-bold text-lg tracking-tight text-[var(--ink-primary)] flex gap-1" @click="emit('goToSection', 'home')" aria-label="Farid Eka Aprilian Home">
-      <span>FARID EKA</span><span class="text-[var(--ink-muted)]">APRILIAN</span>
-    </button>
+    <div class="flex items-center gap-6">
+      <button type="button" class="font-bold text-lg tracking-tight text-[var(--ink-primary)] flex gap-1" @click="emit('goToSection', 'home')" aria-label="Farid Eka Aprilian Home">
+        <span>FARID EKA</span><span class="text-[var(--ink-muted)]">APRILIAN</span>
+      </button>
 
-    <nav class="hidden md:flex items-center gap-6" role="navigation" aria-label="Main Navigation">
+      <!-- Quick Command Palette Trigger (Desktop & Mobile) -->
+      <button
+        type="button"
+        class="hidden sm:inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[var(--surface-1)] hover:bg-[var(--surface-2)] border border-[var(--hairline)] hover:border-[var(--accent-blue)] text-xs text-[var(--ink-muted)] hover:text-[var(--ink-primary)] transition-colors"
+        @click="emit('openCmdPalette')"
+        aria-label="Open Command Palette"
+      >
+        <Search class="w-3.5 h-3.5" />
+        <span class="font-normal">{{ c.cmdBadge || 'Quick Search' }}</span>
+        <kbd class="font-mono text-[10px] bg-[var(--surface-canvas)] border border-[var(--hairline)] px-1.5 py-0.5 rounded text-[var(--ink-muted)]">⌘K</kbd>
+      </button>
+    </div>
+
+    <nav class="hidden lg:flex items-center gap-6" role="navigation" aria-label="Main Navigation">
       <button 
         type="button" 
         :class="['nav-link', { 'is-active text-[var(--ink-primary)]': activeSection === 'home' }]" 
@@ -53,7 +69,17 @@ const emit = defineEmits(['goToSection', 'applyTheme', 'toggleLang'])
       </button>
     </nav>
 
-    <div class="flex items-center gap-4">
+    <div class="flex items-center gap-3">
+      <!-- Mobile Quick Search Icon -->
+      <button
+        type="button"
+        class="sm:hidden p-2 rounded-full bg-[var(--surface-1)] border border-[var(--hairline)] text-[var(--ink-muted)] hover:text-[var(--ink-primary)]"
+        @click="emit('openCmdPalette')"
+        aria-label="Open Command Palette"
+      >
+        <Search class="w-4 h-4" />
+      </button>
+
       <div class="hidden md:flex bg-[var(--surface-1)] border border-[var(--hairline)] rounded-full p-1 gap-1">
         <button
           type="button"

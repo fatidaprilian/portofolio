@@ -1,12 +1,27 @@
 <script setup>
-import { X, ArrowUpRight } from 'lucide-vue-next'
+import { onMounted, onUnmounted } from 'vue'
+import { X, ArrowUpRight, ShieldCheck, Cpu, Code2 } from 'lucide-vue-next'
 
-defineProps({
+const props = defineProps({
   activeProject: { type: Object, required: true },
   c: { type: Object, required: true }
 })
 
 const emit = defineEmits(['close'])
+
+const handleKeyDown = (e) => {
+  if (e.key === 'Escape') {
+    emit('close')
+  }
+}
+
+onMounted(() => {
+  window.addEventListener('keydown', handleKeyDown)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('keydown', handleKeyDown)
+})
 
 const monogramFor = (title) => {
   const cleaned = title.replace(/[^a-z]/gi, '')

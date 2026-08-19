@@ -16,6 +16,7 @@ import Experience from './components/sections/Experience.vue'
 import Contact from './components/sections/Contact.vue'
 import Footer from './components/layout/Footer.vue'
 import SpecDrawer from './components/ui/SpecDrawer.vue'
+import CommandPalette from './components/ui/CommandPalette.vue'
 import CustomCursor from './components/ui/CustomCursor.vue'
 import { copy } from './data/locales.js'
 
@@ -30,6 +31,7 @@ const themePref = ref('auto') // auto | light | dark
 const resolvedTheme = ref('light')
 const themeAnnouncement = ref('')
 const activeProject = ref(null) // Holds selected project for slide-in drawer
+const isCommandPaletteOpen = ref(false)
 const activeSection = ref('home')
 const showPreloader = ref(true)
 const counterRef = ref(null)
@@ -77,6 +79,30 @@ const toggleLang = () => {
     localStorage.setItem('portfolio-lang', lang.value)
   } catch (_) {
     // ignore
+  }
+}
+
+// -----------------------------------------------------------------
+// Spotlight Mouse Coordinates Tracker
+// -----------------------------------------------------------------
+const onMouseMoveGlobal = (e) => {
+  const cards = document.querySelectorAll('.spotlight-card')
+  cards.forEach((card) => {
+    const rect = card.getBoundingClientRect()
+    const x = e.clientX - rect.left
+    const y = e.clientY - rect.top
+    card.style.setProperty('--mouse-x', `${x}px`)
+    card.style.setProperty('--mouse-y', `${y}px`)
+  })
+}
+
+// -----------------------------------------------------------------
+// Keyboard Shortcuts (Cmd+K / Ctrl+K)
+// -----------------------------------------------------------------
+const onGlobalKeyDown = (e) => {
+  if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+    e.preventDefault()
+    isCommandPaletteOpen.value = !isCommandPaletteOpen.value
   }
 }
 
@@ -176,8 +202,6 @@ const playOpeningSequence = () => {
     .from(root.querySelector('.hero-actions'), { y: 12, opacity: 0, duration: 0.5 }, '-=0.5')
 }
 
-
-
 // -----------------------------------------------------------------
 // Lifecycle
 // -----------------------------------------------------------------
@@ -201,6 +225,9 @@ onMounted(async () => {
   if (mediaQuery.addEventListener) mediaQuery.addEventListener('change', onSchemeChange)
   else mediaQuery.addListener(onSchemeChange)
 
+  window.addEventListener('mousemove', onMouseMoveGlobal, { passive: true })
+  window.addEventListener('keydown', onGlobalKeyDown)
+
   initLenis()
   initIntersectionObserver()
   await nextTick()
@@ -222,6 +249,8 @@ onUnmounted(() => {
     if (mediaQuery.removeEventListener) mediaQuery.removeEventListener('change', onSchemeChange)
     else mediaQuery.removeListener(onSchemeChange)
   }
+  window.removeEventListener('mousemove', onMouseMoveGlobal)
+  window.removeEventListener('keydown', onGlobalKeyDown)
 })
 
 watch(lang, () => {
@@ -230,15 +259,11 @@ watch(lang, () => {
 </script>
 
 <template>
-
-
   <a href="#home" class="sr-only focus:not-sr-only fixed top-4 left-4 z-50 bg-black text-white px-4 py-2 rounded-md font-semibold outline-none">{{ c.skip }}</a>
 
   <span class="sr-only" role="status" aria-live="polite">
     {{ themeAnnouncement }}
   </span>
-
-
 
   <!-- ========== Premium Top Navigation Header ========== -->
   <Navbar
@@ -249,6 +274,7 @@ watch(lang, () => {
     @goToSection="goToSection"
     @applyTheme="applyTheme"
     @toggleLang="toggleLang"
+    @openCmdPalette="isCommandPaletteOpen = true"
   />
 
   <!-- ========== Main Content Sections ========== -->
@@ -275,6 +301,20 @@ watch(lang, () => {
     :activeProject="activeProject"
     :c="c"
     @close="activeProject = null"
+  />
+
+  <!-- ========== Command Palette Modal (Cmd+K) ========== -->
+  <CommandPalette
+    :isOpen="isCommandPaletteOpen"
+    :c="c"
+    :projects="projects"
+    :themePref="themePref"
+    :lang="lang"
+    @close="isCommandPaletteOpen = false"
+    @goToSection="goToSection"
+    @selectProject="(p) => { activeProject = p; isCommandPaletteOpen = false }"
+    @applyTheme="applyTheme"
+    @toggleLang="toggleLang"
   />
 
   <CustomCursor />

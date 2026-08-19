@@ -27,14 +27,18 @@ const careerProfileSource = {
         title: 'Freelance Web Developer',
         role: 'Remote, Indonesia (Tim 3 Orang)',
         description:
-          'Mengembangkan storefront dan alur checkout Next.js untuk situs e-commerce produksi dan menghubungkannya ke API backend. Menggunakan Git untuk koordinasi tim 3 developer dan mencapai setiap milestone selama kontrak 3 bulan.'
+          'Mengembangkan storefront dan alur checkout Next.js untuk situs e-commerce produksi dan menghubungkannya ke API backend. Menggunakan Git untuk koordinasi tim 3 developer dan mencapai setiap milestone selama kontrak 3 bulan.',
+        technologies: ['Next.js', 'React', 'Git', 'REST API', 'Tailwind CSS', 'Midtrans'],
+        impact: '100% On-Time Milestone Delivery'
       },
       {
         period: '2022 (3 Bulan)',
         title: 'Web & Content Intern',
         role: 'Agronesia, Indonesia',
         description:
-          'Membangun landing page produk dengan HTML dan CSS serta memproduksi konten pemasaran untuk media sosial perusahaan.'
+          'Membangun landing page produk dengan HTML dan CSS serta memproduksi konten pemasaran untuk media sosial perusahaan.',
+        technologies: ['HTML5', 'CSS3', 'JavaScript', 'Responsive Design'],
+        impact: 'Marketing Page Shipped'
       }
     ],
     certificationsLabel: 'Sertifikasi & Kursus',
@@ -114,14 +118,18 @@ const careerProfileSource = {
         title: 'Freelance Web Developer',
         role: 'Remote, Indonesia (Team of 3)',
         description:
-          'Developed the Next.js storefront and checkout flow for a production e-commerce site and connected it to the backend API. Used Git to coordinate with two other developers and hit every milestone across the 3-month contract.'
+          'Developed the Next.js storefront and checkout flow for a production e-commerce site and connected it to the backend API. Used Git to coordinate with two other developers and hit every milestone across the 3-month contract.',
+        technologies: ['Next.js', 'React', 'Git', 'REST API', 'Tailwind CSS', 'Midtrans'],
+        impact: '100% On-Time Milestone Delivery'
       },
       {
         period: '2022 (3 Months)',
         title: 'Web & Content Intern',
         role: 'Agronesia, Indonesia',
         description:
-          'Built product landing pages with HTML and CSS and produced marketing content for the company’s social media.'
+          'Built product landing pages with HTML and CSS and produced marketing content for the company’s social media.',
+        technologies: ['HTML5', 'CSS3', 'JavaScript', 'Responsive Design'],
+        impact: 'Marketing Page Shipped'
       }
     ],
     certificationsLabel: 'Certifications & Courses',
