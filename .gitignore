@@ -42,8 +42,8 @@ keyboard-audit-plan.js
 
 # Environment files
 .env
-.env.local
-.env.*.local
+.env.*
+!.env.example
 
 # agentic-senior-core: local runtime artifacts
 .agent-context/state/token-saver/
