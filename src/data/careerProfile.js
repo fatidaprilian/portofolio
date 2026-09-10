@@ -11,14 +11,13 @@ const careerProfileSource = {
       'Freelance Web Developer (Remote, Tim 3 orang | 2025)'
     ],
     contactActions: {
-      callLabel: 'Telepon',
-      callValue: '6285155461126',
       emailLabel: 'Email',
       emailValue: 'faridaprilian214@gmail.com',
       linkedinLabel: 'LinkedIn',
       linkedinValue: 'linkedin.com/in/farid-aprilian',
-      portfolioValue: 'faridekaaprilian.dev',
-      githubValue: 'github.com/fatidaprilian'
+      githubLabel: 'GitHub',
+      githubValue: 'github.com/fatidaprilian',
+      portfolioValue: 'faridekaaprilian.dev'
     },
     timelineLabel: 'Linimasa Pengalaman',
     timelineItems: [
@@ -102,14 +101,13 @@ const careerProfileSource = {
       'Freelance Web Developer (Remote, Team of 3 | 2025)'
     ],
     contactActions: {
-      callLabel: 'Phone',
-      callValue: '6285155461126',
       emailLabel: 'Email',
       emailValue: 'faridaprilian214@gmail.com',
       linkedinLabel: 'LinkedIn',
       linkedinValue: 'linkedin.com/in/farid-aprilian',
-      portfolioValue: 'faridekaaprilian.dev',
-      githubValue: 'github.com/fatidaprilian'
+      githubLabel: 'GitHub',
+      githubValue: 'github.com/fatidaprilian',
+      portfolioValue: 'faridekaaprilian.dev'
     },
     timelineLabel: 'Experience Timeline',
     timelineItems: [

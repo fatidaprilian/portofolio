@@ -51,16 +51,16 @@ const getProfile = () => getCareerProfileByLanguage(props.language)
             <p class="text-xs uppercase tracking-[0.2em] text-muted">Contact</p>
             <div class="space-y-2 mt-3">
               <p>
-                <span class="font-semibold text-[#3e2c23]">{{ getProfile().contactActions.callLabel }}</span><br/>
-                <span class="text-[#6a4f40]">{{ getProfile().contactActions.callValue }}</span>
-              </p>
-              <p>
                 <span class="font-semibold text-[#3e2c23]">{{ getProfile().contactActions.emailLabel }}</span><br/>
                 <a :href="`mailto:${getProfile().contactActions.emailValue}`" class="text-accent underline-link">{{ getProfile().contactActions.emailValue }}</a>
               </p>
               <p>
                 <span class="font-semibold text-[#3e2c23]">{{ getProfile().contactActions.linkedinLabel }}</span><br/>
                 <a :href="`https://${getProfile().contactActions.linkedinValue}`" target="_blank" rel="noreferrer" class="text-accent underline-link">{{ getProfile().contactActions.linkedinValue }}</a>
+              </p>
+              <p>
+                <span class="font-semibold text-[#3e2c23]">{{ getProfile().contactActions.githubLabel || 'GitHub' }}</span><br/>
+                <a :href="`https://${getProfile().contactActions.githubValue}`" target="_blank" rel="noreferrer" class="text-accent underline-link">{{ getProfile().contactActions.githubValue }}</a>
               </p>
             </div>
           </div>

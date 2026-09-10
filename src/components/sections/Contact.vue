@@ -1,6 +1,6 @@
 <script setup>
 import { onMounted, onUnmounted, ref } from 'vue'
-import { Mail, Phone, Linkedin, MessageCircle, Copy, Check, Clock } from 'lucide-vue-next'
+import { Mail, Github, Linkedin, Copy, Check, Clock } from 'lucide-vue-next'
 
 defineProps({
   c: { type: Object, required: true },
@@ -124,17 +124,17 @@ onUnmounted(() => {
             </button>
           </div>
 
-          <!-- WhatsApp Direct -->
+          <!-- GitHub Profile -->
           <a
-            :href="`https://wa.me/${profile.contactActions.callValue}`"
+            :href="`https://${profile.contactActions.githubValue || 'github.com/fatidaprilian'}`"
             target="_blank"
             rel="noreferrer"
             class="flex items-center gap-3 p-3 rounded-xl bg-[var(--surface-1)] hover:bg-[var(--surface-2)] border border-[var(--hairline)] hover:border-[var(--accent-blue)] text-[var(--ink-primary)] font-medium text-sm transition-colors"
           >
-            <div class="w-8 h-8 rounded-full bg-[var(--surface-canvas)] flex items-center justify-center shrink-0 text-emerald-400">
-              <MessageCircle class="w-4 h-4" />
+            <div class="w-8 h-8 rounded-full bg-[var(--surface-canvas)] flex items-center justify-center shrink-0 text-[var(--ink-primary)]">
+              <Github class="w-4 h-4" />
             </div>
-            <span>{{ c.contactWhatsapp || 'Chat via WhatsApp' }}</span>
+            <span>GitHub Profile</span>
           </a>
 
           <!-- LinkedIn -->
