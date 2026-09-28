@@ -17,6 +17,9 @@ const careerProfileSource = {
       linkedinValue: 'linkedin.com/in/farid-aprilian',
       githubLabel: 'GitHub',
       githubValue: 'github.com/fatidaprilian',
+      meetingLabel: 'Jadwalkan Panggilan (Google Meet)',
+      meetingValue: 'calendar.app.google/yND5q1Mz91fp9CP8A',
+      meetingUrl: 'https://calendar.app.google/yND5q1Mz91fp9CP8A',
       portfolioValue: 'faridekaaprilian.dev'
     },
     timelineLabel: 'Linimasa Pengalaman',
@@ -107,6 +110,9 @@ const careerProfileSource = {
       linkedinValue: 'linkedin.com/in/farid-aprilian',
       githubLabel: 'GitHub',
       githubValue: 'github.com/fatidaprilian',
+      meetingLabel: 'Schedule a Call (Google Meet)',
+      meetingValue: 'calendar.app.google/yND5q1Mz91fp9CP8A',
+      meetingUrl: 'https://calendar.app.google/yND5q1Mz91fp9CP8A',
       portfolioValue: 'faridekaaprilian.dev'
     },
     timelineLabel: 'Experience Timeline',

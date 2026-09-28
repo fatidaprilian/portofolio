@@ -12,7 +12,8 @@ import {
   Languages,
   Check,
   X,
-  Compass
+  Compass,
+  Video
 } from 'lucide-vue-next'
 
 const props = defineProps({
@@ -107,6 +108,17 @@ const filteredItems = computed(() => {
         } catch (_) {
           emit('close')
         }
+      }
+    },
+    {
+      id: 'act-meeting',
+      group: props.lang === 'id' ? 'Aksi' : 'Actions',
+      label: props.c.cmdMeeting || 'Jadwalkan Panggilan (Google Meet)',
+      sublabel: '30 Min Technical Discussion',
+      icon: Video,
+      action: () => {
+        window.open('https://calendar.app.google/yND5q1Mz91fp9CP8A', '_blank')
+        emit('close')
       }
     },
     {

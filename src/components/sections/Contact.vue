@@ -1,6 +1,6 @@
 <script setup>
 import { onMounted, onUnmounted, ref } from 'vue'
-import { Mail, Github, Linkedin, Copy, Check, Clock } from 'lucide-vue-next'
+import { Mail, Github, Linkedin, Copy, Check, Clock, Video, ArrowUpRight } from 'lucide-vue-next'
 
 defineProps({
   c: { type: Object, required: true },
@@ -148,6 +148,25 @@ onUnmounted(() => {
               <Linkedin class="w-4 h-4" />
             </div>
             <span>LinkedIn Profile</span>
+          </a>
+
+          <!-- Google Meet / Video Call -->
+          <a
+            :href="profile.contactActions.meetingUrl || 'https://calendar.app.google/yND5q1Mz91fp9CP8A'"
+            target="_blank"
+            rel="noreferrer"
+            class="flex items-center justify-between p-3 rounded-xl bg-[var(--surface-1)] hover:bg-[var(--surface-2)] border border-[var(--hairline)] hover:border-[var(--accent-blue)] text-[var(--ink-primary)] font-medium text-sm transition-colors"
+          >
+            <div class="flex items-center gap-3">
+              <div class="w-8 h-8 rounded-full bg-[var(--surface-canvas)] flex items-center justify-center shrink-0 text-emerald-400">
+                <Video class="w-4 h-4" />
+              </div>
+              <div class="flex flex-col">
+                <span class="font-medium text-sm leading-tight">{{ profile.contactActions.meetingLabel || 'Jadwalkan Panggilan (Google Meet)' }}</span>
+                <span class="text-xs text-[var(--ink-muted)] font-mono">{{ profile.contactActions.meetingValue || 'calendar.app.google/yND5q1Mz91fp9CP8A' }}</span>
+              </div>
+            </div>
+            <ArrowUpRight class="w-4 h-4 text-[var(--ink-muted)] shrink-0" />
           </a>
         </div>
       </div>
