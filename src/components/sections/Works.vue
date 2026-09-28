@@ -220,7 +220,7 @@ const onProjectLeave = () => {
 
           <!-- Role Label -->
           <p class="font-mono text-xs font-bold text-[var(--brand-mint)] uppercase tracking-wider mb-3">
-            Open-Source & Code Sandbox
+            {{ c.moreProjectsRole || 'Open-Source & Code Sandbox' }}
           </p>
 
           <!-- Summary -->
@@ -234,7 +234,6 @@ const onProjectLeave = () => {
           <div class="flex flex-wrap gap-1.5">
             <span class="comic-tag text-[10px] sm:text-[11px]">Git Repositories</span>
             <span class="comic-tag text-[10px] sm:text-[11px]">Open Source</span>
-            <span class="comic-tag text-[10px] sm:text-[11px]">Public Sandbox</span>
           </div>
           <span class="font-mono text-xs font-bold text-[var(--brand-coral)] flex items-center gap-1 group-hover:underline">
             {{ c.moreProjectsCta || 'Buka GitHub' }}
@@ -315,7 +314,7 @@ const onProjectLeave = () => {
                   {{ c.moreProjectsTitle || 'Lihat Proyek Lainnya di GitHub' }}
                 </h3>
               </div>
-              <p class="text-xs text-[var(--ink-muted)] font-medium mt-0.5">github.com/fatidaprilian • 20+ Repositori Publik & Eksperimen</p>
+              <p class="text-xs text-[var(--ink-muted)] font-medium mt-0.5">{{ c.moreProjectsListMeta || 'github.com/fatidaprilian • 20+ Repositori Publik & Eksperimen' }}</p>
             </div>
           </div>
           

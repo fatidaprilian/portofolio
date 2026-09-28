@@ -223,10 +223,10 @@ onUnmounted(() => {
         <form class="comic-panel p-6 sm:p-8 bg-[var(--surface-panel)] border-[1.5px] border-[var(--comic-border)] shadow-comic flex flex-col gap-4" @submit.prevent="handleFormSubmit">
           <div class="border-b border-[var(--comic-border)]/20 pb-3 flex items-center justify-between">
             <h3 class="font-black text-sm text-[var(--ink-primary)]">
-              Kirim Pesan Langsung
+              {{ c.formTitle || 'Kirim Pesan Langsung' }}
             </h3>
             <span class="font-mono text-[10px] font-bold px-2 py-0.5 rounded bg-[var(--brand-sun)] text-slate-950 border border-[var(--comic-border)]">
-              PESAN
+              {{ c.formBadge || 'PESAN' }}
             </span>
           </div>
 

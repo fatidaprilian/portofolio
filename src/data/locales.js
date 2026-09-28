@@ -39,6 +39,7 @@ export const copy = {
     aboutPullQuote: '“Kode terbaik adalah yang sederhana, mudah dipahami rekan tim, dan tidak berlebihan.”',
     
     highlightsTitle: 'Sekilas Tentang Saya',
+    highlightsBadge: 'PROFIL',
     highlights: [
       { label: 'Domisili', value: 'Depok / Jakarta, Indonesia' },
       { label: 'Pendidikan', value: 'S1 Sistem Informasi — UBSI Depok (IPK 3.98)' },
@@ -53,12 +54,18 @@ export const copy = {
     moreProjectsSubtitle: 'Eksplorasi eksperimen kode, script automasi, library, dan modul open-source lainnya di profil GitHub saya.',
     moreProjectsCta: 'Buka Repositori GitHub',
     moreProjectsTag: 'Lainnya di GitHub',
+    moreProjectsRole: 'Repositori & Eksplorasi Kode',
+    moreProjectsListMeta: 'github.com/fatidaprilian • 20+ Repositori Publik & Eksperimen',
     
     skillsTitle: 'Teknologi & Peralatan yang Biasa Saya Gunakan',
     skillsMeta: 'Stack & Keahlian',
+    skillsSub: 'Keahlian & Bidang Utama',
     
     experienceTitle: 'Riwayat Pengalaman & Studi',
     experienceMeta: 'Pengalaman Karir',
+    experienceSub: 'Perjalanan Karir & Profesional',
+    educationTitle: 'Pendidikan Formal',
+    certificationsTitle: 'Sertifikasi & Lisensi',
     
     contactTitle: 'Tertarik Bekerja Sama? Mari Ngobrol.',
     contactMeta: 'Kontak & Diskusi',
@@ -78,6 +85,8 @@ export const copy = {
     footerLeft: 'Farid Eka Aprilian • Portofolio',
     themeLabels: { auto: 'Otomatis', light: 'Terang', dark: 'Gelap' },
     
+    formTitle: 'Kirim Pesan Langsung',
+    formBadge: 'PESAN',
     formName: 'Nama Lengkap',
     formEmail: 'Alamat Email',
     formMessage: 'Pesan Anda',
@@ -126,6 +135,7 @@ export const copy = {
     aboutPullQuote: '“The best code is simple, clear to the team, and free of unnecessary complexity.”',
     
     highlightsTitle: 'Quick Highlights',
+    highlightsBadge: 'PROFILE',
     highlights: [
       { label: 'Location', value: 'Depok / Jakarta, Indonesia' },
       { label: 'Education', value: 'B.S. Information Systems — UBSI Depok (GPA 3.98)' },
@@ -140,12 +150,18 @@ export const copy = {
     moreProjectsSubtitle: 'Explore open-source experiments, automation scripts, libraries, and utilities on my GitHub profile.',
     moreProjectsCta: 'Open GitHub Repositories',
     moreProjectsTag: 'More on GitHub',
+    moreProjectsRole: 'Open-Source & Code Sandbox',
+    moreProjectsListMeta: 'github.com/fatidaprilian • 20+ Public Repositories & Experiments',
     
     skillsTitle: 'Technologies & Tools I Use',
     skillsMeta: 'Stack & Capabilities',
+    skillsSub: 'Core Capabilities & Domains',
     
     experienceTitle: 'Work History & Education',
     experienceMeta: 'Career Timeline',
+    experienceSub: 'Career & Professional Journey',
+    educationTitle: 'Formal Education',
+    certificationsTitle: 'Certifications & Licenses',
     
     contactTitle: 'Interested in Collaborating? Let\'s Talk.',
     contactMeta: 'Get in Touch',
@@ -165,6 +181,8 @@ export const copy = {
     footerLeft: 'Farid Eka Aprilian • Portfolio',
     themeLabels: { auto: 'Auto', light: 'Light', dark: 'Dark' },
     
+    formTitle: 'Send Direct Message',
+    formBadge: 'MESSAGE',
     formName: 'Full Name',
     formEmail: 'Email Address',
     formMessage: 'Your Message',

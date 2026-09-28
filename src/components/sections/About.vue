@@ -56,7 +56,7 @@ defineProps({
               {{ c.highlightsTitle || 'Sekilas Tentang Saya' }}
             </h3>
             <span class="font-mono text-[10px] font-bold text-slate-950 bg-[var(--brand-mint)] border border-[var(--comic-border)] px-2 py-0.5 rounded shadow-[1px_1px_0px_var(--comic-border)]">
-              PROFIL
+              {{ c.highlightsBadge || 'PROFIL' }}
             </span>
           </div>
           

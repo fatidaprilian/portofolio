@@ -19,7 +19,7 @@ defineProps({
         <h2 id="experience-heading" class="display-section">{{ c.experienceTitle }}</h2>
       </div>
       <p class="text-[var(--ink-muted)] text-xs sm:text-sm font-medium mt-4 md:mt-0">
-        Perjalanan Karir & Profesional
+        {{ c.experienceSub || 'Perjalanan Karir & Profesional' }}
       </p>
     </div>
 
@@ -69,7 +69,9 @@ defineProps({
       <div v-if="profile.educationItems?.length" class="flex flex-col gap-6">
         <div class="flex items-center gap-2">
           <GraduationCap class="w-5 h-5 text-[var(--brand-coral)]" />
-          <h3 class="text-2xl font-black text-[var(--ink-primary)] tracking-tight">Pendidikan Formal</h3>
+          <h3 class="text-2xl font-black text-[var(--ink-primary)] tracking-tight">
+            {{ c.educationTitle || profile.educationLabel || 'Pendidikan Formal' }}
+          </h3>
         </div>
 
         <div class="flex flex-col gap-4">
@@ -92,7 +94,9 @@ defineProps({
       <div v-if="profile.certificationsItems?.length" class="flex flex-col gap-6">
         <div class="flex items-center gap-2">
           <Award class="w-5 h-5 text-[var(--brand-sun)]" />
-          <h3 class="text-2xl font-black text-[var(--ink-primary)] tracking-tight">Sertifikasi & Lisensi</h3>
+          <h3 class="text-2xl font-black text-[var(--ink-primary)] tracking-tight">
+            {{ c.certificationsTitle || profile.certificationsLabel || 'Sertifikasi & Lisensi' }}
+          </h3>
         </div>
 
         <div class="flex flex-col gap-4">

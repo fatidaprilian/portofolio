@@ -72,7 +72,7 @@ const capabilities = computed(() => [
         <h2 id="skills-heading" class="display-section">{{ c.skillsTitle }}</h2>
       </div>
       <p class="text-[var(--ink-muted)] text-xs sm:text-sm font-mono mt-4 md:mt-0 font-medium">
-        Keahlian & Bidang Utama
+        {{ c.skillsSub || 'Keahlian & Bidang Utama' }}
       </p>
     </div>
 
