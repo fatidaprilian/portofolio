@@ -83,11 +83,11 @@ const monogramFor = (title) => {
           <!-- Metadata Pill Badges -->
           <div class="grid grid-cols-3 gap-3 border-b-2 border-[var(--comic-border)] pb-5">
             <div class="flex flex-col gap-0.5">
-              <span class="font-mono text-[11px] font-black uppercase tracking-wider text-[var(--ink-muted)]">Year</span>
+              <span class="font-mono text-[11px] font-black uppercase tracking-wider text-[var(--ink-muted)]">{{ c.drawerYear || 'Year' }}</span>
               <span class="text-sm font-black text-[var(--ink-primary)]">{{ activeProject.year }}</span>
             </div>
             <div class="flex flex-col gap-0.5 col-span-2">
-              <span class="font-mono text-[11px] font-black uppercase tracking-wider text-[var(--ink-muted)]">Role</span>
+              <span class="font-mono text-[11px] font-black uppercase tracking-wider text-[var(--ink-muted)]">{{ c.drawerRole || 'Role' }}</span>
               <span class="text-sm font-black text-[var(--brand-coral)]">{{ activeProject.role }}</span>
             </div>
           </div>
@@ -108,7 +108,7 @@ const monogramFor = (title) => {
             <div v-if="activeProject.caseStudy?.constraint" class="comic-panel p-4 bg-[var(--canvas-bg)] border-2 border-[var(--comic-border)]">
               <div class="flex items-center gap-2 mb-1.5">
                 <span class="font-mono text-xs font-black uppercase tracking-wider px-2 py-0.5 rounded bg-[var(--brand-coral)] text-white border border-[var(--comic-border)] shadow-[1px_1px_0px_var(--comic-border)]">
-                  The Constraint
+                  {{ c.drawerConstraint || 'The Constraint' }}
                 </span>
               </div>
               <p class="text-[var(--ink-muted)] text-sm sm:text-base leading-relaxed">{{ activeProject.caseStudy.constraint }}</p>
@@ -117,7 +117,7 @@ const monogramFor = (title) => {
             <div v-if="activeProject.caseStudy?.decision" class="comic-panel p-4 bg-[var(--canvas-bg)] border-2 border-[var(--comic-border)]">
               <div class="flex items-center gap-2 mb-1.5">
                 <span class="font-mono text-xs font-black uppercase tracking-wider px-2 py-0.5 rounded bg-[var(--brand-sun)] text-slate-950 border border-[var(--comic-border)] shadow-[1px_1px_0px_var(--comic-border)]">
-                  The Decision
+                  {{ c.drawerDecision || 'The Decision' }}
                 </span>
               </div>
               <p class="text-[var(--ink-muted)] text-sm sm:text-base leading-relaxed">{{ activeProject.caseStudy.decision }}</p>
@@ -126,7 +126,7 @@ const monogramFor = (title) => {
             <div v-if="activeProject.caseStudy?.outcome" class="comic-panel p-4 bg-[var(--canvas-bg)] border-2 border-[var(--comic-border)]">
               <div class="flex items-center gap-2 mb-1.5">
                 <span class="font-mono text-xs font-black uppercase tracking-wider px-2 py-0.5 rounded bg-[var(--brand-mint)] text-slate-950 border border-[var(--comic-border)] shadow-[1px_1px_0px_var(--comic-border)]">
-                  The Outcome
+                  {{ c.drawerOutcome || 'The Outcome' }}
                 </span>
               </div>
               <p class="text-[var(--ink-muted)] text-sm sm:text-base leading-relaxed">{{ activeProject.caseStudy.outcome }}</p>
@@ -142,7 +142,7 @@ const monogramFor = (title) => {
               rel="noreferrer"
               class="btn-comic-primary flex-1 py-3 text-center"
             >
-              <span>Live Site</span>
+              <span>{{ c.drawerLiveSite || 'Live Site' }}</span>
               <ArrowUpRight class="w-4 h-4 ml-1" aria-hidden="true" />
             </a>
             <a
@@ -152,7 +152,7 @@ const monogramFor = (title) => {
               rel="noreferrer"
               class="btn-comic-secondary flex-1 py-3 text-center"
             >
-              <span>View Source</span>
+              <span>{{ c.drawerViewSource || 'View Source' }}</span>
               <ArrowUpRight class="w-4 h-4 ml-1" aria-hidden="true" />
             </a>
           </div>

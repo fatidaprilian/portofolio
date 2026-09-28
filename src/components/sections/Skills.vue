@@ -13,52 +13,36 @@ const props = defineProps({
   profile: { type: Object, required: true }
 })
 
-const capabilities = computed(() => [
-  {
-    id: 'ai-agentic',
-    category: 'AI Architecture & Agentic Tooling',
-    icon: Bot,
-    title: 'AI Tooling & Multi-Host Plugins',
-    description:
-      'Merancang arsitektur plugin multi-host, protokol tool-calling, serta guardrails engineering yang mencegah LLM over-building dan menghemat konsumsi token.',
-    badge: 'Creator @ryuenn3123/agentic-senior-core',
-    badgeColor: 'var(--brand-coral)',
-    technologies: ['TypeScript', 'Prompt Protocols', 'Multi-Host Plugins', 'Token Optimization', 'AI Guardrails', 'AST Tooling']
-  },
-  {
-    id: 'backend-distributed',
-    category: 'Backend & Data Systems',
-    icon: Server,
-    title: 'Distributed Backend & ERP Integration',
-    description:
-      'Membangun API berskala produksi dengan batasan service yang bersih, transaksi database atomic, serta integrasi webhook pihak ketiga (seperti Accurate ERP).',
-    badge: 'Production-Grade',
-    badgeColor: 'var(--brand-mint)',
-    technologies: ['NestJS', 'Laravel', 'FastAPI', 'PostgreSQL', 'Prisma ORM', 'Docker', 'Redis', 'Webhooks']
-  },
-  {
-    id: 'frontend-craft',
-    category: 'Frontend & Interface Engineering',
-    icon: LayoutGrid,
-    title: 'Modern Frontend & Desain Responsif',
-    description:
-      'Membangun antarmuka web yang cepat, mudah digunakan, dan ramah aksesibilitas dengan micro-interactions yang halus dan sistem token warna yang konsisten.',
-    badge: 'WCAG AA Compliant',
-    badgeColor: 'var(--brand-sun)',
-    technologies: ['Vue 3 (Composition API)', 'Next.js', 'React', 'Tailwind CSS', 'GSAP', 'Lenis Scroll', 'TypeScript']
-  },
-  {
-    id: 'systems-kernel',
-    category: 'Systems & Networking',
-    icon: Activity,
-    title: 'Systems & Embedded Network Daemon',
-    description:
-      'Mengembangkan daemon binary ringan menggunakan Go untuk manajemen bandwidth embedded OpenWrt, mitigasi bufferbloat, dan kontrol lalu lintas jaringan.',
-    badge: 'Low-Latency',
-    badgeColor: 'var(--brand-sky)',
-    technologies: ['Go (Golang)', 'OpenWrt', 'Linux tc subsystem', 'SQM QoS', 'Embedded Linux', 'Networking']
-  }
-])
+const iconMap = {
+  'ai-agentic': Bot,
+  'backend-distributed': Server,
+  'frontend-craft': LayoutGrid,
+  'systems-kernel': Activity
+}
+
+const colorMap = {
+  'ai-agentic': 'var(--brand-coral)',
+  'backend-distributed': 'var(--brand-mint)',
+  'frontend-craft': 'var(--brand-sun)',
+  'systems-kernel': 'var(--brand-sky)'
+}
+
+const techMap = {
+  'ai-agentic': ['TypeScript', 'Prompt Protocols', 'Multi-Host Plugins', 'Token Optimization', 'AI Guardrails', 'AST Tooling'],
+  'backend-distributed': ['NestJS', 'Laravel', 'FastAPI', 'PostgreSQL', 'Prisma ORM', 'Docker', 'Redis', 'Webhooks'],
+  'frontend-craft': ['Vue 3 (Composition API)', 'Next.js', 'React', 'Tailwind CSS', 'GSAP', 'Lenis Scroll', 'TypeScript'],
+  'systems-kernel': ['Go (Golang)', 'OpenWrt', 'Linux tc subsystem', 'SQM QoS', 'Embedded Linux', 'Networking']
+}
+
+const capabilities = computed(() => {
+  const items = props.c.skillsItems || []
+  return items.map((item) => ({
+    ...item,
+    icon: iconMap[item.id] || Bot,
+    badgeColor: colorMap[item.id] || 'var(--brand-mint)',
+    technologies: techMap[item.id] || []
+  }))
+})
 </script>
 
 <template>

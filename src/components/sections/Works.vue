@@ -183,7 +183,7 @@ const onProjectLeave = () => {
         target="_blank"
         rel="noopener noreferrer"
         class="comic-panel p-5 sm:p-6 flex flex-col justify-between group bg-[var(--surface-panel)] border-[1.5px] border-dashed border-[var(--comic-border)] hover:border-solid hover:border-[var(--brand-coral)] transition-all cursor-pointer"
-        aria-label="Lihat proyek lainnya di GitHub"
+        :aria-label="c.moreProjectsTitle || 'Explore more projects on GitHub'"
       >
         <div>
           <!-- Thumbnail Frame / GitHub Graphic -->
@@ -300,7 +300,7 @@ const onProjectLeave = () => {
         class="comic-panel p-5 sm:p-6 bg-[var(--surface-panel)] border-[1.5px] border-dashed border-[var(--comic-border)] hover:border-solid hover:border-[var(--brand-coral)] transition-all group block"
         @mouseenter="onProjectEnter($event, 'more')"
         @mouseleave="onProjectLeave"
-        aria-label="Lihat proyek lainnya di GitHub"
+        :aria-label="c.moreProjectsTitle || 'Explore more projects on GitHub'"
       >
         <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
           <div class="flex items-center gap-4 sm:gap-6">
@@ -369,7 +369,7 @@ const onProjectLeave = () => {
           <Github class="w-8 h-8" />
         </div>
         <p class="font-black text-base text-[var(--ink-primary)]">github.com/fatidaprilian</p>
-        <p class="font-mono text-xs font-bold text-[var(--ink-muted)] mt-1">20+ Repositori & Riset Terbuka ↗</p>
+        <p class="font-mono text-xs font-bold text-[var(--ink-muted)] mt-1">{{ c.moreProjectsPreviewSub || '20+ Repositories & Experiments ↗' }}</p>
       </div>
     </div>
   </section>

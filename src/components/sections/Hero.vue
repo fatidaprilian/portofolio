@@ -98,7 +98,7 @@ const emit = defineEmits(['goToSection'])
               <div class="px-1 pt-1 flex items-center justify-between">
                 <div>
                   <h2 class="text-base font-black text-[var(--ink-primary)] tracking-tight">Farid Eka Aprilian</h2>
-                  <p class="text-xs text-[var(--ink-muted)] font-medium">Full-Stack & Systems Engineer</p>
+                  <p class="text-xs text-[var(--ink-muted)] font-medium">{{ c.quickStatsRole || 'Full-Stack & Systems Engineer' }}</p>
                 </div>
                 <div class="w-8 h-8 rounded-full bg-[var(--brand-sun)] border border-[var(--comic-border)] flex items-center justify-center text-slate-950 font-black text-xs shadow-[1px_1px_0px_var(--comic-border)]">
                   FEA

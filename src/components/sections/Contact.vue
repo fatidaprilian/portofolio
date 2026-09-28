@@ -113,8 +113,8 @@ onUnmounted(() => {
       <div class="lg:col-span-6 flex flex-col gap-6">
         
         <div class="text-3xl sm:text-4xl md:text-5xl font-black text-[var(--ink-primary)] tracking-tight leading-tight">
-          <span>Mari Mulai Diskusi</span><br />
-          <span class="text-[var(--brand-coral)]">Untuk Proyek Anda;</span>
+          <span>{{ c.contactHeading1 || 'Mari Mulai Diskusi' }}</span><br />
+          <span class="text-[var(--brand-coral)]">{{ c.contactHeading2 || 'Untuk Proyek Anda;' }}</span>
         </div>
 
         <p class="text-base sm:text-lg text-[var(--ink-muted)] leading-relaxed max-w-lg">
@@ -178,7 +178,7 @@ onUnmounted(() => {
               </div>
               <div class="flex flex-col">
                 <span class="font-bold text-sm text-[var(--ink-primary)]">{{ profile.contactActions.meetingLabel || 'Jadwalkan Panggilan (Google Meet)' }}</span>
-                <span class="text-xs text-[var(--ink-muted)]">30 menit diskusi teknis</span>
+                <span class="text-xs text-[var(--ink-muted)]">{{ c.contactMeetingSub || '30 menit diskusi teknis' }}</span>
               </div>
             </div>
             <ArrowUpRight class="w-4 h-4 text-[var(--ink-muted)] shrink-0" />

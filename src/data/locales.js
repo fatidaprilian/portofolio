@@ -56,10 +56,45 @@ export const copy = {
     moreProjectsTag: 'Lainnya di GitHub',
     moreProjectsRole: 'Repositori & Eksplorasi Kode',
     moreProjectsListMeta: 'github.com/fatidaprilian • 20+ Repositori Publik & Eksperimen',
+    moreProjectsPreviewSub: '20+ Repositori & Riset Terbuka ↗',
     
     skillsTitle: 'Teknologi & Peralatan yang Biasa Saya Gunakan',
     skillsMeta: 'Stack & Keahlian',
     skillsSub: 'Keahlian & Bidang Utama',
+    skillsItems: [
+      {
+        id: 'ai-agentic',
+        category: 'AI Architecture & Agentic Tooling',
+        title: 'AI Tooling & Multi-Host Plugins',
+        description:
+          'Merancang arsitektur plugin multi-host, protokol tool-calling, serta guardrails engineering yang mencegah LLM over-building dan menghemat konsumsi token.',
+        badge: 'Creator @ryuenn3123/agentic-senior-core'
+      },
+      {
+        id: 'backend-distributed',
+        category: 'Backend & Data Systems',
+        title: 'Distributed Backend & ERP Integration',
+        description:
+          'Membangun API berskala produksi dengan batasan service yang bersih, transaksi database atomic, serta integrasi webhook pihak ketiga (seperti Accurate ERP).',
+        badge: 'Production-Grade'
+      },
+      {
+        id: 'frontend-craft',
+        category: 'Frontend & Interface Engineering',
+        title: 'Modern Frontend & Desain Responsif',
+        description:
+          'Membangun antarmuka web yang cepat, mudah digunakan, dan ramah aksesibilitas dengan micro-interactions yang halus dan sistem token warna yang konsisten.',
+        badge: 'WCAG AA Compliant'
+      },
+      {
+        id: 'systems-kernel',
+        category: 'Systems & Networking',
+        title: 'Systems & Embedded Network Daemon',
+        description:
+          'Mengembangkan daemon binary ringan menggunakan Go untuk manajemen bandwidth embedded OpenWrt, mitigasi bufferbloat, dan kontrol lalu lintas jaringan.',
+        badge: 'Low-Latency'
+      }
+    ],
     
     experienceTitle: 'Riwayat Pengalaman & Studi',
     experienceMeta: 'Pengalaman Karir',
@@ -69,6 +104,9 @@ export const copy = {
     
     contactTitle: 'Tertarik Bekerja Sama? Mari Ngobrol.',
     contactMeta: 'Kontak & Diskusi',
+    contactHeading1: 'Mari Mulai Diskusi',
+    contactHeading2: 'Untuk Proyek Anda;',
+    contactMeetingSub: '30 menit diskusi teknis',
     contactBody:
       'Saya selalu terbuka untuk diskusi proyek baru, kolaborasi teknis, atau peluang kerja penuh waktu. Silakan kirim pesan melalui form atau hubungi langsung lewat email dan LinkedIn.',
     contactLocation: 'Jakarta, Indonesia (WIB / UTC+7)',
@@ -80,6 +118,14 @@ export const copy = {
     phone: 'Telepon',
     linkedin: 'LinkedIn',
     github: 'GitHub',
+
+    drawerYear: 'Tahun',
+    drawerRole: 'Peran',
+    drawerConstraint: 'Tantangan & Batasan',
+    drawerDecision: 'Keputusan Rekayasa',
+    drawerOutcome: 'Hasil Akhir',
+    drawerLiveSite: 'Buka Situs',
+    drawerViewSource: 'Lihat Kode Sumber',
     
     backToTop: 'Kembali ke atas',
     footerLeft: 'Farid Eka Aprilian • Portofolio',
@@ -152,10 +198,45 @@ export const copy = {
     moreProjectsTag: 'More on GitHub',
     moreProjectsRole: 'Open-Source & Code Sandbox',
     moreProjectsListMeta: 'github.com/fatidaprilian • 20+ Public Repositories & Experiments',
+    moreProjectsPreviewSub: '20+ Public Repositories & Experiments ↗',
     
     skillsTitle: 'Technologies & Tools I Use',
     skillsMeta: 'Stack & Capabilities',
     skillsSub: 'Core Capabilities & Domains',
+    skillsItems: [
+      {
+        id: 'ai-agentic',
+        category: 'AI Architecture & Agentic Tooling',
+        title: 'AI Tooling & Multi-Host Plugins',
+        description:
+          'Designing multi-host plugin architectures, tool-calling protocols, and engineering guardrails that prevent LLMs from over-building and optimize token consumption.',
+        badge: 'Creator @ryuenn3123/agentic-senior-core'
+      },
+      {
+        id: 'backend-distributed',
+        category: 'Backend & Data Systems',
+        title: 'Distributed Backend & ERP Integration',
+        description:
+          'Building production-grade APIs with clean service boundaries, atomic database transactions, and reliable third-party webhook integrations (such as Accurate ERP).',
+        badge: 'Production-Grade'
+      },
+      {
+        id: 'frontend-craft',
+        category: 'Frontend & Interface Engineering',
+        title: 'Modern Frontend & Responsive Design',
+        description:
+          'Crafting fast, user-friendly, and accessible web interfaces with smooth micro-interactions and consistent design token systems.',
+        badge: 'WCAG AA Compliant'
+      },
+      {
+        id: 'systems-kernel',
+        category: 'Systems & Networking',
+        title: 'Systems & Embedded Network Daemons',
+        description:
+          'Developing lightweight Go binary daemons for embedded OpenWrt bandwidth management, bufferbloat mitigation, and network traffic shaping.',
+        badge: 'Low-Latency'
+      }
+    ],
     
     experienceTitle: 'Work History & Education',
     experienceMeta: 'Career Timeline',
@@ -165,6 +246,9 @@ export const copy = {
     
     contactTitle: 'Interested in Collaborating? Let\'s Talk.',
     contactMeta: 'Get in Touch',
+    contactHeading1: 'Let\'s Discuss',
+    contactHeading2: 'Your Next Project;',
+    contactMeetingSub: '30 min technical consultation',
     contactBody:
       'I am always open to discussing new software projects, technical collaborations, or full-time opportunities. Feel free to send a message via the form or reach out directly on email or LinkedIn.',
     contactLocation: 'Jakarta, Indonesia (WIB / UTC+7)',
@@ -176,6 +260,14 @@ export const copy = {
     phone: 'Phone',
     linkedin: 'LinkedIn',
     github: 'GitHub',
+
+    drawerYear: 'Year',
+    drawerRole: 'Role',
+    drawerConstraint: 'The Constraint',
+    drawerDecision: 'The Decision',
+    drawerOutcome: 'The Outcome',
+    drawerLiveSite: 'Live Site',
+    drawerViewSource: 'View Source',
     
     backToTop: 'Back to top',
     footerLeft: 'Farid Eka Aprilian • Portfolio',
