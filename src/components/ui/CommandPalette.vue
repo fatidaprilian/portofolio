@@ -242,34 +242,34 @@ onUnmounted(() => {
   <Transition name="palette-fade">
     <div
       v-if="isOpen"
-      class="fixed inset-0 z-[300] flex items-start justify-center pt-[12vh] px-4 bg-black/60 backdrop-blur-md"
+      class="fixed inset-0 z-[300] flex items-start justify-center pt-[12vh] px-4 bg-black/60 backdrop-blur-sm"
       @click="emit('close')"
       role="dialog"
       aria-modal="true"
       aria-labelledby="cmd-palette-title"
     >
       <div
-        class="w-full max-w-xl bg-[var(--surface-1)] border border-[var(--hairline)] rounded-2xl shadow-2xl overflow-hidden flex flex-col transition-transform duration-200"
+        class="w-full max-w-xl bg-[var(--surface-panel)] border-2 border-[var(--comic-border)] rounded-2xl shadow-comic-lg overflow-hidden flex flex-col transition-transform duration-200"
         @click.stop
       >
         <!-- Search Input Bar -->
-        <div class="relative flex items-center px-4 py-3.5 border-b border-[var(--hairline)] bg-[var(--surface-canvas)]">
-          <Search class="w-5 h-5 text-[var(--ink-muted)] shrink-0 mr-3" aria-hidden="true" />
+        <div class="relative flex items-center px-4 py-3.5 border-b-2 border-[var(--comic-border)] bg-[var(--canvas-bg)]">
+          <Search class="w-5 h-5 text-[var(--brand-coral)] shrink-0 mr-3" aria-hidden="true" />
           <input
             ref="inputRef"
             id="cmd-palette-title"
             v-model="searchQuery"
             type="text"
-            class="w-full bg-transparent text-[var(--ink-primary)] placeholder:text-[var(--ink-muted)] text-base font-normal focus:outline-none"
+            class="w-full bg-transparent text-[var(--ink-primary)] placeholder:text-[var(--ink-muted)] text-base font-bold focus:outline-none"
             :placeholder="c.cmdPrompt"
             autocomplete="off"
             spellcheck="false"
           />
           <button
             type="button"
-            class="p-1 rounded-md text-[var(--ink-muted)] hover:text-[var(--ink-primary)] hover:bg-[var(--surface-1)] transition-colors ml-2"
+            class="p-1.5 rounded-lg text-[var(--ink-primary)] hover:bg-[var(--brand-coral)] hover:text-white border border-[var(--comic-border)] transition-colors ml-2"
             @click="emit('close')"
-            aria-label="Close command palette"
+            aria-label="Close navigator"
           >
             <X class="w-4 h-4" />
           </button>
@@ -278,12 +278,12 @@ onUnmounted(() => {
         <!-- Search Results List -->
         <div
           ref="listContainerRef"
-          class="max-h-[380px] overflow-y-auto p-2 flex flex-col gap-1"
+          class="max-h-[380px] overflow-y-auto p-3 flex flex-col gap-1.5"
           role="listbox"
         >
           <div
             v-if="filteredItems.length === 0"
-            class="py-10 text-center text-[var(--ink-muted)] text-sm"
+            class="py-10 text-center text-[var(--ink-muted)] font-medium text-sm"
           >
             {{ lang === 'id' ? 'Tidak ada hasil yang cocok.' : 'No matching results found.' }}
           </div>
@@ -294,10 +294,10 @@ onUnmounted(() => {
               :key="item.id"
               :data-index="index"
               :class="[
-                'group flex items-center justify-between px-3 py-2.5 rounded-xl cursor-pointer transition-colors duration-150',
+                'group flex items-center justify-between px-3 py-2.5 rounded-xl cursor-pointer border transition-all duration-150',
                 selectedIndex === index
-                  ? 'bg-[var(--ink-primary)] text-[var(--ink-inverse)]'
-                  : 'text-[var(--ink-primary)] hover:bg-[var(--surface-2)]'
+                  ? 'bg-[var(--brand-coral)] text-white border-[var(--comic-border)] shadow-[2px_2px_0px_var(--comic-border)]'
+                  : 'text-[var(--ink-primary)] bg-[var(--surface-panel)] border-transparent hover:border-[var(--comic-border)] hover:bg-[var(--surface-subtle)]'
               ]"
               role="option"
               :aria-selected="selectedIndex === index"
@@ -309,15 +309,15 @@ onUnmounted(() => {
                   :is="item.icon"
                   :class="[
                     'w-4 h-4 shrink-0 transition-colors',
-                    selectedIndex === index ? 'text-[var(--ink-inverse)]' : 'text-[var(--ink-muted)] group-hover:text-[var(--ink-primary)]'
+                    selectedIndex === index ? 'text-white' : 'text-[var(--brand-coral)]'
                   ]"
                 />
                 <div class="flex flex-col min-w-0">
-                  <span class="text-sm font-semibold truncate leading-tight">{{ item.label }}</span>
+                  <span class="text-sm font-black truncate leading-tight">{{ item.label }}</span>
                   <span
                     :class="[
                       'text-xs truncate leading-tight font-mono',
-                      selectedIndex === index ? 'opacity-75 text-[var(--ink-inverse)]' : 'text-[var(--ink-muted)]'
+                      selectedIndex === index ? 'text-white/80' : 'text-[var(--ink-muted)]'
                     ]"
                   >
                     {{ item.sublabel }}
@@ -329,17 +329,17 @@ onUnmounted(() => {
                 <span
                   v-if="item.badge"
                   :class="[
-                    'font-mono text-[10px] px-2 py-0.5 rounded border',
+                    'font-mono text-[10px] font-black px-2 py-0.5 rounded border',
                     selectedIndex === index
-                      ? 'border-white/30 text-[var(--ink-inverse)]'
-                      : 'border-[var(--hairline)] text-[var(--ink-muted)] bg-[var(--surface-canvas)]'
+                      ? 'border-white bg-white/20 text-white'
+                      : 'border-[var(--comic-border)] text-slate-950 bg-[var(--brand-sun)]'
                   ]"
                 >
                   {{ item.badge }}
                 </span>
                 <span
                   v-if="item.id === 'act-copy-email' && emailCopied"
-                  class="font-mono text-xs flex items-center gap-1 text-emerald-400 font-bold"
+                  class="font-mono text-xs flex items-center gap-1 text-emerald-300 font-bold"
                 >
                   <Check class="w-3.5 h-3.5" />
                   Copied!
@@ -347,7 +347,7 @@ onUnmounted(() => {
                 <ArrowRight
                   :class="[
                     'w-4 h-4 transition-transform',
-                    selectedIndex === index ? 'translate-x-0.5 opacity-100' : 'opacity-0'
+                    selectedIndex === index ? 'translate-x-1 opacity-100 text-white' : 'opacity-0'
                   ]"
                 />
               </div>
@@ -356,20 +356,20 @@ onUnmounted(() => {
         </div>
 
         <!-- Footer Key Hints -->
-        <div class="px-4 py-2.5 border-t border-[var(--hairline)] bg-[var(--surface-canvas)] flex items-center justify-between text-xs font-mono text-[var(--ink-muted)]">
+        <div class="px-4 py-2.5 border-t-2 border-[var(--comic-border)] bg-[var(--canvas-bg)] flex items-center justify-between text-xs font-mono font-bold text-[var(--ink-muted)]">
           <div class="flex items-center gap-3">
             <span class="flex items-center gap-1">
-              <kbd class="px-1.5 py-0.5 rounded bg-[var(--surface-1)] border border-[var(--hairline)] text-[10px]">↑</kbd>
-              <kbd class="px-1.5 py-0.5 rounded bg-[var(--surface-1)] border border-[var(--hairline)] text-[10px]">↓</kbd>
+              <kbd class="px-1.5 py-0.5 rounded bg-[var(--surface-panel)] border border-[var(--comic-border)] text-[10px]">↑</kbd>
+              <kbd class="px-1.5 py-0.5 rounded bg-[var(--surface-panel)] border border-[var(--comic-border)] text-[10px]">↓</kbd>
               Navigate
             </span>
             <span class="flex items-center gap-1">
-              <kbd class="px-1.5 py-0.5 rounded bg-[var(--surface-1)] border border-[var(--hairline)] text-[10px]">↵</kbd>
+              <kbd class="px-1.5 py-0.5 rounded bg-[var(--surface-panel)] border border-[var(--comic-border)] text-[10px]">↵</kbd>
               Select
             </span>
           </div>
           <span class="flex items-center gap-1">
-            <kbd class="px-1.5 py-0.5 rounded bg-[var(--surface-1)] border border-[var(--hairline)] text-[10px]">ESC</kbd>
+            <kbd class="px-1.5 py-0.5 rounded bg-[var(--surface-panel)] border border-[var(--comic-border)] text-[10px]">ESC</kbd>
             Close
           </span>
         </div>
@@ -381,7 +381,7 @@ onUnmounted(() => {
 <style scoped>
 .palette-fade-enter-active,
 .palette-fade-leave-active {
-  transition: opacity 0.2s ease;
+  transition: opacity 0.15s ease;
 }
 .palette-fade-enter-from,
 .palette-fade-leave-to {
@@ -389,14 +389,14 @@ onUnmounted(() => {
 }
 .palette-fade-enter-active > div,
 .palette-fade-leave-active > div {
-  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease;
+  transition: transform 0.15s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.15s ease;
 }
 .palette-fade-enter-from > div {
-  transform: scale(0.96) translateY(-8px);
+  transform: scale(0.97) translateY(-6px);
   opacity: 0;
 }
 .palette-fade-leave-to > div {
-  transform: scale(0.96) translateY(-8px);
+  transform: scale(0.97) translateY(-6px);
   opacity: 0;
 }
 </style>

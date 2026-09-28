@@ -17,7 +17,6 @@ import Contact from './components/sections/Contact.vue'
 import Footer from './components/layout/Footer.vue'
 import SpecDrawer from './components/ui/SpecDrawer.vue'
 import CommandPalette from './components/ui/CommandPalette.vue'
-import CustomCursor from './components/ui/CustomCursor.vue'
 import { copy } from './data/locales.js'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -80,20 +79,6 @@ const toggleLang = () => {
   } catch (_) {
     // ignore
   }
-}
-
-// -----------------------------------------------------------------
-// Spotlight Mouse Coordinates Tracker
-// -----------------------------------------------------------------
-const onMouseMoveGlobal = (e) => {
-  const cards = document.querySelectorAll('.spotlight-card')
-  cards.forEach((card) => {
-    const rect = card.getBoundingClientRect()
-    const x = e.clientX - rect.left
-    const y = e.clientY - rect.top
-    card.style.setProperty('--mouse-x', `${x}px`)
-    card.style.setProperty('--mouse-y', `${y}px`)
-  })
 }
 
 // -----------------------------------------------------------------
@@ -225,7 +210,6 @@ onMounted(async () => {
   if (mediaQuery.addEventListener) mediaQuery.addEventListener('change', onSchemeChange)
   else mediaQuery.addListener(onSchemeChange)
 
-  window.addEventListener('mousemove', onMouseMoveGlobal, { passive: true })
   window.addEventListener('keydown', onGlobalKeyDown)
 
   initLenis()
@@ -249,7 +233,6 @@ onUnmounted(() => {
     if (mediaQuery.removeEventListener) mediaQuery.removeEventListener('change', onSchemeChange)
     else mediaQuery.removeListener(onSchemeChange)
   }
-  window.removeEventListener('mousemove', onMouseMoveGlobal)
   window.removeEventListener('keydown', onGlobalKeyDown)
 })
 
@@ -316,8 +299,6 @@ watch(lang, () => {
     @applyTheme="applyTheme"
     @toggleLang="toggleLang"
   />
-
-  <CustomCursor />
 </template>
 
 <style>

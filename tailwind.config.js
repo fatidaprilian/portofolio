@@ -7,15 +7,25 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Semantic role tokens — components consume these, never raw primitives.
-        'surface-page': 'var(--surface-page)',
-        'surface-raised': 'var(--surface-raised)',
-        'surface-sunken': 'var(--surface-sunken)',
+        'surface-page': 'var(--canvas-bg)',
+        'surface-panel': 'var(--surface-panel)',
+        'comic-ink': 'var(--comic-ink)',
+        'comic-border': 'var(--comic-border)',
+        'brand-coral': 'var(--brand-coral)',
+        'brand-mint': 'var(--brand-mint)',
+        'brand-sun': 'var(--brand-sun)',
+        'brand-sky': 'var(--brand-sky)',
         'ink-primary': 'var(--ink-primary)',
-        'ink-secondary': 'var(--ink-secondary)',
-        'ink-tertiary': 'var(--ink-tertiary)',
-        rule: 'var(--rule)',
-        accent: 'var(--accent)',
+        'ink-muted': 'var(--ink-muted)',
+        'ink-subtle': 'var(--ink-subtle)',
+        rule: 'var(--comic-border)',
+        accent: 'var(--brand-coral)',
+      },
+      boxShadow: {
+        'comic': '3px 3px 0px var(--comic-border)',
+        'comic-lg': '5px 5px 0px var(--comic-border)',
+        'comic-sm': '2px 2px 0px var(--comic-border)',
+        'comic-btn': '2.5px 2.5px 0px var(--comic-border)',
       },
       fontFamily: {
         sans: ['"Inter Variable"', 'ui-sans-serif', 'system-ui', '"Helvetica Neue"', 'Arial', 'sans-serif'],

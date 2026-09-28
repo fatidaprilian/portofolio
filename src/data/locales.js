@@ -1,78 +1,71 @@
 export const copy = {
   id: {
     skip: 'Lewati ke konten utama',
-    issue: 'Pilihan Karya',
-    eyebrow: 'Desain & Pengembangan Web',
-    coverHeadline: ['Halo, saya Farid Eka.', 'Full-Stack & Agentic Engineer.'],
+    issue: 'Portofolio Proyek',
+    eyebrow: 'Web & Systems Engineer',
+    coverHeadline: ['Farid Eka;', 'Software & Systems Engineer'],
     coverBody:
-      'Saya membangun sistem web berskala produksi dan arsitektur AI agentic. Berfokus pada integrasi kokoh dan antarmuka yang dirancang dengan niat.',
-    ctaView: 'Lihat Portfolio',
+      'Halo! Saya Farid, software engineer yang berfokus membangun sistem web skala produksi, integrasi backend yang kokoh, dan tooling arsitektur AI. Senang merancang aplikasi yang cepat, rapi, dan nyaman digunakan.',
+    ctaView: 'Lihat Proyek Saya',
     ctaContact: 'Hubungi Saya',
-    ctaDownloadCv: 'Unduh CV',
+    ctaDownloadCv: 'Unduh CV Lengkap',
 
     homeLabel: 'Beranda',
     aboutLabel: 'Tentang',
-    worksLabel: 'Karya',
+    worksLabel: 'Proyek',
     skillsLabel: 'Keahlian',
     experienceLabel: 'Pengalaman',
     contactLabel: 'Kontak',
     
-    availabilityStatus: 'STATUS // TERSEDIA UNTUK PROYEK & FULL-TIME',
+    availabilityStatus: 'Halo! Terbuka untuk diskusi proyek baru & tawaran kerja',
     viewModeList: 'Tampilan List',
-    viewModeGrid: 'Bento Grid',
-    cmdPrompt: 'Cari proyek, section, atau aksi...',
-    cmdBadge: 'Perintah',
+    viewModeGrid: 'Tampilan Grid',
+    cmdPrompt: 'Cari proyek, keahlian, atau halaman...',
+    cmdBadge: 'Menu Cepat',
     cmdCopyEmail: 'Salin Email',
-    cmdMeeting: 'Buka Google Meet',
-    cmdDownloadResume: 'Unduh Resume (PDF)',
-    cmdToggleTheme: 'Ganti Tema',
+    cmdMeeting: 'Jadwalkan Panggilan (Google Meet)',
+    cmdDownloadResume: 'Unduh CV (PDF)',
+    cmdToggleTheme: 'Ganti Mode (Terang / Gelap)',
     cmdToggleLang: 'Ganti Bahasa (ID/EN)',
     quickStatsGpa: 'IPK 3.98 / 4.00 (UBSI Depok)',
-    quickStatsPkg: 'Creator @ryuenn3123/agentic-senior-core (20+ AI Tools)',
-    quickStatsRole: 'Full-Stack & Agentic Systems Engineer',
+    quickStatsPkg: 'Creator @ryuenn3123/agentic-senior-core',
+    quickStatsRole: 'Full-Stack & Systems Engineer',
 
-    aboutTitle: 'Mendesain produk digital dengan tujuan.',
+    aboutTitle: 'Mengenal saya lebih dekat.',
     aboutBodyP1:
-      'Bagi saya, tampilan antarmuka adalah ruang untuk berkomunikasi. Setiap elemen di layar harus memiliki alasan, susunan yang jelas, dan alur yang menuntun pembaca secara alami.',
+      'Saya seorang software engineer dari Depok/Jakarta. Keseharian saya banyak berkutat dengan perancangan arsitektur backend, optimasi database, integrasi sistem pihak ketiga (seperti ERP dan webhook), hingga pembuatan antarmuka web yang bersih dan responsif.',
     aboutBodyP2:
-      'Dengan menggabungkan panduan visual dan kode pemrograman yang rapi, saya memastikan produk digital tidak hanya menarik tetapi juga mudah digunakan, cepat, dan mudah dirawat ke depannya.',
-    aboutPullQuote: '“Detail halus yang tidak berlebihan adalah cara terbaik menunjukkan keahlian.”',
+      'Saya juga mengembangkan package open-source @ryuenn3123/agentic-senior-core yang digunakan oleh komunitas pengembang AI coding. Bagi saya, kode yang baik adalah kode yang sederhana, mudah dirawat tim, dan benar-benar menyelesaikan masalah nyata.',
+    aboutPullQuote: '“Kode terbaik adalah yang sederhana, mudah dipahami rekan tim, dan tidak berlebihan.”',
     
-    principlesLabel: 'Prinsip Arsitektur',
-    principles: [
-      {
-        tag: 'CORE.01',
-        title: 'Boundary Before Features',
-        desc: 'Menetapkan batas service dan modul yang jelas sejak awal agar skalabilitas dan kecepatan iterasi tim tetap terjaga aman.'
-      },
-      {
-        tag: 'CORE.02',
-        title: 'Validation At The Edge',
-        desc: 'Semua input eksternal (API, webhook, query) divalidasi ketat di pintu gerbang sebelum menyentuh business logic.'
-      },
-      {
-        tag: 'CORE.03',
-        title: 'Zero Over-Engineering',
-        desc: 'Membangun solusi yang esensial, cepat, dan hemat token tanpa lapisan abstraksi prematur yang membebani sistem.'
-      }
+    highlightsTitle: 'Sekilas Tentang Saya',
+    highlights: [
+      { label: 'Domisili', value: 'Depok / Jakarta, Indonesia' },
+      { label: 'Pendidikan', value: 'S1 Sistem Informasi — UBSI Depok (IPK 3.98)' },
+      { label: 'Fokus Utama', value: 'Full-Stack Web, Distributed Backend & AI Tooling' },
+      { label: 'Open Source', value: 'Author @ryuenn3123/agentic-senior-core' }
     ],
 
-    worksTitle: 'Pilihan Karya',
-    worksMeta: 'Daftar Proyek',
-    ctaDetails: 'Lihat Detail',
+    worksTitle: 'Beberapa Proyek yang Pernah Saya Buat',
+    worksMeta: 'Karya & Portofolio',
+    ctaDetails: 'Lihat Detail Proyek',
+    moreProjectsTitle: 'Lihat Proyek Lainnya di GitHub',
+    moreProjectsSubtitle: 'Eksplorasi eksperimen kode, script automasi, library, dan modul open-source lainnya di profil GitHub saya.',
+    moreProjectsCta: 'Buka Repositori GitHub',
+    moreProjectsTag: 'Lainnya di GitHub',
     
-    skillsTitle: 'Peralatan Teknis & Desain',
-    skillsMeta: 'Teknologi yang Digunakan',
+    skillsTitle: 'Teknologi & Peralatan yang Biasa Saya Gunakan',
+    skillsMeta: 'Stack & Keahlian',
     
-    experienceTitle: 'Perjalanan Karir',
-    experienceMeta: 'Riwayat Pekerjaan',
+    experienceTitle: 'Riwayat Pengalaman & Studi',
+    experienceMeta: 'Pengalaman Karir',
     
-    contactTitle: 'Mari Bekerja Sama',
-    contactMeta: 'Terbuka untuk diskusi',
+    contactTitle: 'Tertarik Bekerja Sama? Mari Ngobrol.',
+    contactMeta: 'Kontak & Diskusi',
     contactBody:
-      'Jika Anda membutuhkan rekan kerja yang peduli pada alur produk, detail desain, dan sistem kode yang kokoh, silakan kirim pesan.',
+      'Saya selalu terbuka untuk diskusi proyek baru, kolaborasi teknis, atau peluang kerja penuh waktu. Silakan kirim pesan melalui form atau hubungi langsung lewat email dan LinkedIn.',
     contactLocation: 'Jakarta, Indonesia (WIB / UTC+7)',
-    contactActiveStatus: 'Ketersediaan: Aktif & Responsif',
+    contactActiveStatus: 'Status: Aktif & Responsif',
     contactWhatsapp: 'Chat via WhatsApp',
     contactCopyEmailAction: 'Salin Alamat Email',
     contactEmailCopied: 'Email Berhasil Tersalin!',
@@ -81,15 +74,8 @@ export const copy = {
     linkedin: 'LinkedIn',
     github: 'GitHub',
     
-    colophonLabel: 'Informasi Situs',
-    colophonTitle: 'Spesifikasi Pembuatan',
-    colophonBody: [
-      ['Tipografi', 'Inter (Sistem), JetBrains Mono (Data), Fraunces (Kutipan).'],
-      ['Teknologi', 'Vue 3, Vite, Tailwind CSS, Lenis (scroll halus), GSAP (animasi).'],
-      ['Aksesibilitas', 'Memenuhi standar kontras yang baik, mendukung penggunaan keyboard.'],
-      ['Skema Warna', 'Sistem warna OKLCH dengan pilihan mode Terang & Gelap.'],
-    ],
-    footerLeft: 'Portfolio 2026 / dirancang di browser',
+    backToTop: 'Kembali ke atas',
+    footerLeft: 'Farid Eka Aprilian • Portofolio',
     themeLabels: { auto: 'Otomatis', light: 'Terang', dark: 'Gelap' },
     
     formName: 'Nama Lengkap',
@@ -97,83 +83,76 @@ export const copy = {
     formMessage: 'Pesan Anda',
     formSend: 'Kirim Pesan',
     formSending: 'Mengirim...',
-    formSuccess: 'Pesan Anda berhasil dikirim!',
-    formError: 'Gagal mengirim pesan. Silakan coba lagi.'
+    formSuccess: 'Pesan berhasil terkirim! Terima kasih.',
+    formError: 'Gagal mengirim pesan. Silakan coba kirim email langsung.'
   },
   en: {
     skip: 'Skip to main content',
     issue: 'Selected Works',
-    eyebrow: 'Web Design & Development',
-    coverHeadline: ['Hi, I\'m Farid Eka.', 'Full-Stack & Agentic Engineer.'],
+    eyebrow: 'Web & Systems Engineer',
+    coverHeadline: ['Farid Eka;', 'Software & Systems Engineer'],
     coverBody:
-      'I build production-grade web systems and agentic AI architectures. Focused on robust integrations and intentionally designed interfaces.',
-    ctaView: 'View Portfolio',
+      'Hi! I\'m Farid, a software engineer focused on building production-grade web systems, resilient backend integrations, and AI architecture tooling. I love creating fast, clean, and accessible applications.',
+    ctaView: 'View My Projects',
     ctaContact: 'Get in Touch',
-    ctaDownloadCv: 'Download CV',
+    ctaDownloadCv: 'Download Full CV',
 
     homeLabel: 'Home',
     aboutLabel: 'About',
-    worksLabel: 'Works',
+    worksLabel: 'Projects',
     skillsLabel: 'Skills',
     experienceLabel: 'Experience',
     contactLabel: 'Contact',
 
-    availabilityStatus: 'STATUS // AVAILABLE FOR HIGH-IMPACT ROLES',
+    availabilityStatus: 'Hi! Open for new project discussions & engineering roles',
     viewModeList: 'List View',
-    viewModeGrid: 'Bento Grid',
-    cmdPrompt: 'Search projects, sections, or commands...',
-    cmdBadge: 'Command',
+    viewModeGrid: 'Grid View',
+    cmdPrompt: 'Search projects, skills, or pages...',
+    cmdBadge: 'Quick Menu',
     cmdCopyEmail: 'Copy Email',
-    cmdMeeting: 'Open Google Meet',
-    cmdDownloadResume: 'Download Resume (PDF)',
-    cmdToggleTheme: 'Toggle Theme',
+    cmdMeeting: 'Schedule Call (Google Meet)',
+    cmdDownloadResume: 'Download CV (PDF)',
+    cmdToggleTheme: 'Toggle Theme (Light / Dark)',
     cmdToggleLang: 'Switch Language (ID/EN)',
     quickStatsGpa: 'GPA 3.98 / 4.00 (UBSI Depok)',
-    quickStatsPkg: 'Creator @ryuenn3123/agentic-senior-core (20+ AI Tools)',
-    quickStatsRole: 'Full-Stack & Agentic Systems Engineer',
+    quickStatsPkg: 'Creator @ryuenn3123/agentic-senior-core',
+    quickStatsRole: 'Full-Stack & Systems Engineer',
 
-    aboutTitle: 'Designing digital products with purpose.',
+    aboutTitle: 'A little bit about me.',
     aboutBodyP1:
-      'For me, an interface is a communication space. Every element on the screen must have a clear reason, logical hierarchy, and a natural flow that guides the user.',
+      'I am a software engineer based in Depok/Jakarta. Most of my daily work involves designing backend architectures, database modeling, enterprise webhook integrations (such as ERP workflows), and building clean, responsive user interfaces.',
     aboutBodyP2:
-      'By combining visual guidelines with clean code, I ensure digital products are not only beautiful but also accessible, fast, and easy to maintain.',
-    aboutPullQuote: '“A subtle detail that is never over-decorated is the quietest way to show skill.”',
+      'I also author the open-source package @ryuenn3123/agentic-senior-core adopted across AI coding tools. I believe good engineering is simple, easy for teams to maintain, and strictly focused on solving real problems.',
+    aboutPullQuote: '“The best code is simple, clear to the team, and free of unnecessary complexity.”',
     
-    principlesLabel: 'Engineering Principles',
-    principles: [
-      {
-        tag: 'CORE.01',
-        title: 'Boundary Before Features',
-        desc: 'Defining clean service and module boundaries upfront so rapid feature iteration remains safe and isolated.'
-      },
-      {
-        tag: 'CORE.02',
-        title: 'Validation At The Edge',
-        desc: 'Strictly validating external inputs (APIs, webhooks, payloads) at the threshold before reaching core business logic.'
-      },
-      {
-        tag: 'CORE.03',
-        title: 'Zero Over-Engineering',
-        desc: 'Building essential, fast, and token-efficient code without premature abstractions that burden system maintenance.'
-      }
+    highlightsTitle: 'Quick Highlights',
+    highlights: [
+      { label: 'Location', value: 'Depok / Jakarta, Indonesia' },
+      { label: 'Education', value: 'B.S. Information Systems — UBSI Depok (GPA 3.98)' },
+      { label: 'Core Focus', value: 'Full-Stack Web, Distributed Backend & AI Tooling' },
+      { label: 'Open Source', value: 'Author @ryuenn3123/agentic-senior-core' }
     ],
 
-    worksTitle: 'Selected Works',
-    worksMeta: 'Project List',
-    ctaDetails: 'View Details',
+    worksTitle: 'Selected Projects I\'ve Built',
+    worksMeta: 'Featured Works',
+    ctaDetails: 'View Project Details',
+    moreProjectsTitle: 'Explore More Projects on GitHub',
+    moreProjectsSubtitle: 'Explore open-source experiments, automation scripts, libraries, and utilities on my GitHub profile.',
+    moreProjectsCta: 'Open GitHub Repositories',
+    moreProjectsTag: 'More on GitHub',
     
-    skillsTitle: 'Technical & Design Tools',
-    skillsMeta: 'Technologies Used',
+    skillsTitle: 'Technologies & Tools I Use',
+    skillsMeta: 'Stack & Capabilities',
     
-    experienceTitle: 'Career Timeline',
-    experienceMeta: 'Work History',
+    experienceTitle: 'Work History & Education',
+    experienceMeta: 'Career Timeline',
     
-    contactTitle: 'Let\'s Collaborate',
-    contactMeta: 'Open for discussions',
+    contactTitle: 'Interested in Collaborating? Let\'s Talk.',
+    contactMeta: 'Get in Touch',
     contactBody:
-      'If you need a collaborator who cares deeply about product flows, design details, and robust code systems, let\'s start talking.',
+      'I am always open to discussing new software projects, technical collaborations, or full-time opportunities. Feel free to send a message via the form or reach out directly on email or LinkedIn.',
     contactLocation: 'Jakarta, Indonesia (WIB / UTC+7)',
-    contactActiveStatus: 'Availability: Active & Responsive',
+    contactActiveStatus: 'Status: Active & Responsive',
     contactWhatsapp: 'Chat on WhatsApp',
     contactCopyEmailAction: 'Copy Email Address',
     contactEmailCopied: 'Email Copied to Clipboard!',
@@ -182,15 +161,8 @@ export const copy = {
     linkedin: 'LinkedIn',
     github: 'GitHub',
     
-    colophonLabel: 'Site Information',
-    colophonTitle: 'Build Specifications',
-    colophonBody: [
-      ['Typography', 'Inter (System), JetBrains Mono (Data), Fraunces (Quotes).'],
-      ['Technologies', 'Vue 3, Vite, Tailwind CSS, Lenis (smooth scroll), GSAP (animation).'],
-      ['Accessibility', 'Meets good contrast standards, fully supports keyboard navigation.'],
-      ['Color Scheme', 'OKLCH color system with Light & Dark mode options.'],
-    ],
-    footerLeft: 'Portfolio 2026 / designed in browser',
+    backToTop: 'Back to top',
+    footerLeft: 'Farid Eka Aprilian • Portfolio',
     themeLabels: { auto: 'Auto', light: 'Light', dark: 'Dark' },
     
     formName: 'Full Name',
@@ -198,7 +170,7 @@ export const copy = {
     formMessage: 'Your Message',
     formSend: 'Send Message',
     formSending: 'Sending...',
-    formSuccess: 'Your message was sent successfully!',
-    formError: 'Failed to send message. Please try again.'
+    formSuccess: 'Message sent successfully! Thank you.',
+    formError: 'Failed to send message. Please send an email directly.'
   }
 }

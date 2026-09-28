@@ -5,9 +5,6 @@ import {
   Server,
   LayoutGrid,
   Activity,
-  Terminal,
-  Database,
-  Cpu,
   Layers
 } from 'lucide-vue-next'
 
@@ -16,117 +13,118 @@ const props = defineProps({
   profile: { type: Object, required: true }
 })
 
-const bentoCapabilities = computed(() => [
+const capabilities = computed(() => [
   {
     id: 'ai-agentic',
-    code: 'MOD.01 // AGENTIC_CORE',
+    category: 'AI Architecture & Agentic Tooling',
     icon: Bot,
-    title: 'AI Architecture & Agentic Systems',
+    title: 'AI Tooling & Multi-Host Plugins',
     description:
-      'Designing engineering guardrails, multi-host tool plugins, and prompt/skill protocols that eliminate LLM over-building and slash token consumption.',
+      'Merancang arsitektur plugin multi-host, protokol tool-calling, serta guardrails engineering yang mencegah LLM over-building dan menghemat konsumsi token.',
     badge: 'Creator @ryuenn3123/agentic-senior-core',
-    technologies: ['TypeScript', 'Prompt Engineering', 'Multi-Host Plugins', 'Token Optimization', 'AI Guardrails', 'AST Tooling'],
-    metrics: '20+ AI Host Tools Adopted'
+    badgeColor: 'var(--brand-coral)',
+    technologies: ['TypeScript', 'Prompt Protocols', 'Multi-Host Plugins', 'Token Optimization', 'AI Guardrails', 'AST Tooling']
   },
   {
     id: 'backend-distributed',
-    code: 'MOD.02 // BACKEND_DATA',
+    category: 'Backend & Data Systems',
     icon: Server,
-    title: 'Distributed Backend & Data Systems',
+    title: 'Distributed Backend & ERP Integration',
     description:
-      'Architecting resilient service boundaries, atomic transaction reservations, Accurate ERP webhook sync, and clean data migrations.',
+      'Membangun API berskala produksi dengan batasan service yang bersih, transaksi database atomic, serta integrasi webhook pihak ketiga (seperti Accurate ERP).',
     badge: 'Production-Grade',
-    technologies: ['NestJS', 'Laravel', 'FastAPI', 'PostgreSQL', 'Prisma ORM', 'Docker', 'Redis', 'Webhooks'],
-    metrics: 'Zero-Overselling ERP Architecture'
+    badgeColor: 'var(--brand-mint)',
+    technologies: ['NestJS', 'Laravel', 'FastAPI', 'PostgreSQL', 'Prisma ORM', 'Docker', 'Redis', 'Webhooks']
   },
   {
     id: 'frontend-craft',
-    code: 'MOD.03 // UI_ENGINEERING',
+    category: 'Frontend & Interface Engineering',
     icon: LayoutGrid,
-    title: 'Modern Frontend & Interface Craft',
+    title: 'Modern Frontend & Desain Responsif',
     description:
-      'Building accessible, fast, and memorable user experiences with fluid micro-interactions, OKLCH design systems, and responsive layouts.',
-    badge: 'WCAG 2.2 AA Compliant',
-    technologies: ['Vue 3 (Composition API)', 'Next.js', 'React', 'Tailwind CSS', 'GSAP', 'Lenis Scroll', 'TypeScript'],
-    metrics: 'Sub-second Interactive Load'
+      'Membangun antarmuka web yang cepat, mudah digunakan, dan ramah aksesibilitas dengan micro-interactions yang halus dan sistem token warna yang konsisten.',
+    badge: 'WCAG AA Compliant',
+    badgeColor: 'var(--brand-sun)',
+    technologies: ['Vue 3 (Composition API)', 'Next.js', 'React', 'Tailwind CSS', 'GSAP', 'Lenis Scroll', 'TypeScript']
   },
   {
     id: 'systems-kernel',
-    code: 'MOD.04 // SYSTEM_DAEMON',
+    category: 'Systems & Networking',
     icon: Activity,
-    title: 'Systems & Network Engineering',
+    title: 'Systems & Embedded Network Daemon',
     description:
-      'Crafting lightweight daemon binaries in Go for embedded OpenWrt routing, bufferbloat reduction, and direct Linux kernel tc subsystem interaction.',
-    badge: 'Low-Latency Systems',
-    technologies: ['Go (Golang)', 'OpenWrt', 'Linux tc subsystem', 'SQM QoS', 'Embedded Linux', 'Networking'],
-    metrics: 'Kernel-Level Bandwidth Optimization'
+      'Mengembangkan daemon binary ringan menggunakan Go untuk manajemen bandwidth embedded OpenWrt, mitigasi bufferbloat, dan kontrol lalu lintas jaringan.',
+    badge: 'Low-Latency',
+    badgeColor: 'var(--brand-sky)',
+    technologies: ['Go (Golang)', 'OpenWrt', 'Linux tc subsystem', 'SQM QoS', 'Embedded Linux', 'Networking']
   }
 ])
 </script>
 
 <template>
   <section id="skills" class="section-container" aria-labelledby="skills-heading">
-    <div class="mb-12 flex flex-col md:flex-row md:items-end justify-between border-b border-[var(--hairline)] pb-6">
+    <div class="mb-10 flex flex-col md:flex-row md:items-end justify-between border-b border-[var(--comic-border)]/20 pb-6">
       <div>
-        <span class="pill-tag inline-block mb-4">{{ c.skillsMeta }}</span>
+        <span class="comic-chapter-badge bg-[var(--brand-sun)] text-slate-950 mb-4">
+          <Layers class="w-3.5 h-3.5 text-slate-950" />
+          {{ c.skillsMeta }}
+        </span>
         <h2 id="skills-heading" class="display-section">{{ c.skillsTitle }}</h2>
       </div>
-      <p class="text-[var(--ink-muted)] text-sm font-mono mt-4 md:mt-0">
-        // 4 ARCHITECTURAL DOMAINS
+      <p class="text-[var(--ink-muted)] text-xs sm:text-sm font-mono mt-4 md:mt-0 font-medium">
+        Keahlian & Bidang Utama
       </p>
     </div>
 
-    <!-- Bento Matrix Grid -->
+    <!-- Clean Panel Grid -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
       <div
-        v-for="bento in bentoCapabilities"
-        :key="bento.id"
-        class="spotlight-card p-6 md:p-8 flex flex-col justify-between group cursor-default"
+        v-for="item in capabilities"
+        :key="item.id"
+        class="comic-panel p-6 sm:p-7 flex flex-col justify-between bg-[var(--surface-panel)] border-[1.5px] border-[var(--comic-border)]"
       >
         <div>
-          <!-- Top Row: Module Code + Live Badge -->
-          <div class="flex items-center justify-between mb-5">
-            <span class="font-mono text-xs text-[var(--ink-muted)] tracking-wider">
-              {{ bento.code }}
+          <!-- Category & Badge -->
+          <div class="flex items-center justify-between mb-4">
+            <span class="font-mono text-xs font-bold text-[var(--ink-muted)]">
+              {{ item.category }}
             </span>
-            <span class="font-mono text-[11px] font-semibold text-[var(--accent-blue)] bg-[var(--surface-canvas)] border border-[var(--hairline)] px-2.5 py-1 rounded-full">
-              {{ bento.badge }}
+            <span
+              class="font-mono text-[10px] font-bold px-2 py-0.5 rounded border border-[var(--comic-border)] shadow-[1px_1px_0px_var(--comic-border)]"
+              :style="{ backgroundColor: item.badgeColor, color: item.badgeColor === 'var(--brand-coral)' ? '#fff' : '#14151F' }"
+            >
+              {{ item.badge }}
             </span>
           </div>
 
           <!-- Header Icon + Title -->
-          <div class="flex items-start gap-4 mb-4">
-            <div class="w-11 h-11 rounded-xl bg-[var(--surface-canvas)] border border-[var(--hairline)] flex items-center justify-center text-[var(--ink-primary)] shrink-0 group-hover:border-[var(--accent-blue)] group-hover:text-[var(--accent-blue)] transition-colors duration-300">
-              <component :is="bento.icon" class="w-5 h-5" />
+          <div class="flex items-start gap-3.5 mb-3">
+            <div class="w-10 h-10 rounded-xl bg-[var(--surface-subtle)] border border-[var(--comic-border)] flex items-center justify-center text-[var(--brand-coral)] shrink-0 shadow-[1px_1px_0px_var(--comic-border)]">
+              <component :is="item.icon" class="w-5 h-5" />
             </div>
             <div>
-              <h3 class="text-xl md:text-2xl font-bold tracking-tight text-[var(--ink-primary)]">
-                {{ bento.title }}
+              <h3 class="text-xl sm:text-2xl font-black tracking-tight text-[var(--ink-primary)]">
+                {{ item.title }}
               </h3>
             </div>
           </div>
 
           <!-- Description -->
-          <p class="text-[var(--ink-muted)] text-sm md:text-base leading-relaxed mb-6">
-            {{ bento.description }}
+          <p class="text-[var(--ink-muted)] text-xs sm:text-sm leading-relaxed mb-6">
+            {{ item.description }}
           </p>
         </div>
 
-        <!-- Bottom: Technologies Pill Tags & Metrics -->
-        <div>
-          <div class="flex flex-wrap gap-2 mb-5">
+        <!-- Technologies Sticker Tags -->
+        <div class="pt-3 border-t border-[var(--comic-border)]/15">
+          <div class="flex flex-wrap gap-1.5">
             <span
-              v-for="tech in bento.technologies"
+              v-for="tech in item.technologies"
               :key="tech"
-              class="font-mono text-xs text-[var(--ink-primary)] bg-[var(--surface-canvas)] border border-[var(--hairline)] px-2.5 py-1 rounded-md"
+              class="comic-tag text-[10px] sm:text-[11px]"
             >
               {{ tech }}
             </span>
-          </div>
-
-          <div class="pt-4 border-t border-[var(--hairline)]/60 flex items-center justify-between font-mono text-xs text-[var(--ink-muted)]">
-            <span>IMPACT:</span>
-            <span class="text-[var(--ink-primary)] font-medium">{{ bento.metrics }}</span>
           </div>
         </div>
       </div>
