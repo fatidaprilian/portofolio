@@ -25,6 +25,16 @@ const careerProfileSource = {
     timelineLabel: 'Linimasa Pengalaman',
     timelineItems: [
       {
+        period: 'Agu. 2026 – Nov. 2026',
+        title: 'Backend AI Engineering Intern',
+        role: 'FlyRank AI Internship (Remote, Global Cohort)',
+        description:
+          'Mengembangkan arsitektur backend, integrasi LLM/tooling, dan evaluasi model skala produksi dalam program magang AI global terverifikasi.',
+        technologies: ['Python', 'FastAPI', 'REST API', 'AI Tooling', 'Docker', 'PostgreSQL'],
+        impact: 'Terverifikasi (FR-D1-FBE8F-0F92A)',
+        url: 'https://internship.flyrank.ai/verify?id=FR-D1-FBE8F-0F92A&first_name=Farid'
+      },
+      {
         period: 'Sept. 2025 – Dec. 2025',
         title: 'Freelance Web Developer',
         role: 'Remote, Indonesia (Tim 3 Orang)',
@@ -117,6 +127,16 @@ const careerProfileSource = {
     },
     timelineLabel: 'Experience Timeline',
     timelineItems: [
+      {
+        period: 'Aug. 2026 – Nov. 2026',
+        title: 'Backend AI Engineering Intern',
+        role: 'FlyRank AI Internship (Remote, Global Cohort)',
+        description:
+          'Engineered backend architectures, LLM/tooling integrations, and production-grade model evaluation pipelines in a globally verified AI internship.',
+        technologies: ['Python', 'FastAPI', 'REST API', 'AI Tooling', 'Docker', 'PostgreSQL'],
+        impact: 'Verified (FR-D1-FBE8F-0F92A)',
+        url: 'https://internship.flyrank.ai/verify?id=FR-D1-FBE8F-0F92A&first_name=Farid'
+      },
       {
         period: 'Sept. 2025 – Dec. 2025',
         title: 'Freelance Web Developer',

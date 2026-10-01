@@ -129,6 +129,10 @@ export const copy = {
     
     backToTop: 'Kembali ke atas',
     footerLeft: 'Farid Eka Aprilian • Portofolio',
+    footerBio: 'Software & Systems Engineer yang berfokus membangun sistem web skala produksi, integrasi backend yang kokoh, dan open-source AI tooling.',
+    footerCredentialLabel: 'Akreditasi & Kredensial Resmi',
+    footerCredentialDesc: 'Terverifikasi publik di pangkalan data FlyRank AI Internship.',
+    verifyCredentialLabel: 'Verifikasi Kredensial',
     themeLabels: { auto: 'Otomatis', light: 'Terang', dark: 'Gelap' },
     
     formTitle: 'Kirim Pesan Langsung',
@@ -271,6 +275,10 @@ export const copy = {
     
     backToTop: 'Back to top',
     footerLeft: 'Farid Eka Aprilian • Portfolio',
+    footerBio: 'Software & Systems Engineer focused on production-grade web systems, resilient backend integrations, and open-source AI tooling.',
+    footerCredentialLabel: 'Official Verified Credential',
+    footerCredentialDesc: 'Publicly verifiable on official FlyRank AI Internship registry.',
+    verifyCredentialLabel: 'Verify Credential',
     themeLabels: { auto: 'Auto', light: 'Light', dark: 'Dark' },
     
     formTitle: 'Send Direct Message',

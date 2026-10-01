@@ -1,5 +1,5 @@
 <script setup>
-import { GraduationCap, Award, Briefcase } from 'lucide-vue-next'
+import { GraduationCap, Award, Briefcase, ExternalLink } from 'lucide-vue-next'
 
 defineProps({
   c: { type: Object, required: true },
@@ -34,7 +34,18 @@ defineProps({
         <div class="flex flex-col gap-2 max-w-3xl">
           <div class="flex flex-wrap items-center gap-3">
             <h3 class="text-xl sm:text-2xl font-black text-[var(--ink-primary)] tracking-tight">{{ item.title }}</h3>
-            <span v-if="item.impact" class="font-mono text-[11px] font-bold text-slate-950 bg-[var(--brand-mint)] border border-[var(--comic-border)] px-2.5 py-0.5 rounded shadow-[1px_1px_0px_var(--comic-border)]">
+            <a
+              v-if="item.url && item.impact"
+              :href="item.url"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center gap-1 font-mono text-[11px] font-bold text-slate-950 bg-[var(--brand-mint)] hover:bg-[var(--brand-sun)] border border-[var(--comic-border)] px-2.5 py-0.5 rounded shadow-[1px_1px_0px_var(--comic-border)] transition-colors"
+              :aria-label="`Verify ${item.title}`"
+            >
+              <span>{{ item.impact }}</span>
+              <ExternalLink class="w-3 h-3" />
+            </a>
+            <span v-else-if="item.impact" class="font-mono text-[11px] font-bold text-slate-950 bg-[var(--brand-mint)] border border-[var(--comic-border)] px-2.5 py-0.5 rounded shadow-[1px_1px_0px_var(--comic-border)]">
               {{ item.impact }}
             </span>
           </div>
@@ -110,7 +121,19 @@ defineProps({
               <span class="font-mono text-xs font-bold text-[var(--ink-muted)] bg-[var(--surface-subtle)] border border-[var(--comic-border)] px-2.5 py-0.5 rounded shrink-0">{{ cert.period }}</span>
             </div>
             <p class="text-[var(--ink-muted)] text-xs sm:text-sm font-medium">{{ cert.issuer }}</p>
-            <span class="inline-self-start font-mono text-xs font-bold text-emerald-600 dark:text-emerald-400 mt-1">{{ cert.status }}</span>
+            <div class="flex flex-wrap items-center justify-between gap-2 mt-1 pt-2 border-t border-[var(--comic-border)]/15">
+              <span class="font-mono text-xs font-bold text-emerald-600 dark:text-emerald-400">{{ cert.status }}</span>
+              <a
+                v-if="cert.url"
+                :href="cert.url"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-1 font-mono text-xs font-bold text-[var(--brand-mint)] hover:underline"
+              >
+                <span>{{ c.verifyCredentialLabel || 'Verifikasi Kredensial' }}</span>
+                <ExternalLink class="w-3.5 h-3.5" />
+              </a>
+            </div>
           </div>
         </div>
       </div>
