@@ -28,7 +28,7 @@ defineProps({
       <div
         v-for="item in profile.timelineItems"
         :key="`${item.period}-${item.title}`"
-        class="comic-panel p-6 sm:p-7 flex flex-col md:flex-row md:items-start justify-between bg-[var(--surface-panel)] border-[1.5px] border-[var(--comic-border)] gap-6"
+        class="comic-panel p-5 sm:p-7 flex flex-col md:flex-row md:items-start justify-between bg-[var(--surface-panel)] border-[1.5px] border-[var(--comic-border)] gap-4 sm:gap-6"
         role="listitem"
       >
         <div class="flex flex-col gap-2 max-w-3xl">
@@ -65,7 +65,7 @@ defineProps({
           </div>
         </div>
         
-        <div class="self-start shrink-0">
+        <div class="self-start shrink-0 order-first md:order-last">
           <span class="font-mono text-xs font-bold text-slate-950 bg-[var(--brand-sun)] border border-[var(--comic-border)] px-3 py-1.5 rounded-lg shadow-[1px_1px_0px_var(--comic-border)]">
             {{ item.period }}
           </span>
@@ -89,11 +89,11 @@ defineProps({
           <div
             v-for="edu in profile.educationItems"
             :key="edu.institution"
-            class="comic-panel p-6 bg-[var(--surface-panel)] border-[1.5px] border-[var(--comic-border)] flex flex-col gap-2"
+            class="comic-panel p-5 sm:p-6 bg-[var(--surface-panel)] border-[1.5px] border-[var(--comic-border)] flex flex-col gap-2.5"
           >
-            <div class="flex justify-between items-start gap-4">
-              <h4 class="text-base sm:text-lg font-black text-[var(--ink-primary)]">{{ edu.institution }}</h4>
-              <span class="font-mono text-xs font-bold text-[var(--ink-muted)] bg-[var(--surface-subtle)] border border-[var(--comic-border)] px-2.5 py-0.5 rounded shrink-0">{{ edu.period }}</span>
+            <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-1.5 sm:gap-4">
+              <h4 class="text-base sm:text-lg font-black text-[var(--ink-primary)] leading-snug">{{ edu.institution }}</h4>
+              <span class="font-mono text-xs font-bold text-[var(--ink-muted)] bg-[var(--surface-subtle)] border border-[var(--comic-border)] px-2.5 py-0.5 rounded shrink-0 self-start">{{ edu.period }}</span>
             </div>
             <p class="text-[var(--brand-mint)] text-xs sm:text-sm font-bold">{{ edu.degree }}</p>
             <p v-if="edu.details" class="text-[var(--ink-muted)] text-xs leading-relaxed mt-1">{{ edu.details }}</p>
@@ -114,11 +114,11 @@ defineProps({
           <div
             v-for="cert in profile.certificationsItems"
             :key="cert.title"
-            class="comic-panel p-6 bg-[var(--surface-panel)] border-[1.5px] border-[var(--comic-border)] flex flex-col gap-2"
+            class="comic-panel p-5 sm:p-6 bg-[var(--surface-panel)] border-[1.5px] border-[var(--comic-border)] flex flex-col gap-2.5"
           >
-            <div class="flex justify-between items-start gap-4">
-              <h4 class="text-base sm:text-lg font-black text-[var(--ink-primary)]">{{ cert.title }}</h4>
-              <span class="font-mono text-xs font-bold text-[var(--ink-muted)] bg-[var(--surface-subtle)] border border-[var(--comic-border)] px-2.5 py-0.5 rounded shrink-0">{{ cert.period }}</span>
+            <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-1.5 sm:gap-4">
+              <h4 class="text-base sm:text-lg font-black text-[var(--ink-primary)] leading-snug">{{ cert.title }}</h4>
+              <span class="font-mono text-xs font-bold text-[var(--ink-muted)] bg-[var(--surface-subtle)] border border-[var(--comic-border)] px-2.5 py-0.5 rounded shrink-0 self-start">{{ cert.period }}</span>
             </div>
             <p class="text-[var(--ink-muted)] text-xs sm:text-sm font-medium">{{ cert.issuer }}</p>
             <div class="flex flex-wrap items-center justify-between gap-2 mt-1 pt-2 border-t border-[var(--comic-border)]/15">
